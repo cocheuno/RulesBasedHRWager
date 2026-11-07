@@ -21,6 +21,8 @@ python backtest.py out/dmr1106y.picks.json results/dmr1106y.results.json   # joi
 python -m unittest discover -s tests -v             # rule + Pick 3/4 tests on a synthetic card (no real data needed)
 ```
 
+Day-to-day commands: see **[RACE-DAY.md](RACE-DAY.md)**.
+
 ## Layout
 
 ```
