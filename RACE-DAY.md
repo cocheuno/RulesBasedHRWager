@@ -69,7 +69,9 @@ Useful variants:
 
 ## 4. After the last race: hand the results to Claude
 
-1. Save each race's **PAYOUTS** page screenshot as `data\results-png\<card>\r<N>.png` (r1.png, r2.png, ...).
+1. Best: download each race's **chart PDF** ("View chart") into `data\results-png\<card>\` as downloaded
+   (e.g. `20261106BELUSA1.pdf`) — it carries every finisher, final odds and the track condition, no OCR needed.
+   Otherwise save the **PAYOUTS** page screenshot as `data\results-png\<card>\r<N>.png` (r1.png, r2.png, ...).
 2. Push the screenshots and the picks file:
 
 ```powershell
