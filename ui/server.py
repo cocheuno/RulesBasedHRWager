@@ -15,7 +15,8 @@ screen and pick.py always agree.  Files live where the command line puts them:
 API
     GET  /api/cards                         cards on disk and what each has
     GET  /api/cards/<card>                  roster, latest picks, results, back-test, wager evaluation, state
-    POST /api/cards/<card>/run              {"scratches": "2:10, 4:2"} -> run the engine, write data/out, return the card payload
+    POST /api/cards/<card>/run              {"scratches": "2:10, 4:2", "reparse": false} -> run the engine (re-reading the PDF when
+                                            asked, when it is newer than the cached card, or when the parser changed), write data/out
     PUT  /api/cards/<card>/scratches        {"scratches": "..."} -> save without running
     POST /api/cards/<card>/results          {"race_no", "finish", "win", "place", "show", "exotics"} -> results file
     POST /api/cards/<card>/ocr              {"race_no": n?, "force": bool} -> read screenshot(s) into the results file
@@ -44,6 +45,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
+from brisnet_pp.parser import PARSER_VERSION                  # noqa: E402
 from handicapper.engine import format_report, load_config   # noqa: E402
 from handicapper.pipeline import run_card                     # noqa: E402
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
@@ -52,6 +54,24 @@ from ocr_results import ocr_folder   # noqa: E402
 
 STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 CARD_RE = re.compile(r"^[a-z0-9_-]{3,24}$", re.I)
+
+
+def reparse_reason(pdf: str | None, card_json: str | None) -> str | None:
+    """Why a cached card.json must be rebuilt from the PDF: no cache, the PDF is newer, or the parser changed."""
+    if not pdf:
+        return None
+    if not card_json:
+        return "no cached card"
+    try:
+        if os.path.getmtime(pdf) > os.path.getmtime(card_json) + 1:
+            return "PDF is newer than the cached card"
+        with open(card_json, encoding="utf-8") as fh:
+            stamp = json.load(fh).get("parser_version")
+    except (OSError, ValueError):
+        return "cached card unreadable"
+    if stamp != PARSER_VERSION:
+        return f"parser changed ({stamp or 'unstamped'} -> {PARSER_VERSION})"
+    return None
 
 
 class Desk:
@@ -131,7 +151,7 @@ class Desk:
         st["activity"] = st["activity"][-50:]
 
     # ---------------------------------------------------------------- engine
-    def run(self, card: str, scratches: str | None = None) -> dict:
+    def run(self, card: str, scratches: str | None = None, reparse: bool = False) -> dict:
         f = self.files(card)
         source = f["pp"] or f["card_json"]
         if not source:
@@ -140,11 +160,14 @@ class Desk:
         if scratches is not None:
             st["scratches"] = scratches
         with self.lock:
-            # parse once and cache the raw card so the roster (with scratched horses) is always available
-            if f["pp"] and not f["card_json"]:
+            # parse once and cache the raw card so the roster (with scratched horses) is always available;
+            # re-read the PDF when asked, when it is newer than the cache, or when the parser has changed since
+            why = reparse_reason(f["pp"], f["card_json"]) if f["pp"] else None
+            if f["pp"] and (reparse or why):
                 out = run_card(f["pp"], config_path=self.config, multirace=False)
                 with open(os.path.join(self.out, f"{card}.card.json"), "w", encoding="utf-8") as fh:
                     json.dump(out["raw"], fh, indent=1, ensure_ascii=False)
+                self.log(st, "Re-read PPs", why or "asked for")
             cj = os.path.join(self.out, f"{card}.card.json")
             out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config)
             result = out["result"]
@@ -445,7 +468,7 @@ class Handler(SimpleHTTPRequestHandler):
             if m:
                 card, action = unquote(m.group(1)), m.group(2)
                 if action == "run":
-                    return self._json(self.desk.run(card, payload.get("scratches")))
+                    return self._json(self.desk.run(card, payload.get("scratches"), bool(payload.get("reparse"))))
                 if action == "ocr":
                     rn = payload.get("race_no")
                     return self._json(self.desk.ocr(card, int(rn) if rn else None, bool(payload.get("force"))))

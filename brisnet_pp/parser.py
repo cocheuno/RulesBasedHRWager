@@ -29,6 +29,10 @@ from typing import Iterable
 
 import pdfplumber
 
+# Bump whenever the parser's output changes (surface, distance, workouts, ...): the app re-reads a cached
+# card.json whose stamp differs, so a parser fix reaches cards that were parsed before it.
+PARSER_VERSION = "2026-11-07.2"
+
 from .symbols import (
     FRAC_CLASS, MARGIN_CLASS, SUP_CLASS, SYM_AGE_3UP, SYM_AGE_4UP, SYM_AW,
     SYM_CLAIM_C, SYM_FILLIES, SYM_FIRST_LASIX, SYM_NAME_FLAG, SYM_NEG,
@@ -258,6 +262,7 @@ class BrisnetPPParser:
         codes = Counter(h["records"].get("track_code") for r in self.card["races"] for h in r["horses"] if h["records"].get("track_code"))
         self.card["track_code"] = codes.most_common(1)[0][0] if codes else None
         self.card["warnings"] = self.warnings
+        self.card["parser_version"] = PARSER_VERSION
         return self.card
 
     # ------------------------------------------------------------ page level

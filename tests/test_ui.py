@@ -16,7 +16,7 @@ sys.path.insert(0, ROOT)
 sys.path.insert(0, HERE)
 
 from synthetic_card import build_card          # noqa: E402
-from ui.server import Desk, make_server, parse_multipart   # noqa: E402
+from ui.server import Desk, make_server, parse_multipart, reparse_reason   # noqa: E402
 
 
 class Base(unittest.TestCase):
@@ -74,6 +74,23 @@ class TestDesk(Base):
         self.assertEqual(an["cards"][0]["card"], "synth")
         self.assertEqual([c["track"] for c in an["rollup"]["chart"]], ["DMR", "ALL"])
         self.assertTrue(an["rules"])
+
+    def test_reparse_reason(self):
+        import time
+        from brisnet_pp.parser import PARSER_VERSION
+        d = os.path.join(self.tmp, "rp"); os.makedirs(d, exist_ok=True)
+        pdf, cj = os.path.join(d, "x.pdf"), os.path.join(d, "x.card.json")
+        open(pdf, "wb").write(b"%PDF")
+        self.assertIsNone(reparse_reason(None, cj), "no PDF: nothing to re-read from")
+        self.assertEqual(reparse_reason(pdf, None), "no cached card")
+        json.dump({"races": []}, open(cj, "w"))
+        self.assertTrue(reparse_reason(pdf, cj).startswith("parser changed (unstamped"))
+        json.dump({"races": [], "parser_version": "0.0"}, open(cj, "w"))
+        self.assertIn("0.0 -> " + PARSER_VERSION, reparse_reason(pdf, cj))
+        json.dump({"races": [], "parser_version": PARSER_VERSION}, open(cj, "w"))
+        self.assertIsNone(reparse_reason(pdf, cj), "current stamp, PDF older: keep the cache")
+        os.utime(pdf, (time.time() + 60, time.time() + 60))
+        self.assertEqual(reparse_reason(pdf, cj), "PDF is newer than the cached card")
 
     def test_upload_and_multipart(self):
         body = (b"--XX\r\nContent-Disposition: form-data; name=\"card\"\r\n\r\nabc1107y\r\n"
