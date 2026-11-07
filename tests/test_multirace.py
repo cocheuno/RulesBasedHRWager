@@ -117,12 +117,29 @@ class TestTickets(Base):
         res = score_card(build_card(), self.cfg, multirace=False)
         self.assertIsNone(res["multirace"])
 
+    def test_top3_and_other_wagers(self):
+        from handicapper.engine import format_report
+        txt = format_report(self.result, detail=0)
+        for r in self.result["races"]:
+            self.assertIn(f"### Race {r['race_no']}:", txt)
+            self.assertTrue(r["other_wagers"], f"R{r['race_no']} has no wager suggestions")
+            self.assertIn(r["leg"]["kind"], ("single", "standard", "chaos"))
+        r5 = self.by_race[5]                      # 4/5 standout: key, no win bet, single in horizontals
+        self.assertTrue(any(w.startswith("EXACTA key #1") for w in r5["other_wagers"]))
+        self.assertTrue(any("no WIN bet" in w and "single" in w for w in r5["other_wagers"]))
+        r6 = self.by_race[6]                      # beatable 8/5 favourite: chalk underneath only
+        self.assertTrue(any("favourite #1 looks beatable" in w for w in r6["other_wagers"]))
+        r4 = self.by_race[4]                      # daily double into R5's single
+        self.assertTrue(any(w.startswith("DAILY DOUBLE") and "R5 #1" in w for w in r4["other_wagers"]))
+        self.assertFalse(any(w.startswith("DAILY DOUBLE") for w in r6["other_wagers"]))   # last race: no next leg
+        self.assertIn("| 1 | 1 | Standout |", txt)
+
     def test_report_section_present(self):
         from handicapper.engine import format_report
         txt = format_report(self.result, detail=2)
         self.assertLess(txt.index("## Wagering summary"), txt.index("## Race details"))
         self.assertLess(txt.index("## Race details"), txt.index("## Multi-race wagers"))
-        self.assertIn("| 5 | Alw 60000n2x", txt)
+        self.assertIn("### Race 5: Alw 60000n2x", txt)
         terse = format_report(self.result, detail=0)
         self.assertIn("## Wagering summary", terse)
         self.assertNotIn("## Race details", terse)

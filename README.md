@@ -8,7 +8,7 @@ with a one-line justification.
 pip install pdfplumber              # the only dependency (poppler not required)
 
 python pick.py dmr1106y.pdf                         # parse + score, print the report (wagering summary first, then details)
-python pick.py dmr1106y.pdf --detail 0              # wagering summary only: the bets per race + Pick 3/4 tickets
+python pick.py dmr1106y.pdf --detail 0              # wagering summary only: top 3 per race, primary play, other wagers, Pick 3/4 tickets
 python pick.py dmr1106y.pdf -o out/                 # also write <card>.card.json / .picks.json / .picks.md
 python pick.py out/dmr1106y.card.json --race 4 --detail 2    # full rule-by-rule audit, one race
 python pick.py --rules-doc > RULES.md               # regenerate the rule catalog
@@ -135,6 +135,14 @@ After every race is scored, each leg's live horses get a blended win probability
 
 Budgets, coverage targets and thresholds are in `rules_config.json -> multirace`; `--budget3/--budget4` override
 the budgets from the command line and `--no-multi` suppresses the section.
+
+### Other wagers per race (`engine.other_wagers`)
+
+The wagering summary lists each race's top three ranked live horses (score, blended win chance, A/B grade) and a
+set of secondary wagers chosen by the race's confidence: exacta / trifecta / superfecta **keys** on a standout
+(a key costs a third of a box), exacta box plus part-wheel and a 2/3/4 trifecta in a medium race, boxes only in a
+contentious one, WIN only on a V1 overlay, the favourite kept underneath when H5 finds it beatable, and a daily
+double with the next race's A horses.
 
 Selection (`rules_config.json → selection`): the top horse is a **single** when it is
 `single_gap` (7) points clear and the race is not contentious (fewer than 4 horses within
