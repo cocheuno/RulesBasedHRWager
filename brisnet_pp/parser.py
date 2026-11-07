@@ -343,8 +343,8 @@ class BrisnetPPParser:
         # e.g. "™MC 16000 1 Mile 3&up, F & M Friday, November 06, 2026"
         race["fillies_mares"] = SYM_FILLIES in h
         race["state_bred"] = SYM_STATEBRED in h
-        hc = clean_name(h)
-        m = re.match(r"^(?P<cls>.+?)\s+(?P<dist>(?:\d+(?:\s\d/\d+)?|About\s+\d+[^\s]*)\s+(?:Furlongs?|Miles?|Yards)(?:\s+\d+/\d+)?)\s*(?P<surf>\(T\))?\s+(?P<age>\S+)(?:,\s*(?P<sex>F & M|F|C & G))?\s+[A-Z][a-z]+day", hc)
+        hc = clean_name(h.replace("\u00bd", " 1/2").replace("\u00bc", " 1/4").replace("\u00be", " 3/4"))
+        m = re.match(r"^(?P<cls>.+?)\s+(?P<dist>(?:\d+(?:\s\d/\d+)?|About\s+\d+[^\s]*)\s+(?:Furlongs?|Miles?|Yards)(?:\s+\d+/\d+)?)\s*(?P<surf>\([Tt]\))?\s+(?P<age>\S+)(?:,?\s*(?P<sex>F & M|F|C & G|Fillies(?: & Mares)?|Fillies and Mares|Colts(?: & Geldings)?|Mares))?\s+[A-Z][a-z]+day", hc)
         if m:
             race["class_text"] = m.group("cls").strip()
             race["distance_text"] = m.group("dist").strip()
@@ -354,7 +354,7 @@ class BrisnetPPParser:
         else:
             race["class_text"] = hc
             race["distance_text"] = None
-            race["surface"] = "turf" if "(T)" in hc else "dirt"
+            race["surface"] = "turf" if re.search(r"\([Tt]\)", hc) else "dirt"
             race["age_text"] = None
             race["sex_text"] = None
         race["distance_furlongs"] = distance_text_to_furlongs(race["distance_text"]) if race["distance_text"] else None
@@ -541,12 +541,12 @@ class BrisnetPPParser:
         pos_txt, neg_txt = [], []
         for r in head:
             tl = r.text(5, 190)
-            if re.match(r"^(\d{4}|JKYw/)", tl) and r.x_min < 15:
+            if re.match(r"^\+?\s*(\d{4}|JKYw/)", tl) and r.x_min < 15:
                 in_stats = True
-                m = re.match(r"^(?P<cat>.+?)\s+(?P<n>\d+)\s+(?P<w>\d+)%\s+(?P<itm>\d+)%\s+(?P<roi>[+-]?\d+\.\d+)\s*$", tl)
+                m = re.match(r"^(?P<flag>\+)?\s*(?P<cat>.+?)\s+(?P<n>\d+)\s+(?P<w>\d+)%\s+(?P<itm>\d+)%\s+(?P<roi>[+-]?\d+\.\d+)\s*$", tl)
                 if m:
-                    horse["jockey_stats"].append({"category": m.group("cat"), "starts": int(m.group("n")), "win_pct": int(m.group("w")),
-                                                  "itm_pct": int(m.group("itm")), "roi": float(m.group("roi"))})
+                    horse["jockey_stats"].append({"category": m.group("cat").strip(), "flag": bool(m.group("flag")), "starts": int(m.group("n")),
+                                                  "win_pct": int(m.group("w")), "itm_pct": int(m.group("itm")), "roi": float(m.group("roi"))})
             tt = r.text(190, 392)
             if in_stats and tt:
                 m = re.match(r"^(?P<flag>\+)?\s*(?P<cat>.+?)\s+(?P<n>\d+)\s+(?P<w>\d+)%\s+(?P<itm>\d+)%\s+(?P<roi>[+-]?\d+\.\d+)\s*$", tt)
@@ -563,8 +563,8 @@ class BrisnetPPParser:
         horse["positives"] = split_bullets(" ".join(pos_txt), SYM_POS) + split_bullets(" ".join(pos_txt), SYM_NEG)
         horse["negatives"] = split_bullets(" ".join(neg_txt), SYM_NEG) + split_bullets(" ".join(neg_txt), SYM_POS)
 
-        # ---- past performances & workouts
-        for r in tail:
+        # ---- past performances & workouts (a first-time starter has no DATE TRK table: its workouts sit in the head)
+        for r in (tail if tail else head):
             t = r.text(0, 60)
             if r.x_min < 15 and DATE_RE.match(t):
                 pp = self._parse_pp_row(r)
