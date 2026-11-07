@@ -23,6 +23,7 @@ naming the rules that shaped it.  Deterministic: no randomness.
 from __future__ import annotations
 
 import math
+import re
 from dataclasses import dataclass
 from typing import Callable
 
@@ -319,6 +320,32 @@ def h9(seq: dict, cfg: dict):
     seq["all_favorites_prob"] = round(chalk, 4)
 
 
+@hrule("H10", "Offered windows and denominations")
+def h10(result: dict, cfg: dict) -> dict:
+    """The Ultimate PP header lists the wagers offered on each race ("50c Rolling Pick 3", "50c Early Pick 4",
+    "$3 Late Pick 3", "$.50 Pick 4 (Races 8-9-10-11)", "$1.00 Bet 3 (Races 6-7-8)").  A Pick 3 / Pick 4 window is
+    built only when the menu of its first race offers it, at the denomination the menu states; "Rolling" means a
+    window starting at that race, "Early"/"Late" likewise, an explicit race list is taken as written (consecutive
+    races only).  When a card's menu names no Pick 3 / Pick 4 at all, every consecutive window is built at the
+    profile's base, as before.
+    Basis: a ticket you cannot buy is not a bet; Crist - know the menu and its minimums before building."""
+    offered = {"pick3": {}, "pick4": {}}
+    for r in result["races"]:
+        txt = r.get("wagers_menu") or ""
+        for m in re.finditer(r"(?P<amt>\$\s?\d*\.?\d+|\d+\s?c)\s*(?:(?P<kind>Rolling|Early|Late|Turf)\s+)?(?:Pick\s*|Bet\s*)(?P<n>[34])\b\s*(?:\((?:Races?\s*)?(?P<list>[\dR\-\s]+)\))?", txt, re.I):
+            amt = m.group("amt").replace(" ", "")
+            base = float(amt[1:]) if amt.startswith("$") else float(amt[:-1]) / 100.0
+            n = int(m.group("n"))
+            key = f"pick{n}"
+            if m.group("list"):
+                nums = [int(x) for x in re.findall(r"\d+", m.group("list"))]
+                if len(nums) == n and nums == list(range(nums[0], nums[0] + n)):
+                    offered[key][nums[0]] = base
+                continue   # explicit non-consecutive list (e.g. Turf Pick 3 R4-6-8): not built
+            offered[key][r["race_no"]] = base
+    return offered
+
+
 # ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
@@ -334,7 +361,7 @@ def make_leg(r: dict, cfg: dict) -> Leg | None:
     return leg
 
 
-def build_sequence(result: dict, start_idx: int, n: int, cfg: dict, name: str) -> dict | None:
+def build_sequence(result: dict, start_idx: int, n: int, cfg: dict, name: str, base: float | None = None) -> dict | None:
     races = result["races"][start_idx:start_idx + n]
     if len(races) < n:
         return None
@@ -342,7 +369,7 @@ def build_sequence(result: dict, start_idx: int, n: int, cfg: dict, name: str) -
     if any(l is None for l in legs):
         return None
     key = "pick3" if n == 3 else "pick4"
-    seq = {"name": name, "races": [r["race_no"] for r in races], "legs": legs, "base": cfg[key]["base"],
+    seq = {"name": name, "races": [r["race_no"] for r in races], "legs": legs, "base": base if base is not None else cfg[key]["base"],
            "budget": cfg[key]["budget"], "notes": []}
     h7(seq, cfg)
     h8(seq, cfg)
@@ -362,14 +389,23 @@ def leg_summary(r: dict, cfg: dict) -> dict | None:
 def build_all(result: dict, cfg: dict) -> dict:
     """All consecutive Pick 3 and Pick 4 windows on the card, ranked; `recommended` is the best window of each."""
     out = {}
+    offered = h10(result, cfg)
     for n, key, label in ((3, "pick3", "Pick 3"), (4, "pick4", "Pick 4")):
         seqs = []
+        menu = offered[key]
         for i in range(0, len(result["races"]) - n + 1):
-            s = build_sequence(result, i, n, cfg, f"{label} R{result['races'][i]['race_no']}-R{result['races'][i + n - 1]['race_no']}")
+            start = result["races"][i]["race_no"]
+            if menu and start not in menu:
+                continue
+            base = menu.get(start) if menu else None
+            s = build_sequence(result, i, n, cfg, f"{label} R{start}-R{result['races'][i + n - 1]['race_no']}", base)
             if s:
+                if menu:
+                    s["notes"].insert(0, f"H10 offered on the R{start} menu at ${base:.2f}")
                 seqs.append(s)
         seqs.sort(key=lambda s: (-s["score"], s["races"][0]))
-        out[key] = {"label": label, "windows": [_serialize(s) for s in seqs], "recommended": _serialize(seqs[0]) if seqs else None}
+        out[key] = {"label": label, "offered": {str(k): v for k, v in menu.items()}, "windows": [_serialize(s) for s in seqs],
+                    "recommended": _serialize(seqs[0]) if seqs else None}
     return out
 
 

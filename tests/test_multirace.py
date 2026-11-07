@@ -113,6 +113,25 @@ class TestTickets(Base):
             self.assertEqual(self.mr[key]["recommended"]["name"], self.mr[key]["windows"][0]["name"])
             self.assertEqual(len(self.mr[key]["windows"]), 6 - (3 if key == "pick3" else 4) + 1)
 
+    def test_h10_offered_windows(self):
+        card = build_card()
+        menus = {1: "$1 Exacta / 50c Rolling Pick 3 / 50c Early Pick 4", 2: "50c Rolling Pick 3", 3: "$3 Late Pick 3 / 50c Late Pick 4",
+                 4: "$1 Exacta", 5: "$1 Exacta", 6: "$1 Exacta / $3 Turf Pick 3 (R2-4-6)"}
+        for r in card["races"]:
+            r["wagers"] = menus[r["race_no"]]
+        res = score_card(card, self.cfg)
+        p3, p4 = res["multirace"]["pick3"], res["multirace"]["pick4"]
+        self.assertEqual(p3["offered"], {"1": 0.5, "2": 0.5, "3": 3.0})
+        self.assertEqual(sorted(w["races"][0] for w in p3["windows"]), [1, 2, 3])
+        self.assertEqual(next(w for w in p3["windows"] if w["races"][0] == 3)["base"], 3.0)
+        self.assertEqual(p4["offered"], {"1": 0.5, "3": 0.5})
+        self.assertEqual(sorted(w["races"][0] for w in p4["windows"]), [1, 3])
+        self.assertTrue(all(any(n.startswith("H10") for n in w["notes"]) for w in p3["windows"]))
+        # no menu at all: every window, profile base
+        res2 = score_card(build_card(), self.cfg)
+        self.assertEqual(res2["multirace"]["pick3"]["offered"], {})
+        self.assertEqual(len(res2["multirace"]["pick3"]["windows"]), 4)
+
     def test_no_multi_option(self):
         res = score_card(build_card(), self.cfg, multirace=False)
         self.assertIsNone(res["multirace"])

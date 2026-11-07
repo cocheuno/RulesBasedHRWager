@@ -202,5 +202,10 @@
         "P4": 4.5
       }
     }
+  },
+  "wagering": {
+    "_comment": "Wagering analysis (handicapper/wagering.py): $1 unit stake on every bet type; other wagers count as bets placed.",
+    "unit": 1.0,
+    "count_other_wagers": true
   }
 }
