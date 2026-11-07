@@ -1232,11 +1232,16 @@ def m4(f, ctx):
 @rule("X1", "Hopelessly slow", "elimination", 1, hard=True)
 def x1(f, ctx):
     """Throw-out: best speed figure of the last three starts is 10+ points below today's par AND the horse has
-    3+ starts AND it is not dropping 3+ class levels.
-    Basis: Beyer / Quinn - eliminate horses whose figures cannot reach par; the process starts by throwing out."""
+    3+ starts AND it is not dropping 3+ class levels AND its best figure under today's surface/distance conditions
+    (last four such races) is not within 4 of par either.
+    Basis: Beyer / Quinn - eliminate horses whose figures cannot reach par; the process starts by throwing out.
+    Beyer again for the exemption: a figure earned under today's conditions outranks recent figures earned elsewhere
+    (Belmont 2026-11-06 R2: the winner had run 89 at the distance but 75-76 since, and was thrown out)."""
     par = ctx["par_speed"]
     if par and f["best_last3"] is not None and f["starts"] >= 3 and f["best_last3"] <= par - 10:
         if f["class_move"] is not None and f["class_move"] <= -3:
+            return None
+        if f["best_match_speed"] is not None and f["best_match_speed"] >= par - 4:
             return None
         return -1.0, f"best of last 3 {f['best_last3']} is {par - f['best_last3']} below par {par}"
     return None
