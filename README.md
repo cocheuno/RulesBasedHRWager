@@ -158,6 +158,14 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
 ### Tuning
 
 * Change a weight: `"weights": {"S7": 5, "P5": 2}`; switch a rule off: `"disabled": ["V1"]`.
+* **Track profiles**: `"tracks": {"DMR": {"weights": {...}, "selection": {...}, "multirace": {...}}}` layers over
+  the global values and is chosen automatically from the track code the parser reads off the PP (every horse's
+  track-record line carries it); `"track_aliases"` maps track names to codes as a fallback, and
+  `pick.py --track-profile SA` forces one.  The report header and `picks.json["track_profile"]` say which profile
+  scored the card.  The rule logic is common to all tracks; what the profiles carry is how much each factor counts
+  (pace rules P1/P3/P4/P7, course specialists D5/D6, post bias P6, trainer thresholds) and the ticket parameters
+  (denominations, budgets, chaos-leg field size).  The shipped profiles are expert priors; fit them per track with
+  `backtest.py` as cards accumulate.
 * Every run writes `*.picks.json`, which contains the full per-horse feature set and every
   rule hit — join it with results to back-test weights.
 * Add a rule: write a function in `rules.py` with the `@rule` decorator and a docstring ending in a

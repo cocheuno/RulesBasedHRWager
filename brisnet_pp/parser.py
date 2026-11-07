@@ -22,7 +22,7 @@ from __future__ import annotations
 import json
 import re
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Iterable
@@ -254,6 +254,9 @@ class BrisnetPPParser:
             self._derive_race_fields(race)
             for h in race["horses"]:
                 self._derive_horse_fields(h, race)
+        # today's track code (e.g. DMR): the code on every horse's track-record line
+        codes = Counter(h["records"].get("track_code") for r in self.card["races"] for h in r["horses"] if h["records"].get("track_code"))
+        self.card["track_code"] = codes.most_common(1)[0][0] if codes else None
         self.card["warnings"] = self.warnings
         return self.card
 

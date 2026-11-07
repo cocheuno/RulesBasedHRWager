@@ -205,6 +205,39 @@ class TestMaidensAndEliminations(Base):
         self.assertNotIn("7", self.by_race[1]["picks"])
 
 
+class TestTrackProfiles(Base):
+    CFG_PATH = os.path.join(os.path.dirname(HERE), "rules_config.json")
+
+    def test_profile_layers_over_global(self):
+        from handicapper.engine import resolve_track_code
+        base = load_config(self.CFG_PATH)
+        self.assertEqual(base["track_profile"], "default")
+        code = resolve_track_code(self.card, base)
+        self.assertEqual(code, "DMR")
+        dmr = load_config(self.CFG_PATH, track_code=code)
+        self.assertEqual(dmr["track_profile"], "DMR")
+        self.assertEqual(dmr["weights"]["P1"], 8)
+        self.assertEqual(dmr["multirace"]["pick3"]["base"], 0.5)
+        self.assertEqual(dmr["multirace"]["logit_scale"], base["multirace"]["logit_scale"], "untouched keys survive the layer")
+        unknown = load_config(self.CFG_PATH, track_code="ZZZ")
+        self.assertTrue(unknown["track_profile"].startswith("default"))
+        self.assertEqual(unknown["weights"], base["weights"])
+
+    def test_alias_fallback_and_report_header(self):
+        from handicapper.engine import resolve_track_code, format_report
+        base = load_config(self.CFG_PATH)
+        card = {"track": "Santa Anita", "track_code": None}
+        self.assertEqual(resolve_track_code(card, base), "SA")
+        self.assertIsNone(resolve_track_code({"track": "Nowhere Downs"}, base))
+        res = score_card(self.card, load_config(self.CFG_PATH, track_code="DMR"))
+        self.assertEqual(res["track_profile"], "DMR")
+        self.assertIn("track profile: DMR", format_report(res, detail=0))
+        # the profile changes points, not structure: P1 for the R2 lone speed is 8 under DMR, 7 by default
+        r2 = next(r for r in res["races"] if r["race_no"] == 2)
+        p1 = next(h for s in r2["sheets"] for h in s["hits"] if h["rule"] == "P1")
+        self.assertEqual(p1["points"], 8.0)
+
+
 class TestWeights(Base):
     def test_prime_power_and_comment_weights_are_moderate(self):
         w = {rl.id: rl.weight for rl in R.RULES}
