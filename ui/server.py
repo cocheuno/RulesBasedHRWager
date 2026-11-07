@@ -165,6 +165,10 @@ class Desk:
         if f["card_json"]:
             cj = json.load(open(f["card_json"], encoding="utf-8"))
             meta = {"track": cj.get("track"), "date": cj.get("date"), "track_code": cj.get("track_code")}
+            if not meta["track_code"]:   # card.json written before the parser recorded it: take it from the horses
+                from collections import Counter
+                codes = Counter(h["records"].get("track_code") for r in cj["races"] for h in r["horses"] if h.get("records", {}).get("track_code"))
+                meta["track_code"] = codes.most_common(1)[0][0] if codes else None
             for r in cj["races"]:
                 roster.append({"race_no": r["race_no"], "class_text": r.get("class_text"), "distance_text": r.get("distance_text"),
                                "surface": r.get("surface"), "post_time": r.get("post_time"), "wagers": r.get("wagers"),
@@ -172,6 +176,8 @@ class Desk:
                                            "run_style": h.get("run_style"), "speed_pts": h.get("speed_pts"), "entry_status": h.get("entry_status"),
                                            "jockey": h.get("jockey"), "trainer": h.get("trainer")} for h in r["horses"]]})
         picks = json.load(open(f["picks_json"], encoding="utf-8")) if f["picks_json"] else None
+        if picks and not picks.get("track_code") and meta.get("track_code"):
+            picks["track_code"] = meta["track_code"]
         results = load_results(f["results"]) if f["results"] else None
         bt = ev = None
         if picks and results:
@@ -220,13 +226,38 @@ class Desk:
         self.save_state(st)
         return self.payload(card)
 
+    def chart_scratches(self, card: str) -> str:
+        """Scratch list derived from the charts: every horse on the card that is not among a race's chart runners."""
+        pl = self.payload(card)
+        if not pl["results"] or not pl["roster"]:
+            return ""
+        out = []
+        for r in pl["roster"]:
+            ch = next((x for x in pl["results"]["races"] if x["race_no"] == r["race_no"]), None)
+            if not ch or not ch.get("runners"):
+                continue
+            ran = {x["pgm"].upper() for x in ch["runners"]}
+            out += [f"{r['race_no']}:{h['pgm']}" for h in r["horses"] if h["pgm"].upper() not in ran]
+        return ", ".join(out)
+
     def process(self, card: str) -> dict:
         f = self.files(card)
         if f["pngs"] or f["charts"]:
             self.ocr(card)
+        # re-score "as run": the charts say who actually ran, so the back-test compares against that field
+        derived = self.chart_scratches(card)
+        st = self.state(card)
+        if derived:
+            have = set(x.strip().upper() for x in (st.get("scratches") or "").split(",") if x.strip())
+            want = set(x.strip().upper() for x in derived.split(","))
+            if want - have:
+                merged = ", ".join(sorted(have | want, key=lambda t: (int(t.split(":")[0]), t.split(":")[1])))
+                self.log(st, "As-run re-score", f"charts show these did not run: {', '.join(sorted(want - have))}; re-running with scratches {merged}")
+                self.save_state(st)
+                self.run(card, merged)
         pl = self.payload(card)
         if not (pl["picks"] and pl["results"]):
-            raise ValueError("needs a run (picks) and at least one race result (a screenshot r<N>.png or an entered result)")
+            raise ValueError("needs a run (picks) and at least one race result (a chart PDF, a screenshot r<N>.png or an entered result)")
         text = "# " + card + "\n\n" + format_backtest(pl["backtest"]) + "\n\n" + format_evaluation(pl["evaluation"])
         with open(os.path.join(self.results, f"{card}.backtest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)
@@ -251,7 +282,7 @@ class Desk:
             res = load_results(f["results"])
             bt = backtest(picks, res)
             ev = evaluate_card(picks, res, cfg)
-            ev["card_code"], ev["track_code"] = c["card"], picks.get("track_code") or c.get("track_code")
+            ev["card_code"], ev["track_code"] = c["card"], picks.get("track_code") or c.get("track_code") or self.payload(c["card"])["meta"].get("track_code")
             evals.append(ev)
             s = bt["summary"]
             cards.append({"card": c["card"], "track": ev["track_code"], "date": picks.get("date"), "races": s["races"],
