@@ -120,6 +120,12 @@ class TestTickets(Base):
     def test_report_section_present(self):
         from handicapper.engine import format_report
         txt = format_report(self.result, detail=2)
+        self.assertLess(txt.index("## Wagering summary"), txt.index("## Race details"))
+        self.assertLess(txt.index("## Race details"), txt.index("## Multi-race wagers"))
+        self.assertIn("| 5 | Alw 60000n2x", txt)
+        terse = format_report(self.result, detail=0)
+        self.assertIn("## Wagering summary", terse)
+        self.assertNotIn("## Race details", terse)
         self.assertIn("## Multi-race wagers", txt)
         self.assertIn("Pick 4", txt)
         self.assertIn("H5 vulnerable favourite", txt)
