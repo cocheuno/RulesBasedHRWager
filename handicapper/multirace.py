@@ -180,12 +180,14 @@ def h4(leg: Leg, cfg: dict):
 @hrule("H5", "Vulnerable favourite")
 def h5(leg: Leg, cfg: dict):
     """The ML favourite is vulnerable when it is not the top-scored horse, or when its model probability is below
-    `fav_vulnerable_ratio` times its ML probability, or when it carries a negative hit from a rule in
-    `fav_vulnerable_rules` (bounce risk, speed duel, underlay, suspicious drop, maiden graduate, no-excuse flop,
-    elimination).  A vulnerable favourite sitting among the A's is demoted to B (unless it is the only A); one not on
-    the ticket at all is added as a B when its probability clears `min_b_prob`.  The leg is then a "price leg".
+    `fav_vulnerable_ratio` times its ML probability.  A vulnerable favourite sitting among the A's is demoted to B
+    (unless it is the only A); one not on the ticket at all is added as a B when its probability clears
+    `min_b_prob`.  The leg is then a "price leg".  A favourite that is still the top-scored horse but carries a
+    negative hit from a rule in `fav_vulnerable_rules` (bounce risk, speed duel, underlay, suspicious drop, maiden
+    graduate, no-excuse flop) is only noted: it stays an A and H2 has already refused to single it.
     Basis: Davidowitz / DRF - favourites win about a third of races; the Pick 4 pays when the chalk loses in a leg
-    where you were alive, so the chalk is kept as a cheap B, not as the horse the ticket is built around."""
+    where you were alive, so a chalk you are against is kept as a cheap B; Crist - but your own top choice is
+    always an A, a warning sign means spread around it, not against it."""
     fav = leg.favorite
     if fav is None or leg.kind == "single" or fav not in leg.probs:
         return
@@ -196,11 +198,14 @@ def h5(leg: Leg, cfg: dict):
     if leg.model_probs[fav] < cfg["fav_vulnerable_ratio"] * leg.ml_probs[fav]:
         reasons.append(f"model {leg.model_probs[fav]:.0%} vs ML {leg.ml_probs[fav]:.0%}")
     bad = [h["rule"] for h in sheet["hits"] if h["points"] < 0 and h["rule"] in cfg["fav_vulnerable_rules"]]
+    if not reasons:
+        if bad:
+            leg.audit.append(f"H5 favourite #{fav} ({sheet['ml_odds']}) is the top pick but carries {','.join(bad)}: stays A, not singled, spread around it")
+        else:
+            leg.audit.append(f"H5 favourite #{fav} ({sheet['ml_odds']}) looks legitimate")
+        return
     if bad:
         reasons.append("hits " + ",".join(bad))
-    if not reasons:
-        leg.audit.append(f"H5 favourite #{fav} ({sheet['ml_odds']}) looks legitimate")
-        return
     leg.price_leg = True
     if fav in leg.A and len(leg.A) > 1:
         leg.A.remove(fav)
