@@ -157,7 +157,7 @@ def horse_features(h: dict, race: dict) -> dict:
     f["improving"] = len(spd3) == 3 and spd3[0] > spd3[1] > spd3[2]
     f["declining"] = len(spd3) == 3 and spd3[0] < spd3[1] < spd3[2]
     # speed on today's surface / at today's distance category
-    surf_key = "trf" if race["surface"] == "turf" else "fst"
+    surf_key = {"turf": "trf", "aw": "aw"}.get(race["surface"], "fst")
     f["best_surface_speed"] = (h["records"].get(surf_key) or {}).get("best_speed")
     f["surface_starts"] = (h["records"].get(surf_key) or {}).get("starts", 0)
     f["surface_wins"] = (h["records"].get(surf_key) or {}).get("win", 0)

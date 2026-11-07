@@ -10,6 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 
 from brisnet_pp.parser import BrisnetPPParser, Row   # noqa: E402
+from brisnet_pp.symbols import SYM_AW                # noqa: E402
 
 
 def row(top, tokens, page=1):
@@ -39,6 +40,18 @@ class TestRaceHeader(unittest.TestCase):
         race = {"header_text": "Clm 12500n2L 5½ Furlongs 3&up, F & M Friday, November 06, 2026"}
         p._derive_race_fields(race)
         self.assertEqual((race["class_text"], race["distance_furlongs"], race["surface"], race["sex_text"]), ("Clm 12500n2L", 5.5, "dirt", "F & M"))
+
+    def test_all_weather_and_mile_seventy(self):
+        p = BrisnetPPParser.__new__(BrisnetPPParser)
+        race = {"header_text": f"Hcp 60000 {SYM_AW} 1m70yds 3&up, F & M Saturday, November 07, 2026"}
+        p._derive_race_fields(race)
+        self.assertEqual((race["class_text"], race["distance_furlongs"], race["surface"], race["is_route"], race["class_code"]), ("Hcp 60000", 8.32, "aw", True, "HCP"))
+        race = {"header_text": f"Mdn 50k {SYM_AW} 5½ Furlongs 2yo Fillies Saturday, November 07, 2026"}
+        p._derive_race_fields(race)
+        self.assertEqual((race["distance_furlongs"], race["surface"], race["sex_text"]), (5.5, "aw", "Fillies"))
+        race = {"header_text": "Clm 10000 1 Mile 70 Yards 3&up Friday, November 06, 2026"}
+        p._derive_race_fields(race)
+        self.assertEqual((race["distance_furlongs"], race["surface"]), (8.32, "dirt"))
 
 
 class TestDebutRunnerBlock(unittest.TestCase):

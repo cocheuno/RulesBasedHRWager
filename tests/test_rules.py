@@ -296,6 +296,23 @@ class TestTrackProfiles(Base):
         self.assertEqual(p1["points"], 8.0)
 
 
+class TestAllWeather(unittest.TestCase):
+    def test_records_and_matching_use_the_aw_surface(self):
+        from synthetic_card import build_card
+        from handicapper.features import horse_features
+        card = build_card()
+        race = card["races"][1]
+        race["surface"] = "aw"
+        h = race["horses"][0]
+        h["records"]["aw"] = {"starts": 4, "win": 2, "place": 1, "show": 0, "earnings": None, "best_speed": 83}
+        h["pp"][0]["surface"] = "aw"
+        h["pp"][0]["is_route"] = race["is_route"]      # the fixture's lines default to a mile; today is a sprint
+        f = horse_features(h, race)
+        self.assertEqual((f["surface_starts"], f["surface_wins"], f["best_surface_speed"]), (4, 2, 83))
+        self.assertEqual(f["match_speeds"], [h["pp"][0]["speed"]], "only the all-weather line matches today's surface")
+        self.assertTrue(f["last_same_surface"])
+
+
 class TestPipeline(unittest.TestCase):
     def test_track_code_stamped_on_result(self):
         from handicapper.pipeline import run_card
