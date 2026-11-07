@@ -316,9 +316,10 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=STATIC, **kw)
 
-    def log_message(self, fmt, *args):   # quieter console
-        if "/api/" in (args[0] if args else ""):
-            sys.stderr.write("%s %s\n" % (time.strftime("%H:%M:%S"), fmt % args))
+    def log_message(self, fmt, *args):   # quieter console: API calls and errors only
+        line = fmt % args if args else fmt
+        if "/api/" in line or "code 5" in line:
+            sys.stderr.write("%s %s\n" % (time.strftime("%H:%M:%S"), line))
 
     def _json(self, obj, status=200):
         data = json.dumps(obj, default=str).encode()
@@ -354,6 +355,10 @@ class Handler(SimpleHTTPRequestHandler):
                 self.send_header("Content-Length", str(len(data)))
                 self.end_headers()
                 return self.wfile.write(data)
+            if u.path == "/favicon.ico":
+                self.send_response(204)
+                self.end_headers()
+                return None
             if u.path == "/":
                 self.path = "/index.html"
             return super().do_GET()
