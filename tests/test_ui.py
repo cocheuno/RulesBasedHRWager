@@ -42,6 +42,8 @@ class TestDesk(Base):
         pl = self.desk.run("synth", "1:2, 2:1")
         self.assertTrue(pl["picks"] and pl["files"]["picks_json"])
         self.assertEqual(pl["state"]["scratches"], "1:2, 2:1")
+        self.assertEqual(pl["picks"]["scratches"], "1:2, 2:1", "picks.json records the scratches it was run with")
+        self.assertTrue(any(n.startswith("scratch: R2: scratched #1") for n in pl["picks"]["run_notes"]))
         self.assertEqual(len(pl["roster"][0]["horses"]), 7, "roster keeps scratched horses")
         r2 = next(r for r in pl["picks"]["races"] if r["race_no"] == 2)
         self.assertNotIn("1", [s["pgm"] for s in r2["sheets"]], "scratched horse is not scored")

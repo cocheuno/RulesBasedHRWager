@@ -58,4 +58,8 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
     result = score_card(card, cfg, multirace=multirace)
     if not result.get("track_code") and code:   # a card parsed before the parser recorded the code
         result["track_code"] = code
+    # what this run was made from, so a picks.json on its own says which scratches and parser produced it
+    result["scratches"] = scratch or ""
+    result["parser_version"] = card.get("parser_version")
+    result["run_notes"] = list(notes)
     return {"card": card, "raw": raw, "result": result, "cfg": cfg, "track_code": code, "notes": notes}
