@@ -1,8 +1,18 @@
 __pycache__/
 *.pyc
 out/
-*.pdf
 .venv/
+
+# Proprietary Brisnet / Equibase data never enters the repository
+*.pdf
 *.card.json
-data/
-*.png
+dmr1106y.picks.json
+dmr1106y.picks.md
+
+# Local data folder: everything ignored except the result screenshots (public payoff pages)
+# and the engine's picks.json, which the after-race processing needs.
+data/*
+!data/results-png/
+!data/out/
+data/out/*
+!data/out/*.picks.json
