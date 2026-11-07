@@ -52,7 +52,22 @@ class TestDesk(Base):
         self.assertEqual(pl["results"]["races"][0]["exotics"][0]["type"], "EXACTA")
         self.assertIsNotNone(pl["backtest"])
         self.assertTrue(any(x["race_no"] == 2 for x in pl["evaluation"]["rows"]))
+        # a chart-style result whose runner list omits #7 (Tag Virgin) in R2 -> process re-scores as run
+        pl = self.desk.save_result("synth", {"race_no": 2, "finish": ["3", "5", "4"], "win": "8.00"})
+        import json as _json
+        rp = os.path.join(self.tmp, "results", "synth.results.json")
+        data = _json.load(open(rp))
+        for r in data["races"]:
+            if r["race_no"] == 2:
+                r["runners"] = [{"pgm": p, "name": ""} for p in ("1", "2", "3", "4", "6")]
+                r["source"] = "chart"
+        _json.dump(data, open(rp, "w"))
+        self.assertEqual(self.desk.chart_scratches("synth"), "2:5, 2:7")
         pl = self.desk.process("synth")
+        self.assertIn("2:7", pl["state"]["scratches"])
+        self.assertTrue(any(a["step"] == "As-run re-score" for a in pl["state"]["activity"]))
+        r2 = next(r for r in pl["picks"]["races"] if r["race_no"] == 2)
+        self.assertNotIn("7", [s["pgm"] for s in r2["sheets"]])
         self.assertIn("Back-test", pl["report"])
         self.assertTrue(os.path.exists(os.path.join(self.tmp, "results", "synth.backtest.md")))
         an = self.desk.analysis()

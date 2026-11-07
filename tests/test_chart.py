@@ -82,6 +82,12 @@ class TestChart(unittest.TestCase):
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
 
+    def test_pool_lines_with_digits_in_the_name(self):
+        from brisnet_pp.chart import EXOTIC_RE, _pool, _base
+        line = "$2 DAILY DOUBLE (6-8) PAID $29.80 50 CENT PICK 3 (1-6-8) PAID $19.55 $1 SUPERFECTA (8-3-1-4) PAID $92.81 50 CENT PICK 4 (6-8-7-2) PAID $109.20"
+        got = [(_pool(m.group("pool")), _base(m.group("base")), m.group("combo").replace("-", "/"), float(m.group("paid"))) for m in EXOTIC_RE.finditer(line)]
+        self.assertEqual(got, [("DOUBLE", 2.0, "6/8", 29.80), ("PICK3", 0.5, "1/6/8", 19.55), ("SUPERFECTA", 1.0, "8/3/1/4", 92.81), ("PICK4", 0.5, "6/8/7/2", 109.20)])
+
     def test_race_no_from_file_names(self):
         self.assertEqual(race_no_of("x/20261106BELUSA1.pdf"), 1)
         self.assertEqual(race_no_of("x/20261106GPXUSA11.pdf"), 11)

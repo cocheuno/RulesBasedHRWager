@@ -26,7 +26,7 @@ from .symbols import clean_name, parse_call
 
 ORDINALS = {"FIRST": 1, "SECOND": 2, "THIRD": 3, "FOURTH": 4, "FIFTH": 5, "SIXTH": 6, "SEVENTH": 7, "EIGHTH": 8, "NINTH": 9,
             "TENTH": 10, "ELEVENTH": 11, "TWELFTH": 12, "THIRTEENTH": 13, "FOURTEENTH": 14}
-EXOTIC_RE = re.compile(r"(?P<base>\$\d+(?:\.\d+)?|\d+\s*CENT)\s+(?P<pool>[A-Z][A-Z \-]+?)\s+\((?P<combo>[\dA-Z/\-,]+)\)\s+PAID\s+\$(?P<paid>[\d,]+\.\d{2})")
+EXOTIC_RE = re.compile(r"(?P<base>\$\d+(?:\.\d+)?|\d+\s*CENT)\s+(?P<pool>[A-Z][A-Z0-9 \-]+?)\s+\((?P<combo>[\dA-Z/\-,]+)\)\s+PAID\s+\$(?P<paid>[\d,]+\.\d{2})")
 COND_RE = re.compile(r"\b(?:Track|Course)\s+(?P<cond>Fast|Sloppy|Muddy|Good|Firm|Yielding|Soft|Heavy|Wet Fast|Slow|Frozen|Standard)(?:\s*\((?P<note>[^)]+)\))?", re.I)
 DIST_RE = re.compile(r"^(?P<dist>(?:ABOUT\s+)?[\d\s/½¼¾]+(?:FURLONGS?|MILES?|MILE|YARDS))\.?\s*(?:\(.*?\))?\s*(?P<cls>.*)$", re.I)
 

@@ -198,6 +198,19 @@ class TestMaidensAndEliminations(Base):
     def test_m4_second_time_starter(self):
         self.assertTrue(hits(self.sheet(1, "Second Timer"), "M4"))
 
+    def test_x1_spares_a_horse_with_par_figure_under_todays_conditions(self):
+        from synthetic_card import build_card
+        from handicapper.engine import score_race
+        card = build_card()
+        r2 = card["races"][1]                      # Clm 12500 6f dirt, par 80
+        h = next(x for x in r2["horses"] if x["name"] == "Out Of Sorts")   # 58/60/57: eliminated by X1
+        h["pp"].append(dict(h["pp"][0], date="2026-05-01", speed=78, distance_furlongs=6.0, is_route=False, surface="dirt"))
+        s = next(x for x in score_race(r2, self.cfg)["sheets"] if x["name"] == "Out Of Sorts")
+        self.assertFalse(hits(s, "X1"), "a 78 under today's conditions (par 80) is not 'hopelessly slow'")
+        self.assertTrue(hits(s, "X4"), "it is still outclassed on class ratings (a separate rule)")
+        base = next(x for x in score_race(build_card()["races"][1], self.cfg)["sheets"] if x["name"] == "Out Of Sorts")
+        self.assertTrue(hits(base, "X1"), "without that figure X1 still fires")
+
     def test_x_rules(self):
         self.assertTrue(self.sheet(1, "Rusty Gate")["eliminated"])          # X2 long layoff
         self.assertTrue(self.sheet(2, "Out Of Sorts")["eliminated"])        # X1 / X4
