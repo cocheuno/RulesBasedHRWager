@@ -177,8 +177,8 @@ RulesBasedHRWager/
     out/                               pick.py -o data/out  (card.json, picks.json, picks.md)
 ```
 
-Per card: `python pick.py data/pps/dmr1106y.pdf --scratch "..." -o data/out`, transcribe the screenshots into
-`results/dmr1106y.results.json`, run `python backtest.py data/out/dmr1106y.picks.json results/dmr1106y.results.json`,
+Per card: `python pick.py data/pps/dmr1106y.pdf --scratch "..." -o data/out`, type each race's payout page into
+`results/dmr1106y.results.json` with `addresult.py` (one line per race, see its docstring), run `python backtest.py data/out/dmr1106y.picks.json results/dmr1106y.results.json`,
 then commit `results/` only.
 
 ## Results, scratches and back-testing
