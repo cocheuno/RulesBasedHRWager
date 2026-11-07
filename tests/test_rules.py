@@ -205,6 +205,51 @@ class TestMaidensAndEliminations(Base):
         self.assertNotIn("7", self.by_race[1]["picks"])
 
 
+class TestKeyRaceSheet(unittest.TestCase):
+    def test_merge_and_f16(self):
+        from synthetic_card import build_card
+        from brisnet_pp.sheet import merge_sheet
+        from handicapper.engine import load_config, score_card
+        card = build_card()
+        sheet = {"track_code": "DMR", "date_text": "11/06", "best_bets": [(2, "1")],
+                 "races": {2: {"top_pick": "1", "top3": ["1", "3", "5"], "speed": ["1"], "class": ["5"], "pace": ["1"],
+                               "horses": {"1": {"name": "Lone Rocket", "angles": ["HotTrainer"]},
+                                          "5": {"name": "Tag Virgin", "angles": ["ExitPossibleKeyRace"]},
+                                          "3": {"name": "Drop Off Win", "angles": ["ExitKeyRace"]},
+                                          "6": {"name": "Wrong Name", "angles": ["ExitKeyRace"]}}}}}
+        notes = merge_sheet(card, sheet)
+        self.assertTrue(any("#6" in n and "ignored" in n for n in notes), "name mismatch guards the merge")
+        self.assertTrue(any("R1: not on the sheet" in n for n in notes))
+        res = score_card(card, load_config(None))
+        r2 = next(r for r in res["races"] if r["race_no"] == 2)
+        self.assertEqual(r2["brisnet"]["top_pick"], "1")
+        self.assertEqual(r2["brisnet"]["best_bet"], "1")
+        f16 = {s["name"]: [h for h in s["hits"] if h["rule"] == "F16"] for s in r2["sheets"]}
+        self.assertEqual(f16["Drop Off Win"][0]["points"], 3.0)
+        self.assertEqual(f16["Tag Virgin"][0]["points"], 1.8)
+        self.assertFalse(f16["Lone Rocket"])
+        self.assertFalse(f16["Tailing Off"])
+        # wrong track: nothing merged
+        card2 = build_card()
+        notes2 = merge_sheet(card2, dict(sheet, track_code="GP"))
+        self.assertTrue(notes2 and "not merged" in notes2[0])
+        self.assertFalse(any(h.get("sheet_angles") for r in card2["races"] for h in r["horses"]))
+
+    def test_backtest_reports_brisnet_benchmark(self):
+        from synthetic_card import build_card
+        from brisnet_pp.sheet import merge_sheet
+        from handicapper.engine import load_config, score_card
+        from handicapper.results import backtest, format_backtest
+        card = build_card()
+        merge_sheet(card, {"track_code": "DMR", "best_bets": [], "races": {
+            2: {"top_pick": "3", "top3": ["3", "1", "5"], "speed": [], "class": [], "pace": [], "horses": {}}}})
+        bt = backtest(score_card(card, load_config(None)), {"races": [{"race_no": 2, "finish": ["1", "3"], "win": 8.0}]})
+        self.assertEqual(bt["summary"]["brisnet_races"], 1)
+        self.assertEqual(bt["summary"]["brisnet_pick_wins"], 0)
+        self.assertEqual(bt["summary"]["brisnet_top3"], 1)
+        self.assertIn("Brisnet Power Play benchmark", format_backtest(bt))
+
+
 class TestTrackProfiles(Base):
     CFG_PATH = os.path.join(os.path.dirname(HERE), "rules_config.json")
 

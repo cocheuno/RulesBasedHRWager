@@ -33,6 +33,9 @@ Scratches are `race:program` pairs, in quotes, comma-separated. Also-eligibles d
 python pick.py data\pps\<card>.pdf --scratch "2:10, 4:2, 4:11, 7:13" -o data\out
 ```
 
+If you also downloaded the Power Play quick sheet (`<card>q.pdf`), add `--sheet data\pps\<card>q.pdf`: it turns on
+the key-race rule (F16) and lets the back-test compare the engine with Brisnet's own picks.
+
 This prints the full report and writes `data\out\<card>.picks.md` (summary first, then every rule hit) and
 `data\out\<card>.picks.json` (needed for the back-test).  Re-run it if more scratches come in.
 

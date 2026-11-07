@@ -195,6 +195,14 @@ Processing (from any clone): read the screenshots into `results/dmr1106y.results
 `addresult.py`), run `python backtest.py data/out/dmr1106y.picks.json results/dmr1106y.results.json > results/dmr1106y.backtest.md`,
 commit `results/`.
 
+## Brisnet Power Play sheet (`--sheet <card>q.pdf`)
+
+The quick sheet that accompanies the PPs is read coordinate-wise by `brisnet_pp/sheet.py`.  Only two things are
+taken from it: each horse's Power Play angles, of which **"ExitKeyRace" / "ExitPossibleKeyRace"** feed rule F16
+(the key-race angle the PPs alone cannot show), and Brisnet's own top pick / Top 3 / 3-Star Best Bets, which
+`backtest.py` reports as a benchmark next to the engine's picks.  The other angles (hot trainer, distance
+specialist, horse for course, clocker specials) restate data the PP rules already score and are ignored.
+
 ## Results, scratches and back-testing
 
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
