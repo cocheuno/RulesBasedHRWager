@@ -84,7 +84,9 @@ git commit -m "<card>: results screenshots"
 git push origin main
 ```
 
-3. Tell Claude: **"process <card>"**.  Claude transcribes the screenshots into
+3. Or do it yourself on the Desk: **Process results** reads every screenshot (needs `pip install rapidocr_onnxruntime`
+   once), shows "Check this result" on any race it is unsure about, and writes the back-test.
+   Tell Claude: **"process <card>"** if you would rather hand it over.  Claude transcribes the screenshots into
    `results\<card>.results.json`, runs the back-test, commits `results\<card>.results.json` and
    `results\<card>.backtest.md`, pushes, and reports how the selections and tickets did.
 4. Next morning's `git pull` brings those files down.

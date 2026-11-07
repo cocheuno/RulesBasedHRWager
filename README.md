@@ -6,6 +6,7 @@ with a one-line justification.
 
 ```
 pip install pdfplumber              # the only dependency (poppler not required)
+pip install rapidocr_onnxruntime    # optional: reads the result screenshots (pure pip, no system install)
 
 python pick.py dmr1106y.pdf                         # parse + score, print the report (wagering summary first, then details)
 python pick.py dmr1106y.pdf --detail 0              # wagering summary only: top 3 per race, primary play, other wagers, Pick 3/4 tickets
@@ -19,6 +20,7 @@ python pick.py dmr1106y.pdf --scratch "3:3, 8:4, 8:9"             # remove scrat
 python pick.py dmr1106y.pdf --results results/dmr1106y.results.json   # earlier races' winners feed the same-day bias rule P10
 python backtest.py out/dmr1106y.picks.json results/dmr1106y.results.json   # join picks with results: per-race and per-rule hit rates
 python ui.py                                        # Race Day Desk: the local screen (http://127.0.0.1:8765)
+python ocr_results.py data/results-png/dmr1106y results/dmr1106y.results.json --card data/out/dmr1106y.card.json   # screenshots -> results
 python -m unittest discover -s tests -v             # rule + Pick 3/4 tests on a synthetic card (no real data needed)
 ```
 
@@ -224,6 +226,12 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   program order (MTO horses stay flagged).  Pace shape and all field-relative ranks are recomputed.
 * `--results` reads the same file and, for each race, summarises the winners of the earlier races on the same
   surface (run style, post) as `race["day_bias"]`, which rule **P10** scores once three such results exist.
+* **Screenshots are read, not typed.** `handicapper/ocr.py` runs RapidOCR (optional `pip install rapidocr_onnxruntime`;
+  Tesseract + `pytesseract` also works) on each `r<N>.png`, assigns win/place/show by column, takes the finish order
+  from the exotic combinations (the "PP n" boxes are post positions), reads every pool line with its base and payout,
+  skips consolation lines, and cross-checks the runner names against the card.  Anything doubtful is a warning stored
+  under the race's `ocr` block; the Desk shows "Check this result" and keeps the entry form for corrections.
+  Verified exact on all three Del Mar screenshots on file.
 * `backtest.py` joins `picks.json` with results: winner's rank, top-pick hit rate, flat win-bet ROI, whether an
   eliminated horse won, per-rule win% / ITM% when the rule fired, and whether the recommended Pick 3/4 hit.
   This is the data the weights in `rules_config.json` should eventually be fitted on.

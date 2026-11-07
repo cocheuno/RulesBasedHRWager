@@ -1,0 +1,2 @@
+# Optional: reading payout-page screenshots (ui Process results, ocr_results.py)
+rapidocr_onnxruntime>=1.2
