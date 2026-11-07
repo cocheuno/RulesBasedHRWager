@@ -26,7 +26,9 @@ from .symbols import clean_name, parse_call
 
 ORDINALS = {"FIRST": 1, "SECOND": 2, "THIRD": 3, "FOURTH": 4, "FIFTH": 5, "SIXTH": 6, "SEVENTH": 7, "EIGHTH": 8, "NINTH": 9,
             "TENTH": 10, "ELEVENTH": 11, "TWELFTH": 12, "THIRTEENTH": 13, "FOURTEENTH": 14}
-EXOTIC_RE = re.compile(r"(?P<base>\$\d+(?:\.\d+)?|\d+\s*CENT)\s+(?P<pool>[A-Z][A-Z0-9 \-]+?)\s+\((?P<combo>[\dA-Z/\-,]+)\)\s+PAID\s+\$(?P<paid>[\d,]+\.\d{2})")
+# "$1 EXACTA (7-4) PAID $30.10" in the mutuel block; "$2 Daily Double (8-7) Paid $49.00; Daily Double Pool $23,490."
+# and "50 CENT Pick 3 (6-8-7) Paid $40.55" in mixed case at the foot of the chart
+EXOTIC_RE = re.compile(r"(?P<base>\$\d+(?:\.\d+)?|\d+\s*CENT)\s+(?P<pool>[A-Za-z][A-Za-z0-9 \-]+?)\s+\((?P<combo>[\dA-Za-z/\-,]+)\)\s+PAID\s+\$(?P<paid>[\d,]+\.\d{2})", re.I)
 COND_RE = re.compile(r"\b(?:Track|Course)\s+(?P<cond>Fast|Sloppy|Muddy|Good|Firm|Yielding|Soft|Heavy|Wet Fast|Slow|Frozen|Standard)(?:\s*\((?P<note>[^)]+)\))?", re.I)
 DIST_RE = re.compile(r"^(?P<dist>(?:ABOUT\s+)?[\d\s/½¼¾]+(?:FURLONGS?|MILES?|MILE|YARDS))\.?\s*(?:\(.*?\))?\s*(?P<cls>.*)$", re.I)
 
@@ -205,11 +207,18 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
         starts = split_comments(" ".join(para), [(x["name"], x["pgm"]) for x in runners])
         for x in runners:
             x["comment"] = starts.get(x["pgm"])
-    for r, t in texts:
-        if t.startswith("Scratched-"):
-            out["scratched"] = [s.strip() for s in re.split(r";|,(?=\s*[A-Z])", t[len("Scratched-"):]) if s.strip()]
-        if t.startswith("Claimed-") or t.startswith("Claiming Prices"):
-            out["claimed"].append(t)
+    LABEL = re.compile(r"^(Scratched|Claimed|Claiming Prices|Owners|Trainers|Breeders|Footnotes|Copyright|\$|\d+ CENT)", re.I)
+    for i, (r, t) in enumerate(texts):
+        if t.startswith("Scratched-") or t.startswith("Claimed-") or t.startswith("Claiming Prices"):
+            full = t
+            for rr, tt in texts[i + 1:i + 6]:          # a wrapped list continues on rows that carry no label
+                if LABEL.match(tt) or rr.x_min > 40:
+                    break
+                full += " " + tt
+            if full.startswith("Scratched-"):
+                out["scratched"] = [s.strip() for s in re.split(r";|,(?=\s*[A-Z])", full[len("Scratched-"):]) if s.strip()]
+            else:
+                out["claimed"].append(full)
     return out
 
 

@@ -19,7 +19,7 @@ python validate_parse.py card.json                  # internal consistency check
 python pick.py dmr1106y.pdf --scratch "3:3, 8:4, 8:9"             # remove scratches (also-eligibles draw in), re-rank
 python pick.py dmr1106y.pdf --results results/dmr1106y.results.json   # earlier races' winners feed the same-day bias rule P10
 python backtest.py out/dmr1106y.picks.json results/dmr1106y.results.json   # join picks with results: per-race and per-rule hit rates
-python ui.py                                        # Race Day Desk: the local screen (http://127.0.0.1:8765)
+python ui.py start                                  # Race Day Desk in the background (http://127.0.0.1:8765); ui.py stop / status
 python ocr_results.py data/results-png/dmr1106y results/dmr1106y.results.json --card data/out/dmr1106y.card.json   # screenshots -> results
 python -m unittest discover -s tests -v             # rule + Pick 3/4 tests on a synthetic card (no real data needed)
 ```

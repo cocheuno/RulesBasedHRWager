@@ -6,7 +6,9 @@ screenshot folder, results file.
 
 ## The screen instead of PowerShell
 
-Everything below can be done on one page: `python ui.py` opens http://127.0.0.1:8765. Load tab: drop the PDFs and
+Everything below can be done on one page: `python ui.py start` opens http://127.0.0.1:8765 in the background and
+gives the prompt back (`python ui.py stop` ends it, `python ui.py status` checks; plain `python ui.py` runs in
+the window with Ctrl+C to stop). Load tab: drop the PDFs and
 PNGs. Desk tab: Run picks, tick scratches, Re-run, read the bets; after the race enter or view the result and the
 bet results. Analysis tab: hit/miss bars and ROI tables. The commands remain for scripting and for Claude.
 

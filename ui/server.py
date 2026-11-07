@@ -21,6 +21,7 @@ API
     POST /api/cards/<card>/ocr              {"race_no": n?, "force": bool} -> read screenshot(s) into the results file
     POST /api/cards/<card>/process          OCR any screenshot not yet on file, then back-test + wager evaluation -> results/<card>.backtest.md
     POST /api/upload  (multipart)           fields card, kind (pp|sheet|png), race_no (png), file
+    POST /api/shutdown                      stop the server (used by `python ui.py stop`)
     GET  /api/analysis                      roll-up across every card with results
     GET  /png/<card>/<file>                 a result screenshot
 """
@@ -430,6 +431,10 @@ class Handler(SimpleHTTPRequestHandler):
                 return self._json({"saved": [o["saved"] for o in out]})
             body = self._body()
             payload = json.loads(body) if body else {}
+            if u.path == "/api/shutdown":
+                self._json({"ok": True, "stopping": True})
+                threading.Thread(target=self.server.shutdown, daemon=True).start()
+                return None
             m = re.fullmatch(r"/api/cards/([^/]+)/(run|results|process|ocr)", u.path)
             if m:
                 card, action = unquote(m.group(1)), m.group(2)
