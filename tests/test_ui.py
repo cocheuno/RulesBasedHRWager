@@ -130,6 +130,8 @@ class TestHTTP(Base):
     def test_api_round_trip(self):
         st, b = self.req("/"); self.assertEqual(st, 200); self.assertIn(b"Race Day Desk", b)
         st, b = self.req("/app.js"); self.assertEqual(st, 200)
+        with urllib.request.urlopen(f"http://127.0.0.1:{self.port}/app.js") as resp:
+            self.assertEqual(resp.headers.get("Cache-Control"), "no-store")
         st, b = self.req("/api/cards"); self.assertEqual(json.loads(b)[0]["card"], "synth")
         st, b = self.req("/api/cards/synth/run", "POST", {"scratches": ""})
         pl = json.loads(b); self.assertTrue(pl["picks"])
