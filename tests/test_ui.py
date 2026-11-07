@@ -144,6 +144,18 @@ class TestHTTP(Base):
         self.assertFalse(t.is_alive(), "serve_forever returned after /api/shutdown")
         srv.server_close()
 
+    def test_status_endpoint(self):
+        import ui.server as srv
+        st, b = self.req("/api/status"); d = json.loads(b)
+        self.assertFalse(d["code_changed"]); self.assertEqual(d["changed_files"], []); self.assertTrue(d["parser_version"])
+        saved = dict(srv.CODE_AT_START)
+        try:
+            srv.CODE_AT_START["ui/server.py"] -= 100          # pretend the running code is older than the file
+            st, b = self.req("/api/status"); d = json.loads(b)
+            self.assertTrue(d["code_changed"]); self.assertIn("ui/server.py", d["changed_files"])
+        finally:
+            srv.CODE_AT_START.clear(); srv.CODE_AT_START.update(saved)
+
     def test_api_round_trip(self):
         st, b = self.req("/"); self.assertEqual(st, 200); self.assertIn(b"Race Day Desk", b)
         st, b = self.req("/app.js"); self.assertEqual(st, 200)

@@ -15,6 +15,8 @@ screen and pick.py always agree.  Files live where the command line puts them:
 API
     GET  /api/cards                         cards on disk and what each has
     GET  /api/cards/<card>                  roster, latest picks, results, back-test, wager evaluation, state
+    GET  /api/status                        {"started", "parser_version", "code_changed", "changed_files"}: the code on
+                                            disk is newer than the running app (stop/start it)
     POST /api/cards/<card>/run              {"scratches": "2:10, 4:2", "reparse": false} -> run the engine (re-reading the PDF when
                                             asked, when it is newer than the cached card, or when the parser changed), write data/out
     PUT  /api/cards/<card>/scratches        {"scratches": "..."} -> save without running
@@ -53,6 +55,30 @@ from handicapper.wagering import evaluate_card, format_evaluation, format_units,
 from ocr_results import ocr_folder   # noqa: E402
 
 STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+CODE_GLOBS = ("ui/server.py", "ui/static/*", "handicapper/*.py", "brisnet_pp/*.py", "rules_config.json", "ocr_results.py")
+
+
+def code_stamp() -> dict[str, float]:
+    """Modification time of every file the running app is built from (relative path -> mtime)."""
+    out = {}
+    for g in CODE_GLOBS:
+        for p in glob.glob(os.path.join(ROOT, *g.split("/"))):
+            if os.path.isfile(p):
+                out[os.path.relpath(p, ROOT).replace("\\", "/")] = os.path.getmtime(p)
+    return out
+
+
+STARTED_AT = datetime.now().isoformat(timespec="seconds")
+CODE_AT_START = code_stamp()
+
+
+def status() -> dict:
+    """Is the code on disk newer than what this process loaded?  (After `git pull` the background app keeps
+    running the old code until `python ui.py stop` / `start`.)"""
+    now = code_stamp()
+    changed = sorted(p for p, t in now.items() if p not in CODE_AT_START or t > CODE_AT_START[p] + 1)
+    changed += sorted(p for p in CODE_AT_START if p not in now)
+    return {"started": STARTED_AT, "parser_version": PARSER_VERSION, "code_changed": bool(changed), "changed_files": changed[:20]}
 CARD_RE = re.compile(r"^[a-z0-9_-]{3,24}$", re.I)
 
 
@@ -420,6 +446,8 @@ class Handler(SimpleHTTPRequestHandler):
         try:
             if u.path == "/api/cards":
                 return self._json(self.desk.cards())
+            if u.path == "/api/status":
+                return self._json(status())
             m = re.fullmatch(r"/api/cards/([^/]+)", u.path)
             if m:
                 return self._json(self.desk.payload(unquote(m.group(1))))

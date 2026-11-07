@@ -16,8 +16,12 @@ git pull origin main
 python ui.py start
 ```
 
-The browser opens http://127.0.0.1:8765 and the prompt comes back. If the page looks like yesterday's after a pull,
-press Ctrl+F5 once.
+The browser opens http://127.0.0.1:8765 and the prompt comes back. If the app was already running, `start` restarts
+it when the code on disk is newer; a red banner at the top of the page says the same thing. If the page looks like
+yesterday's after a pull, press Ctrl+F5 once.
+
+**After merging a PR during the day:** `git pull origin main`, then `python ui.py start` (it restarts the running
+app). A picks run made before the restart used the old rules and parser.
 
 ## 2. Before the races
 
