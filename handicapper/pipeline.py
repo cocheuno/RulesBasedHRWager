@@ -56,4 +56,6 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
     if budget4 is not None:
         cfg["multirace"]["pick4"]["budget"] = budget4
     result = score_card(card, cfg, multirace=multirace)
+    if not result.get("track_code") and code:   # a card parsed before the parser recorded the code
+        result["track_code"] = code
     return {"card": card, "raw": raw, "result": result, "cfg": cfg, "track_code": code, "notes": notes}
