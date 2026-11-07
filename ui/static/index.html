@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Race Day Desk</title>
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Race Day Desk</div>
+  <nav class="tabs" aria-label="Screens">
+    <a href="#desk" data-screen="desk">Desk</a>
+    <a href="#load" data-screen="load">Load</a>
+    <a href="#analysis" data-screen="analysis">Analysis</a>
+  </nav>
+  <label class="field">Card <select id="cardSelect" aria-label="Card"></select></label>
+  <div id="chips" class="chips"></div>
+  <div class="actions">
+    <button id="btnRun" class="btn primary" type="button">Run picks</button>
+    <button id="btnProcess" class="btn outline" type="button">Process results</button>
+  </div>
+</header>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<main id="screen"></main>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -18,6 +18,7 @@ python validate_parse.py card.json                  # internal consistency check
 python pick.py dmr1106y.pdf --scratch "3:3, 8:4, 8:9"             # remove scratches (also-eligibles draw in), re-rank
 python pick.py dmr1106y.pdf --results results/dmr1106y.results.json   # earlier races' winners feed the same-day bias rule P10
 python backtest.py out/dmr1106y.picks.json results/dmr1106y.results.json   # join picks with results: per-race and per-rule hit rates
+python ui.py                                        # Race Day Desk: the local screen (http://127.0.0.1:8765)
 python -m unittest discover -s tests -v             # rule + Pick 3/4 tests on a synthetic card (no real data needed)
 ```
 
@@ -172,6 +173,18 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
   `Basis:` sentence; it appears in the audit and in `RULES.md` automatically (the tests enforce the basis line).
 * Pick 3/4 behaviour: `multirace` block in `rules_config.json` (budgets, `single_prob`, coverage targets,
   `fav_vulnerable_rules`, `ml_blend`).
+
+## Race Day Desk (`python ui.py`)
+
+The local screen for the whole day, on the Python standard library (no new dependency): `ui/server.py`
+serves `ui/static/` at http://127.0.0.1:8765 and a JSON API that calls `handicapper.pipeline.run_card`, the
+same function `pick.py` uses.  Three screens: **Desk** (card / race selection, the horses with program, post,
+ML, rank, score, win chance, A/B grade and a scratch checkbox; Run / Re-run buttons; primary play, other wagers,
+Pick 3/4 tickets; the rule-by-rule audit; after the race the finish, payoffs, screenshot and what every
+suggested wager returned), **Load** (drop the PPs, the quick sheet and result PNGs; the scratch list; the runs
+kept per card; an activity log) and **Analysis** (filters, KPIs, hit/miss bars per track and overall, tables
+by bet type / track / confidence / rule / card, the Brisnet benchmark).  Design: `docs/UI-DESIGN.md`.
+Per-card UI state lives in `data/cards/<card>.json` (ignored by git).
 
 ## Local data layout
 
