@@ -1,0 +1,16 @@
+{
+  "_comment": "Weight overrides by rule id (defaults live in handicapper/rules.py). Empty = defaults. 'disabled' lists rule ids to switch off.",
+  "weights": {},
+  "disabled": [],
+  "selection": {
+    "single_gap": 7.0,
+    "pair_gap": 4.0,
+    "third_gap": 7.0,
+    "spread_gap": 4.0,
+    "max_picks": 3,
+    "min_ml_for_win_bet": 1.5,
+    "value_overlay": 1.30,
+    "value_underlay": 0.60,
+    "logit_scale": 12.0
+  }
+}
