@@ -324,10 +324,11 @@ def h9(seq: dict, cfg: dict):
 def h10(result: dict, cfg: dict) -> dict:
     """The Ultimate PP header lists the wagers offered on each race ("50c Rolling Pick 3", "50c Early Pick 4",
     "$3 Late Pick 3", "$.50 Pick 4 (Races 8-9-10-11)", "$1.00 Bet 3 (Races 6-7-8)").  A Pick 3 / Pick 4 window is
-    built only when the menu of its first race offers it, at the denomination the menu states; "Rolling" means a
-    window starting at that race, "Early"/"Late" likewise, an explicit race list is taken as written (consecutive
-    races only).  When a card's menu names no Pick 3 / Pick 4 at all, every consecutive window is built at the
-    profile's base, as before.
+    built only when the menu of its first race offers it; "Rolling" means a window starting at that race,
+    "Early"/"Late" likewise, an explicit race list is taken as written (consecutive races only).  The ticket is
+    priced at the configured denomination (pick3/pick4 `base`: $1 and $0.50) unless the menu's minimum is higher
+    (a "$3 Late Pick 3" is bet at $3).  When a card's menu names no Pick 3 / Pick 4 at all, every consecutive
+    window is built at the configured base.
     Basis: a ticket you cannot buy is not a bet; Crist - know the menu and its minimums before building."""
     offered = {"pick3": {}, "pick4": {}}
     for r in result["races"]:
@@ -397,11 +398,12 @@ def build_all(result: dict, cfg: dict) -> dict:
             start = result["races"][i]["race_no"]
             if menu and start not in menu:
                 continue
-            base = menu.get(start) if menu else None
+            minimum = menu.get(start) if menu else None
+            base = max(minimum, cfg[key]["base"]) if minimum is not None else None
             s = build_sequence(result, i, n, cfg, f"{label} R{start}-R{result['races'][i + n - 1]['race_no']}", base)
             if s:
                 if menu:
-                    s["notes"].insert(0, f"H10 offered on the R{start} menu at ${base:.2f}")
+                    s["notes"].insert(0, f"H10 offered on the R{start} menu (minimum ${minimum:.2f}); bet at ${base:.2f}")
                 seqs.append(s)
         seqs.sort(key=lambda s: (-s["score"], s["races"][0]))
         out[key] = {"label": label, "offered": {str(k): v for k, v in menu.items()}, "windows": [_serialize(s) for s in seqs],

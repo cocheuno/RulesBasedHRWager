@@ -123,7 +123,9 @@ class TestTickets(Base):
         p3, p4 = res["multirace"]["pick3"], res["multirace"]["pick4"]
         self.assertEqual(p3["offered"], {"1": 0.5, "2": 0.5, "3": 3.0})
         self.assertEqual(sorted(w["races"][0] for w in p3["windows"]), [1, 2, 3])
-        self.assertEqual(next(w for w in p3["windows"] if w["races"][0] == 3)["base"], 3.0)
+        self.assertEqual(next(w for w in p3["windows"] if w["races"][0] == 3)["base"], 3.0, "menu minimum above the configured base applies")
+        self.assertEqual(next(w for w in p3["windows"] if w["races"][0] == 1)["base"], 1.0, "50c Pick 3 is bet at the configured $1")
+        self.assertTrue(all(w["base"] == 0.5 for w in p4["windows"]))
         self.assertEqual(p4["offered"], {"1": 0.5, "3": 0.5})
         self.assertEqual(sorted(w["races"][0] for w in p4["windows"]), [1, 3])
         self.assertTrue(all(any(n.startswith("H10") for n in w["notes"]) for w in p3["windows"]))

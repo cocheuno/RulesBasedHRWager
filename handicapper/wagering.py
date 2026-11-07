@@ -2,7 +2,9 @@
 Wagering analysis: score every suggested wager against the results file.
 
 Policy (rules_config.json -> "wagering"):
-  * unit stake $1 on every bet type (`unit`), whatever the track's minimum;
+  * a unit stake per bet type (`units`: $2 win/place/show, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double),
+    whatever the track's minimum; a recommended Pick 3 / Pick 4 ticket is priced at the denomination it was built
+    at (multirace.pick3/pick4.base: $1 and $0.50, or the menu minimum when that is higher);
   * the "other wagers" count as bets placed (`count_other_wagers`), alongside the primary play and the
     recommended Pick 3 / Pick 4 tickets.
 
@@ -19,7 +21,9 @@ from __future__ import annotations
 import itertools
 from collections import defaultdict
 
-DEFAULT_WAGERING = {"unit": 1.0, "count_other_wagers": True}
+DEFAULT_UNITS = {"WIN": 2.0, "PLACE": 2.0, "SHOW": 2.0, "EXACTA": 1.0, "TRIFECTA": 0.5, "SUPERFECTA": 0.10,
+                 "DOUBLE": 1.0, "PICK3": 1.0, "PICK4": 0.5}
+DEFAULT_WAGERING = {"units": dict(DEFAULT_UNITS), "count_other_wagers": True}
 SLOTS = {"EXACTA": 2, "TRIFECTA": 3, "SUPERFECTA": 4}
 
 
@@ -40,11 +44,27 @@ def combos(legs: list[list[str]], box: bool = False, multi: bool = False) -> lis
 
 
 def make_wager(wtype: str, legs: list[list[str]], box: bool = False, label: str = "", source: str = "other",
-               race_no: int | None = None, races: list[int] | None = None) -> dict:
+               race_no: int | None = None, races: list[int] | None = None, unit: float | None = None) -> dict:
+    """`unit` fixes the stake for this wager (a Pick 3/4 ticket's denomination); otherwise the bet type's unit
+    from the wagering config applies at evaluation time."""
     legs = [[str(p) for p in leg] for leg in legs]
     n = len(combos(legs, box, wtype in MULTI))
-    return {"type": wtype, "legs": legs, "box": box, "combos": n, "label": label, "source": source,
-            "race_no": race_no, "races": races or ([race_no] if race_no else [])}
+    w = {"type": wtype, "legs": legs, "box": box, "combos": n, "label": label, "source": source,
+         "race_no": race_no, "races": races or ([race_no] if race_no else [])}
+    if unit is not None:
+        w["unit"] = unit
+    return w
+
+
+def unit_for(w: dict, cfg: dict) -> float:
+    """The stake per combination for one wager: its own denomination when it carries one, else the configured
+    unit for its bet type ($1 when the type is not listed)."""
+    if w.get("unit") is not None:
+        return float(w["unit"])
+    units = dict(DEFAULT_UNITS, **(cfg.get("units") or {}))
+    if "unit" in cfg and "units" not in cfg:     # old single-unit config
+        return float(cfg["unit"])
+    return float(units.get(w["type"], 1.0))
 
 
 # ---------------------------------------------------------------------------
@@ -70,9 +90,10 @@ def _combo_list(s: str) -> list[list[str]]:
 
 
 def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
-    """Return {cost, hit, ret, known}.  known=False when the result or the pool payout is not on file."""
+    """Return {unit, cost, hit, ret, known}.  known=False when the result or the pool payout is not on file.
+    Returns are scaled to the stake: a $2 win payout x (unit / 2), an exotic's per-dollar payout x unit."""
     cost = round(w["combos"] * unit, 2)
-    row = {"cost": cost, "hit": False, "ret": 0.0, "known": True}
+    row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True}
     wtype = w["type"]
     if wtype in ("WIN", "EXACTA", "TRIFECTA", "SUPERFECTA"):
         res = by_no.get(w["race_no"])
@@ -159,7 +180,7 @@ def card_wagers(picks: dict, cfg: dict) -> list[dict]:
             continue
         for t in rec["tickets"]:
             out.append(make_wager(wtype, t["legs"], False, f"{rec['name']} {t['name']}", "multirace",
-                                  race_no=rec["races"][0], races=rec["races"]) | {"confidence": "multirace"})
+                                  race_no=rec["races"][0], races=rec["races"], unit=rec.get("base")) | {"confidence": "multirace"})
     return out
 
 
@@ -168,7 +189,7 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
     by_no = {r["race_no"]: r for r in results.get("races", [])}
     rows = []
     for w in card_wagers(picks, cfg):
-        ev = evaluate_wager(w, by_no, cfg["unit"])
+        ev = evaluate_wager(w, by_no, unit_for(w, cfg))
         rows.append({"race_no": w["race_no"], "races": w["races"], "type": w["type"], "label": w["label"],
                      "source": w["source"], "confidence": w.get("confidence"), **ev})
     known = [x for x in rows if x["known"]]
@@ -176,7 +197,25 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
            "cost": round(sum(x["cost"] for x in known), 2), "ret": round(sum(x["ret"] or 0 for x in known), 2)}
     tot["roi"] = round((tot["ret"] - tot["cost"]) / tot["cost"], 3) if tot["cost"] else None
     return {"card": picks.get("source"), "track_code": picks.get("track_code"), "date": picks.get("date"),
-            "unit": cfg["unit"], "rows": rows, "totals": tot}
+            "units": units_table(cfg), "rows": rows, "totals": tot}
+
+
+def units_table(cfg: dict) -> dict:
+    """Bet type -> unit stake, as configured (for the report header and the screen)."""
+    cfg = dict(DEFAULT_WAGERING, **(cfg or {}))
+    units = dict(DEFAULT_UNITS, **(cfg.get("units") or {}))
+    if "unit" in cfg and "units" not in cfg:
+        units = {k: float(cfg["unit"]) for k in units}
+    return {k: float(v) for k, v in units.items()}
+
+
+def format_units(units: dict) -> str:
+    """'$2 win, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double, $1 Pick 3, $0.50 Pick 4'."""
+    names = (("WIN", "win"), ("EXACTA", "exacta"), ("TRIFECTA", "trifecta"), ("SUPERFECTA", "superfecta"),
+             ("DOUBLE", "double"), ("PICK3", "Pick 3"), ("PICK4", "Pick 4"))
+    def money(v):
+        return f"${v:.0f}" if float(v).is_integer() else f"${v:.2f}"
+    return ", ".join(f"{money(units[k])} {n}" for k, n in names if k in units)
 
 
 def rollup(evaluations: list[dict]) -> dict:
@@ -217,17 +256,18 @@ def rollup(evaluations: list[dict]) -> dict:
 
 def format_evaluation(ev: dict) -> str:
     t = ev["totals"]
-    L = [f"## Wagers at ${ev['unit']:.0f} a combination — {t['bets']} bets ({t['known']} with known results): "
-         f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else ""), ""]
-    L.append("| Race | Wager | Cost | Result | Return |")
-    L.append("|---|---|---|---|---|")
+    L = [f"## Wagers — {t['bets']} bets ({t['known']} with known results): "
+         f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else ""), "",
+         "Unit stakes: " + format_units(ev.get("units") or DEFAULT_UNITS) + ".", ""]
+    L.append("| Race | Wager | Unit | Cost | Result | Return |")
+    L.append("|---|---|---|---|---|---|")
     for x in ev["rows"]:
         rn = "R" + "-".join(str(n) for n in x["races"]) if len(x["races"]) > 1 else f"R{x['race_no']}"
         res = "HIT" if x["hit"] else ("miss" if x["known"] else "unknown")
         ret = "" if x["ret"] is None else f"${x['ret']:.2f}"
         if x["hit"] and x["ret"] is None:
             ret = "payout not on file"
-        L.append(f"| {rn} | {x['label']} | ${x['cost']:.2f} | {res} | {ret} |")
+        L.append(f"| {rn} | {x['label']} | ${x.get('unit', 1.0):.2f} | ${x['cost']:.2f} | {res} | {ret} |")
     return "\n".join(L)
 
 

@@ -242,7 +242,9 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   This is the data the weights in `rules_config.json` should eventually be fitted on.
 * **Wagering analysis** (`handicapper/wagering.py`, printed by `backtest.py`): every suggested wager (primary play,
   other wagers, recommended Pick 3/4 tickets) is a structure the engine emits beside its text; each is scored
-  against the results file at a **$1 unit stake** (`rules_config.json -> wagering`), overlapping suggestions are
+  against the results file at a **unit stake per bet type** (`rules_config.json -> wagering.units`: $2 win/place/show,
+  $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double; Pick 3 $1 and Pick 4 $0.50 from `multirace.pickN.base`,
+  or the track menu's minimum when higher), overlapping suggestions are
   counted once, and the roll-up gives bets / hits / misses / cost / return / ROI by bet type, track and confidence
   plus the hit-miss counts per track for the charts.  Pick 3/4 windows are only built where the PP's wager menu
   offers them, at the offered denomination (rule H10).
