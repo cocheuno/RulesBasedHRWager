@@ -115,6 +115,18 @@ class TestHTTP(Base):
         with urllib.request.urlopen(r) as resp:
             return resp.status, resp.read()
 
+    def test_shutdown_endpoint(self):
+        srv = make_server(self.tmp, port=0)
+        port = srv.server_address[1]
+        t = threading.Thread(target=srv.serve_forever, daemon=True)
+        t.start()
+        r = urllib.request.Request(f"http://127.0.0.1:{port}/api/shutdown", data=b"{}", method="POST", headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(r) as resp:
+            self.assertTrue(json.loads(resp.read())["stopping"])
+        t.join(5)
+        self.assertFalse(t.is_alive(), "serve_forever returned after /api/shutdown")
+        srv.server_close()
+
     def test_api_round_trip(self):
         st, b = self.req("/"); self.assertEqual(st, 200); self.assertIn(b"Race Day Desk", b)
         st, b = self.req("/app.js"); self.assertEqual(st, 200)
