@@ -171,7 +171,7 @@ def score_race(race: dict, cfg: dict) -> dict:
         "surface": race.get("surface"), "field_size": len(race["horses"]), "pars": race.get("pars"),
         "pace_shape": ctx["pace_shape"], "lone_speed": ctx["lone_speed"], "num_early": ctx["num_early"],
         "picks": picks, "bet_structure": structure, "confidence": confidence, "selection_note": note,
-        "sheets": sheets,
+        "brisnet": race.get("brisnet"), "sheets": sheets,
     }
 
 

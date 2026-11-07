@@ -140,10 +140,13 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
         wsheet = sheets.get(win)
         live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
         top = live[0]["pgm"] if live else None
+        bn = r.get("brisnet") or {}
         row = {"race_no": r["race_no"], "winner": win, "winner_rank": wsheet["rank"] if wsheet else None,
                "winner_eliminated": bool(wsheet and wsheet["eliminated"]), "top_pick": top,
                "top_pick_won": top == win, "winner_in_top3": win in [s["pgm"] for s in live[:3]],
-               "picks_hit": win in r["picks"], "win_payoff": res.get("win")}
+               "picks_hit": win in r["picks"], "win_payoff": res.get("win"),
+               "brisnet_pick": bn.get("top_pick"), "brisnet_won": bool(bn.get("top_pick")) and bn.get("top_pick") == win,
+               "brisnet_top3": win in (bn.get("top3") or []), "brisnet_best_bet": bn.get("best_bet")}
         if top:
             bet += stake
             if top == win and res.get("win"):
@@ -174,9 +177,14 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
         st["win_pct"] = round(100.0 * st["won"] / st["fired"], 1)
         st["itm_pct"] = round(100.0 * st["itm"] / st["fired"], 1)
     n = len(races_out)
+    bench = [r for r in races_out if r["brisnet_pick"]]
     return {"races": races_out, "rules": rules, "multirace": multi,
             "summary": {"races": n, "top_pick_wins": sum(r["top_pick_won"] for r in races_out),
                         "winner_in_top3": sum(r["winner_in_top3"] for r in races_out),
+                        "brisnet_races": len(bench), "brisnet_pick_wins": sum(r["brisnet_won"] for r in bench),
+                        "brisnet_top3": sum(r["brisnet_top3"] for r in bench),
+                        "brisnet_best_bets": sum(1 for r in bench if r["brisnet_best_bet"]),
+                        "brisnet_best_bet_wins": sum(1 for r in bench if r["brisnet_best_bet"] and r["brisnet_best_bet"] == r["winner"]),
                         "winner_eliminated": sum(r["winner_eliminated"] for r in races_out),
                         "flat_win_bet": round(bet, 2), "flat_win_return": round(ret, 2),
                         "flat_win_roi": round((ret - bet) / bet, 3) if bet else None}}
@@ -188,12 +196,16 @@ def format_backtest(bt: dict) -> str:
     L.append(f"Top pick won {s['top_pick_wins']}/{s['races']}; winner in top 3: {s['winner_in_top3']}/{s['races']}; "
              f"winner had been eliminated: {s['winner_eliminated']}; flat ${2:.0f} win on the top pick: bet ${s['flat_win_bet']:.2f}, "
              f"returned ${s['flat_win_return']:.2f}" + (f" (ROI {s['flat_win_roi']:+.1%})" if s["flat_win_roi"] is not None else ""))
-    L.append("")
-    L.append("| Race | Winner | Winner rank | Eliminated? | Top pick | Hit | Win $2 |")
-    L.append("|---|---|---|---|---|---|---|")
+    if s.get("brisnet_races"):
+        L.append(f"Brisnet Power Play benchmark over {s['brisnet_races']} races: its top pick won {s['brisnet_pick_wins']}, "
+                 f"winner in its Top 3: {s['brisnet_top3']}; 3-Star Best Bets {s['brisnet_best_bet_wins']}/{s['brisnet_best_bets']}")
+        L.append("")
+    L.append("| Race | Winner | Winner rank | Eliminated? | Top pick | Hit | Win $2 | Brisnet pick |")
+    L.append("|---|---|---|---|---|---|---|---|")
     for r in bt["races"]:
+        bp = (f"#{r['brisnet_pick']}" + (" WIN" if r["brisnet_won"] else "") + (" (best bet)" if r["brisnet_best_bet"] else "")) if r.get("brisnet_pick") else ""
         L.append(f"| {r['race_no']} | #{r['winner']} | {r['winner_rank']} | {'yes' if r['winner_eliminated'] else ''} | #{r['top_pick']} | "
-                 f"{'WIN' if r['top_pick_won'] else ('top3' if r['winner_in_top3'] else '')} | {r['win_payoff'] if r['win_payoff'] is not None else ''} |")
+                 f"{'WIN' if r['top_pick_won'] else ('top3' if r['winner_in_top3'] else '')} | {r['win_payoff'] if r['win_payoff'] is not None else ''} | {bp} |")
     L.append("")
     for key, m in bt["multirace"].items():
         if m.get("known"):

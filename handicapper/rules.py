@@ -803,6 +803,24 @@ def f15(f, ctx):
     return None
 
 
+@rule("F16", "Exits a key race", "form", 3)
+def f16(f, ctx):
+    """Only when the Brisnet Power Play sheet is supplied (pick.py --sheet).  The sheet flags the horse's last race
+    as a key race - one whose other runners have already come back to win: "ExitKeyRace" +1.0, "ExitPossibleKeyRace"
+    +0.6.  Discounted by half if the horse was beaten 10+ lengths in that race (it was not part of the key race's
+    strength).
+    Basis: Davidowitz - the key race is the strongest form angle there is, and the one the PPs alone cannot show
+    because it needs the other horses' next-out results; Brisnet computes it from its database."""
+    if not (f["key_race"] or f["possible_key_race"]):
+        return None
+    fac = 1.0 if f["key_race"] else 0.6
+    why = "key race" if f["key_race"] else "possible key race"
+    if f["last_beaten"] is not None and f["last_beaten"] >= 10:
+        fac *= 0.5
+        why += f" (but beaten {f['last_beaten']}L in it)"
+    return fac, f"exits a {why} per the Power Play sheet"
+
+
 # =========================================================================
 # K — CONNECTIONS
 # =========================================================================

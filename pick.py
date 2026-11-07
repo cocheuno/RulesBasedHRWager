@@ -9,6 +9,7 @@ End-to-end: Brisnet Ultimate PPs PDF (or parsed JSON)  ->  1-3 horses per race.
     python pick.py card.pdf --config rules_config.json
     python pick.py card.json --budget4 48           # Pick 4 tickets shaped to a $48 budget
     python pick.py card.pdf --scratch "3:3, 8:4, 8:9" --results results/card.results.json   # scratches; day bias from earlier results
+    python pick.py card.pdf --sheet cardq.pdf          # Brisnet Power Play sheet: key-race angles + Brisnet picks benchmark
     python backtest.py out/card.picks.json results/card.results.json                        # how did the rules do?
 """
 from __future__ import annotations
@@ -23,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from brisnet_pp.parser import parse_pdf          # noqa: E402
 from handicapper.engine import format_report, load_config, resolve_track_code, rules_doc, score_card  # noqa: E402
 from handicapper.results import apply_scratches, attach_day_bias, load_results, parse_scratch_spec  # noqa: E402
+from brisnet_pp.sheet import merge_sheet, parse_sheet  # noqa: E402
 
 
 def main() -> int:
@@ -35,6 +37,7 @@ def main() -> int:
     ap.add_argument("--race", type=int, help="only this race number")
     ap.add_argument("--scratch", help="scratched horses as race:program pairs, e.g. \"3:3, 4:6, 8:4, 8:9\" (also-eligibles draw in)")
     ap.add_argument("--results", help="results JSON for this card (results/<card>.results.json); earlier races feed the same-day bias rule P10")
+    ap.add_argument("--sheet", help="Brisnet Power Play quick sheet PDF (<card>q.pdf): key-race angles (F16) and Brisnet's picks for the back-test")
     ap.add_argument("--track-profile", help="force a track profile from rules_config.json -> tracks (default: the track code read from the PP)")
     ap.add_argument("--no-multi", action="store_true", help="skip the Pick 3 / Pick 4 construction section")
     ap.add_argument("--budget3", type=float, help="override the Pick 3 budget in dollars (rules_config.json -> multirace.pick3.budget)")
@@ -52,6 +55,9 @@ def main() -> int:
         card = parse_pdf(args.card)
         for w in card.get("warnings", []):
             print("parser warning:", w, file=sys.stderr)
+    if args.sheet:
+        for n in merge_sheet(card, parse_sheet(args.sheet)):
+            print("sheet:", n, file=sys.stderr)
     if args.scratch:
         for n in apply_scratches(card, parse_scratch_spec(args.scratch)):
             print("scratch:", n, file=sys.stderr)

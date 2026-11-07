@@ -322,6 +322,10 @@ def horse_features(h: dict, race: dict) -> dict:
                                and f["last_beaten"] is not None and f["last_beaten"] >= 4)
     f["debut_speed"] = spd3[-1] if (f["starts"] == 1 and spd3) else None
 
+    # ---- Brisnet Power Play sheet angles (pick.py --sheet), if the sheet was supplied
+    f["sheet_angles"] = list(h.get("sheet_angles") or [])
+    f["key_race"] = any(a.replace(" ", "") == "ExitKeyRace" for a in f["sheet_angles"])
+    f["possible_key_race"] = any(a.replace(" ", "") == "ExitPossibleKeyRace" for a in f["sheet_angles"])
     # ---- Brisnet QuickPlay comments
     f["positives"] = h.get("positives", [])
     f["negatives"] = h.get("negatives", [])

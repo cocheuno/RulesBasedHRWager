@@ -170,7 +170,7 @@
       }
     },
     "GP": {
-      "_comment": "Gulfstream: large turf fields, turf form and late pace; chaos legs are common.",
+      "_comment": "Gulfstream: large turf fields, turf form and late pace; chaos legs are common. $1 'Bet 3', $0.50 Pick 4/5 (per the Power Play sheet wager menu).",
       "weights": {
         "P4": 4.5,
         "D6": 2.5
@@ -178,7 +178,7 @@
       "multirace": {
         "chaos_field": 11,
         "pick3": {
-          "base": 0.5,
+          "base": 1.0,
           "budget": 60.0
         },
         "pick4": {
