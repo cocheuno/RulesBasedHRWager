@@ -163,6 +163,24 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
 * Pick 3/4 behaviour: `multirace` block in `rules_config.json` (budgets, `single_prob`, coverage targets,
   `fav_vulnerable_rules`, `ml_blend`).
 
+## Local data layout
+
+Only transcribed results JSON is committed.  PDFs and result screenshots live in `data/`, which `.gitignore`
+excludes entirely (as are all `*.pdf`, `*.png`, `*.card.json` anywhere):
+
+```
+RulesBasedHRWager/
+  results/dmr1106y.results.json        committed: payoffs / finish order (public data)
+  data/                                ignored:  never reaches GitHub
+    pps/dmr1106y.pdf                   the TwinSpires / Brisnet download, named <trk><mmdd><y>.pdf
+    results-png/dmr1106y/r1.png ...    one screenshot per race
+    out/                               pick.py -o data/out  (card.json, picks.json, picks.md)
+```
+
+Per card: `python pick.py data/pps/dmr1106y.pdf --scratch "..." -o data/out`, type each race's payout page into
+`results/dmr1106y.results.json` with `addresult.py` (one line per race, see its docstring), run `python backtest.py data/out/dmr1106y.picks.json results/dmr1106y.results.json`,
+then commit `results/` only.
+
 ## Results, scratches and back-testing
 
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
