@@ -214,6 +214,12 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 * `backtest.py` joins `picks.json` with results: winner's rank, top-pick hit rate, flat win-bet ROI, whether an
   eliminated horse won, per-rule win% / ITM% when the rule fired, and whether the recommended Pick 3/4 hit.
   This is the data the weights in `rules_config.json` should eventually be fitted on.
+* **Wagering analysis** (`handicapper/wagering.py`, printed by `backtest.py`): every suggested wager (primary play,
+  other wagers, recommended Pick 3/4 tickets) is a structure the engine emits beside its text; each is scored
+  against the results file at a **$1 unit stake** (`rules_config.json -> wagering`), overlapping suggestions are
+  counted once, and the roll-up gives bets / hits / misses / cost / return / ROI by bet type, track and confidence
+  plus the hit-miss counts per track for the charts.  Pick 3/4 windows are only built where the PP's wager menu
+  offers them, at the offered denomination (rule H10).
 
 ## Known limits
 

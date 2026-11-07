@@ -1,0 +1,248 @@
+"""
+Wagering analysis: score every suggested wager against the results file.
+
+Policy (rules_config.json -> "wagering"):
+  * unit stake $1 on every bet type (`unit`), whatever the track's minimum;
+  * the "other wagers" count as bets placed (`count_other_wagers`), alongside the primary play and the
+    recommended Pick 3 / Pick 4 tickets.
+
+A wager is a structure the engine now emits beside its text:
+  {"type": "WIN"|"EXACTA"|"TRIFECTA"|"SUPERFECTA"|"DOUBLE"|"PICK3"|"PICK4", "legs": [[pgms], ...],
+   "box": bool, "combos": n, "label": "...", "source": "primary"|"other"|"multirace", "race_no": n, "races": [...]}
+`combos` counts distinct outcomes covered (a key or box never pays twice for the same horse in two slots).
+
+evaluate_card(picks, results, cfg) -> per-race rows {label, type, cost, hit, ret, known} and totals;
+rollup(evaluations) -> by bet type, by track, by confidence, plus hit/miss counts for the bar charts.
+"""
+from __future__ import annotations
+
+import itertools
+from collections import defaultdict
+
+DEFAULT_WAGERING = {"unit": 1.0, "count_other_wagers": True}
+SLOTS = {"EXACTA": 2, "TRIFECTA": 3, "SUPERFECTA": 4}
+
+
+MULTI = ("DOUBLE", "PICK3", "PICK4", "PICK5", "PICK6")
+
+
+def combos(legs: list[list[str]], box: bool = False, multi: bool = False) -> list[tuple]:
+    """Outcomes a wager covers.  Within one race a horse cannot fill two slots, so keys and part-wheels drop
+    repeats; across races (multi) every product counts because program numbers are per race.  Box: every
+    ordering of n horses from the set."""
+    if box:
+        horses = list(dict.fromkeys(legs[0]))
+        return list(itertools.permutations(horses, len(legs)))
+    legs = [list(dict.fromkeys(leg)) for leg in legs]
+    if multi:
+        return list(itertools.product(*legs))
+    return [c for c in itertools.product(*legs) if len(set(c)) == len(c)]
+
+
+def make_wager(wtype: str, legs: list[list[str]], box: bool = False, label: str = "", source: str = "other",
+               race_no: int | None = None, races: list[int] | None = None) -> dict:
+    legs = [[str(p) for p in leg] for leg in legs]
+    n = len(combos(legs, box, wtype in MULTI))
+    return {"type": wtype, "legs": legs, "box": box, "combos": n, "label": label, "source": source,
+            "race_no": race_no, "races": races or ([race_no] if race_no else [])}
+
+
+# ---------------------------------------------------------------------------
+# results lookups
+# ---------------------------------------------------------------------------
+def _pool(res_race: dict, wtype: str):
+    for e in res_race.get("exotics", []):
+        t = e["type"].upper().replace(" ", "").replace("-", "")
+        if t == wtype or (wtype == "DOUBLE" and t in ("DOUBLE", "DAILYDOUBLE")):
+            return e
+    return None
+
+
+def _per_dollar(e: dict) -> float | None:
+    if e is None or e.get("payout") is None or not e.get("base"):
+        return None
+    return e["payout"] / e["base"]
+
+
+def _combo_list(s: str) -> list[list[str]]:
+    """'6,9,10/8/7/2' -> [['6','9','10'], ['8'], ['7'], ['2']] (alternates after scratches)."""
+    return [[p.strip() for p in part.split(",") if p.strip()] for part in s.split("/")]
+
+
+def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
+    """Return {cost, hit, ret, known}.  known=False when the result or the pool payout is not on file."""
+    cost = round(w["combos"] * unit, 2)
+    row = {"cost": cost, "hit": False, "ret": 0.0, "known": True}
+    wtype = w["type"]
+    if wtype in ("WIN", "EXACTA", "TRIFECTA", "SUPERFECTA"):
+        res = by_no.get(w["race_no"])
+        if not res or not res.get("finish"):
+            row["known"] = False
+            return row
+        fin = res["finish"]
+        if wtype == "WIN":
+            win = w["legs"][0]
+            if fin[0] in win:
+                row["hit"] = True
+                row["ret"] = round(unit * (res["win"] / 2.0), 2) if res.get("win") is not None else None
+                row["known"] = res.get("win") is not None
+            return row
+        k = SLOTS[wtype]
+        if len(fin) < k:
+            row["known"] = False
+            return row
+        actual = tuple(fin[:k])
+        if actual in set(combos(w["legs"], w["box"], False)):
+            row["hit"] = True
+            pd = _per_dollar(_pool(res, wtype))
+            row["ret"] = round(unit * pd, 2) if pd is not None else None
+            row["known"] = pd is not None
+        return row
+    # multi-race: DOUBLE / PICK3 / PICK4
+    winners = []
+    for rn in w["races"]:
+        res = by_no.get(rn)
+        if not res or not res.get("finish"):
+            row["known"] = False
+            return row
+        winners.append(res["finish"][0])
+    if all(wn in leg for wn, leg in zip(winners, w["legs"])):
+        row["hit"] = True
+        last = by_no[w["races"][-1]]
+        e = _pool(last, wtype)
+        pd = _per_dollar(e)
+        if pd is not None and e.get("combo"):
+            # the pool's combo must agree with the winners we matched (alternates after scratches allowed)
+            cl = _combo_list(e["combo"])
+            if len(cl) == len(winners) and all(wn in part for wn, part in zip(winners, cl)):
+                row["ret"] = round(unit * pd, 2)
+                return row
+        row["ret"], row["known"] = None, False
+    return row
+
+
+# ---------------------------------------------------------------------------
+# card level
+# ---------------------------------------------------------------------------
+def _dedupe(ws: list[dict]) -> list[dict]:
+    """Drop a wager whose combinations are all covered by another wager of the same type on the same race(s):
+    the primary WIN and the 'other' WIN on the same horse are one bet, and an exacta box inside a part-wheel
+    is already paid for.  The larger wager survives; between equals the primary play does."""
+    keep = []
+    for i, w in enumerate(ws):
+        ci = set(combos(w["legs"], w["box"], w["type"] in MULTI))
+        covered = False
+        for j, v in enumerate(ws):
+            if i == j or v["type"] != w["type"] or v["races"] != w["races"]:
+                continue
+            cj = set(combos(v["legs"], v["box"], v["type"] in MULTI))
+            if ci < cj or (ci == cj and (v["source"] == "primary" and w["source"] != "primary" or (v["source"] == w["source"] and j < i))):
+                covered = True
+                break
+        if not covered:
+            keep.append(w)
+    return keep
+
+
+def card_wagers(picks: dict, cfg: dict) -> list[dict]:
+    """Every wager the report suggested, as structures: primary plays, other wagers, recommended Pick 3 / 4,
+    de-duplicated so no combination is paid for twice."""
+    out = []
+    for r in picks["races"]:
+        ws = [w for w in r.get("wagers", []) if w["source"] != "other" or cfg.get("count_other_wagers", True)]
+        for w in _dedupe(ws):
+            out.append(dict(w, confidence=r["confidence"]))
+    mr = picks.get("multirace") or {}
+    for key, wtype in (("pick3", "PICK3"), ("pick4", "PICK4")):
+        rec = (mr.get(key) or {}).get("recommended")
+        if not rec:
+            continue
+        for t in rec["tickets"]:
+            out.append(make_wager(wtype, t["legs"], False, f"{rec['name']} {t['name']}", "multirace",
+                                  race_no=rec["races"][0], races=rec["races"]) | {"confidence": "multirace"})
+    return out
+
+
+def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
+    cfg = dict(DEFAULT_WAGERING, **(cfg or {}))
+    by_no = {r["race_no"]: r for r in results.get("races", [])}
+    rows = []
+    for w in card_wagers(picks, cfg):
+        ev = evaluate_wager(w, by_no, cfg["unit"])
+        rows.append({"race_no": w["race_no"], "races": w["races"], "type": w["type"], "label": w["label"],
+                     "source": w["source"], "confidence": w.get("confidence"), **ev})
+    known = [x for x in rows if x["known"]]
+    tot = {"bets": len(rows), "known": len(known), "hits": sum(1 for x in known if x["hit"]),
+           "cost": round(sum(x["cost"] for x in known), 2), "ret": round(sum(x["ret"] or 0 for x in known), 2)}
+    tot["roi"] = round((tot["ret"] - tot["cost"]) / tot["cost"], 3) if tot["cost"] else None
+    return {"card": picks.get("source"), "track_code": picks.get("track_code"), "date": picks.get("date"),
+            "unit": cfg["unit"], "rows": rows, "totals": tot}
+
+
+def rollup(evaluations: list[dict]) -> dict:
+    """Aggregate several cards: by bet type, by track, by confidence, and hit/miss counts per track + all."""
+    def agg(keyfn):
+        g = defaultdict(lambda: {"bets": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0})
+        for ev in evaluations:
+            for x in ev["rows"]:
+                k = keyfn(ev, x)
+                d = g[k]
+                d["bets"] += 1
+                if not x["known"]:
+                    d["unknown"] += 1
+                    continue
+                d["hits" if x["hit"] else "misses"] += 1
+                d["cost"] += x["cost"]
+                d["ret"] += x["ret"] or 0.0
+        for d in g.values():
+            d["cost"], d["ret"] = round(d["cost"], 2), round(d["ret"], 2)
+            d["roi"] = round((d["ret"] - d["cost"]) / d["cost"], 3) if d["cost"] else None
+        return dict(sorted(g.items()))
+    by_track = agg(lambda ev, x: ev.get("track_code") or "?")
+    out = {"by_type": agg(lambda ev, x: x["type"]), "by_track": by_track,
+           "by_confidence": agg(lambda ev, x: x.get("confidence") or "?"),
+           "by_track_type": agg(lambda ev, x: f"{ev.get('track_code') or '?'} {x['type']}")}
+    allc = {"bets": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0}
+    for d in by_track.values():
+        for k in ("bets", "hits", "misses", "unknown", "cost", "ret"):
+            allc[k] += d[k]
+    allc["cost"], allc["ret"] = round(allc["cost"], 2), round(allc["ret"], 2)
+    allc["roi"] = round((allc["ret"] - allc["cost"]) / allc["cost"], 3) if allc["cost"] else None
+    out["all"] = allc
+    # bar-chart series: one bar pair (hits, misses) per track, plus ALL
+    out["chart"] = [{"track": t, "hits": d["hits"], "misses": d["misses"]} for t, d in by_track.items()] + \
+                   [{"track": "ALL", "hits": allc["hits"], "misses": allc["misses"]}]
+    return out
+
+
+def format_evaluation(ev: dict) -> str:
+    t = ev["totals"]
+    L = [f"## Wagers at ${ev['unit']:.0f} a combination — {t['bets']} bets ({t['known']} with known results): "
+         f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else ""), ""]
+    L.append("| Race | Wager | Cost | Result | Return |")
+    L.append("|---|---|---|---|---|")
+    for x in ev["rows"]:
+        rn = "R" + "-".join(str(n) for n in x["races"]) if len(x["races"]) > 1 else f"R{x['race_no']}"
+        res = "HIT" if x["hit"] else ("miss" if x["known"] else "unknown")
+        ret = "" if x["ret"] is None else f"${x['ret']:.2f}"
+        if x["hit"] and x["ret"] is None:
+            ret = "payout not on file"
+        L.append(f"| {rn} | {x['label']} | ${x['cost']:.2f} | {res} | {ret} |")
+    return "\n".join(L)
+
+
+def format_rollup(ru: dict) -> str:
+    L = ["## Roll-up", ""]
+    for title, key in (("By bet type", "by_type"), ("By track", "by_track"), ("By confidence", "by_confidence")):
+        L.append(f"### {title}")
+        L.append("")
+        L.append("| Group | Bets | Hits | Misses | Unknown | Cost | Return | ROI |")
+        L.append("|---|---|---|---|---|---|---|---|")
+        for k, d in ru[key].items():
+            L.append(f"| {k} | {d['bets']} | {d['hits']} | {d['misses']} | {d['unknown']} | ${d['cost']:.2f} | ${d['ret']:.2f} | " +
+                     (f"{d['roi']:+.0%}" if d["roi"] is not None else "") + " |")
+        L.append("")
+    a = ru["all"]
+    L.append(f"All tracks: {a['bets']} bets, {a['hits']} hits, {a['misses']} misses, ${a['cost']:.2f} cost, ${a['ret']:.2f} returned" +
+             (f", ROI {a['roi']:+.0%}" if a["roi"] is not None else ""))
+    return "\n".join(L)

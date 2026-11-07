@@ -25,6 +25,7 @@ from collections import defaultdict
 
 from . import rules as R
 from . import multirace as MR
+from .wagering import DEFAULT_WAGERING, make_wager
 from .features import horse_features, race_context
 
 DEFAULT_CONFIG = {
@@ -42,6 +43,7 @@ DEFAULT_CONFIG = {
         "logit_scale": 12.0,       # points per e-fold in implied probability
     },
     "multirace": dict(MR.DEFAULT_MULTIRACE),   # Pick 3 / Pick 4 construction (see multirace.py)
+    "wagering": dict(DEFAULT_WAGERING),        # unit stake and what counts as a bet (see wagering.py)
 }
 
 
@@ -56,6 +58,7 @@ def _apply_layer(cfg: dict, layer: dict) -> None:
             cfg["multirace"][k].update(v)
         else:
             cfg["multirace"][k] = v
+    cfg["wagering"].update(layer.get("wagering", {}))
 
 
 def load_config(path: str | None, track_code: str | None = None) -> dict:
@@ -171,7 +174,7 @@ def score_race(race: dict, cfg: dict) -> dict:
         "surface": race.get("surface"), "field_size": len(race["horses"]), "pars": race.get("pars"),
         "pace_shape": ctx["pace_shape"], "lone_speed": ctx["lone_speed"], "num_early": ctx["num_early"],
         "picks": picks, "bet_structure": structure, "confidence": confidence, "selection_note": note,
-        "brisnet": race.get("brisnet"), "sheets": sheets,
+        "brisnet": race.get("brisnet"), "wagers_menu": race.get("wagers"), "sheets": sheets,
     }
 
 
@@ -229,12 +232,38 @@ def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
         r["leg"] = MR.leg_summary(r, cfg["multirace"]) if multirace else None
     for i, r in enumerate(out["races"]):
         nxt = out["races"][i + 1] if i + 1 < len(out["races"]) else None
-        r["other_wagers"] = other_wagers(r, nxt, cfg["selection"])
+        r["wagers"] = primary_wagers(r, cfg["selection"])
+        r["other_wagers"] = other_wagers(r, nxt, cfg["selection"], r["wagers"])
     out["multirace"] = MR.build_all(out, cfg["multirace"]) if multirace else None
     return out
 
 
-def other_wagers(r: dict, nxt: dict | None, sel: dict) -> list[str]:
+def primary_wagers(r: dict, sel: dict) -> list[dict]:
+    """The primary play as wager structures (mirrors the bet_structure text from select())."""
+    p = r["picks"]
+    if not p:
+        return []
+    names = {s["pgm"]: s for s in r["sheets"]}
+    ml = names[p[0]]["ml_decimal"] or 99
+    n = r["race_no"]
+    W = []
+    if len(p) == 1:
+        if ml >= sel["min_ml_for_win_bet"]:
+            W.append(make_wager("WIN", [[p[0]]], False, f"WIN #{p[0]}", "primary", n))
+    elif len(p) == 2:
+        W.append(make_wager("EXACTA", [p, p], True, f"EXACTA box #{p[0]}-#{p[1]}", "primary", n))
+        longer = max(p, key=lambda k: names[k]["ml_decimal"] or 0)
+        if (names[longer]["ml_decimal"] or 0) >= 2.5:
+            W.append(make_wager("WIN", [[longer]], False, f"WIN #{longer} (longer-priced of the pair)", "primary", n))
+    else:
+        W.append(make_wager("TRIFECTA", [p, p, p], True, "TRIFECTA box " + "-".join("#" + k for k in p), "primary", n))
+        W.append(make_wager("EXACTA", [p[:2], p[:2]], True, f"EXACTA box #{p[0]}-#{p[1]}", "primary", n))
+        if ml >= sel["min_ml_for_win_bet"]:
+            W.append(make_wager("WIN", [[p[0]]], False, f"WIN #{p[0]}", "primary", n))
+    return W
+
+
+def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = None) -> list[str]:
     """Exotic / secondary wagers for one race, built from the ranked live horses, the race confidence and the
     leg grading (A/B, vulnerable favourite) when it is available.  Deterministic; every line names the horses.
 
@@ -267,40 +296,59 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict) -> list[str]:
     def hs(*ks):
         return ",".join(f"#{k}" for k in ks if k)
 
+    def add(wtype, legs, box=False, races=None):
+        """record the structured form of the line just appended to W (skipped when W holds advice only)"""
+        if structs is not None:
+            structs.append(make_wager(wtype, [[k for k in leg if k] for leg in legs], box, W[-1], "other",
+                                      r["race_no"], races))
+
     if conf == "high":
         W.append(f"EXACTA key {hs(a)} over {hs(b, c, d)}")
+        add("EXACTA", [[a], [b, c, d]])
         if c:
             W.append(f"TRIFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
+            add("TRIFECTA", [[a], [b, c, d], [b, c, d, e]])
         if ml < sel["min_ml_for_win_bet"]:
             W.append(f"no WIN bet on {hs(a)} (ML {top['ml_odds']} is below {sel['min_ml_for_win_bet']}-1): use it as a single in the Pick 3 / Pick 4 instead")
         else:
             W.append(f"WIN {hs(a)} (ML {top['ml_odds']}, fair {top['fair_odds']}-1)")
+            add("WIN", [[a]])
         if r["field_size"] >= 8 and e:
             W.append(f"SUPERFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
+            add("SUPERFECTA", [[a], [b, c, d], [b, c, d], [b, c, d, e]])
     elif conf == "medium":
         W.append(f"EXACTA box {hs(a, b)}" + (f"; EXACTA part-wheel {hs(a, b)} / {hs(a, b, c)}" if c else ""))
+        add("EXACTA", [[a, b], [a, b, c]] if c else [[a, b], [a, b]])
         if c:
             W.append(f"TRIFECTA {hs(a, b)} / {hs(a, b, c)} / {hs(a, b, c, d)}")
+            add("TRIFECTA", [[a, b], [a, b, c], [a, b, c, d]])
         if overlays:
             W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1)" for x in overlays))
+            add("WIN", [[x["pgm"] for x in overlays]])
         else:
             W.append("no WIN bet: neither of the top two is an overlay at the morning line")
     else:
         spread = [x["pgm"] for x in live[:4] if top["score"] - x["score"] <= sel["spread_gap"]]
-        box = [a, b, c] + ([d] if d and d in spread else [])
-        W.append(f"TRIFECTA box {'-'.join('#' + k for k in box if k)} (contentious: spread, do not key)")
-        W.append(f"EXACTA box {'-'.join('#' + k for k in box[:3] if k)}")
+        box = [k for k in [a, b, c] + ([d] if d and d in spread else []) if k]
+        W.append(f"TRIFECTA box {'-'.join('#' + k for k in box)} (contentious: spread, do not key)")
+        if len(box) >= 3:
+            add("TRIFECTA", [box, box, box], box=True)
+        W.append(f"EXACTA box {'-'.join('#' + k for k in box[:3])}")
+        add("EXACTA", [box[:3], box[:3]], box=True)
         if overlays:
             W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1)" for x in overlays))
+            add("WIN", [[x["pgm"] for x in overlays]])
         else:
             W.append("no WIN bet in a contentious race without an overlay; use the A/B spread in the Pick 3 / Pick 4")
     if leg.get("price_leg") and fav and fav != a:
         over = [k for k in (a, b) if k != fav]
         under = list(dict.fromkeys(k for k in (a, b, c, fav) if k))   # ordered, no duplicates
         W.append(f"favourite {hs(fav)} looks beatable (H5): EXACTA {hs(*over)} over {hs(*under)} - chalk underneath only, never on top")
+        add("EXACTA", [over, under])
     if leg.get("A") and nxt and (nxt.get("leg") or {}).get("A"):
         na = nxt["leg"]["A"]
-        W.append(f"DAILY DOUBLE {hs(*leg['A'])} with R{nxt['race_no']} {hs(*na)} ({len(leg['A']) * len(na)} x $1)")
+        W.append(f"DAILY DOUBLE {hs(*leg['A'])} with R{nxt['race_no']} {hs(*na)} ({len(set(leg['A'])) * len(set(na))} x $1)")
+        add("DOUBLE", [list(leg["A"]), list(na)], races=[r["race_no"], nxt["race_no"]])
     return W
 
 
