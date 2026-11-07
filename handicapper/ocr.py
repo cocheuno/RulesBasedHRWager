@@ -24,7 +24,7 @@ COMBO_RE = re.compile(r"^[\dA-Z]{1,3}(?:[,/][\dA-Z]{1,3})+/?$")
 CONSOL_RE = re.compile(r"\(\s*\d+\s*of\s*\d+\s*\)", re.I)
 PP_RE = re.compile(r"^P\s?P\s?(\d{1,2}[A-Z]?)$", re.I)
 NOISE = re.compile(r"^(PROGRAM|POOLS|PPS|STATS|RESULTS|VIDEO.*|PAYOUTS|FINISH ORDER|VIEW CHART|RUNNER|WIN|PLACE|SHOW|POOL TYPE|RUNNERS|PAYOUT|BET|DE|RA|MY|M|OFFICIAL|ADD TO STABLE|RACE \d+)$", re.I)
-COND_RE = re.compile(r"\b(DIRT|TURF|ALL ?WEATHER|SYNTHETIC|TAPETA|AW|INNER TURF|WIDENER)\s*[:\-]\s*([A-Z ]{3,12})\b", re.I)
+COND_RE = re.compile(r"\b(DIRT|TURF|ALL ?WEATHER|SYNTHETIC|TAPETA|AW|INNER TURF|WIDENER)\s*[:\-]\s*(WET FAST|FAST|SLOPPY|MUDDY|GOOD|FIRM|YIELDING|SOFT|HEAVY|SEALED|FROZEN|SLOW|STANDARD)\b", re.I)
 
 
 # ---------------------------------------------------------------------------
