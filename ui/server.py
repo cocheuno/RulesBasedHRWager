@@ -18,7 +18,8 @@ API
     POST /api/cards/<card>/run              {"scratches": "2:10, 4:2"} -> run the engine, write data/out, return the card payload
     PUT  /api/cards/<card>/scratches        {"scratches": "..."} -> save without running
     POST /api/cards/<card>/results          {"race_no", "finish", "win", "place", "show", "exotics"} -> results file
-    POST /api/cards/<card>/process          back-test + wager evaluation -> results/<card>.backtest.md
+    POST /api/cards/<card>/ocr              {"race_no": n?, "force": bool} -> read screenshot(s) into the results file
+    POST /api/cards/<card>/process          OCR any screenshot not yet on file, then back-test + wager evaluation -> results/<card>.backtest.md
     POST /api/upload  (multipart)           fields card, kind (pp|sheet|png), race_no (png), file
     GET  /api/analysis                      roll-up across every card with results
     GET  /png/<card>/<file>                 a result screenshot
@@ -46,6 +47,7 @@ from handicapper.engine import format_report, load_config   # noqa: E402
 from handicapper.pipeline import run_card                     # noqa: E402
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
 from handicapper.wagering import evaluate_card, format_evaluation, rollup  # noqa: E402
+from ocr_results import ocr_folder   # noqa: E402
 
 STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 CARD_RE = re.compile(r"^[a-z0-9_-]{3,24}$", re.I)
@@ -73,12 +75,13 @@ class Desk:
         sheet = next((os.path.join(self.pps, s) for s in sheet_names if s and os.path.exists(os.path.join(self.pps, s))), None)
         pngdir = os.path.join(self.pngs, card)
         pngs = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "r*.png")))
+        charts = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "*.pdf")))
         return {"pp": pp if os.path.exists(pp) else None, "sheet": sheet,
                 "card_json": self._opt(os.path.join(self.out, f"{card}.card.json")),
                 "picks_json": self._opt(os.path.join(self.out, f"{card}.picks.json")),
                 "results": self._opt(os.path.join(self.results, f"{card}.results.json")),
                 "backtest_md": self._opt(os.path.join(self.results, f"{card}.backtest.md")),
-                "pngs": pngs}
+                "pngs": pngs, "charts": charts}
 
     @staticmethod
     def _opt(p):
@@ -174,7 +177,7 @@ class Desk:
         if picks and results:
             bt = backtest(picks, results)
             ev = evaluate_card(picks, results, load_config(self.config)["wagering"])
-        return {"card": card, "meta": meta, "files": {k: (bool(v) if k != "pngs" else v) for k, v in f.items()},
+        return {"card": card, "meta": meta, "files": {k: (bool(v) if k not in ("pngs", "charts") else v) for k, v in f.items()},
                 "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev}
 
     # ---------------------------------------------------------------- results
@@ -203,10 +206,27 @@ class Desk:
         self.save_state(st)
         return self.payload(card)
 
+    def ocr(self, card: str, race_no: int | None = None, force: bool = False) -> dict:
+        """Read the card's payout screenshots into results/<card>.results.json (only races not yet on file unless force)."""
+        f = self.files(card)
+        src = os.path.join(self.pngs, card, f"r{race_no}.png") if race_no else os.path.join(self.pngs, card)
+        if race_no and not os.path.exists(src):
+            raise FileNotFoundError(f"no screenshot r{race_no}.png for {card}")
+        out = ocr_folder(src, os.path.join(self.results, f"{card}.results.json"), f["card_json"], force)
+        st = self.state(card)
+        for r in out["races"]:
+            w = r["ocr"]["warnings"]
+            self.log(st, f"OCR R{r['race_no']}", f"finish {'/'.join(r['finish'])}, {len(r['exotics'])} pools" + (f"; CHECK: {'; '.join(w)}" if w else ""))
+        self.save_state(st)
+        return self.payload(card)
+
     def process(self, card: str) -> dict:
+        f = self.files(card)
+        if f["pngs"] or f["charts"]:
+            self.ocr(card)
         pl = self.payload(card)
         if not (pl["picks"] and pl["results"]):
-            raise ValueError("needs a run (picks) and at least one race result")
+            raise ValueError("needs a run (picks) and at least one race result (a screenshot r<N>.png or an entered result)")
         text = "# " + card + "\n\n" + format_backtest(pl["backtest"]) + "\n\n" + format_evaluation(pl["evaluation"])
         with open(os.path.join(self.results, f"{card}.backtest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)
@@ -264,16 +284,16 @@ class Desk:
             path = os.path.join(self.pps, f"{card}.pdf")
         elif kind == "sheet":
             path = os.path.join(self.pps, f"{card[:-1]}q.pdf" if card.endswith("y") else f"{card}q.pdf")
-        elif kind == "png":
+        elif kind in ("png", "chart"):
             if not race_no:
-                m = re.search(r"r?(\d{1,2})", os.path.splitext(filename)[0])
+                m = re.search(r"USA(\d{1,2})$", os.path.splitext(filename)[0], re.I) or re.search(r"r?(\d{1,2})", os.path.splitext(filename)[0])
                 race_no = int(m.group(1)) if m else None
             if not race_no:
-                raise ValueError("png needs a race number (name it r3.png or pass race_no)")
+                raise ValueError(f"{kind} needs a race number (name it r3.{ 'png' if kind == 'png' else 'pdf'} or pass race_no)")
             os.makedirs(os.path.join(self.pngs, card), exist_ok=True)
-            path = os.path.join(self.pngs, card, f"r{race_no}.png")
+            path = os.path.join(self.pngs, card, f"r{race_no}.{'png' if kind == 'png' else 'pdf'}")
         else:
-            raise ValueError("kind must be pp, sheet or png")
+            raise ValueError("kind must be pp, sheet, png or chart")
         with open(path, "wb") as fh:
             fh.write(data)
         if kind == "pp":   # a new PP file invalidates the cached parse
@@ -379,11 +399,14 @@ class Handler(SimpleHTTPRequestHandler):
                 return self._json({"saved": [o["saved"] for o in out]})
             body = self._body()
             payload = json.loads(body) if body else {}
-            m = re.fullmatch(r"/api/cards/([^/]+)/(run|results|process)", u.path)
+            m = re.fullmatch(r"/api/cards/([^/]+)/(run|results|process|ocr)", u.path)
             if m:
                 card, action = unquote(m.group(1)), m.group(2)
                 if action == "run":
                     return self._json(self.desk.run(card, payload.get("scratches")))
+                if action == "ocr":
+                    rn = payload.get("race_no")
+                    return self._json(self.desk.ocr(card, int(rn) if rn else None, bool(payload.get("force"))))
                 if action == "results":
                     return self._json(self.desk.save_result(card, payload))
                 if action == "process":

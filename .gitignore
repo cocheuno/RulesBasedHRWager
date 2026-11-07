@@ -16,3 +16,4 @@ data/*
 !data/out/
 data/out/*
 !data/out/*.picks.json
+!tests/fixtures/*.png

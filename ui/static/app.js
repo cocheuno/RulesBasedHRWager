@@ -49,8 +49,14 @@ async function runPicks() {
 }
 async function processResults() {
   if (!S.card) return;
-  try { S.data = await api('/api/cards/' + encodeURIComponent(S.card) + '/process', { method: 'POST', body: '{}' }); toast('Back-test written to results/' + S.card + '.backtest.md'); }
-  catch (e) { toast('Process failed: ' + e.message, 7000); }
+  const b = $('#btnProcess'); b.disabled = true; b.textContent = 'Reading screenshots…';
+  try { S.data = await api('/api/cards/' + encodeURIComponent(S.card) + '/process', { method: 'POST', body: '{}' }); const n = (S.data.results ? S.data.results.races : []).filter(r => r.ocr && r.ocr.warnings.length).length; toast('Results read' + (n ? ' — ' + n + ' race(s) need a check' : '') + '; back-test written to results/' + S.card + '.backtest.md', 6000); S.tab = 'after'; }
+  catch (e) { toast('Process failed: ' + e.message, 8000); }
+  b.disabled = false; b.textContent = 'Process results'; render();
+}
+async function ocrRace(rn, force) {
+  try { S.data = await api('/api/cards/' + encodeURIComponent(S.card) + '/ocr', { method: 'POST', body: JSON.stringify({ race_no: rn, force: !!force }) }); toast('Screenshot r' + rn + '.png read'); }
+  catch (e) { toast('OCR failed: ' + e.message, 8000); }
   render();
 }
 
@@ -59,7 +65,7 @@ function render() {
   document.querySelectorAll('.tabs a').forEach(a => a.classList.toggle('on', a.dataset.screen === S.screen));
   renderChips();
   const btn = $('#btnRun'); btn.textContent = S.dirty ? 'Re-run with scratches' : (S.data && S.data.picks ? 'Re-run picks' : 'Run picks');
-  $('#btnProcess').disabled = !(S.data && S.data.picks && S.data.results);
+  $('#btnProcess').disabled = !(S.data && S.data.picks && (S.data.results || (S.data.files.pngs || []).length || (S.data.files.charts || []).length));
   const m = $('#screen');
   if (S.screen === 'load') return renderLoad(m);
   if (S.screen === 'analysis') return renderAnalysis(m);
@@ -99,6 +105,7 @@ function renderDesk(m) {
   m.querySelectorAll('input[data-scr]').forEach(cb => cb.onchange = () => { const [rn, pg] = cb.dataset.scr.split(':'); const set = S.scratches[rn] = S.scratches[rn] || new Set(); cb.checked ? set.add(pg) : set.delete(pg); if (!set.size) delete S.scratches[rn]; S.dirty = true; api('/api/cards/' + encodeURIComponent(S.card) + '/scratches', { method: 'PUT', body: JSON.stringify({ scratches: scratchText() }) }).catch(e => toast(e.message)); render(); });
   m.querySelectorAll('tr[data-horse]').forEach(tr => tr.onclick = ev => { if (ev.target.tagName === 'INPUT') return; S.horse = tr.dataset.horse; render(); });
   const form = $('#resultForm', m); if (form) form.onsubmit = submitResult;
+  m.querySelectorAll('button[data-ocr]').forEach(b => b.onclick = () => ocrRace(+b.dataset.ocr, b.dataset.force === '1'));
 }
 
 function racePanel(r, p, res) {
@@ -122,7 +129,8 @@ function racePanel(r, p, res) {
     body = table + `<div class="grid2"><div class="card"><h2>Bets from pick.py</h2>${p ? `<div class="play" style="margin-top:10px"><div class="k">PRIMARY PLAY · confidence ${p.confidence}</div><div class="v">${esc(play)}</div><div class="muted">${esc(p.bet_structure)}</div></div><div class="small muted" style="margin-top:10px;font-weight:600">OTHER WAGERS</div><ul style="margin:6px 0 0;padding-left:18px">${(p.other_wagers || []).map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : '<p class="muted">Run picks first.</p>'}</div>
       <div class="card"><h2>Multi-race tickets that include this race</h2>${tickets || '<p class="muted">None recommended through this race.</p>'}</div></div>` + audit(p);
   } else {
-    body = (res && res.finish && res.finish.length ? afterPanel(r, p, res) : resultForm(r, p)) + audit(p);
+    const hasPng = (S.data.files.pngs || []).includes(`r${r.race_no}.png`) || (S.data.files.charts || []).includes(`r${r.race_no}.pdf`);
+    body = (res && res.finish && res.finish.length ? afterPanel(r, p, res) : (hasPng ? `<div class="card"><h2>Screenshot r${r.race_no}.png is loaded but not read yet</h2><p class="muted">Press <b>Process results</b> to read every screenshot, or read just this one.</p><button class="btn primary" type="button" data-ocr="${r.race_no}">Read this screenshot</button></div>` : resultForm(r, p))) + audit(p);
   }
   return head + body;
 }
@@ -138,14 +146,18 @@ function audit(p) {
 function afterPanel(r, p, res) {
   const names = {}; r.horses.forEach(h => names[h.pgm] = h.name);
   const places = ['1st', '2nd', '3rd', '4th', '5th'];
-  const finish = `<div class="finish">${res.finish.slice(0, 5).map((pg, i) => `<div><span class="p">${places[i]}</span><span class="n">#${esc(pg)}</span><span class="h">${esc(names[pg] || '')}</span></div>`).join('')}</div>`;
+  const odds = res.final_odds || {}, runners = {}; (res.runners || []).forEach(x => runners[x.pgm] = x);
+  const finish = `<div class="finish">${res.finish.slice(0, 6).map((pg, i) => `<div><span class="p">${places[i] || (i + 1) + 'th'}</span><span class="n">#${esc(pg)}</span><span class="h">${esc(names[pg] || (runners[pg] || {}).name || '')}</span>${odds[pg] != null ? `<span class="h">${odds[pg]}-1${runners[pg] && runners[pg].beaten ? ' · ' + runners[pg].beaten + 'L' : ''}</span>` : ''}</div>`).join('')}</div>`;
   const pay = [res.win != null ? ['WIN', '#' + res.finish[0], '$2', money(res.win)] : null].filter(Boolean)
     .concat(Object.entries(res.place || {}).map(([k, v]) => ['PLACE', '#' + k, '$2', money(v)]), Object.entries(res.show || {}).map(([k, v]) => ['SHOW', '#' + k, '$2', money(v)]),
       (res.exotics || []).map(e => [e.type, e.combo, money(e.base), money(e.payout)]));
   const png = (S.data.files.pngs || []).includes(`r${r.race_no}.png`) ? `<a href="/png/${encodeURIComponent(S.card)}/r${r.race_no}.png" target="_blank"><img class="shot" src="/png/${encodeURIComponent(S.card)}/r${r.race_no}.png" alt="Payout page race ${r.race_no}"></a>` : '<div class="drop">no screenshot r' + r.race_no + '.png loaded</div>';
   const ev = S.data.evaluation, rows = ev ? ev.rows.filter(x => x.races.includes(r.race_no)) : [];
   const bt = S.data.backtest && S.data.backtest.races.find(x => x.race_no === r.race_no);
-  return `<div class="grid2"><div class="card"><div style="display:flex;justify-content:space-between"><h2>Result</h2><span class="small muted">r${r.race_no}.png</span></div><div style="margin-top:10px">${finish}</div><table style="margin-top:10px"><thead><tr><th>Pool</th><th>Combo</th><th>Base</th><th>Paid</th></tr></thead><tbody>${pay.map(x => `<tr><td>${esc(x[0])}</td><td><b>${esc(x[1])}</b></td><td class="muted">${x[2]}</td><td><b>${x[3]}</b></td></tr>`).join('')}</tbody></table><div style="margin-top:10px">${png}</div><details style="margin-top:10px"><summary class="small muted">Edit this result</summary>${resultForm(r, p, res)}</details></div>
+  const ocr = res.ocr || null;
+  const check = ocr ? (ocr.source === 'chart' ? `<div class="small muted" style="margin-top:8px">read from the official chart${res.track_condition ? ' · track ' + esc(res.track_condition) : ''}${res.final_odds ? ' · final odds on file' : ''}</div>` : ocr.warnings.length ? `<div class="soft" style="margin-top:10px;background:var(--warn-bg);color:var(--warn)"><b>Check this result</b> — read from the screenshot with confidence ${ocr.confidence}: ${esc(ocr.warnings.join('; '))}. Correct it below if it is wrong.</div>` : `<div class="small muted" style="margin-top:8px">read from the screenshot (confidence ${ocr.confidence}; names ${esc((ocr.names || []).filter(Boolean).join(', '))})</div>`) : '';
+  const reread = (S.data.files.pngs || []).includes(`r${r.race_no}.png`) ? `<button class="btn small" type="button" data-ocr="${r.race_no}" data-force="1" style="margin-left:8px">Re-read screenshot</button>` : '';
+  return `<div class="grid2"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Result</h2><span class="small muted">r${r.race_no}.png ${reread}</span></div>${check}<div style="margin-top:10px">${finish}</div><table style="margin-top:10px"><thead><tr><th>Pool</th><th>Combo</th><th>Base</th><th>Paid</th></tr></thead><tbody>${pay.map(x => `<tr><td>${esc(x[0])}</td><td><b>${esc(x[1])}</b></td><td class="muted">${x[2]}</td><td><b>${x[3]}</b></td></tr>`).join('')}</tbody></table><div style="margin-top:10px">${png}</div><details style="margin-top:10px"><summary class="small muted">Edit this result</summary>${resultForm(r, p, res)}</details></div>
     <div class="card"><h2>Bet results — what the suggested wagers returned (${money(S.data.evaluation ? S.data.evaluation.unit : 1)} unit)</h2><table style="margin-top:8px"><thead><tr><th>Wager</th><th>Cost</th><th>Result</th><th>Return</th></tr></thead><tbody>${rows.map(x => `<tr><td>${esc(x.label)}</td><td>${money(x.cost)}</td><td class="${x.hit ? 'hit' : x.known ? 'miss' : 'unknown'}">${x.hit ? 'HIT' : x.known ? 'miss' : 'unknown'}</td><td><b>${x.ret == null ? (x.hit ? 'payout not on file' : '') : money(x.ret)}</b></td></tr>`).join('') || '<tr><td colspan="4" class="muted">no wagers evaluated (run picks first)</td></tr>'}</tbody></table>
     ${bt ? `<div class="soft" style="margin-top:10px;line-height:1.6"><b>Winner #${esc(bt.winner)}</b> ranked ${bt.winner_rank ?? '—'} by the engine${bt.winner_eliminated ? ' (had been eliminated)' : ''}; top pick #${esc(bt.top_pick)} ${bt.top_pick_won ? 'won' : bt.winner_in_top3 ? 'did not win but the winner was in the top 3' : 'missed'}.${bt.brisnet_pick ? ` Brisnet pick #${esc(bt.brisnet_pick)}${bt.brisnet_won ? ' won' : ''}.` : ''}</div>` : ''}</div></div>`;
 }
@@ -153,6 +165,7 @@ function resultForm(r, p, res) {
   const ex = (res && res.exotics ? res.exotics : []).map(e => `${e.type} ${e.base} ${e.combo} ${e.payout}`).join('\n');
   const kv = o => Object.entries(o || {}).map(([k, v]) => `${k}:${v}`).join(', ');
   return `<form id="resultForm" class="card"><h2>Enter the result for race ${r.race_no}</h2><p class="small muted">Copy from the payout page (or its screenshot). Finish order and win payoff are enough for the back-test; exotics make the bet results complete. One exotic per line: <code>EXACTA 1 8/3 40.10</code> (type, base, combo, payout).</p>
+    <p class="small muted">Normally the screenshot is read for you (Process results). This form is the fallback and the way to correct a misread.</p>
     <div class="form"><label>Finish order, program numbers<input type="text" name="finish" value="${esc((res && res.finish || []).join('/'))}" placeholder="8/3/1/4" required></label><label>Win payoff ($2)<input type="number" step="0.01" name="win" value="${res && res.win != null ? res.win : ''}" placeholder="9.40"></label>
     <label>Place ($2), program:amount<input type="text" name="place" value="${esc(kv(res && res.place))}" placeholder="8:5.40, 3:6.80"></label><label>Show ($2), program:amount<input type="text" name="show" value="${esc(kv(res && res.show))}" placeholder="8:3.00, 3:4.40, 1:2.60"></label>
     <label class="wide">Exotics<textarea name="exotics" placeholder="EXACTA 1 8/3 40.10&#10;TRIFECTA 0.5 8/3/1 79.20&#10;DOUBLE 2 6/8 29.80&#10;PICK3 0.5 1/6/8 19.55">${esc(ex)}</textarea></label></div>
@@ -177,7 +190,10 @@ function renderLoad(m) {
     <div class="grid3" style="margin-top:16px">
       <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>1 · Ultimate PPs</h2><span class="chip ${f.pp ? 'good' : ''}">${f.pp ? 'loaded' : 'not loaded'}</span></div><label class="drop" style="margin-top:10px">Drop or choose &lt;card&gt;.pdf<input type="file" accept="application/pdf" data-kind="pp" hidden></label>${d && d.meta.track ? `<div class="small muted" style="margin-top:8px">${esc(d.meta.track)} (${esc(d.meta.track_code || '')}) · ${esc(d.meta.date || '')} · ${d.roster.length} races</div>` : ''}</div>
       <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>2 · Power Play quick sheet</h2><span class="chip ${f.sheet ? 'good' : ''}">${f.sheet ? 'loaded' : 'optional'}</span></div><label class="drop" style="margin-top:10px">Drop or choose &lt;card&gt;q.pdf<br><span class="small">turns on the key-race rule and the Brisnet benchmark</span><input type="file" accept="application/pdf" data-kind="sheet" hidden></label></div>
-      <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>3 · Result screenshots</h2><span class="chip ${(f.pngs || []).length ? 'good' : ''}">${(f.pngs || []).length} loaded</span></div><label class="drop" style="margin-top:10px">Drop payout-page PNGs named r1.png, r2.png …<br><span class="small">several at once is fine</span><input type="file" accept="image/png" multiple data-kind="png" hidden></label><div class="small muted" style="margin-top:8px">${(f.pngs || []).join(' · ')}</div></div></div>
+      <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>3 · Results</h2><span class="chip ${((f.charts || []).length + (f.pngs || []).length) ? 'good' : ''}">${(f.charts || []).length} charts · ${(f.pngs || []).length} screenshots</span></div>
+        <label class="drop" style="margin-top:10px"><b>Result charts (PDF)</b> — best: drop them as downloaded (20261106BELUSA1.pdf) or as r1.pdf …<br><span class="small">every finisher, final odds, condition, comments; no OCR needed</span><input type="file" accept="application/pdf" multiple data-kind="chart" hidden></label>
+        <label class="drop" style="margin-top:8px">Payout-page screenshots named r1.png, r2.png …<br><span class="small">read by OCR; a chart for the same race wins</span><input type="file" accept="image/png" multiple data-kind="png" hidden></label>
+        <div class="small muted" style="margin-top:8px">${(f.charts || []).concat(f.pngs || []).join(' · ')}</div></div></div>
     <div class="card" style="margin-top:16px"><h2>Scratches</h2><div class="filters" style="margin-top:8px"><input type="text" id="scrText" style="flex:1 1 420px" value="${esc(scratchText())}" placeholder="2:10, 4:2, 4:11, 7:13" aria-label="Scratch list"><button class="btn primary" type="button" id="btnApply">Apply and re-run picks</button></div><div class="small muted" style="margin-top:8px">race:program pairs; also-eligibles draw in automatically; or tick horses on the Desk.</div></div>
     <div class="grid2" style="margin-top:16px"><div class="card"><h2>Runs kept for this card</h2><table style="margin-top:8px"><thead><tr><th>When</th><th>Scratches</th><th>Profile</th></tr></thead><tbody>${(st.runs || []).slice().reverse().map(r => `<tr><td class="muted">${esc(r.at)}</td><td>${esc(r.scratches || '—')}</td><td>${esc(r.profile || '')}</td></tr>`).join('') || '<tr><td colspan="3" class="muted">none yet</td></tr>'}</tbody></table></div>
     <div class="card"><h2>Activity</h2><table style="margin-top:8px"><thead><tr><th>When</th><th>Step</th><th>Outcome</th></tr></thead><tbody>${(st.activity || []).slice().reverse().map(a => `<tr><td class="muted">${esc(a.at)}</td><td>${esc(a.step)}</td><td>${esc(a.outcome)}</td></tr>`).join('') || '<tr><td colspan="3" class="muted">nothing yet</td></tr>'}</tbody></table></div></div>`;
