@@ -226,6 +226,11 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   program order (MTO horses stay flagged).  Pace shape and all field-relative ranks are recomputed.
 * `--results` reads the same file and, for each race, summarises the winners of the earlier races on the same
   surface (run style, post) as `race["day_bias"]`, which rule **P10** scores once three such results exist.
+* **Result charts are the best source.** The Equibase/Brisnet chart PDF (the track site's "View chart", e.g.
+  `20261106BELUSA1.pdf`) is real text in the PP symbol font; `brisnet_pp/chart.py` reads it coordinate-wise: every
+  finisher with program number, final odds, position and margin at every call, beaten lengths, equipment, weight,
+  the track condition, times, pools, scratches and the trip comment per horse.  Drop charts in
+  `data/results-png/<card>/` (as downloaded or as `r<N>.pdf`); a chart beats a screenshot of the same race.
 * **Screenshots are read, not typed.** `handicapper/ocr.py` runs RapidOCR (optional `pip install rapidocr_onnxruntime`;
   Tesseract + `pytesseract` also works) on each `r<N>.png`, assigns win/place/show by column, takes the finish order
   from the exotic combinations (the "PP n" boxes are post positions), reads every pool line with its base and payout,

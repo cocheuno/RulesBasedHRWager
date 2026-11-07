@@ -72,6 +72,9 @@ class TestDesk(Base):
         self.assertEqual(self.desk.files("abc1107y")["pngs"], ["r3.png"])
         out = self.desk.save_upload("abc1107y", "sheet", "x.pdf", b"%PDF")
         self.assertTrue(out["saved"].endswith("abc1107q.pdf"))
+        out = self.desk.save_upload("abc1107y", "chart", "20261107ABCUSA4.pdf", b"%PDF")
+        self.assertTrue(out["saved"].replace("\\", "/").endswith("abc1107y/r4.pdf"))
+        self.assertEqual(self.desk.files("abc1107y")["charts"], ["r4.pdf"])
         with self.assertRaises(ValueError):
             self.desk.save_upload("../bad", "pp", "x.pdf", b"")
 

@@ -75,12 +75,13 @@ class Desk:
         sheet = next((os.path.join(self.pps, s) for s in sheet_names if s and os.path.exists(os.path.join(self.pps, s))), None)
         pngdir = os.path.join(self.pngs, card)
         pngs = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "r*.png")))
+        charts = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "*.pdf")))
         return {"pp": pp if os.path.exists(pp) else None, "sheet": sheet,
                 "card_json": self._opt(os.path.join(self.out, f"{card}.card.json")),
                 "picks_json": self._opt(os.path.join(self.out, f"{card}.picks.json")),
                 "results": self._opt(os.path.join(self.results, f"{card}.results.json")),
                 "backtest_md": self._opt(os.path.join(self.results, f"{card}.backtest.md")),
-                "pngs": pngs}
+                "pngs": pngs, "charts": charts}
 
     @staticmethod
     def _opt(p):
@@ -176,7 +177,7 @@ class Desk:
         if picks and results:
             bt = backtest(picks, results)
             ev = evaluate_card(picks, results, load_config(self.config)["wagering"])
-        return {"card": card, "meta": meta, "files": {k: (bool(v) if k != "pngs" else v) for k, v in f.items()},
+        return {"card": card, "meta": meta, "files": {k: (bool(v) if k not in ("pngs", "charts") else v) for k, v in f.items()},
                 "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev}
 
     # ---------------------------------------------------------------- results
@@ -221,7 +222,7 @@ class Desk:
 
     def process(self, card: str) -> dict:
         f = self.files(card)
-        if f["pngs"]:
+        if f["pngs"] or f["charts"]:
             self.ocr(card)
         pl = self.payload(card)
         if not (pl["picks"] and pl["results"]):
@@ -283,16 +284,16 @@ class Desk:
             path = os.path.join(self.pps, f"{card}.pdf")
         elif kind == "sheet":
             path = os.path.join(self.pps, f"{card[:-1]}q.pdf" if card.endswith("y") else f"{card}q.pdf")
-        elif kind == "png":
+        elif kind in ("png", "chart"):
             if not race_no:
-                m = re.search(r"r?(\d{1,2})", os.path.splitext(filename)[0])
+                m = re.search(r"USA(\d{1,2})$", os.path.splitext(filename)[0], re.I) or re.search(r"r?(\d{1,2})", os.path.splitext(filename)[0])
                 race_no = int(m.group(1)) if m else None
             if not race_no:
-                raise ValueError("png needs a race number (name it r3.png or pass race_no)")
+                raise ValueError(f"{kind} needs a race number (name it r3.{ 'png' if kind == 'png' else 'pdf'} or pass race_no)")
             os.makedirs(os.path.join(self.pngs, card), exist_ok=True)
-            path = os.path.join(self.pngs, card, f"r{race_no}.png")
+            path = os.path.join(self.pngs, card, f"r{race_no}.{'png' if kind == 'png' else 'pdf'}")
         else:
-            raise ValueError("kind must be pp, sheet or png")
+            raise ValueError("kind must be pp, sheet, png or chart")
         with open(path, "wb") as fh:
             fh.write(data)
         if kind == "pp":   # a new PP file invalidates the cached parse
