@@ -9,14 +9,20 @@
     "spread_gap": 4.0,
     "max_picks": 3,
     "min_ml_for_win_bet": 1.5,
-    "value_overlay": 1.30,
-    "value_underlay": 0.60,
+    "value_overlay": 1.3,
+    "value_underlay": 0.6,
     "logit_scale": 12.0
   },
   "multirace": {
     "_comment": "Pick 3 / Pick 4 construction (handicapper/multirace.py, rules H1-H9). Budgets in dollars; base = ticket denomination.",
-    "pick3": {"base": 1.0, "budget": 60.0},
-    "pick4": {"base": 0.5, "budget": 100.0},
+    "pick3": {
+      "base": 1.0,
+      "budget": 60.0
+    },
+    "pick4": {
+      "base": 0.5,
+      "budget": 100.0
+    },
     "logit_scale": 18.0,
     "ml_blend": 0.35,
     "single_prob": 0.45,
@@ -34,9 +40,167 @@
     "spread_gap": 4.0,
     "min_b_prob": 0.06,
     "fav_vulnerable_ratio": 0.8,
-    "fav_vulnerable_rules": ["S6", "P2", "V1", "C9", "C10", "F5", "X1", "X4"],
+    "fav_vulnerable_rules": [
+      "S6",
+      "P2",
+      "V1",
+      "C9",
+      "C10",
+      "F5",
+      "X1",
+      "X4"
+    ],
     "single_backup": false,
     "price_leg_bonus": 0.35,
     "single_bonus": 0.25
+  },
+  "_tracks_comment": "Track profiles layer over the global weights/selection/multirace above and are chosen by the track code the parser reads off the PP (pick.py --track-profile overrides). Every value here is an expert prior, not a fitted weight: fit them per track with backtest.py once enough cards are on file.",
+  "track_aliases": {
+    "Del Mar": "DMR",
+    "Santa Anita": "SA",
+    "Santa Anita Park": "SA",
+    "Los Alamitos": "LRC",
+    "Golden Gate": "GG",
+    "Saratoga": "SAR",
+    "Belmont Park": "BEL",
+    "Belmont at the Big A": "AQU",
+    "Aqueduct": "AQU",
+    "Gulfstream Park": "GP",
+    "Churchill Downs": "CD",
+    "Keeneland": "KEE",
+    "Oaklawn Park": "OP",
+    "Fair Grounds": "FG",
+    "Monmouth Park": "MTH",
+    "Woodbine": "WO",
+    "Parx Racing": "PRX",
+    "Laurel Park": "LRL"
+  },
+  "tracks": {
+    "DMR": {
+      "_comment": "Del Mar: speed-favouring main track, course-specialist turf; 5f turf sprints are speed races. $0.50 Pick 3 and Pick 4.",
+      "weights": {
+        "P1": 8,
+        "P7": 2.5,
+        "D5": 2.0,
+        "D6": 2.5
+      },
+      "multirace": {
+        "pick3": {
+          "base": 0.5,
+          "budget": 60.0
+        },
+        "pick4": {
+          "base": 0.5,
+          "budget": 100.0
+        }
+      }
+    },
+    "SA": {
+      "_comment": "Santa Anita: speed holds on dirt, early pace figures (E2) decide sprints; downhill turf is its own course (D5). $0.50 Pick 3/4.",
+      "weights": {
+        "P1": 8,
+        "P3": 4.5,
+        "D5": 2.0
+      },
+      "multirace": {
+        "pick3": {
+          "base": 0.5,
+          "budget": 60.0
+        },
+        "pick4": {
+          "base": 0.5,
+          "budget": 100.0
+        }
+      }
+    },
+    "SAR": {
+      "_comment": "Saratoga: big fields, late pace and course specialists on turf, lone speed less reliable; trainer % thresholds are circuit-high.",
+      "weights": {
+        "P1": 6,
+        "P4": 4.5,
+        "D5": 2.5,
+        "D6": 2.5
+      },
+      "multirace": {
+        "chaos_field": 9,
+        "a_coverage": 0.6,
+        "pick3": {
+          "base": 1.0,
+          "budget": 60.0
+        },
+        "pick4": {
+          "base": 0.5,
+          "budget": 100.0
+        }
+      }
+    },
+    "BEL": {
+      "_comment": "Belmont: long stretch, late pace matters; two turf courses.",
+      "weights": {
+        "P1": 6,
+        "P4": 4.5,
+        "D6": 2.5
+      },
+      "multirace": {
+        "pick3": {
+          "base": 1.0,
+          "budget": 60.0
+        },
+        "pick4": {
+          "base": 0.5,
+          "budget": 100.0
+        }
+      }
+    },
+    "AQU": {
+      "_comment": "Aqueduct: inside speed on the main track in winter; smaller fields.",
+      "weights": {
+        "P1": 7.5,
+        "P6": 2.5
+      },
+      "multirace": {
+        "pick3": {
+          "base": 1.0,
+          "budget": 60.0
+        },
+        "pick4": {
+          "base": 0.5,
+          "budget": 100.0
+        }
+      }
+    },
+    "GP": {
+      "_comment": "Gulfstream: large turf fields, turf form and late pace; chaos legs are common.",
+      "weights": {
+        "P4": 4.5,
+        "D6": 2.5
+      },
+      "multirace": {
+        "chaos_field": 11,
+        "pick3": {
+          "base": 0.5,
+          "budget": 60.0
+        },
+        "pick4": {
+          "base": 0.5,
+          "budget": 100.0
+        }
+      }
+    },
+    "KEE": {
+      "_comment": "Keeneland: speed-favouring dirt, course specialists; short meet so meet bias tables are thin (P5 lighter).",
+      "weights": {
+        "P1": 8,
+        "D5": 2.0,
+        "P5": 3
+      }
+    },
+    "CD": {
+      "_comment": "Churchill Downs: fair main track, long stretch; course specialists on the turf.",
+      "weights": {
+        "D5": 2.0,
+        "P4": 4.5
+      }
+    }
   }
 }

@@ -398,7 +398,7 @@ def build_card() -> dict:
                                      "post": {"RAIL": {"impact": 1.0}, "1-3": {"impact": 1.0}, "4-7": {"impact": 1.0}, "8+": {"impact": 0.9}}},
                             "week": {"races": 2, "runstyle": {}, "post": {}}}))
 
-    return {"source": "synthetic", "track": TRACK, "date": TODAY.isoformat(), "races": races, "warnings": []}
+    return {"source": "synthetic", "track": TRACK, "track_code": TRK, "date": TODAY.isoformat(), "races": races, "warnings": []}
 
 
 if __name__ == "__main__":
