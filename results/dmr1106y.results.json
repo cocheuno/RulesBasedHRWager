@@ -1,33 +1,483 @@
 {
-  "track": "Del Mar",
-  "date": "2026-11-06",
-  "_source": "track payout pages transcribed by hand; $2 win/place/show, exotics at the stated base. R6: only the winner is known (from the R7 double 8/8 and Pick 3 2/8/8). R2: #9 and #10 scratched (Pick 4 line 6,9,10/8/7/2).",
-  "scratches": "2:9, 2:10",
-  "races": [
-    {"race_no": 1, "finish": ["1", "6", "4", "3"], "win": 5.20, "place": {"1": 3.40, "6": 9.20}, "show": {"1": 2.10, "6": 3.20, "4": 2.10},
-     "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "1/6", "payout": 17.30}, {"type": "QUINELLA", "base": 2.0, "combo": "1/6", "payout": 31.60},
-                 {"type": "TRIFECTA", "base": 0.5, "combo": "1/6/4", "payout": 13.50}, {"type": "SUPERFECTA", "base": 0.1, "combo": "1/6/4/3", "payout": 12.46}]},
-    {"race_no": 2, "finish": ["6", "5", "1", "3"], "win": 6.40, "place": {"6": 4.20, "5": 6.00}, "show": {"6": 3.00, "5": 4.40, "1": 3.80},
-     "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "6/5", "payout": 26.50}, {"type": "QUINELLA", "base": 2.0, "combo": "5/6", "payout": 35.00},
-                 {"type": "TRIFECTA", "base": 0.5, "combo": "6/5/1", "payout": 58.40}, {"type": "SUPERFECTA", "base": 0.1, "combo": "6/5/1/3", "payout": 29.67},
-                 {"type": "DOUBLE", "base": 2.0, "combo": "1/6", "payout": 15.80}]},
-    {"race_no": 3, "finish": ["8", "3", "1", "4"], "win": 9.40, "place": {"8": 5.40, "3": 6.80}, "show": {"8": 3.00, "3": 4.40, "1": 2.60},
-     "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "8/3", "payout": 40.10}, {"type": "QUINELLA", "base": 2.0, "combo": "3/8", "payout": 40.80},
-                 {"type": "TRIFECTA", "base": 0.5, "combo": "8/3/1", "payout": 79.20}, {"type": "SUPERFECTA", "base": 0.1, "combo": "8/3/1/4", "payout": 92.81},
-                 {"type": "DOUBLE", "base": 2.0, "combo": "6/8", "payout": 29.80}, {"type": "PICK3", "base": 0.5, "combo": "1/6/8", "payout": 19.55}]},
-    {"race_no": 4, "finish": ["7", "4", "8", "6"], "win": 8.00, "place": {"7": 4.40, "4": 6.20}, "show": {"7": 3.00, "4": 4.60, "8": 3.60},
-     "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "7/4", "payout": 30.10}, {"type": "QUINELLA", "base": 2.0, "combo": "4/7", "payout": 36.00},
-                 {"type": "TRIFECTA", "base": 0.5, "combo": "7/4/8", "payout": 66.05}, {"type": "SUPERFECTA", "base": 0.1, "combo": "7/4/8/6", "payout": 35.66},
-                 {"type": "DOUBLE", "base": 2.0, "combo": "8/7", "payout": 49.00}, {"type": "PICK3", "base": 0.5, "combo": "6/8/7", "payout": 40.55}]},
-    {"race_no": 5, "finish": ["2", "7", "8", "6"], "win": 7.60, "place": {"2": 4.20, "7": 6.80}, "show": {"2": 3.20, "7": 4.40, "8": 5.00},
-     "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "2/7", "payout": 13.90}, {"type": "QUINELLA", "base": 2.0, "combo": "2/7", "payout": 19.00},
-                 {"type": "TRIFECTA", "base": 0.5, "combo": "2/7/8", "payout": 35.85}, {"type": "SUPERFECTA", "base": 0.1, "combo": "2/7/8/6", "payout": 20.73},
-                 {"type": "DOUBLE", "base": 2.0, "combo": "7/2", "payout": 27.80}, {"type": "PICK3", "base": 0.5, "combo": "8/7/2", "payout": 48.10},
-                 {"type": "PICK4", "base": 0.5, "combo": "6,9,10/8/7/2", "payout": 109.20}, {"type": "PICK5", "base": 0.5, "combo": "1/6,9,10/8/7/2", "payout": 387.80}]},
-    {"race_no": 6, "finish": ["8"], "_note": "winner only, inferred from R7 double 8/8 and Pick 3 2/8/8; payout page not yet transcribed"},
-    {"race_no": 7, "finish": ["8", "11", "12", "5"], "win": 10.40, "place": {"8": 5.60, "11": 5.40}, "show": {"8": 4.40, "11": 4.40, "12": 7.20},
-     "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "8/11", "payout": 31.20}, {"type": "QUINELLA", "base": 2.0, "combo": "8/11", "payout": 41.20},
-                 {"type": "TRIFECTA", "base": 0.5, "combo": "8/11/12", "payout": 168.85}, {"type": "SUPERFECTA", "base": 0.1, "combo": "8/11/12/5", "payout": 523.78},
-                 {"type": "DOUBLE", "base": 2.0, "combo": "8/8", "payout": 41.00}, {"type": "PICK3", "base": 0.5, "combo": "2/8/8", "payout": 32.00}]}
-  ]
+ "track": "Del Mar",
+ "date": "2026-11-06",
+ "_source": "track payout pages transcribed by hand; $2 win/place/show, exotics at the stated base. R2: #9 and #10 scratched (Pick 4 line 6,9,10/8/7/2).",
+ "scratches": "2:9, 2:10",
+ "races": [
+  {
+   "race_no": 1,
+   "finish": [
+    "1",
+    "6",
+    "4",
+    "3"
+   ],
+   "win": 5.2,
+   "place": {
+    "1": 3.4,
+    "6": 9.2
+   },
+   "show": {
+    "1": 2.1,
+    "6": 3.2,
+    "4": 2.1
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "1/6",
+     "payout": 17.3
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "1/6",
+     "payout": 31.6
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "1/6/4",
+     "payout": 13.5
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "1/6/4/3",
+     "payout": 12.46
+    }
+   ]
+  },
+  {
+   "race_no": 2,
+   "finish": [
+    "6",
+    "5",
+    "1",
+    "3"
+   ],
+   "win": 6.4,
+   "place": {
+    "6": 4.2,
+    "5": 6.0
+   },
+   "show": {
+    "6": 3.0,
+    "5": 4.4,
+    "1": 3.8
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "6/5",
+     "payout": 26.5
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "5/6",
+     "payout": 35.0
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "6/5/1",
+     "payout": 58.4
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "6/5/1/3",
+     "payout": 29.67
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "1/6",
+     "payout": 15.8
+    }
+   ]
+  },
+  {
+   "race_no": 3,
+   "finish": [
+    "8",
+    "3",
+    "1",
+    "4"
+   ],
+   "win": 9.4,
+   "place": {
+    "8": 5.4,
+    "3": 6.8
+   },
+   "show": {
+    "8": 3.0,
+    "3": 4.4,
+    "1": 2.6
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "8/3",
+     "payout": 40.1
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "3/8",
+     "payout": 40.8
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "8/3/1",
+     "payout": 79.2
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "8/3/1/4",
+     "payout": 92.81
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "6/8",
+     "payout": 29.8
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "1/6/8",
+     "payout": 19.55
+    }
+   ]
+  },
+  {
+   "race_no": 4,
+   "finish": [
+    "7",
+    "4",
+    "8",
+    "6"
+   ],
+   "win": 8.0,
+   "place": {
+    "7": 4.4,
+    "4": 6.2
+   },
+   "show": {
+    "7": 3.0,
+    "4": 4.6,
+    "8": 3.6
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "7/4",
+     "payout": 30.1
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "4/7",
+     "payout": 36.0
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "7/4/8",
+     "payout": 66.05
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "7/4/8/6",
+     "payout": 35.66
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "8/7",
+     "payout": 49.0
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "6/8/7",
+     "payout": 40.55
+    }
+   ]
+  },
+  {
+   "race_no": 5,
+   "finish": [
+    "2",
+    "7",
+    "8",
+    "6"
+   ],
+   "win": 7.6,
+   "place": {
+    "2": 4.2,
+    "7": 6.8
+   },
+   "show": {
+    "2": 3.2,
+    "7": 4.4,
+    "8": 5.0
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "2/7",
+     "payout": 13.9
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "2/7",
+     "payout": 19.0
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "2/7/8",
+     "payout": 35.85
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "2/7/8/6",
+     "payout": 20.73
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "7/2",
+     "payout": 27.8
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "8/7/2",
+     "payout": 48.1
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "6,9,10/8/7/2",
+     "payout": 109.2
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "1/6,9,10/8/7/2",
+     "payout": 387.8
+    }
+   ]
+  },
+  {
+   "race_no": 6,
+   "finish": [
+    "8",
+    "9",
+    "2",
+    "1"
+   ],
+   "win": 5.8,
+   "place": {
+    "8": 4.4,
+    "9": 5.6
+   },
+   "show": {
+    "8": 2.6,
+    "9": 2.8,
+    "2": 2.1
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "8/9",
+     "payout": 17.2
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "8/9",
+     "payout": 20.0
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "8/9/2",
+     "payout": 18.5
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "8/9/2/1",
+     "payout": 17.54
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "2/8",
+     "payout": 23.2
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "7/2/8",
+     "payout": 25.1
+    }
+   ]
+  },
+  {
+   "race_no": 7,
+   "finish": [
+    "8",
+    "11",
+    "12",
+    "5"
+   ],
+   "win": 10.4,
+   "place": {
+    "8": 5.6,
+    "11": 5.4
+   },
+   "show": {
+    "8": 4.4,
+    "11": 4.4,
+    "12": 7.2
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "8/11",
+     "payout": 31.2
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "8/11",
+     "payout": 41.2
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "8/11/12",
+     "payout": 168.85
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "8/11/12/5",
+     "payout": 523.78
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "8/8",
+     "payout": 41.0
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "2/8/8",
+     "payout": 32.0
+    }
+   ]
+  },
+  {
+   "race_no": 8,
+   "finish": [
+    "4",
+    "8",
+    "1",
+    "7",
+    "11"
+   ],
+   "win": 14.0,
+   "place": {
+    "4": 5.6,
+    "8": 5.2
+   },
+   "show": {
+    "4": 4.2,
+    "8": 3.4,
+    "1": 5.8
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "4/8",
+     "payout": 28.5
+    },
+    {
+     "type": "QUINELLA",
+     "base": 2.0,
+     "combo": "4/8",
+     "payout": 41.2
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "4/8/1",
+     "payout": 165.0
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "4/8/1/7",
+     "payout": 81.42
+    },
+    {
+     "type": "SUPER HIGH FIVE",
+     "base": 0.5,
+     "combo": "4/8/1/7/11",
+     "payout": 6254.3
+    },
+    {
+     "type": "DOUBLE",
+     "base": 5.0,
+     "combo": "8/4",
+     "payout": 317.5
+    },
+    {
+     "type": "PICK3",
+     "base": 3.0,
+     "combo": "8/8/4",
+     "payout": 810.6
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "2/8/8/4",
+     "payout": 477.8
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "7/2/8/8/4",
+     "payout": 1814.35
+    },
+    {
+     "type": "PICK6",
+     "base": 2.0,
+     "combo": "8/7/2/8/8/4",
+     "payout": 32455.0
+    }
+   ]
+  }
+ ]
 }
