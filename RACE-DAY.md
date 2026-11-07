@@ -4,6 +4,12 @@ All commands run in PowerShell from the `RulesBasedHRWager` folder.
 `<card>` is the TwinSpires file code, e.g. `dmr1106y` (track + mmdd + y). Use it everywhere: PDF name,
 screenshot folder, results file.
 
+## The screen instead of PowerShell
+
+Everything below can be done on one page: `python ui.py` opens http://127.0.0.1:8765. Load tab: drop the PDFs and
+PNGs. Desk tab: Run picks, tick scratches, Re-run, read the bets; after the race enter or view the result and the
+bet results. Analysis tab: hit/miss bars and ROI tables. The commands remain for scripting and for Claude.
+
 ## 0. Once per day, before anything else
 
 ```powershell

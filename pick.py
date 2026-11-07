@@ -21,10 +21,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from brisnet_pp.parser import parse_pdf          # noqa: E402
-from handicapper.engine import format_report, load_config, resolve_track_code, rules_doc, score_card  # noqa: E402
-from handicapper.results import apply_scratches, attach_day_bias, load_results, parse_scratch_spec  # noqa: E402
-from brisnet_pp.sheet import merge_sheet, parse_sheet  # noqa: E402
+from handicapper.engine import format_report, rules_doc  # noqa: E402
+from handicapper.pipeline import run_card                # noqa: E402
 
 
 def main() -> int:
@@ -49,32 +47,12 @@ def main() -> int:
         return 0
     if not args.card:
         ap.error("card is required")
-    if args.card.lower().endswith(".json"):
-        card = json.load(open(args.card, encoding="utf-8"))
-    else:
-        card = parse_pdf(args.card)
-        for w in card.get("warnings", []):
-            print("parser warning:", w, file=sys.stderr)
-    if args.sheet:
-        for n in merge_sheet(card, parse_sheet(args.sheet)):
-            print("sheet:", n, file=sys.stderr)
-    if args.scratch:
-        for n in apply_scratches(card, parse_scratch_spec(args.scratch)):
-            print("scratch:", n, file=sys.stderr)
-    if args.results:
-        for n in attach_day_bias(card, load_results(args.results)):
-            print("results:", n, file=sys.stderr)
-    if args.race:
-        card["races"] = [r for r in card["races"] if r["race_no"] == args.race]
-    base_cfg = load_config(args.config)
-    code = args.track_profile or resolve_track_code(card, base_cfg)
-    cfg = load_config(args.config, track_code=code)
-    print(f"track: {card.get('track')} ({code or 'unknown code'}); profile: {cfg['track_profile']}", file=sys.stderr)
-    if args.budget3 is not None:
-        cfg["multirace"]["pick3"]["budget"] = args.budget3
-    if args.budget4 is not None:
-        cfg["multirace"]["pick4"]["budget"] = args.budget4
-    result = score_card(card, cfg, multirace=not args.no_multi)
+    out = run_card(args.card, scratch=args.scratch, sheet=args.sheet, results=args.results, config_path=args.config,
+                   track_profile=args.track_profile, multirace=not args.no_multi, budget3=args.budget3, budget4=args.budget4,
+                   race_no=args.race)
+    for n in out["notes"]:
+        print(n, file=sys.stderr)
+    card, result = out["card"], out["result"]
     report = format_report(result, detail=args.detail)
     print(report)
     if args.out:
