@@ -6,120 +6,147 @@ Points = factor × weight. Weights are defaults; override in rules_config.json.
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| S1 | Top last-race speed figure | 6 | Highest Brisnet speed figure in the field last time out: full credit; within 2 points of the top: half. |
-| S2 | Best of last three speed figures | 6 | Best Brisnet speed figure among the last three starts ranks 1st (1.0), 2nd (0.6) or 3rd (0.3) in the field. |
-| S3 | Average speed vs. class par | 5 | Average of the last three speed figures compared with the Brisnet PAR for today's class: >= par +3: 1.0; >= par: 0.5; par-4 .. par-1: 0; below par-4: -0.6; below par-8: -1.0. |
-| S4 | Best figure on today's surface & distance category | 5 | Best speed figure earned in races matching today's surface and sprint/route category ranks 1st (1.0) or 2nd (0.5). A horse with no matching race gets no credit here (handled by D-rules). |
-| S5 | Improving / declining figure pattern | 3 | Three consecutively rising speed figures: +1.0 (horse is on an upward form cycle). Three consecutively falling figures: -1.0 (tailing off). |
-| S6 | Bounce risk after a career-top figure | 3 | Last race was a new career top by 5+ points over every previous figure AND the horse has 3+ starts: -1.0 (regression to the mean is likely, especially off a short rest). |
-| S7 | Prime Power rank | 7 | Brisnet Prime Power rank in the field: 1st 1.0, 2nd 0.6, 3rd 0.35. Bonus +0.4 if the top-ranked horse is 4+ points clear of the second. |
-| S8 | Consistently near par | 3 | All of the last three speed figures are within 3 points of today's par or better: 1.0 (reliable, no bounce risk). |
+| S1 | Top last-race speed figure | 6 | Highest Brisnet speed figure in the field last time out: full credit; within 2 points of the top: half. Basis: Beyer - the last-race figure is the single most predictive number on the page when it is not a fluke. |
+| S2 | Best of last three speed figures | 6 | Best Brisnet speed figure among the last three starts ranks 1st (1.0), 2nd (0.6) or 3rd (0.3) in the field. Basis: Beyer - judge a horse on the best of its recent figures, not only the last one. |
+| S3 | Average speed vs. class par | 5 | Average of the last three speed figures compared with the Brisnet PAR for today's class: >= par +3: 1.0; >= par: 0.5; par-4 .. par-1: 0; below par-4: -0.6; below par-8: -1.0. Basis: Beyer / Brisnet par method - a horse that has not run to today's par is unlikely to do so today. |
+| S4 | Best figure on today's surface & distance category | 5 | Best speed figure earned in races matching today's surface and sprint/route category ranks 1st (1.0) or 2nd (0.5). A horse with no matching race gets no credit here (handled by D-rules). Basis: Beyer - compare figures earned under like conditions; a dirt-sprint figure says little about a turf route. |
+| S5 | Improving / declining figure pattern | 3 | Three consecutively rising speed figures: +1.0 (horse is on an upward form cycle). Three consecutively falling figures: -1.0 (tailing off). Basis: Litfin form cycles - improving patterns continue more often than they reverse; declining ones rarely snap back. |
+| S6 | Bounce risk after a career-top figure | 4 | Last race was a new career top by 5+ points over every previous figure AND the horse has 3+ starts: -1.0; -1.3 if it comes back within 21 days; a further -0.3 if the jump was 10+ points. The penalty is sized so that it offsets most, not all, of the credit S1/S2/S4 give the same figure: the horse stays a contender but is no longer a single (H2 lists S6 among the vulnerability rules). Basis: Beyer / Ragozin "bounce" - a lifetime top run with effort is usually followed by a regression, more so off a short rest and the bigger the leap. |
+| S7 | Prime Power rank | 4 | Brisnet Prime Power rank in the field: 1st 1.0, 2nd 0.6, 3rd 0.35. Bonus +0.4 if the top-ranked horse is 4+ points clear of the second. Weight is deliberately moderate: Prime Power is itself a composite of speed, class, pace and form, so a high weight double-counts the S/C/P/F rules. Basis: Brisnet's own studies - top Prime Power wins ~31-39% overall (more when clear by 3+ points); experts use it as a contender screen, not as the selection. |
+| S8 | Paired figures near par | 3 | All of the last three speed figures are within 3 points of today's par or better: 1.0 (reliable, no bounce risk). Or the last two figures are "paired" (within 2 points of each other) and both at least par-3: 0.8. Basis: Beyer - a horse that pairs two figures has shown that level is its true form, so the figure can be trusted. |
+| S9 | Figure standout | 4 | The horse's best figure of its last two starts beats every rival's best-of-last-three by 2+ points: 1.0; by exactly 1: 0.5. Not awarded if that figure was a 5+ point career top (S6 already flags bounce risk). Basis: Beyer's "figure horse" - when one horse has run faster than anything the others have ever run recently, the figures alone make it the most likely winner. |
 
 ## Distance
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| D7 | Best figure at the exact distance | 2 | Brisnet 'best speed at distance' (Dis record) ranks 1st in the field: 1.0; 2nd: 0.5. |
-| D1 | Record at today's distance | 3 | Starts at today's distance: a win: 1.0; ITM (no win) in 2+ tries: 0.5; 0-for-4+ with no ITM: -0.6. |
-| D2 | Record on today's surface | 3 | Starts on today's surface (dirt-fast or turf): win% >= 25 with 3+ starts: 1.0; ITM% >= 50: 0.5; 0 for 6+ with ITM% < 20: -0.7. |
-| D3 | Surface switch with no experience | 3 | Horse has never run on today's surface: judged by Brisnet pedigree rating for that surface (>= 110: +0.5; 100-109: 0; < 100: -0.7) and, turf-to-dirt, by the trainer's 'Turf to Dirt' stat (win% >= 20: +0.5). |
-| D4 | Distance change suitability | 2.5 | Stretching out sprint-to-route: +0.6 if late pace (LP) avg >= par-late and sire AWD >= 7.0; -0.6 if the horse has faded (negative last-race 2c pace figure change) and sire AWD < 6.5. Route-to-sprint: +0.5 if best E2 is within 3 of the field's best; -0.5 otherwise. |
-| D5 | Track record (today's track) | 1.5 | Won at today's track: 1.0; ITM 2+ times here: 0.5. |
-| D6 | Turf pedigree / proven turf speed (turf races only) | 2 | Turf race: best turf figure ranks 1st: +1.0; horse with 0 turf starts and pedigree turf rating < 100: -0.8. |
+| D7 | Best figure at the exact distance | 2 | Brisnet 'best speed at distance' (Dis record) ranks 1st in the field: 1.0; 2nd: 0.5. Basis: Quinn / "horses for courses" - proven ability at the exact trip is a secondary but real edge. |
+| D1 | Record at today's distance | 3 | Starts at today's distance: a win: 1.0; ITM (no win) in 2+ tries: 0.5; 0-for-4+ with no ITM: -0.6. Basis: Quinn distance preferences - proven at the trip is a credential; repeatedly failing at it is a warning. |
+| D2 | Record on today's surface | 3 | Starts on today's surface (dirt-fast or turf): win% >= 25 with 3+ starts: 1.0; ITM% >= 50: 0.5; 0 for 6+ with ITM% < 20: -0.7. Basis: Quinn / Davidowitz - surface preference is one of the few stable traits a horse has. |
+| D3 | Surface switch with no experience | 3 | Horse has never run on today's surface: judged by Brisnet pedigree rating for that surface (>= 110: +0.5; 100-109: 0; < 100: -0.7) and, turf-to-dirt, by the trainer's 'Turf to Dirt' stat (win% >= 20: +0.5). Basis: Brisnet pedigree ratings and trainer surface-switch stats are the only evidence for a first-timer on a surface. |
+| D4 | Distance change suitability | 2.5 | Stretching out sprint-to-route: +0.6 if late pace (LP) avg >= par-late and sire AWD >= 7.0; -0.6 if the horse has faded (negative last-race 2c pace figure change) and sire AWD < 6.5. Route-to-sprint: +0.5 if best E2 is within 3 of the field's best; -0.5 otherwise. Basis: Brohamer / Quinn - stretching out suits horses with late pace and stamina pedigree; cutting back suits horses with early pace. |
+| D5 | Track record (today's track) | 1.5 | Won at today's track: 1.0; ITM 2+ times here: 0.5. Basis: "horses for courses" - a modest but persistent edge. |
+| D6 | Turf pedigree / proven turf speed (turf races only) | 2 | Turf race: best turf figure ranks 1st: +1.0; horse with 0 turf starts and pedigree turf rating < 100: -0.8. Basis: Beyer / Quinn - turf form is a separate skill; use turf figures for turf races and pedigree for first-timers. |
 
 ## Class
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| C1 | Class drop | 5 | Today's class level is below the last race's (by the class ladder): drop of 1-3 levels 0.6, 3+ levels 1.0. If the horse was beaten 10+ lengths last time the drop is discounted to 0.3 ("dropping for a reason"). |
-| C2 | Class rise | 4 | Today's class level is above the last race's: -0.6 for a 1-3 level rise, -1.0 for 3+. Waived (0) if the horse won last time by 2+ lengths or earned a figure above par. |
-| C3 | Class rating rank | 4 | Average Brisnet class rating of the last three starts ranks 1st (1.0), 2nd (0.5) or 3rd (0.25). |
-| C4 | Proven at today's level | 3 | Competitive (finished within 3 lengths) in a race whose class level was >= today's within the last 3 starts: 1.0. |
-| C5 | Last race rating beats the field | 3 | Brisnet race rating of the last race (strength of the field it faced) ranks 1st: 1.0, 2nd: 0.5. |
-| C6 | Claimed / protected drop | 2 | Horse is dropping in class off a claim (new barn moving it down) with a trainer winning >= 15%: 1.0. |
+| C1 | Class drop | 5 | Today's class level is below the last race's (by the class ladder): drop of 1-3 levels 0.6, 3+ levels 1.0. Discounted to 0.3 ("dropping for a reason") if the horse was beaten 10+ lengths last time, or if its figures have declined three straight and it was out of the money each time. Basis: Davidowitz - the class drop is the strongest angle on the page when the horse shows some sign of form, and a trap when the barn is dropping a horse that is going the wrong way. |
+| C2 | Class rise | 4 | Today's class level is above the last race's: -0.6 for a 1-3 level rise, -1.0 for 3+. Waived (0) if the horse won last time by 2+ lengths or earned a figure above par. Basis: Quinn / Davidowitz - most horses moving up lose, except those whose last race (margin or figure) says the new level is within reach. |
+| C3 | Class rating rank | 4 | Average Brisnet class rating of the last three starts ranks 1st (1.0), 2nd (0.5) or 3rd (0.25). Basis: Brisnet class ratings measure the quality of fields actually faced; the horse that has been meeting the best company has the most "hidden class". |
+| C4 | Proven at today's level | 3 | Competitive (finished within 3 lengths) in a race whose class level was >= today's within the last 3 starts: 1.0. Basis: Quinn - "proven at the level" is the cleanest class credential; recent is what counts. |
+| C5 | Last race rating beats the field | 3 | Brisnet race rating of the last race (strength of the field it faced) ranks 1st: 1.0, 2nd: 0.5. Basis: Davidowitz "key race" thinking - a horse coming out of the strongest recent field is better than its finish. |
+| C6 | Claimed last out: the new barn's intent | 2 | Horse was claimed last time. Dropped below the price it was claimed for: -0.8 (the new barn found a problem), softened to +0.3 when the trainer wins >= 20% (sharp claiming barns drop to cash quickly). Raised in class off the claim with a trainer winning >= 15%: +0.8 (the barn thinks it stole a horse). Same level: 0. Basis: Davidowitz - a claimed horse dropped below its purchase price is a red flag unless the trainer is a known manipulator; a claimed horse moved up by a strong barn is one of the most reliable positive intent signals. |
+| C7 | First time for a tag | 3 | Today is the horse's first claiming race after 2+ starts in maiden-special-weight, allowance, optional-claiming or stakes company: +1.0 if its best figure of the last three is within 2 of today's par, otherwise +0.4. Basis: Quinn / Davidowitz - the move from non-claiming to claiming company is the most reliable class drop on the page, because the horse has been facing horses that could not be bought. |
+| C8 | Back class | 2 | Horse has finished within 2 lengths at a class level 2+ rungs above today's within its last 10 starts, but not in its last three: +0.7 if it has been freshened (45+ days) or the trainer wins >= 15%; otherwise +0.3. Basis: Davidowitz "back class" - horses dropping to a level far below their proven ability often rebound at a price, especially after a rest or in the hands of a capable barn. |
+| C9 | Maiden graduate moving into winners' company | 3 | Last race was a maiden win. Into an allowance / optional-claiming n1x race or open claiming company: -0.7 if the win came in a maiden claimer, -0.4 if in maiden special weight; waived when the winning figure met today's par. Into a claiming race written for non-winners of two (n2L): 0 (the race is written for exactly this horse). Basis: Quinn's condition book - the jump from maidens to winners is the biggest in racing; Davidowitz - a maiden-claiming graduate in open company is "among the worst bets in racing". |
+| C10 | Drop in class after a win | 3 | Won last time and drops 2+ class levels today: -0.6 (a sound winner is not dropped; something is wrong), unless the trainer wins >= 20% or shows a Brisnet "Drops off win" stat of 15%+ with 10+ starts (then +0.3, a barn that cashes this way on purpose). Basis: Davidowitz - the suspicious drop; Brisnet trainer-category stats identify the barns that do it successfully. |
 
 ## Pace
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| P1 | Lone early speed | 7 | Only one horse in the field has early-speed points >= 5 and is at least 2 points clear of all others, with no other 'E' type: that horse gets 1.0 (uncontested lead). Full credit on dirt, 0.7 on turf. |
-| P2 | Speed duel penalty / closer bonus | 4 | Hot pace shape (3+ 'E' types or 3+ horses with 6+ speed points): E types -1.0, E/P -0.5, P +0.5, S +1.0. Soft pace shape (<= 2 early types, no lone speed): E/E-P +0.4, S -0.4. |
-| P3 | Best early pace figure (E1/E2) | 4 | Best E2 pace figure in the field: 1.0 in sprints, 0.6 in routes; best E1 adds 0.4 (sprints only). |
-| P4 | Best late pace figure | 4 | Best late-pace (LP) figure in the field: 1.0 in routes/turf, 0.6 in dirt sprints; 2nd best 0.4. |
-| P5 | Running style vs. track bias | 4 | Brisnet track-bias impact value for the horse's run style at today's surface/distance (meet totals): >= 1.30: 1.0; 1.10-1.29: 0.5; <= 0.60: -1.0; 0.61-0.85: -0.5. Weekly figures (if 5+ races) add half credit. |
-| P6 | Post position vs. bias | 2 | Track-bias impact value for the post-position group (RAIL, 1-3, 4-7, 8+): >= 1.3: 1.0; <= 0.7: -1.0 (meet totals). Rail horse with E/P or P style in a route adds nothing extra. |
-| P7 | Early speed points rank | 2 | Brisnet early-speed points: 7-8 points 1.0, 5-6 points 0.5 (only when the pace shape is not hot). |
-| P8 | Pace figures vs. par | 2.5 | Early types: average E2 of last 3 >= par E2 + 2 in a soft/lone pace: +1.0 (can control the race). Closers: average late pace >= par late + 3 in a hot pace: +1.0 (will be running at the end). Early type whose average E2 is 6+ below par: -0.6 (will not be able to get position). |
+| P1 | Lone early speed | 7 | Only one horse in the field has early-speed points >= 5 and is at least 2 points clear of all others, with no other 'E' type: that horse gets 1.0 (uncontested lead). Full credit on dirt, 0.7 on turf. Basis: Quirin - the first-call leader wins ~26% of all races and far more when unpressed; lone speed is the most powerful single pace angle, weaker on turf where closers fare better. |
+| P2 | Speed duel penalty / closer bonus | 4 | Hot pace shape (3+ 'E' types or 3+ horses with 6+ speed points): E types -1.0, E/P -0.5, P +0.5, S +1.0. Soft pace shape (<= 2 early types, no lone speed): E/E-P +0.4, S -0.4. Basis: Brohamer / Quirin - duelling speed horses beat each other; a soft pace strands deep closers. |
+| P3 | Best early pace figure (E1/E2) | 4 | Best E2 pace figure in the field: 1.0 in sprints, 0.6 in routes; best E1 adds 0.4 (sprints only). Basis: Brohamer - second-call (E2) pace decides sprints; who is in front at the pace call matters most. |
+| P4 | Best late pace figure | 4 | Best late-pace (LP) figure in the field: 1.0 in routes/turf, 0.6 in dirt sprints; 2nd best 0.4. Basis: Brohamer - late pace is the deciding segment in routes and on turf; in dirt sprints it is secondary. |
+| P5 | Running style vs. track bias | 4 | Brisnet track-bias impact value for the horse's run style at today's surface/distance (meet totals): >= 1.30: 1.0; 1.10-1.29: 0.5; <= 0.60: -1.0; 0.61-0.85: -0.5. Weekly figures (if 5+ races) add half credit. Basis: Quirin impact values / Davidowitz track bias - run styles the surface is favouring win more than their share. |
+| P6 | Post position vs. bias | 2 | Track-bias impact value for the post-position group (RAIL, 1-3, 4-7, 8+): >= 1.3: 1.0; <= 0.7: -1.0 (meet totals). Rail horse with E/P or P style in a route adds nothing extra. Basis: Quirin / Brisnet track-bias stats - post-position bias is real but modest; use it only when extreme. |
+| P7 | Early speed points rank | 2 | Brisnet early-speed points: 7-8 points 1.0, 5-6 points 0.5 (only when the pace shape is not hot). Basis: Quirin speed points - horses that habitually show early speed win more than their share unless several meet. |
+| P8 | Pace figures vs. par | 2.5 | Early types: average E2 of last 3 >= par E2 + 2 in a soft/lone pace: +1.0 (can control the race). Closers: average late pace >= par late + 3 in a hot pace: +1.0 (will be running at the end). Early type whose average E2 is 6+ below par: -0.6 (will not be able to get position). Basis: Brohamer - match each horse's pace figures to the par and to the projected shape of the race. |
+| P9 | Probable pace leader by E1 figure | 3 | Among E / E/P types, the horse whose average first-call (E1) figure beats the next early type's by 3+ points: +1.0 (it should control the lead, whatever the speed points say). Two or more 'E' types whose E1 averages are all within 1 point of the top early figure: -0.5 each (a duel is likely). Basis: Brohamer / Sartin pace-line matchups - compare the leaders' E1 figures directly; Quirin - duellers win less often than lone or pressured leaders. |
 
 ## Form
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| F1 | Won last race | 3 | Won last start: 1.0; won 'handily/drew off/driving' (strong win comment): 1.4. |
-| F2 | In the money last race | 2 | Finished 2nd or 3rd last time beaten <= 3 lengths: 1.0; 4th-5th beaten <= 3 lengths: 0.5. |
-| F3 | Troubled trip last out | 3 | Last-race comment shows trouble (bumped, steadied, checked, blocked, wide trip, slow start, etc.) and the horse still finished within 6 lengths: 1.0 (excuse); trouble and beaten > 6: 0.4. |
-| F4 | Closed ground late last out | 2 | Gained 2+ lengths from the second call to the finish last time, or passed horses in the stretch: 1.0. |
-| F5 | Bad effort last out | 3 | Last race comment is negative (faded, tired, no factor, eased, stopped...) and beaten 8+ lengths with no trouble: -1.0. Beaten 15+: -1.5. |
-| F6 | Layoff handling | 3 | Days since last race: 46-90 days with a flagged/positive layoff trainer stat (win% >= 15): +0.5; 91-180 days: -0.3 unless 3+ works incl. a 5f+ work (then 0); 181+ days: -1.0 unless trainer layoff stat >= 18% and 4+ works (then -0.3). <= 14 days ('quick back'): +0.3 if last race was good. |
-| F7 | Second / third start off the layoff | 2 | Second start after a 60+ day layoff: +1.0 (classic improvement spot) if the comeback race was within 6 lengths; third start: +0.5. |
-| F8 | Consistency | 3 | Career ITM% >= 60 with 4+ starts: 1.0; >= 45: 0.5; <= 20% with 8+ starts: -0.7. |
-| F9 | Recent workout pattern | 2 | A bullet work (fastest of the day) among the last 4 works: +0.7; two or more top-15% works: +0.5; no workout since a layoff of 45+ days: -0.5. |
-| F10 | Two straight in-the-money finishes | 1.5 | ITM in each of the last two starts: 1.0; last three: 1.5. |
+| F1 | Won last race | 3 | Won last start: 1.0; won 'handily/drew off/driving' (strong win comment): 1.4. Basis: Davidowitz / Litfin - last-out winners are in form, and the manner of victory (comment) says how much. |
+| F2 | In the money last race | 2 | Finished 2nd or 3rd last time beaten <= 3 lengths: 1.0; 4th-5th beaten <= 3 lengths: 0.5. Basis: Ainslie / Davidowitz - a close finish last out is the simplest evidence of current form. |
+| F3 | Troubled trip last out | 3 | Last-race comment shows trouble (bumped, steadied, checked, blocked, wide trip, slow start, etc.) and the horse still finished within 6 lengths: 1.0 (excuse); trouble and beaten > 6: 0.4. Basis: Beyer trip handicapping - the running-line comment is the only trip note in the PPs; a troubled horse that still finished close ran better than its figure. |
+| F4 | Closed ground late last out | 2 | Gained 2+ lengths from the second call to the finish last time, or passed horses in the stretch: 1.0. Basis: Brohamer / Litfin - a horse finishing with energy is improving or suited to a longer trip. |
+| F5 | Bad effort last out | 3 | Last race comment is negative (faded, tired, no factor, eased, stopped...) and beaten 8+ lengths with no trouble: -1.0. Beaten 15+: -1.5. Basis: Davidowitz - a no-excuse thrashing is a form (or soundness) warning until the horse shows otherwise. |
+| F6 | Layoff handling | 3 | Days since last race: 46-90 days with a flagged/positive layoff trainer stat (win% >= 15): +0.5; 91-180 days: -0.3 unless 3+ works incl. a 5f+ work (then 0); 181+ days: -1.0 unless trainer layoff stat >= 18% and 4+ works (then -0.3). <= 14 days ('quick back'): +0.3 if last race was good. Basis: Litfin / Brisnet layoff trainer stats - layoff horses win when the barn has a record of winning off the bench and the work tab shows a foundation; otherwise they need a race. |
+| F7 | Second / third start off the layoff | 2 | Second start after a 60+ day layoff: +1.0 (classic improvement spot) if the comeback race was within 6 lengths; third start: +0.5. Basis: Litfin / Brisnet - the second start off a layoff is the classic improvement spot (Brisnet prints it as a positive comment); the third is still positive. |
+| F8 | Consistency | 3 | Career ITM% >= 60 with 4+ starts: 1.0; >= 45: 0.5; <= 20% with 8+ starts: -0.7. Basis: Ainslie consistency - honest horses keep finishing; chronic non-triers keep not finishing. |
+| F9 | Recent workout pattern | 2 | A bullet work (fastest of the day) among the last 4 works: +0.7; two or more top-15% works: +0.5; no workout since a layoff of 45+ days: -0.5. Basis: Davidowitz / Litfin - bullet and sharp works signal readiness; a layoff horse without works is not ready. |
+| F10 | Two straight in-the-money finishes | 1.5 | ITM in each of the last two starts: 1.0; last three: 1.5. Basis: Ainslie - current consistency; horses in a good cycle tend to stay in it for a few starts. |
+| F11 | Trouble in two of the last three | 2 | The running-line comments show trouble (steadied, checked, blocked, 4+ wide, bumped, slow start...) in two or more of the last three starts, each time finishing within 5 lengths: +1.0. Such a horse's figures understate it. Basis: Beyer trip handicapping - repeated trouble is the classic source of a hidden, under-bet horse. |
+| F12 | Hard effort against pace pressure | 2 | Last race the horse dueled / pressed / set the pace (comment or 1st-2nd at the first call within a length) and still finished within 3 lengths: +1.0; within 6: +0.4. Not awarded to winners (F1 covers them). Basis: Brohamer / Beyer - a horse that fought on the lead and held on ran harder than its figure shows; if today's pace is softer it improves. |
+| F13 | Beaten favourite last out | 2.5 | Was the favourite last time and lost. With an excuse (trouble, wide trip, a duel) or beaten 2 lengths or less: +1.0 (the public was right about the horse and it is likely to be a fair price now). Beaten 5+ lengths with no excuse: -0.6. A Brisnet "Btn favorite" trainer stat of 20%+ (10+ starts) adds 0.3. Basis: Davidowitz - beaten favourites with excuses are among the best-value plays next out; Brisnet prints the "Failed as favorite" negative and the trainer's beaten-favourite record for exactly this reason. |
+| F14 | Freshened after a declining cycle | 2 | Three straight declining figures, then 28-60 days off with two or more workouts since the last race: +0.7 (the barn stopped on the horse and brought it back fresh). Basis: Litfin form cycles - a short freshening after a decline is a deliberate reset, not a layoff. |
+| F15 | Fast figure in a losing effort | 2 | Lost last time by 4+ lengths but earned a figure at least 2 points above today's par (the field it met was simply faster): +0.6. The finish position understates the horse against today's par. Basis: Beyer - judge the figure, not the finish; losing fast is better than winning slow. |
 
 ## Connections
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| K1 | Trainer win percentage (year) | 3 | Trainer's current-year win%: >= 22: 1.0; 17-21: 0.6; 12-16: 0.2; <= 7 (with 30+ starts): -0.8. |
-| K2 | Trainer angle stats | 3 | Brisnet trainer category stats that apply today (e.g. '2nd off layoff', 'Turf to Dirt', '1stTimeBlinkers'): any category with 15+ starts and win% >= 20 or ROI >= +0.20: +0.6 each (max 1.2); any with 15+ starts and win% <= 7: -0.5 each (max -1.0). A '+' flag from Brisnet adds 0.2. |
-| K3 | Jockey win percentage | 2 | Jockey current-year win%: >= 18: 1.0; 13-17: 0.5; <= 6 with 50+ mounts: -0.7. |
-| K4 | Jockey/trainer combination | 2 | Jockey-with-this-trainer (last 60 days) stat: 5+ starts and win% >= 25: 1.0; 5+ starts and 0%: -0.5. |
-| K5 | Hot trainer | 2 | Brisnet 'Hot Trainer in last 14 days' comment present: 1.0. |
-| K7 | Trainer meet form | 1.5 | Trainer's record at the current meet: 8+ starts and win% >= 25: +1.0; 15+ starts and 0 wins: -0.6. |
-| K6 | Rider upgrade | 1.5 | Jockey change to a rider winning >= 15% on the year, after a rider who was not listed: 1.0. |
+| K1 | Trainer win percentage (year) | 3 | Trainer's current-year win%: >= 22: 1.0; 17-21: 0.6; 12-16: 0.2; <= 7 (with 30+ starts): -0.8. Basis: Davidowitz - trainers are the most predictable element on the page; sub-8% barns lose at every level. |
+| K2 | Trainer angle stats | 3 | Brisnet trainer category stats that apply today (e.g. '2nd off layoff', 'Turf to Dirt', '1stTimeBlinkers'): any category with 15+ starts and win% >= 20 or ROI >= +0.20: +0.6 each (max 1.2); any with 15+ starts and win% <= 7: -0.5 each (max -1.0). A '+' flag from Brisnet adds 0.2. Basis: Davidowitz trainer patterns - a barn's record in exactly today's situation beats its overall record. |
+| K3 | Jockey win percentage | 2 | Jockey current-year win%: >= 18: 1.0; 13-17: 0.5; <= 6 with 50+ mounts: -0.7. Basis: Ainslie / Quirin - riders matter less than trainers, but the leading riders get the live horses. |
+| K4 | Jockey/trainer combination | 2 | Jockey-with-this-trainer (last 60 days) stat: 5+ starts and win% >= 25: 1.0; 5+ starts and 0%: -0.5. Basis: Davidowitz - a hot jockey/trainer combination is a live-money signal. |
+| K5 | Hot trainer | 2 | Brisnet 'Hot Trainer in last 14 days' comment present: 1.0. Basis: Davidowitz / Brisnet - barns win in streaks; the comment flags one in progress. |
+| K7 | Trainer meet form | 1.5 | Trainer's record at the current meet: 8+ starts and win% >= 25: +1.0; 15+ starts and 0 wins: -0.6. Basis: Davidowitz - the meet record is the most current trainer form available. |
+| K6 | Rider upgrade | 1.5 | Jockey change to a rider winning >= 15% on the year, after a rider who was not listed: 1.0. Basis: Davidowitz - a switch to a leading rider is a statement of intent by the barn. |
 
 ## Age_Weight
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| A1 | Weight / age concession | 1 | Carries 4+ lbs less than the heaviest weight in the field: +0.5; 3yo against older after September (gets the scale-of-weights allowance and is still maturing): +0.3. |
+| A1 | Weight / age concession | 1 | Carries 4+ lbs less than the heaviest weight in the field: +0.5; 3yo against older after September (gets the scale-of-weights allowance and is still maturing): +0.3. Basis: Ainslie - weight matters little, age-and-weight concessions in autumn a little more. |
 
 ## Equipment
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| E1 | First-time blinkers | 2 | Blinkers added today: trainer '1stTimeBlinkers' win% >= 15 (10+ starts): +1.0; <= 7: -0.6; otherwise +0.2. |
-| E2 | Blinkers off | 1 | Blinkers removed today (often a horse that was too keen): +0.3 for P/S types, 0 otherwise. |
-| E3 | First-time Lasix | 1 | First-time Lasix (typically a foreign import or a 2yo): +0.5. |
+| E1 | First-time blinkers | 2 | Blinkers added today: trainer '1stTimeBlinkers' win% >= 15 (10+ starts): +1.0; <= 7: -0.6; otherwise +0.2. Basis: Davidowitz - equipment changes mean what the trainer's record with them says they mean. |
+| E2 | Blinkers off | 1 | Blinkers removed today (often a horse that was too keen): +0.3 for P/S types, 0 otherwise. Basis: Davidowitz - blinkers off is used to settle a horse that has been rank or pulling. |
+| E3 | First-time Lasix | 1 | First-time Lasix (typically a foreign import or a 2yo): +0.5. Basis: a small, well-documented first-time improvement; today mostly a foreign-import angle. |
 
 ## Comments
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| Q1 | QuickPlay positive comments | 1.2 | Each Brisnet positive (ñ) comment: +0.5; strong ones (speed rating best in field, class drop, hot trainer...): +1.0. Max 3.0. |
-| Q2 | QuickPlay negative comments | 1.2 | Each Brisnet negative (×) comment: -0.5; strong ones (poor figures, always far back, beaten by weaker, poor trainer...): -1.0. Min -3.0. The generic 'Has not raced for more than 2 months' counts only -0.25 (layoffs are handled by F6). |
+| Q1 | QuickPlay positive comments | 0.8 | Each Brisnet positive (ñ) comment: +0.5; strong ones (speed rating best in field, class drop, hot trainer...): +1.0. Max 3.0. Weight is modest because the comments restate facts the S/C/P/F/K rules already score. Basis: Brisnet QuickPlay comments are a rule-based summary of the PPs; experts use them as a first scan and a tie-breaker, not as the handicapping itself. |
+| Q2 | QuickPlay negative comments | 0.8 | Each Brisnet negative (×) comment: -0.5; strong ones (poor figures, always far back, beaten by weaker, poor trainer...): -1.0. Min -3.0. The generic 'Has not raced for more than 2 months' counts only -0.25 (layoffs are handled by F6). Basis: as Q1 - negatives are a cross-check on the other rules, weighted so they cannot outvote them. |
 
 ## Maiden
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| M1 | First-time starter profile | 4 | Debut runner: trainer '1st time starter' stat win% >= 15 (+0.6), sire 1st-time-starter win% >= 14 (+0.4), bullet or top-10% work in last 4 (+0.4), 4+ published works (+0.2); debuting in a maiden-claiming race (-0.5); fewer than 3 works (-0.5). |
-| M2 | Maiden-special-weight dropper into maiden claiming | 5 | Today is a maiden-claiming race and the horse's last 1-2 starts were in maiden special weight / higher-priced maiden claimers with a speed figure within 4 of today's par: +1.0 (the classic MSW-to-MCL drop). |
-| M3 | Chronic maiden | 3 | Maiden with 8+ starts: -0.8; 12+ starts: -1.2. Maiden with 3+ seconds and no win ('sucker horse'): additional -0.4. |
-| M4 | Lightly raced improver | 2 | Horse with 1-3 career starts whose last figure improved 5+ points on its previous start: +1.0; second career start after a debut within 4 lengths: +0.6. |
+| M1 | First-time starter profile | 4 | Debut runner: trainer '1st time starter' stat win% >= 15 (+0.6), sire 1st-time-starter win% >= 14 (+0.4), bullet or top-10% work in last 4 (+0.4), 4+ published works (+0.2); debuting in a maiden-claiming race (-0.5); fewer than 3 works (-0.5). Basis: Litfin / Davidowitz - debut runners are judged on the barn's debut record, the sire's precocity and the work tab; a debut in a maiden claimer says the barn does not think much of the horse. |
+| M2 | Maiden-special-weight dropper into maiden claiming | 5 | Today is a maiden-claiming race and the horse's last 1-2 starts were in maiden special weight / higher-priced maiden claimers with a speed figure within 4 of today's par: +1.0 (the classic MSW-to-MCL drop). Basis: Davidowitz / Quinn - MSW to maiden-claiming is the biggest class drop in racing. |
+| M3 | Chronic maiden | 3 | Maiden with 8+ starts: -0.8; 12+ starts: -1.2. Maiden with 3+ seconds and no win ('sucker horse'): additional -0.4. Basis: Davidowitz / Quinn - chronic maidens, especially habitual runners-up, are the classic underlay. |
+| M4 | Lightly raced improver | 2 | Horse with 1-3 career starts whose last figure improved 5+ points on its previous start: +1.0; second career start after a debut within 4 lengths, or with a debut figure within 5 of today's par: +0.6 (second-time starters improve on average; a near-par debut makes par reachable today). Not awarded for a third-start leap of 8+ points that is also a career top (that is S6's bounce pattern). Basis: Litfin - lightly raced horses improve more and more often than seasoned ones; the second start is the biggest average step forward. |
 
 ## Elimination
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| X1 | Hopelessly slow | 1 (hard) | Throw-out: best speed figure of the last three starts is 10+ points below today's par AND the horse has 3+ starts AND it is not dropping 3+ class levels. |
-| X2 | Long layoff, no foundation | 1 (hard) | Throw-out: 365+ days since last race with fewer than 4 workouts. |
-| X3 | Also-eligible / main-track-only | 1 (hard) | Flag (not a throw-out): horse is on the also-eligible list or main-track-only; it runs only if scratches occur. Scored normally but reported with an AE/MTO flag. |
-| X4 | Badly outclassed | 1 (hard) | Throw-out: average class rating of the last three starts is 8+ points below the field's best AND the horse is not dropping in class. |
+| X1 | Hopelessly slow | 1 (hard) | Throw-out: best speed figure of the last three starts is 10+ points below today's par AND the horse has 3+ starts AND it is not dropping 3+ class levels. Basis: Beyer / Quinn - eliminate horses whose figures cannot reach par; the process starts by throwing out. |
+| X2 | Long layoff, no foundation | 1 (hard) | Throw-out: 365+ days since last race with fewer than 4 workouts. Basis: Litfin / Davidowitz - a year away without a foundation of works is a horse not meant to win today. |
+| X3 | Also-eligible / main-track-only | 1 (hard) | Flag (not a throw-out): horse is on the also-eligible list or main-track-only; it runs only if scratches occur. Scored normally but reported with an AE/MTO flag. Basis: Crist - never build a ticket around a horse that may not run. |
+| X4 | Badly outclassed | 1 (hard) | Throw-out: average class rating of the last three starts is 8+ points below the field's best AND the horse is not dropping in class. Basis: Quinn - a horse that has only met far weaker fields and is not dropping is outclassed. |
 
 ## Value
 
 | Id | Rule | Weight | Definition |
 |---|---|---|---|
-| V1 | Morning-line value | 3 | Applied after scoring (see engine): compares the horse's score-implied win probability with the morning-line implied probability. Overlay (fair odds < ML by 30%+): +1.0; underlay (ML < 60% of fair): -0.8. Chalk at 6/5 or lower never gets a value bonus. |
+| V1 | Morning-line value | 3 | Applied after scoring (see engine): compares the horse's score-implied win probability with the morning-line implied probability. Overlay (fair odds < ML by 30%+): +1.0; underlay (ML < 60% of fair): -0.8. Chalk at 6/5 or lower never gets a value bonus. Basis: Meadow / Crist - make your own line and bet only overlays; the morning line is a stand-in for the public's line until the real odds are known. |
+
+## Horizontal (Pick 3 / Pick 4 construction)
+
+These rules grade legs and build tickets from the scored races (handicapper/multirace.py); thresholds live in rules_config.json -> multirace.
+
+| Id | Rule | Definition |
+|---|---|---|
+| H1 | Leg win probabilities | Each live horse's chance in a leg is a blend of the rules-engine probability (softmax of the score, scale `logit_scale`) and the morning-line probability (1/(ML+1), renormalised over the live horses): p = (1 - ml_blend) * model + ml_blend * ML. Eliminated horses get 0. Basis: Benter (1994) - a handicapping model improves markedly when combined with the public's odds; Crist - grade horses by how likely they are to win, not by how much you like them. |
+| H3 | Chaos (spread) leg | A leg is a chaos leg when 4+ live horses are within `spread_gap` points of the top score, or the field has `chaos_field`+ live horses and the top blended probability is under `chaos_top_prob`. Chaos legs use the wider coverage targets and caps (chaos_a_coverage / chaos_b_coverage / chaos_max_a / chaos_max_b). Basis: Crist / DRF - spread where your opinion is weakest, single where it is strongest; large contentious fields (maiden claimers, turf sprints, hot-pace routes) are where the public's chalk is most beatable. |
+| H2 | Single | The top horse is a single when its blended probability is >= `single_prob`, its score is >= `single_gap` points clear of the next live horse, the leg is not a chaos leg, and it carries none of the vulnerability hits listed in `fav_vulnerable_rules`. A single's leg has only the one A horse (a B backup only if `single_backup`). Short-priced singles are still singles: the saving is spent spreading elsewhere. Basis: Crist - "a Pick 4 without a single is a lottery ticket"; singling where you have a real opinion is what finances the spread in the legs where you do not. |
+| H4 | Coverage grading A / B | In a non-single leg, horses are taken in probability order: A until the A's cover `a_coverage` of the leg's probability (at most `max_a`), then B until A+B cover `b_coverage` (at most `max_b`, never a horse under `min_b_prob`). A leg always carries at least two horses unless it is a single. Chaos legs use the chaos targets. Basis: Crist's A/B/C grading - A's are the horses you expect to win, B's the ones that would not surprise you; coverage of win probability, not head-count, decides how deep to go. |
+| H5 | Vulnerable favourite | The ML favourite is vulnerable when it is not the top-scored horse, or when its model probability is below `fav_vulnerable_ratio` times its ML probability, or when it carries a negative hit from a rule in `fav_vulnerable_rules` (bounce risk, speed duel, underlay, suspicious drop, maiden graduate, no-excuse flop, elimination). A vulnerable favourite sitting among the A's is demoted to B (unless it is the only A); one not on the ticket at all is added as a B when its probability clears `min_b_prob`. The leg is then a "price leg". Basis: Davidowitz / DRF - favourites win about a third of races; the Pick 4 pays when the chalk loses in a leg where you were alive, so the chalk is kept as a cheap B, not as the horse the ticket is built around. |
+| H6 | Also-eligibles and throw-outs | Horses eliminated by an X rule are never on a ticket. Also-eligible / main-track-only horses are never on a ticket either; if one would have graded A or B it is reported as an alternate to add if it draws in. Basis: Crist - a ticket built around a horse that may not run is a refund at best and a dead ticket at worst. |
+| H7 | Main ticket plus one-B backups | The main ticket uses every A in every leg. For each leg that has B horses, one backup ticket uses that leg's B's with the A's everywhere else ("A's with one B"). Two legs' B's never appear on the same ticket. Basis: Crist's structured tickets - most of the money goes where the opinion is; backups protect against one upset, not two, which is what keeps the cost proportional to the chance of cashing. |
+| H8 | Budget trim | While the sequence costs more than the budget, remove the lowest-probability B from the leg with the most B's; when no B is left, remove the lowest-probability A from the leg with the most A's (a leg never drops below one horse, and a single is never touched). Each removal is recorded. Basis: Crist / Meadow - the budget is set first; the ticket is shaped to it by cutting the marginal horses, not by shrinking the opinion. |
+| H9 | Sequence ranking | Hit probability = P(all A's win) + sum over legs of P(that leg's B wins and every other leg's A wins), using the H1 probabilities. Sequence score = hit probability x (1 + single_bonus x singles) x (1 + price_leg_bonus x price legs). The ML parlay of the lowest-priced A in each leg is reported as a conservative will-pay yardstick, and the probability that every leg's favourite wins is reported as the "chalk" risk. Basis: Crist - prefer sequences where you have at least one strong opinion and at least one beatable favourite; Meadow - a multi-race bet has to beat the parlay of its parts to be worth the extra takeout. |
 
