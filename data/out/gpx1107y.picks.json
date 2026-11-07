@@ -50,6 +50,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED $1.00 Bet 3 (Races 1-2-3) / $.50 Pick 5 (Races 1-2-3-4-5) 5½ Furlongs. (All-Weather) ™Mdn 50k Purse $50,000 (includes $11,000 FBIF ?",
    "sheets": [
     {
      "pgm": "2",
@@ -2675,6 +2676,155 @@
      "H5 vulnerable favourite #8 (9/5): ranks 3 by score; model 14% vs ML 28%; hits V1 -> stays B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "2",
+       "6"
+      ],
+      [
+       "2",
+       "6"
+      ]
+     ],
+     "box": true,
+     "combos": 2,
+     "label": "EXACTA box #2-#6",
+     "source": "primary",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #2 (longer-priced of the pair)",
+     "source": "primary",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "2",
+       "6"
+      ],
+      [
+       "2",
+       "6",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 4,
+     "label": "EXACTA box #2,#6; EXACTA part-wheel #2,#6 / #2,#6,#8",
+     "source": "other",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "2",
+       "6"
+      ],
+      [
+       "2",
+       "6",
+       "8"
+      ],
+      [
+       "2",
+       "6",
+       "8",
+       "9"
+      ]
+     ],
+     "box": false,
+     "combos": 8,
+     "label": "TRIFECTA #2,#6 / #2,#6,#8 / #2,#6,#8,#9",
+     "source": "other",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "2",
+       "6"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "WIN on the overlay: #2 (ML 9/2 vs fair 1.0-1); #6 (ML 7/2 vs fair 2.4-1)",
+     "source": "other",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "2",
+       "6"
+      ],
+      [
+       "2",
+       "6",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 4,
+     "label": "favourite #8 looks beatable (H5): EXACTA #2,#6 over #2,#6,#8 - chalk underneath only, never on top",
+     "source": "other",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "2",
+       "6"
+      ],
+      [
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "DAILY DOUBLE #2,#6 with R2 #2 (2 x $1)",
+     "source": "other",
+     "race_no": 1,
+     "races": [
+      1,
+      2
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA box #2,#6; EXACTA part-wheel #2,#6 / #2,#6,#8",
     "TRIFECTA #2,#6 / #2,#6,#8 / #2,#6,#8,#9",
@@ -2728,6 +2878,7 @@
     ],
     "best_bet": "2"
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / / E1 E2/LATE SPEED $1.00 Bet 3 (Races 2-3-4) / $.50 Pick 4 (Races 2-3-4-5) 6 Furlongs. MC 12500 Purse $25,000 (includes $2,000 FBIF ? Florida Bred Incentive",
    "sheets": [
     {
      "pgm": "2",
@@ -4862,6 +5013,76 @@
      "H2 single #2: prob 79%, 53.8 pts clear (ML 3/5, short price but the saving buys coverage elsewhere)"
     ]
    },
+   "wagers": [
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "2"
+      ],
+      [
+       "6",
+       "3",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 3,
+     "label": "EXACTA key #2 over #6,#3,#5",
+     "source": "other",
+     "race_no": 2,
+     "races": [
+      2
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "2"
+      ],
+      [
+       "6",
+       "3",
+       "5"
+      ],
+      [
+       "6",
+       "3",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 6,
+     "label": "TRIFECTA key #2 / #6,#3,#5 / #6,#3,#5",
+     "source": "other",
+     "race_no": 2,
+     "races": [
+      2
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "2"
+      ],
+      [
+       "3",
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "DAILY DOUBLE #2 with R3 #3,#7 (2 x $1)",
+     "source": "other",
+     "race_no": 2,
+     "races": [
+      2,
+      3
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA key #2 over #6,#3,#5",
     "TRIFECTA key #2 / #6,#3,#5 / #6,#3,#5",
@@ -4916,6 +5137,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED 5 Furlongs. (All-Weather) ™Clm 10000n2L Purse $23,000 (includes $2,000 FBIF ?",
    "sheets": [
     {
      "pgm": "2",
@@ -7119,6 +7341,161 @@
      "H5 vulnerable favourite #2 (8/5): model 25% vs ML 32%; hits P2 -> demoted to B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "2",
+       "7",
+       "3"
+      ],
+      [
+       "2",
+       "7",
+       "3"
+      ],
+      [
+       "2",
+       "7",
+       "3"
+      ]
+     ],
+     "box": true,
+     "combos": 6,
+     "label": "TRIFECTA box #2-#7-#3",
+     "source": "primary",
+     "race_no": 3,
+     "races": [
+      3
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "2",
+       "7"
+      ],
+      [
+       "2",
+       "7"
+      ]
+     ],
+     "box": true,
+     "combos": 2,
+     "label": "EXACTA box #2-#7",
+     "source": "primary",
+     "race_no": 3,
+     "races": [
+      3
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #2",
+     "source": "primary",
+     "race_no": 3,
+     "races": [
+      3
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "2",
+       "7"
+      ],
+      [
+       "2",
+       "7",
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 4,
+     "label": "EXACTA box #2,#7; EXACTA part-wheel #2,#7 / #2,#7,#3",
+     "source": "other",
+     "race_no": 3,
+     "races": [
+      3
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "2",
+       "7"
+      ],
+      [
+       "2",
+       "7",
+       "3"
+      ],
+      [
+       "2",
+       "7",
+       "3",
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 8,
+     "label": "TRIFECTA #2,#7 / #2,#7,#3 / #2,#7,#3,#4",
+     "source": "other",
+     "race_no": 3,
+     "races": [
+      3
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN on the overlay: #7 (ML 12/1 vs fair 4.6-1)",
+     "source": "other",
+     "race_no": 3,
+     "races": [
+      3
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "3",
+       "7"
+      ],
+      [
+       "11",
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 4,
+     "label": "DAILY DOUBLE #3,#7 with R4 #11,#7 (4 x $1)",
+     "source": "other",
+     "race_no": 3,
+     "races": [
+      3,
+      4
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA box #2,#7; EXACTA part-wheel #2,#7 / #2,#7,#3",
     "TRIFECTA #2,#7 / #2,#7,#3 / #2,#7,#3,#4",
@@ -7171,6 +7548,7 @@
     ],
     "best_bet": "11"
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED $1.00 Bet 3 (Races 4-5-6) / $.50 Pick 4 (Races 4-5-6-7) / $1 Players Place Pick 8 (Races 4 - 11)",
    "sheets": [
     {
      "pgm": "11",
@@ -10649,6 +11027,164 @@
      "H5 vulnerable favourite #10 (7/2): ranks 4 by score; model 8% vs ML 18%; hits P2,F5,V1 -> demoted to B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "11"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #11",
+     "source": "primary",
+     "race_no": 4,
+     "races": [
+      4
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "11"
+      ],
+      [
+       "7",
+       "9",
+       "10"
+      ]
+     ],
+     "box": false,
+     "combos": 3,
+     "label": "EXACTA key #11 over #7,#9,#10",
+     "source": "other",
+     "race_no": 4,
+     "races": [
+      4
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "11"
+      ],
+      [
+       "7",
+       "9",
+       "10"
+      ],
+      [
+       "7",
+       "9",
+       "10",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key #11 / #7,#9,#10 / #7,#9,#10,#8",
+     "source": "other",
+     "race_no": 4,
+     "races": [
+      4
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "11"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #11 (ML 9/2, fair 0.9-1)",
+     "source": "other",
+     "race_no": 4,
+     "races": [
+      4
+     ]
+    },
+    {
+     "type": "SUPERFECTA",
+     "legs": [
+      [
+       "11"
+      ],
+      [
+       "7",
+       "9",
+       "10"
+      ],
+      [
+       "7",
+       "9",
+       "10"
+      ],
+      [
+       "7",
+       "9",
+       "10",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 12,
+     "label": "SUPERFECTA key #11 / #7,#9,#10 / #7,#9,#10 / #7,#9,#10,#8",
+     "source": "other",
+     "race_no": 4,
+     "races": [
+      4
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "11",
+       "7"
+      ],
+      [
+       "11",
+       "7",
+       "9",
+       "10"
+      ]
+     ],
+     "box": false,
+     "combos": 6,
+     "label": "favourite #10 looks beatable (H5): EXACTA #11,#7 over #11,#7,#9,#10 - chalk underneath only, never on top",
+     "source": "other",
+     "race_no": 4,
+     "races": [
+      4
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "11",
+       "7"
+      ],
+      [
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "DAILY DOUBLE #11,#7 with R5 #2 (2 x $1)",
+     "source": "other",
+     "race_no": 4,
+     "races": [
+      4,
+      5
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA key #11 over #7,#9,#10",
     "TRIFECTA key #11 / #7,#9,#10 / #7,#9,#10,#8",
@@ -10703,6 +11239,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED 1 Mile. MC 12500 Purse $25,000 (includes $2,000 FBIF ? Florida Bred Incentive Fund",
    "sheets": [
     {
      "pgm": "2",
@@ -12784,6 +13321,79 @@
      "H2 single #2: prob 82%, 46.8 pts clear"
     ]
    },
+   "wagers": [
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #2",
+     "source": "primary",
+     "race_no": 5,
+     "races": [
+      5
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "2"
+      ],
+      [
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "EXACTA key #2 over #3",
+     "source": "other",
+     "race_no": 5,
+     "races": [
+      5
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #2 (ML 2/1, fair 0.0-1)",
+     "source": "other",
+     "race_no": 5,
+     "races": [
+      5
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "2"
+      ],
+      [
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "DAILY DOUBLE #2 with R6 #5 (1 x $1)",
+     "source": "other",
+     "race_no": 5,
+     "races": [
+      5,
+      6
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA key #2 over #3",
     "WIN #2 (ML 2/1, fair 0.0-1)",
@@ -12835,6 +13445,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED $1.00 Bet 3 (Races 6-7-8) / $.20 Rainbow Pick 6 (Races 6-11) 5 Furlongs. (All-Weather) Clm 17500b Purse $28,000 (includes $2,500 FBIF ?",
    "sheets": [
     {
      "pgm": "5",
@@ -13196,7 +13807,7 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "implied_prob": 0.718,
+     "implied_prob": 0.713,
      "fair_odds": 0.4,
      "rank": 1
     },
@@ -13360,7 +13971,7 @@
        "rule": "V1",
        "name": "Morning-line value",
        "points": -2.4,
-       "note": "underlay: ML 9/2 vs fair 8.8-1"
+       "note": "underlay: ML 9/2 vs fair 8.9-1"
       }
      ],
      "features": {
@@ -13555,8 +14166,8 @@
       "route_to_sprint": false,
       "num_clean_pp": 3
      },
-     "implied_prob": 0.102,
-     "fair_odds": 8.8,
+     "implied_prob": 0.101,
+     "fair_odds": 8.9,
      "rank": 2
     },
     {
@@ -14499,8 +15110,8 @@
      "run_style": "E",
      "speed_pts": 2,
      "prime_power": 110.7,
-     "score": -2.0,
-     "eliminated": true,
+     "score": -4.4,
+     "eliminated": false,
      "flags": [],
      "hits": [
       {
@@ -14594,10 +15205,10 @@
        "note": "Only 2 win(s) in 37 career starts; Poor trainer win%; Poor Recent Speed Figures; Poor record at this distance; Poor record at this track"
       },
       {
-       "rule": "X1",
-       "name": "Hopelessly slow",
-       "points": 0.0,
-       "note": "ELIMINATED: best of last 3 74 is 11 below par 85"
+       "rule": "V1",
+       "name": "Morning-line value",
+       "points": -2.4,
+       "note": "underlay: ML 20/1 vs fair 165.7-1"
       }
      ],
      "features": {
@@ -14790,8 +15401,8 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "implied_prob": 0.0,
-     "fair_odds": null,
+     "implied_prob": 0.006,
+     "fair_odds": 165.7,
      "rank": 6
     },
     {
@@ -15052,19 +15663,145 @@
     "favorite": "4",
     "price_leg": true,
     "probs": {
-     "5": 0.5043,
-     "6": 0.1356,
-     "3": 0.1321,
-     "4": 0.1858,
-     "2": 0.0422
+     "5": 0.4924,
+     "6": 0.1319,
+     "3": 0.1283,
+     "4": 0.1799,
+     "2": 0.041,
+     "1": 0.0264
     },
     "audit": [
-     "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
+     "H1 blended probabilities (model 65% / ML 35%); top #5 49%",
      "H2 #5 would be a single but carries S6; spread instead",
-     "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-     "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
+     "H4 A=['5', '4'] (67%) B=['6'] (80%) targets 55%/78%",
+     "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 31%; hits V1 -> demoted to B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #5",
+     "source": "primary",
+     "race_no": 6,
+     "races": [
+      6
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "5"
+      ],
+      [
+       "6",
+       "3",
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 3,
+     "label": "EXACTA key #5 over #6,#3,#4",
+     "source": "other",
+     "race_no": 6,
+     "races": [
+      6
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "5"
+      ],
+      [
+       "6",
+       "3",
+       "4"
+      ],
+      [
+       "6",
+       "3",
+       "4",
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key #5 / #6,#3,#4 / #6,#3,#4,#2",
+     "source": "other",
+     "race_no": 6,
+     "races": [
+      6
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #5 (ML 2/1, fair 0.4-1)",
+     "source": "other",
+     "race_no": 6,
+     "races": [
+      6
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "5",
+       "6"
+      ],
+      [
+       "5",
+       "6",
+       "3",
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 6,
+     "label": "favourite #4 looks beatable (H5): EXACTA #5,#6 over #5,#6,#3,#4 - chalk underneath only, never on top",
+     "source": "other",
+     "race_no": 6,
+     "races": [
+      6
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "5"
+      ],
+      [
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "DAILY DOUBLE #5 with R7 #4 (1 x $1)",
+     "source": "other",
+     "race_no": 6,
+     "races": [
+      6,
+      7
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA key #5 over #6,#3,#4",
     "TRIFECTA key #5 / #6,#3,#4 / #6,#3,#4,#2",
@@ -15114,6 +15851,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED $1.00 Bet 3 (Races 7-8-9) / $.50 Pick 5 (Races 7-8-9-10-11) 7 Furlongs. Moc 50000 Purse $45,000 (includes $10,000 FBIF ? Florida Bred",
    "sheets": [
     {
      "pgm": "4",
@@ -17361,6 +18099,141 @@
      "H2 single #4: prob 58%, 51.2 pts clear"
     ]
    },
+   "wagers": [
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #4",
+     "source": "primary",
+     "race_no": 7,
+     "races": [
+      7
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "4"
+      ],
+      [
+       "3",
+       "2",
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 3,
+     "label": "EXACTA key #4 over #3,#2,#7",
+     "source": "other",
+     "race_no": 7,
+     "races": [
+      7
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "4"
+      ],
+      [
+       "3",
+       "2",
+       "7"
+      ],
+      [
+       "3",
+       "2",
+       "7",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key #4 / #3,#2,#7 / #3,#2,#7,#8",
+     "source": "other",
+     "race_no": 7,
+     "races": [
+      7
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #4 (ML 5/2, fair 0.1-1)",
+     "source": "other",
+     "race_no": 7,
+     "races": [
+      7
+     ]
+    },
+    {
+     "type": "SUPERFECTA",
+     "legs": [
+      [
+       "4"
+      ],
+      [
+       "3",
+       "2",
+       "7"
+      ],
+      [
+       "3",
+       "2",
+       "7"
+      ],
+      [
+       "3",
+       "2",
+       "7",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 12,
+     "label": "SUPERFECTA key #4 / #3,#2,#7 / #3,#2,#7 / #3,#2,#7,#8",
+     "source": "other",
+     "race_no": 7,
+     "races": [
+      7
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "4"
+      ],
+      [
+       "3",
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "DAILY DOUBLE #4 with R8 #3,#7 (2 x $1)",
+     "source": "other",
+     "race_no": 7,
+     "races": [
+      7,
+      8
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA key #4 over #3,#2,#7",
     "TRIFECTA key #4 / #3,#2,#7 / #3,#2,#7,#8",
@@ -17414,6 +18287,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED $1.00 Bet 3 (Races 8-9-10) / $.50 Pick 4 (Races 8-9-10-11) 1m70yds. (All-Weather) ™Hcp 60000 Purse $60,000 FILLIES AND MARES, THREE",
    "sheets": [
     {
      "pgm": "3",
@@ -19944,6 +20818,162 @@
      "H5 vulnerable favourite #8 (5/2): ranks 2 by score -> demoted to B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #3",
+     "source": "primary",
+     "race_no": 8,
+     "races": [
+      8
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "8",
+       "7",
+       "6"
+      ]
+     ],
+     "box": false,
+     "combos": 3,
+     "label": "EXACTA key #3 over #8,#7,#6",
+     "source": "other",
+     "race_no": 8,
+     "races": [
+      8
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "8",
+       "7",
+       "6"
+      ],
+      [
+       "8",
+       "7",
+       "6",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key #3 / #8,#7,#6 / #8,#7,#6,#5",
+     "source": "other",
+     "race_no": 8,
+     "races": [
+      8
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #3 (ML 20/1, fair 1.5-1)",
+     "source": "other",
+     "race_no": 8,
+     "races": [
+      8
+     ]
+    },
+    {
+     "type": "SUPERFECTA",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "8",
+       "7",
+       "6"
+      ],
+      [
+       "8",
+       "7",
+       "6"
+      ],
+      [
+       "8",
+       "7",
+       "6",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 12,
+     "label": "SUPERFECTA key #3 / #8,#7,#6 / #8,#7,#6 / #8,#7,#6,#5",
+     "source": "other",
+     "race_no": 8,
+     "races": [
+      8
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "3",
+       "8",
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "favourite #8 looks beatable (H5): EXACTA #3 over #3,#8,#7 - chalk underneath only, never on top",
+     "source": "other",
+     "race_no": 8,
+     "races": [
+      8
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "3",
+       "7"
+      ],
+      [
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "DAILY DOUBLE #3,#7 with R9 #3 (2 x $1)",
+     "source": "other",
+     "race_no": 8,
+     "races": [
+      8,
+      9
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA key #3 over #8,#7,#6",
     "TRIFECTA key #3 / #8,#7,#6 / #8,#7,#6,#5",
@@ -19973,7 +21003,7 @@
    ],
    "bet_structure": "WIN",
    "confidence": "high",
-   "selection_note": "#3 is 11.6 points clear",
+   "selection_note": "#3 is 14.0 points clear",
    "brisnet": {
     "top_pick": "5",
     "top3": [
@@ -19998,6 +21028,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Daily Double / $1 Exacta / $.50 Trifecta / $.10 Superfecta / E1 E2/LATE SPEED 6½ Furlongs. ™Clm 17500b Purse $28,000 (includes $2,500 FBIF ? Florida Bred",
    "sheets": [
     {
      "pgm": "3",
@@ -20336,7 +21367,7 @@
       "route_to_sprint": true,
       "num_clean_pp": 6
      },
-     "implied_prob": 0.472,
+     "implied_prob": 0.466,
      "fair_odds": 1.1,
      "rank": 1
     },
@@ -20348,7 +21379,7 @@
      "run_style": "P",
      "speed_pts": 3,
      "prime_power": 111.7,
-     "score": 37.2,
+     "score": 34.8,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -20471,6 +21502,12 @@
        "name": "QuickPlay positive comments",
        "points": 1.6,
        "note": "Switches to a high % jockey; Rail post is winning at 28% clip; Hot Trainer in last 14 days (6 2-0-0)"
+      },
+      {
+       "rule": "V1",
+       "name": "Morning-line value",
+       "points": -2.4,
+       "note": "underlay: ML 2/1 vs fair 3.4-1"
       }
      ],
      "features": {
@@ -20666,8 +21703,8 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "implied_prob": 0.23,
-     "fair_odds": 3.3,
+     "implied_prob": 0.227,
+     "fair_odds": 3.4,
      "rank": 2
     },
     {
@@ -20981,8 +22018,8 @@
       "route_to_sprint": false,
       "num_clean_pp": 6
      },
-     "implied_prob": 0.139,
-     "fair_odds": 6.2,
+     "implied_prob": 0.137,
+     "fair_odds": 6.3,
      "rank": 3
     },
     {
@@ -21091,7 +22128,7 @@
        "rule": "V1",
        "name": "Morning-line value",
        "points": -2.4,
-       "note": "underlay: ML 5/2 vs fair 10.9-1"
+       "note": "underlay: ML 5/2 vs fair 11.0-1"
       }
      ],
      "features": {
@@ -21286,8 +22323,8 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "implied_prob": 0.084,
-     "fair_odds": 10.9,
+     "implied_prob": 0.083,
+     "fair_odds": 11.0,
      "rank": 4
     },
     {
@@ -21432,7 +22469,7 @@
        "rule": "V1",
        "name": "Morning-line value",
        "points": -2.4,
-       "note": "underlay: ML 6/1 vs fair 12.3-1"
+       "note": "underlay: ML 6/1 vs fair 12.5-1"
       }
      ],
      "features": {
@@ -21631,8 +22668,8 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "implied_prob": 0.075,
-     "fair_odds": 12.3,
+     "implied_prob": 0.074,
+     "fair_odds": 12.5,
      "rank": 5
     },
     {
@@ -21643,8 +22680,8 @@
      "run_style": "E/P",
      "speed_pts": 3,
      "prime_power": 108.1,
-     "score": 2.9,
-     "eliminated": true,
+     "score": 0.5,
+     "eliminated": false,
      "flags": [],
      "hits": [
       {
@@ -21720,10 +22757,10 @@
        "note": "Poor Recent Speed Figures"
       },
       {
-       "rule": "X1",
-       "name": "Hopelessly slow",
-       "points": 0.0,
-       "note": "ELIMINATED: best of last 3 69 is 10 below par 79"
+       "rule": "V1",
+       "name": "Morning-line value",
+       "points": -2.4,
+       "note": "underlay: ML 10/1 vs fair 75.9-1"
       }
      ],
      "features": {
@@ -21915,8 +22952,8 @@
       "route_to_sprint": false,
       "num_clean_pp": 9
      },
-     "implied_prob": 0.0,
-     "fair_odds": null,
+     "implied_prob": 0.013,
+     "fair_odds": 75.9,
      "rank": 6
     },
     {
@@ -22199,18 +23236,143 @@
     "favorite": "1",
     "price_leg": true,
     "probs": {
-     "3": 0.3522,
-     "1": 0.2461,
-     "4": 0.1467,
-     "5": 0.1514,
-     "2": 0.1036
+     "3": 0.3463,
+     "1": 0.2205,
+     "4": 0.1434,
+     "5": 0.145,
+     "2": 0.1004,
+     "6": 0.0444
     },
     "audit": [
      "H1 blended probabilities (model 65% / ML 35%); top #3 35%",
-     "H4 A=['3', '1'] (60%) B=['5', '4'] (90%) targets 55%/78%",
-     "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 22% vs ML 29% -> demoted to B; price leg"
+     "H4 A=['3', '1'] (57%) B=['5', '4'] (86%) targets 55%/78%",
+     "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 20% vs ML 27%; hits V1 -> demoted to B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #3",
+     "source": "primary",
+     "race_no": 9,
+     "races": [
+      9
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "1",
+       "4",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 3,
+     "label": "EXACTA key #3 over #1,#4,#5",
+     "source": "other",
+     "race_no": 9,
+     "races": [
+      9
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "1",
+       "4",
+       "5"
+      ],
+      [
+       "1",
+       "4",
+       "5",
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key #3 / #1,#4,#5 / #1,#4,#5,#2",
+     "source": "other",
+     "race_no": 9,
+     "races": [
+      9
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #3 (ML 3/1, fair 1.1-1)",
+     "source": "other",
+     "race_no": 9,
+     "races": [
+      9
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "3",
+       "1",
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "favourite #1 looks beatable (H5): EXACTA #3 over #3,#1,#4 - chalk underneath only, never on top",
+     "source": "other",
+     "race_no": 9,
+     "races": [
+      9
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "3"
+      ],
+      [
+       "7",
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "DAILY DOUBLE #3 with R10 #7,#2 (2 x $1)",
+     "source": "other",
+     "race_no": 9,
+     "races": [
+      9,
+      10
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA key #3 over #1,#4,#5",
     "TRIFECTA key #3 / #1,#4,#5 / #1,#4,#5,#2",
@@ -22265,6 +23427,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Exacta / $.50 Trifecta / $.10 Superfecta / $5 Players Late Double E1 E2/LATE SPEED 5½ Furlongs. (All-Weather) Hcp 60000 Purse $60,000 THREE YEAR OLDS AND UPWARD. Purse $60,000 (Includes $15,000 from FBIF). Free nomination by Thursday,",
    "sheets": [
     {
      "pgm": "7",
@@ -25241,6 +26404,154 @@
      "H5 vulnerable favourite #6 (5/2): ranks 2 by score; hits S6 -> demoted to B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "7",
+       "6"
+      ],
+      [
+       "7",
+       "6"
+      ]
+     ],
+     "box": true,
+     "combos": 2,
+     "label": "EXACTA box #7-#6",
+     "source": "primary",
+     "race_no": 10,
+     "races": [
+      10
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #7 (longer-priced of the pair)",
+     "source": "primary",
+     "race_no": 10,
+     "races": [
+      10
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "7",
+       "6"
+      ],
+      [
+       "7",
+       "6",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 4,
+     "label": "EXACTA box #7,#6; EXACTA part-wheel #7,#6 / #7,#6,#5",
+     "source": "other",
+     "race_no": 10,
+     "races": [
+      10
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "7",
+       "6"
+      ],
+      [
+       "7",
+       "6",
+       "5"
+      ],
+      [
+       "7",
+       "6",
+       "5",
+       "9"
+      ]
+     ],
+     "box": false,
+     "combos": 8,
+     "label": "TRIFECTA #7,#6 / #7,#6,#5 / #7,#6,#5,#9",
+     "source": "other",
+     "race_no": 10,
+     "races": [
+      10
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "7"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN on the overlay: #7 (ML 9/2 vs fair 1.6-1)",
+     "source": "other",
+     "race_no": 10,
+     "races": [
+      10
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "7"
+      ],
+      [
+       "7",
+       "6",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "favourite #6 looks beatable (H5): EXACTA #7 over #7,#6,#5 - chalk underneath only, never on top",
+     "source": "other",
+     "race_no": 10,
+     "races": [
+      10
+     ]
+    },
+    {
+     "type": "DOUBLE",
+     "legs": [
+      [
+       "7",
+       "2"
+      ],
+      [
+       "4",
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 4,
+     "label": "DAILY DOUBLE #7,#2 with R11 #4,#2 (4 x $1)",
+     "source": "other",
+     "race_no": 10,
+     "races": [
+      10,
+      11
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA box #7,#6; EXACTA part-wheel #7,#6 / #7,#6,#5",
     "TRIFECTA #7,#6 / #7,#6,#5 / #7,#6,#5,#9",
@@ -25295,6 +26606,7 @@
     ],
     "best_bet": null
    },
+   "wagers_menu": "$1 Exacta / $.50 Trifecta / $.10 Superfecta / $1 Super Hi 5 E1 E2/LATE SPEED 1m70yds. (All-Weather) Clm 20000 Purse $32,000 (includes $2,500 FBIF ? Florida Bred Incentive Fund includes $2,000 FOA - Florida Owners Awards) FOR THREE YEAR",
    "sheets": [
     {
      "pgm": "4",
@@ -27831,6 +29143,135 @@
      "H5 vulnerable favourite #8 (5/2): ranks 6 by score; model 4% vs ML 22%; hits V1 -> stays B; price leg"
     ]
    },
+   "wagers": [
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "2"
+      ]
+     ],
+     "box": true,
+     "combos": 2,
+     "label": "EXACTA box #4-#2",
+     "source": "primary",
+     "race_no": 11,
+     "races": [
+      11
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 1,
+     "label": "WIN #2 (longer-priced of the pair)",
+     "source": "primary",
+     "race_no": 11,
+     "races": [
+      11
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "2",
+       "6"
+      ]
+     ],
+     "box": false,
+     "combos": 4,
+     "label": "EXACTA box #4,#2; EXACTA part-wheel #4,#2 / #4,#2,#6",
+     "source": "other",
+     "race_no": 11,
+     "races": [
+      11
+     ]
+    },
+    {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "2",
+       "6"
+      ],
+      [
+       "4",
+       "2",
+       "6",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 8,
+     "label": "TRIFECTA #4,#2 / #4,#2,#6 / #4,#2,#6,#5",
+     "source": "other",
+     "race_no": 11,
+     "races": [
+      11
+     ]
+    },
+    {
+     "type": "WIN",
+     "legs": [
+      [
+       "4",
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "WIN on the overlay: #4 (ML 3/1 vs fair 0.9-1); #2 (ML 5/1 vs fair 2.4-1)",
+     "source": "other",
+     "race_no": 11,
+     "races": [
+      11
+     ]
+    },
+    {
+     "type": "EXACTA",
+     "legs": [
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "2",
+       "6",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 6,
+     "label": "favourite #8 looks beatable (H5): EXACTA #4,#2 over #4,#2,#6,#8 - chalk underneath only, never on top",
+     "source": "other",
+     "race_no": 11,
+     "races": [
+      11
+     ]
+    }
+   ],
    "other_wagers": [
     "EXACTA box #4,#2; EXACTA part-wheel #4,#2 / #4,#2,#6",
     "TRIFECTA #4,#2 / #4,#2,#6 / #4,#2,#6,#5",
@@ -27842,6 +29283,14 @@
  "multirace": {
   "pick3": {
    "label": "Pick 3",
+   "offered": {
+    "1": 1.0,
+    "2": 1.0,
+    "4": 1.0,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0
+   },
    "windows": [
     {
      "name": "Pick 3 R1-R3",
@@ -27860,7 +29309,9 @@
      "price_legs": 2,
      "ml_parlay": 32.4,
      "all_favorites_prob": 0.0398,
-     "notes": [],
+     "notes": [
+      "H10 offered on the R1 menu at $1.00"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -28012,13 +29463,15 @@
      "budget": 60.0,
      "cost": 9.0,
      "cost_before_trim": 9.0,
-     "hit_prob": 0.4163,
-     "score": 0.8846,
+     "hit_prob": 0.4057,
+     "score": 0.8622,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 49.5,
-     "all_favorites_prob": 0.0177,
-     "notes": [],
+     "all_favorites_prob": 0.0171,
+     "notes": [
+      "H10 offered on the R4 menu at $1.00"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -28142,178 +29595,18 @@
        "favorite": "4",
        "price_leg": true,
        "probs": {
-        "5": 0.5043,
-        "6": 0.1356,
-        "3": 0.1321,
-        "4": 0.1858,
-        "2": 0.0422
+        "5": 0.4924,
+        "6": 0.1319,
+        "3": 0.1283,
+        "4": 0.1799,
+        "2": 0.041,
+        "1": 0.0264
        },
        "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
+        "H1 blended probabilities (model 65% / ML 35%); top #5 49%",
         "H2 #5 would be a single but carries S6; spread instead",
-        "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 3 R3-R5",
-     "races": [
-      3,
-      4,
-      5
-     ],
-     "base": 1.0,
-     "budget": 60.0,
-     "cost": 16.0,
-     "cost_before_trim": 16.0,
-     "hit_prob": 0.4079,
-     "score": 0.8669,
-     "singles": 1,
-     "price_legs": 2,
-     "ml_parlay": 74.25,
-     "all_favorites_prob": 0.0259,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "3",
-         "7"
-        ],
-        [
-         "11",
-         "7"
-        ],
-        [
-         "2"
-        ]
-       ],
-       "combos": 4,
-       "cost": 4.0
-      },
-      {
-       "name": "backup: B in R3",
-       "legs": [
-        [
-         "2",
-         "5",
-         "4"
-        ],
-        [
-         "11",
-         "7"
-        ],
-        [
-         "2"
-        ]
-       ],
-       "combos": 6,
-       "cost": 6.0
-      },
-      {
-       "name": "backup: B in R4",
-       "legs": [
-        [
-         "3",
-         "7"
-        ],
-        [
-         "10",
-         "9",
-         "8"
-        ],
-        [
-         "2"
-        ]
-       ],
-       "combos": 6,
-       "cost": 6.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 3,
-       "class_text": "Clm 10000n2L",
-       "kind": "standard",
-       "A": [
-        "3",
-        "7"
-       ],
-       "B": [
-        "2",
-        "5",
-        "4"
-       ],
-       "favorite": "2",
-       "price_leg": true,
-       "probs": {
-        "2": 0.272,
-        "7": 0.1568,
-        "3": 0.1804,
-        "4": 0.1524,
-        "5": 0.1567,
-        "6": 0.0817
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 27%",
-        "H4 A=['2', '3', '7'] (61%) B=['5', '4'] (92%) targets 55%/78%",
-        "H5 vulnerable favourite #2 (8/5): model 25% vs ML 32%; hits P2 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 4,
-       "class_text": "MC 17500  5 Furlongs 2yo Fillies Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "11",
-        "7"
-       ],
-       "B": [
-        "10",
-        "9",
-        "8"
-       ],
-       "favorite": "10",
-       "price_leg": true,
-       "probs": {
-        "11": 0.3157,
-        "7": 0.1139,
-        "9": 0.1119,
-        "10": 0.1157,
-        "8": 0.071,
-        "2": 0.0497,
-        "1": 0.0563,
-        "5": 0.04,
-        "3": 0.0506,
-        "6": 0.0412,
-        "12": 0.0339
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #11 32%",
-        "H4 A=['11', '10', '7'] (55%) B=['9', '8'] (73%) targets 55%/78%",
-        "H5 vulnerable favourite #10 (7/2): ranks 4 by score; model 8% vs ML 18%; hits P2,F5,V1 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 5,
-       "class_text": "MC 12500",
-       "kind": "single",
-       "A": [
-        "2"
-       ],
-       "B": [],
-       "favorite": "2",
-       "price_leg": false,
-       "probs": {
-        "2": 0.8238,
-        "3": 0.1762
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 82%",
-        "H2 single #2: prob 82%, 46.8 pts clear"
+        "H4 A=['5', '4'] (67%) B=['6'] (80%) targets 55%/78%",
+        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 31%; hits V1 -> demoted to B; price leg"
        ]
       }
      ]
@@ -28335,7 +29628,9 @@
      "price_legs": 2,
      "ml_parlay": 39.6,
      "all_favorites_prob": 0.0248,
-     "notes": [],
+     "notes": [
+      "H10 offered on the R2 menu at $1.00"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -28482,321 +29777,6 @@
      ]
     },
     {
-     "name": "Pick 3 R5-R7",
-     "races": [
-      5,
-      6,
-      7
-     ],
-     "base": 1.0,
-     "budget": 60.0,
-     "cost": 3.0,
-     "cost_before_trim": 3.0,
-     "hit_prob": 0.3921,
-     "score": 0.7941,
-     "singles": 2,
-     "price_legs": 1,
-     "ml_parlay": 31.5,
-     "all_favorites_prob": 0.017,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "2"
-        ],
-        [
-         "5"
-        ],
-        [
-         "4"
-        ]
-       ],
-       "combos": 1,
-       "cost": 1.0
-      },
-      {
-       "name": "backup: B in R6",
-       "legs": [
-        [
-         "2"
-        ],
-        [
-         "4",
-         "6"
-        ],
-        [
-         "4"
-        ]
-       ],
-       "combos": 2,
-       "cost": 2.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 5,
-       "class_text": "MC 12500",
-       "kind": "single",
-       "A": [
-        "2"
-       ],
-       "B": [],
-       "favorite": "2",
-       "price_leg": false,
-       "probs": {
-        "2": 0.8238,
-        "3": 0.1762
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 82%",
-        "H2 single #2: prob 82%, 46.8 pts clear"
-       ]
-      },
-      {
-       "race_no": 6,
-       "class_text": "Clm 17500b",
-       "kind": "standard",
-       "A": [
-        "5"
-       ],
-       "B": [
-        "4",
-        "6"
-       ],
-       "favorite": "4",
-       "price_leg": true,
-       "probs": {
-        "5": 0.5043,
-        "6": 0.1356,
-        "3": 0.1321,
-        "4": 0.1858,
-        "2": 0.0422
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
-        "H2 #5 would be a single but carries S6; spread instead",
-        "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 7,
-       "class_text": "Moc 50000",
-       "kind": "single",
-       "A": [
-        "4"
-       ],
-       "B": [],
-       "favorite": "7",
-       "price_leg": false,
-       "probs": {
-        "4": 0.5765,
-        "3": 0.05,
-        "2": 0.0741,
-        "7": 0.1108,
-        "8": 0.0402,
-        "5": 0.0428,
-        "6": 0.0284,
-        "9": 0.0259,
-        "1": 0.0514
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #4 58%",
-        "H2 single #4: prob 58%, 51.2 pts clear"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 3 R9-R11",
-     "races": [
-      9,
-      10,
-      11
-     ],
-     "base": 1.0,
-     "budget": 60.0,
-     "cost": 28.0,
-     "cost_before_trim": 28.0,
-     "hit_prob": 0.3476,
-     "score": 0.7125,
-     "singles": 0,
-     "price_legs": 3,
-     "ml_parlay": 72.0,
-     "all_favorites_prob": 0.0067,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "3"
-        ],
-        [
-         "7",
-         "2"
-        ],
-        [
-         "4",
-         "2"
-        ]
-       ],
-       "combos": 4,
-       "cost": 4.0
-      },
-      {
-       "name": "backup: B in R9",
-       "legs": [
-        [
-         "1",
-         "5",
-         "4"
-        ],
-        [
-         "7",
-         "2"
-        ],
-        [
-         "4",
-         "2"
-        ]
-       ],
-       "combos": 12,
-       "cost": 12.0
-      },
-      {
-       "name": "backup: B in R10",
-       "legs": [
-        [
-         "3"
-        ],
-        [
-         "6",
-         "5",
-         "9"
-        ],
-        [
-         "4",
-         "2"
-        ]
-       ],
-       "combos": 6,
-       "cost": 6.0
-      },
-      {
-       "name": "backup: B in R11",
-       "legs": [
-        [
-         "3"
-        ],
-        [
-         "7",
-         "2"
-        ],
-        [
-         "8",
-         "6",
-         "7"
-        ]
-       ],
-       "combos": 6,
-       "cost": 6.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 9,
-       "class_text": "Clm 17500b",
-       "kind": "standard",
-       "A": [
-        "3"
-       ],
-       "B": [
-        "1",
-        "5",
-        "4"
-       ],
-       "favorite": "1",
-       "price_leg": true,
-       "probs": {
-        "3": 0.3522,
-        "1": 0.2461,
-        "4": 0.1467,
-        "5": 0.1514,
-        "2": 0.1036
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #3 35%",
-        "H4 A=['3', '1'] (60%) B=['5', '4'] (90%) targets 55%/78%",
-        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 22% vs ML 29% -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 10,
-       "class_text": "Hcp 60000",
-       "kind": "standard",
-       "A": [
-        "7",
-        "2"
-       ],
-       "B": [
-        "6",
-        "5",
-        "9"
-       ],
-       "favorite": "6",
-       "price_leg": true,
-       "probs": {
-        "7": 0.2853,
-        "6": 0.2586,
-        "5": 0.1083,
-        "9": 0.1034,
-        "2": 0.1253,
-        "3": 0.0684,
-        "4": 0.0506
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #7 29%",
-        "H4 A=['7', '6', '2'] (67%) B=['5', '9'] (88%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (5/2): ranks 2 by score; hits S6 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 11,
-       "class_text": "Clm 20000  1m70yds 3&up Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "4",
-        "2"
-       ],
-       "B": [
-        "8",
-        "6",
-        "7"
-       ],
-       "favorite": "8",
-       "price_leg": true,
-       "probs": {
-        "4": 0.3418,
-        "2": 0.2356,
-        "6": 0.0946,
-        "5": 0.0585,
-        "7": 0.0719,
-        "8": 0.1059,
-        "3": 0.0487,
-        "1": 0.0429
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #4 34%",
-        "H4 A=['4', '2'] (58%) B=['8', '6', '7'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #8 (5/2): ranks 6 by score; model 4% vs ML 22%; hits V1 -> stays B; price leg"
-       ]
-      }
-     ]
-    },
-    {
      "name": "Pick 3 R6-R8",
      "races": [
       6,
@@ -28807,13 +29787,15 @@
      "budget": 60.0,
      "cost": 10.0,
      "cost_before_trim": 10.0,
-     "hit_prob": 0.3201,
-     "score": 0.6801,
+     "hit_prob": 0.3121,
+     "score": 0.6631,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 94.5,
-     "all_favorites_prob": 0.0042,
-     "notes": [],
+     "all_favorites_prob": 0.004,
+     "notes": [
+      "H10 offered on the R6 menu at $1.00"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -28885,17 +29867,18 @@
        "favorite": "4",
        "price_leg": true,
        "probs": {
-        "5": 0.5043,
-        "6": 0.1356,
-        "3": 0.1321,
-        "4": 0.1858,
-        "2": 0.0422
+        "5": 0.4924,
+        "6": 0.1319,
+        "3": 0.1283,
+        "4": 0.1799,
+        "2": 0.041,
+        "1": 0.0264
        },
        "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
+        "H1 blended probabilities (model 65% / ML 35%); top #5 49%",
         "H2 #5 would be a single but carries S6; spread instead",
-        "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
+        "H4 A=['5', '4'] (67%) B=['6'] (80%) targets 55%/78%",
+        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 31%; hits V1 -> demoted to B; price leg"
        ]
       },
       {
@@ -28969,13 +29952,15 @@
      "budget": 60.0,
      "cost": 12.0,
      "cost_before_trim": 12.0,
-     "hit_prob": 0.2928,
-     "score": 0.6222,
+     "hit_prob": 0.2822,
+     "score": 0.5997,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 126.0,
-     "all_favorites_prob": 0.0055,
-     "notes": [],
+     "all_favorites_prob": 0.0049,
+     "notes": [
+      "H10 offered on the R7 menu at $1.00"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -29107,16 +30092,17 @@
        "favorite": "1",
        "price_leg": true,
        "probs": {
-        "3": 0.3522,
-        "1": 0.2461,
-        "4": 0.1467,
-        "5": 0.1514,
-        "2": 0.1036
+        "3": 0.3463,
+        "1": 0.2205,
+        "4": 0.1434,
+        "5": 0.145,
+        "2": 0.1004,
+        "6": 0.0444
        },
        "audit": [
         "H1 blended probabilities (model 65% / ML 35%); top #3 35%",
-        "H4 A=['3', '1'] (60%) B=['5', '4'] (90%) targets 55%/78%",
-        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 22% vs ML 29% -> demoted to B; price leg"
+        "H4 A=['3', '1'] (57%) B=['5', '4'] (86%) targets 55%/78%",
+        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 20% vs ML 27%; hits V1 -> demoted to B; price leg"
        ]
       }
      ]
@@ -29132,13 +30118,15 @@
      "budget": 60.0,
      "cost": 30.0,
      "cost_before_trim": 30.0,
-     "hit_prob": 0.2708,
-     "score": 0.5552,
+     "hit_prob": 0.2622,
+     "score": 0.5376,
      "singles": 0,
      "price_legs": 3,
      "ml_parlay": 162.0,
-     "all_favorites_prob": 0.0128,
-     "notes": [],
+     "all_favorites_prob": 0.0115,
+     "notes": [
+      "H10 offered on the R8 menu at $1.00"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -29266,16 +30254,17 @@
        "favorite": "1",
        "price_leg": true,
        "probs": {
-        "3": 0.3522,
-        "1": 0.2461,
-        "4": 0.1467,
-        "5": 0.1514,
-        "2": 0.1036
+        "3": 0.3463,
+        "1": 0.2205,
+        "4": 0.1434,
+        "5": 0.145,
+        "2": 0.1004,
+        "6": 0.0444
        },
        "audit": [
         "H1 blended probabilities (model 65% / ML 35%); top #3 35%",
-        "H4 A=['3', '1'] (60%) B=['5', '4'] (90%) targets 55%/78%",
-        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 22% vs ML 29% -> demoted to B; price leg"
+        "H4 A=['3', '1'] (57%) B=['5', '4'] (86%) targets 55%/78%",
+        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 20% vs ML 27%; hits V1 -> demoted to B; price leg"
        ]
       },
       {
@@ -29328,7 +30317,9 @@
     "price_legs": 2,
     "ml_parlay": 32.4,
     "all_favorites_prob": 0.0398,
-    "notes": [],
+    "notes": [
+     "H10 offered on the R1 menu at $1.00"
+    ],
     "tickets": [
      {
       "name": "main (all A)",
@@ -29472,6 +30463,11 @@
   },
   "pick4": {
    "label": "Pick 4",
+   "offered": {
+    "2": 0.5,
+    "4": 0.5,
+    "8": 0.5
+   },
    "windows": [
     {
      "name": "Pick 4 R2-R5",
@@ -29491,7 +30487,9 @@
      "price_legs": 2,
      "ml_parlay": 59.4,
      "all_favorites_prob": 0.0204,
-     "notes": [],
+     "notes": [
+      "H10 offered on the R2 menu at $0.50"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -29661,645 +30659,6 @@
        "audit": [
         "H1 blended probabilities (model 65% / ML 35%); top #2 82%",
         "H2 single #2: prob 82%, 46.8 pts clear"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 4 R5-R8",
-     "races": [
-      5,
-      6,
-      7,
-      8
-     ],
-     "base": 0.5,
-     "budget": 100.0,
-     "cost": 5.0,
-     "cost_before_trim": 5.0,
-     "hit_prob": 0.2637,
-     "score": 0.6723,
-     "singles": 2,
-     "price_legs": 2,
-     "ml_parlay": 141.75,
-     "all_favorites_prob": 0.0034,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "2"
-        ],
-        [
-         "5"
-        ],
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ]
-       ],
-       "combos": 2,
-       "cost": 1.0
-      },
-      {
-       "name": "backup: B in R6",
-       "legs": [
-        [
-         "2"
-        ],
-        [
-         "4",
-         "6"
-        ],
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ]
-       ],
-       "combos": 4,
-       "cost": 2.0
-      },
-      {
-       "name": "backup: B in R8",
-       "legs": [
-        [
-         "2"
-        ],
-        [
-         "5"
-        ],
-        [
-         "4"
-        ],
-        [
-         "8",
-         "5",
-         "4",
-         "6"
-        ]
-       ],
-       "combos": 4,
-       "cost": 2.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 5,
-       "class_text": "MC 12500",
-       "kind": "single",
-       "A": [
-        "2"
-       ],
-       "B": [],
-       "favorite": "2",
-       "price_leg": false,
-       "probs": {
-        "2": 0.8238,
-        "3": 0.1762
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 82%",
-        "H2 single #2: prob 82%, 46.8 pts clear"
-       ]
-      },
-      {
-       "race_no": 6,
-       "class_text": "Clm 17500b",
-       "kind": "standard",
-       "A": [
-        "5"
-       ],
-       "B": [
-        "4",
-        "6"
-       ],
-       "favorite": "4",
-       "price_leg": true,
-       "probs": {
-        "5": 0.5043,
-        "6": 0.1356,
-        "3": 0.1321,
-        "4": 0.1858,
-        "2": 0.0422
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
-        "H2 #5 would be a single but carries S6; spread instead",
-        "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 7,
-       "class_text": "Moc 50000",
-       "kind": "single",
-       "A": [
-        "4"
-       ],
-       "B": [],
-       "favorite": "7",
-       "price_leg": false,
-       "probs": {
-        "4": 0.5765,
-        "3": 0.05,
-        "2": 0.0741,
-        "7": 0.1108,
-        "8": 0.0402,
-        "5": 0.0428,
-        "6": 0.0284,
-        "9": 0.0259,
-        "1": 0.0514
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #4 58%",
-        "H2 single #4: prob 58%, 51.2 pts clear"
-       ]
-      },
-      {
-       "race_no": 8,
-       "class_text": "Hcp 60000  1m70yds 3&up, F & M Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "3",
-        "7"
-       ],
-       "B": [
-        "8",
-        "5",
-        "4",
-        "6"
-       ],
-       "favorite": "8",
-       "price_leg": true,
-       "probs": {
-        "3": 0.2343,
-        "8": 0.2019,
-        "7": 0.1416,
-        "6": 0.0918,
-        "5": 0.0987,
-        "2": 0.0771,
-        "1": 0.0616,
-        "4": 0.093
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #3 23%",
-        "H4 A=['3', '8', '7'] (58%) B=['5', '4', '6'] (86%) targets 55%/78%",
-        "H5 vulnerable favourite #8 (5/2): ranks 2 by score -> demoted to B; price leg"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 4 R1-R4",
-     "races": [
-      1,
-      2,
-      3,
-      4
-     ],
-     "base": 0.5,
-     "budget": 100.0,
-     "cost": 18.0,
-     "cost_before_trim": 18.0,
-     "hit_prob": 0.2456,
-     "score": 0.6295,
-     "singles": 1,
-     "price_legs": 3,
-     "ml_parlay": 89.1,
-     "all_favorites_prob": 0.0046,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "2",
-         "6"
-        ],
-        [
-         "2"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "11",
-         "7"
-        ]
-       ],
-       "combos": 8,
-       "cost": 4.0
-      },
-      {
-       "name": "backup: B in R1",
-       "legs": [
-        [
-         "8"
-        ],
-        [
-         "2"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "11",
-         "7"
-        ]
-       ],
-       "combos": 4,
-       "cost": 2.0
-      },
-      {
-       "name": "backup: B in R3",
-       "legs": [
-        [
-         "2",
-         "6"
-        ],
-        [
-         "2"
-        ],
-        [
-         "2",
-         "5",
-         "4"
-        ],
-        [
-         "11",
-         "7"
-        ]
-       ],
-       "combos": 12,
-       "cost": 6.0
-      },
-      {
-       "name": "backup: B in R4",
-       "legs": [
-        [
-         "2",
-         "6"
-        ],
-        [
-         "2"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "10",
-         "9",
-         "8"
-        ]
-       ],
-       "combos": 12,
-       "cost": 6.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 1,
-       "class_text": "Mdn 50k  5 Furlongs 2yo Fillies Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "2",
-        "6"
-       ],
-       "B": [
-        "8"
-       ],
-       "favorite": "8",
-       "price_leg": true,
-       "probs": {
-        "2": 0.3238,
-        "6": 0.251,
-        "8": 0.1857,
-        "9": 0.033,
-        "5": 0.0565,
-        "10": 0.0373,
-        "3": 0.0289,
-        "4": 0.0246,
-        "7": 0.0242,
-        "1": 0.035
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 32%",
-        "H4 A=['2', '6'] (57%) B=['8'] (76%) targets 55%/78%",
-        "H5 vulnerable favourite #8 (9/5): ranks 3 by score; model 14% vs ML 28%; hits V1 -> stays B; price leg"
-       ]
-      },
-      {
-       "race_no": 2,
-       "class_text": "MC 12500",
-       "kind": "single",
-       "A": [
-        "2"
-       ],
-       "B": [],
-       "favorite": "2",
-       "price_leg": false,
-       "probs": {
-        "2": 0.7885,
-        "6": 0.0773,
-        "3": 0.1019,
-        "5": 0.0322
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 79%",
-        "H2 single #2: prob 79%, 53.8 pts clear (ML 3/5, short price but the saving buys coverage elsewhere)"
-       ]
-      },
-      {
-       "race_no": 3,
-       "class_text": "Clm 10000n2L",
-       "kind": "standard",
-       "A": [
-        "3",
-        "7"
-       ],
-       "B": [
-        "2",
-        "5",
-        "4"
-       ],
-       "favorite": "2",
-       "price_leg": true,
-       "probs": {
-        "2": 0.272,
-        "7": 0.1568,
-        "3": 0.1804,
-        "4": 0.1524,
-        "5": 0.1567,
-        "6": 0.0817
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 27%",
-        "H4 A=['2', '3', '7'] (61%) B=['5', '4'] (92%) targets 55%/78%",
-        "H5 vulnerable favourite #2 (8/5): model 25% vs ML 32%; hits P2 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 4,
-       "class_text": "MC 17500  5 Furlongs 2yo Fillies Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "11",
-        "7"
-       ],
-       "B": [
-        "10",
-        "9",
-        "8"
-       ],
-       "favorite": "10",
-       "price_leg": true,
-       "probs": {
-        "11": 0.3157,
-        "7": 0.1139,
-        "9": 0.1119,
-        "10": 0.1157,
-        "8": 0.071,
-        "2": 0.0497,
-        "1": 0.0563,
-        "5": 0.04,
-        "3": 0.0506,
-        "6": 0.0412,
-        "12": 0.0339
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #11 32%",
-        "H4 A=['11', '10', '7'] (55%) B=['9', '8'] (73%) targets 55%/78%",
-        "H5 vulnerable favourite #10 (7/2): ranks 4 by score; model 8% vs ML 18%; hits P2,F5,V1 -> demoted to B; price leg"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 4 R3-R6",
-     "races": [
-      3,
-      4,
-      5,
-      6
-     ],
-     "base": 0.5,
-     "budget": 100.0,
-     "cost": 12.0,
-     "cost_before_trim": 12.0,
-     "hit_prob": 0.2441,
-     "score": 0.6254,
-     "singles": 1,
-     "price_legs": 3,
-     "ml_parlay": 111.38,
-     "all_favorites_prob": 0.0048,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "3",
-         "7"
-        ],
-        [
-         "11",
-         "7"
-        ],
-        [
-         "2"
-        ],
-        [
-         "5"
-        ]
-       ],
-       "combos": 4,
-       "cost": 2.0
-      },
-      {
-       "name": "backup: B in R3",
-       "legs": [
-        [
-         "2",
-         "5",
-         "4"
-        ],
-        [
-         "11",
-         "7"
-        ],
-        [
-         "2"
-        ],
-        [
-         "5"
-        ]
-       ],
-       "combos": 6,
-       "cost": 3.0
-      },
-      {
-       "name": "backup: B in R4",
-       "legs": [
-        [
-         "3",
-         "7"
-        ],
-        [
-         "10",
-         "9",
-         "8"
-        ],
-        [
-         "2"
-        ],
-        [
-         "5"
-        ]
-       ],
-       "combos": 6,
-       "cost": 3.0
-      },
-      {
-       "name": "backup: B in R6",
-       "legs": [
-        [
-         "3",
-         "7"
-        ],
-        [
-         "11",
-         "7"
-        ],
-        [
-         "2"
-        ],
-        [
-         "4",
-         "6"
-        ]
-       ],
-       "combos": 8,
-       "cost": 4.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 3,
-       "class_text": "Clm 10000n2L",
-       "kind": "standard",
-       "A": [
-        "3",
-        "7"
-       ],
-       "B": [
-        "2",
-        "5",
-        "4"
-       ],
-       "favorite": "2",
-       "price_leg": true,
-       "probs": {
-        "2": 0.272,
-        "7": 0.1568,
-        "3": 0.1804,
-        "4": 0.1524,
-        "5": 0.1567,
-        "6": 0.0817
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 27%",
-        "H4 A=['2', '3', '7'] (61%) B=['5', '4'] (92%) targets 55%/78%",
-        "H5 vulnerable favourite #2 (8/5): model 25% vs ML 32%; hits P2 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 4,
-       "class_text": "MC 17500  5 Furlongs 2yo Fillies Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "11",
-        "7"
-       ],
-       "B": [
-        "10",
-        "9",
-        "8"
-       ],
-       "favorite": "10",
-       "price_leg": true,
-       "probs": {
-        "11": 0.3157,
-        "7": 0.1139,
-        "9": 0.1119,
-        "10": 0.1157,
-        "8": 0.071,
-        "2": 0.0497,
-        "1": 0.0563,
-        "5": 0.04,
-        "3": 0.0506,
-        "6": 0.0412,
-        "12": 0.0339
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #11 32%",
-        "H4 A=['11', '10', '7'] (55%) B=['9', '8'] (73%) targets 55%/78%",
-        "H5 vulnerable favourite #10 (7/2): ranks 4 by score; model 8% vs ML 18%; hits P2,F5,V1 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 5,
-       "class_text": "MC 12500",
-       "kind": "single",
-       "A": [
-        "2"
-       ],
-       "B": [],
-       "favorite": "2",
-       "price_leg": false,
-       "probs": {
-        "2": 0.8238,
-        "3": 0.1762
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #2 82%",
-        "H2 single #2: prob 82%, 46.8 pts clear"
-       ]
-      },
-      {
-       "race_no": 6,
-       "class_text": "Clm 17500b",
-       "kind": "standard",
-       "A": [
-        "5"
-       ],
-       "B": [
-        "4",
-        "6"
-       ],
-       "favorite": "4",
-       "price_leg": true,
-       "probs": {
-        "5": 0.5043,
-        "6": 0.1356,
-        "3": 0.1321,
-        "4": 0.1858,
-        "2": 0.0422
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
-        "H2 #5 would be a single but carries S6; spread instead",
-        "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
        ]
       }
      ]
@@ -30316,13 +30675,15 @@
      "budget": 100.0,
      "cost": 4.5,
      "cost_before_trim": 4.5,
-     "hit_prob": 0.24,
-     "score": 0.6119,
+     "hit_prob": 0.2339,
+     "score": 0.5965,
      "singles": 2,
      "price_legs": 2,
      "ml_parlay": 86.62,
-     "all_favorites_prob": 0.002,
-     "notes": [],
+     "all_favorites_prob": 0.0019,
+     "notes": [
+      "H10 offered on the R4 menu at $0.50"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -30455,17 +30816,18 @@
        "favorite": "4",
        "price_leg": true,
        "probs": {
-        "5": 0.5043,
-        "6": 0.1356,
-        "3": 0.1321,
-        "4": 0.1858,
-        "2": 0.0422
+        "5": 0.4924,
+        "6": 0.1319,
+        "3": 0.1283,
+        "4": 0.1799,
+        "2": 0.041,
+        "1": 0.0264
        },
        "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
+        "H1 blended probabilities (model 65% / ML 35%); top #5 49%",
         "H2 #5 would be a single but carries S6; spread instead",
-        "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
+        "H4 A=['5', '4'] (67%) B=['6'] (80%) targets 55%/78%",
+        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 31%; hits V1 -> demoted to B; price leg"
        ]
       },
       {
@@ -30492,227 +30854,6 @@
        "audit": [
         "H1 blended probabilities (model 65% / ML 35%); top #4 58%",
         "H2 single #4: prob 58%, 51.2 pts clear"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 4 R6-R9",
-     "races": [
-      6,
-      7,
-      8,
-      9
-     ],
-     "base": 0.5,
-     "budget": 100.0,
-     "cost": 8.0,
-     "cost_before_trim": 8.0,
-     "hit_prob": 0.1722,
-     "score": 0.4413,
-     "singles": 1,
-     "price_legs": 3,
-     "ml_parlay": 189.0,
-     "all_favorites_prob": 0.001,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "5"
-        ],
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "3"
-        ]
-       ],
-       "combos": 2,
-       "cost": 1.0
-      },
-      {
-       "name": "backup: B in R6",
-       "legs": [
-        [
-         "4",
-         "6"
-        ],
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "3"
-        ]
-       ],
-       "combos": 4,
-       "cost": 2.0
-      },
-      {
-       "name": "backup: B in R8",
-       "legs": [
-        [
-         "5"
-        ],
-        [
-         "4"
-        ],
-        [
-         "8",
-         "5",
-         "4",
-         "6"
-        ],
-        [
-         "3"
-        ]
-       ],
-       "combos": 4,
-       "cost": 2.0
-      },
-      {
-       "name": "backup: B in R9",
-       "legs": [
-        [
-         "5"
-        ],
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "1",
-         "5",
-         "4"
-        ]
-       ],
-       "combos": 6,
-       "cost": 3.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 6,
-       "class_text": "Clm 17500b",
-       "kind": "standard",
-       "A": [
-        "5"
-       ],
-       "B": [
-        "4",
-        "6"
-       ],
-       "favorite": "4",
-       "price_leg": true,
-       "probs": {
-        "5": 0.5043,
-        "6": 0.1356,
-        "3": 0.1321,
-        "4": 0.1858,
-        "2": 0.0422
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #5 50%",
-        "H2 #5 would be a single but carries S6; spread instead",
-        "H4 A=['5', '4'] (69%) B=['6'] (83%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (8/5): ranks 4 by score; model 11% vs ML 33%; hits V1 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 7,
-       "class_text": "Moc 50000",
-       "kind": "single",
-       "A": [
-        "4"
-       ],
-       "B": [],
-       "favorite": "7",
-       "price_leg": false,
-       "probs": {
-        "4": 0.5765,
-        "3": 0.05,
-        "2": 0.0741,
-        "7": 0.1108,
-        "8": 0.0402,
-        "5": 0.0428,
-        "6": 0.0284,
-        "9": 0.0259,
-        "1": 0.0514
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #4 58%",
-        "H2 single #4: prob 58%, 51.2 pts clear"
-       ]
-      },
-      {
-       "race_no": 8,
-       "class_text": "Hcp 60000  1m70yds 3&up, F & M Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "3",
-        "7"
-       ],
-       "B": [
-        "8",
-        "5",
-        "4",
-        "6"
-       ],
-       "favorite": "8",
-       "price_leg": true,
-       "probs": {
-        "3": 0.2343,
-        "8": 0.2019,
-        "7": 0.1416,
-        "6": 0.0918,
-        "5": 0.0987,
-        "2": 0.0771,
-        "1": 0.0616,
-        "4": 0.093
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #3 23%",
-        "H4 A=['3', '8', '7'] (58%) B=['5', '4', '6'] (86%) targets 55%/78%",
-        "H5 vulnerable favourite #8 (5/2): ranks 2 by score -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 9,
-       "class_text": "Clm 17500b",
-       "kind": "standard",
-       "A": [
-        "3"
-       ],
-       "B": [
-        "1",
-        "5",
-        "4"
-       ],
-       "favorite": "1",
-       "price_leg": true,
-       "probs": {
-        "3": 0.3522,
-        "1": 0.2461,
-        "4": 0.1467,
-        "5": 0.1514,
-        "2": 0.1036
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #3 35%",
-        "H4 A=['3', '1'] (60%) B=['5', '4'] (90%) targets 55%/78%",
-        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 22% vs ML 29% -> demoted to B; price leg"
        ]
       }
      ]
@@ -30729,13 +30870,15 @@
      "budget": 100.0,
      "cost": 36.0,
      "cost_before_trim": 36.0,
-     "hit_prob": 0.1712,
-     "score": 0.4108,
+     "hit_prob": 0.166,
+     "score": 0.3983,
      "singles": 0,
      "price_legs": 4,
      "ml_parlay": 324.0,
-     "all_favorites_prob": 0.0014,
-     "notes": [],
+     "all_favorites_prob": 0.0012,
+     "notes": [
+      "H10 offered on the R8 menu at $0.50"
+     ],
      "tickets": [
       {
        "name": "main (all A)",
@@ -30902,16 +31045,17 @@
        "favorite": "1",
        "price_leg": true,
        "probs": {
-        "3": 0.3522,
-        "1": 0.2461,
-        "4": 0.1467,
-        "5": 0.1514,
-        "2": 0.1036
+        "3": 0.3463,
+        "1": 0.2205,
+        "4": 0.1434,
+        "5": 0.145,
+        "2": 0.1004,
+        "6": 0.0444
        },
        "audit": [
         "H1 blended probabilities (model 65% / ML 35%); top #3 35%",
-        "H4 A=['3', '1'] (60%) B=['5', '4'] (90%) targets 55%/78%",
-        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 22% vs ML 29% -> demoted to B; price leg"
+        "H4 A=['3', '1'] (57%) B=['5', '4'] (86%) targets 55%/78%",
+        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 20% vs ML 27%; hits V1 -> demoted to B; price leg"
        ]
       },
       {
@@ -30976,234 +31120,6 @@
        ]
       }
      ]
-    },
-    {
-     "name": "Pick 4 R7-R10",
-     "races": [
-      7,
-      8,
-      9,
-      10
-     ],
-     "base": 0.5,
-     "budget": 100.0,
-     "cost": 15.0,
-     "cost_before_trim": 15.0,
-     "hit_prob": 0.1561,
-     "score": 0.4001,
-     "singles": 1,
-     "price_legs": 3,
-     "ml_parlay": 283.5,
-     "all_favorites_prob": 0.0014,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "3"
-        ],
-        [
-         "7",
-         "2"
-        ]
-       ],
-       "combos": 4,
-       "cost": 2.0
-      },
-      {
-       "name": "backup: B in R8",
-       "legs": [
-        [
-         "4"
-        ],
-        [
-         "8",
-         "5",
-         "4",
-         "6"
-        ],
-        [
-         "3"
-        ],
-        [
-         "7",
-         "2"
-        ]
-       ],
-       "combos": 8,
-       "cost": 4.0
-      },
-      {
-       "name": "backup: B in R9",
-       "legs": [
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "1",
-         "5",
-         "4"
-        ],
-        [
-         "7",
-         "2"
-        ]
-       ],
-       "combos": 12,
-       "cost": 6.0
-      },
-      {
-       "name": "backup: B in R10",
-       "legs": [
-        [
-         "4"
-        ],
-        [
-         "3",
-         "7"
-        ],
-        [
-         "3"
-        ],
-        [
-         "6",
-         "5",
-         "9"
-        ]
-       ],
-       "combos": 6,
-       "cost": 3.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 7,
-       "class_text": "Moc 50000",
-       "kind": "single",
-       "A": [
-        "4"
-       ],
-       "B": [],
-       "favorite": "7",
-       "price_leg": false,
-       "probs": {
-        "4": 0.5765,
-        "3": 0.05,
-        "2": 0.0741,
-        "7": 0.1108,
-        "8": 0.0402,
-        "5": 0.0428,
-        "6": 0.0284,
-        "9": 0.0259,
-        "1": 0.0514
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #4 58%",
-        "H2 single #4: prob 58%, 51.2 pts clear"
-       ]
-      },
-      {
-       "race_no": 8,
-       "class_text": "Hcp 60000  1m70yds 3&up, F & M Saturday, November 07, 2026",
-       "kind": "standard",
-       "A": [
-        "3",
-        "7"
-       ],
-       "B": [
-        "8",
-        "5",
-        "4",
-        "6"
-       ],
-       "favorite": "8",
-       "price_leg": true,
-       "probs": {
-        "3": 0.2343,
-        "8": 0.2019,
-        "7": 0.1416,
-        "6": 0.0918,
-        "5": 0.0987,
-        "2": 0.0771,
-        "1": 0.0616,
-        "4": 0.093
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #3 23%",
-        "H4 A=['3', '8', '7'] (58%) B=['5', '4', '6'] (86%) targets 55%/78%",
-        "H5 vulnerable favourite #8 (5/2): ranks 2 by score -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 9,
-       "class_text": "Clm 17500b",
-       "kind": "standard",
-       "A": [
-        "3"
-       ],
-       "B": [
-        "1",
-        "5",
-        "4"
-       ],
-       "favorite": "1",
-       "price_leg": true,
-       "probs": {
-        "3": 0.3522,
-        "1": 0.2461,
-        "4": 0.1467,
-        "5": 0.1514,
-        "2": 0.1036
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #3 35%",
-        "H4 A=['3', '1'] (60%) B=['5', '4'] (90%) targets 55%/78%",
-        "H5 vulnerable favourite #1 (2/1): ranks 2 by score; model 22% vs ML 29% -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 10,
-       "class_text": "Hcp 60000",
-       "kind": "standard",
-       "A": [
-        "7",
-        "2"
-       ],
-       "B": [
-        "6",
-        "5",
-        "9"
-       ],
-       "favorite": "6",
-       "price_leg": true,
-       "probs": {
-        "7": 0.2853,
-        "6": 0.2586,
-        "5": 0.1083,
-        "9": 0.1034,
-        "2": 0.1253,
-        "3": 0.0684,
-        "4": 0.0506
-       },
-       "audit": [
-        "H1 blended probabilities (model 65% / ML 35%); top #7 29%",
-        "H4 A=['7', '6', '2'] (67%) B=['5', '9'] (88%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (5/2): ranks 2 by score; hits S6 -> demoted to B; price leg"
-       ]
-      }
-     ]
     }
    ],
    "recommended": {
@@ -31224,7 +31140,9 @@
     "price_legs": 2,
     "ml_parlay": 59.4,
     "all_favorites_prob": 0.0204,
-    "notes": [],
+    "notes": [
+     "H10 offered on the R2 menu at $0.50"
+    ],
     "tickets": [
      {
       "name": "main (all A)",
