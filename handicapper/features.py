@@ -74,6 +74,9 @@ STRONG_WIN_WORDS = [r"drew off", r"driving", r"handily", r"easily", r"ridden out
 GOOD_EFFORT_WORDS = [r"rallied", r"rally", r"closed", r"gamely", r"game", r"willing", r"surged", r"bid", r"dueled",
                      r"held", r"just missed", r"missed", r"nipped", r"outkicked", r"outfinished", r"improved", r"up for",
                      r"late", r"finished well", r"strong"]
+# comment fragments that show the horse was involved in the early pace fight (Brisnet abbreviates heavily)
+DUEL_WORDS = [r"duel", r"vied", r"\bpress", r"\bprss", r"battl", r"fought", r"contest", r"disput", r"hustled",
+              r"set pace", r"\bled\b", r"\bpace\b"]
 BAD_EFFORT_WORDS = [r"no factor", r"no threat", r"no rally", r"no response", r"no menace", r"empty", r"faded", r"tired",
                     r"weakened", r"wknd", r"stopped", r"eased", r"outrun", r"far back", r"dropped back", r"gave way",
                     r"retreated", r"flatten", r"done early", r"trailed", r"no speed", r"never involved", r"lost whip"]
@@ -219,16 +222,19 @@ def horse_features(h: dict, race: dict) -> dict:
             f["itm_streak"] += 1
         else:
             break
-    # 2nd/3rd off the layoff
+    # 2nd/3rd off the layoff: count starts since the most recent 60+ day break *visible in the PPs*.
+    # If no such break is shown, the value is None (unknown / no layoff) - a lightly raced horse with two
+    # tightly spaced starts is simply making its third start, not its "2nd off a layoff".
     f["races_since_layoff"] = summ.get("races_since_layoff")
     if f["races_since_layoff"] is None and len(clean) >= 2:
-        n = 0
+        n, found = 0, False
         for i in range(len(clean) - 1):
             gap = _days_between(clean[i]["date"], clean[i + 1]["date"])
             if gap is not None and gap > 60:
+                found = True
                 break
             n += 1
-        f["races_since_layoff"] = n
+        f["races_since_layoff"] = n if found else None
     # works
     works = h.get("workouts", [])
     f["num_works"] = len(works)
@@ -262,6 +268,43 @@ def horse_features(h: dict, race: dict) -> dict:
     f["sire_mud_pct"] = (ps.get("sire") or {}).get("mud_pct")
     f["dam_dpi"] = (ps.get("dam") or {}).get("dpi")
     f["sire_spi"] = (ps.get("sire") or {}).get("spi")
+
+    # ---- expert trip / intent / condition-book features (consumed by S9, C6-C10, P9, F11-F15, M4)
+    par = (race.get("pars") or {}).get("speed")
+    last3 = clean[:3]
+    f["trouble_last3"] = sum(1 for p in last3 if _has(TROUBLE_WORDS, p.get("comment", ""))
+                             and p.get("beaten_lengths") is not None and p["beaten_lengths"] <= 5)
+    f["last_dueled"] = _has(DUEL_WORDS, f["last_comment"]) or bool(
+        last and last.get("call1", {}).get("pos") in (1, 2) and last.get("call1", {}).get("lengths") is not None
+        and last["call1"]["lengths"] <= 1.0)
+    f["last_favorite"] = bool(last and last.get("favorite"))
+    f["last_beaten_favorite"] = f["last_favorite"] and not f["last_won"]
+    f["last_claimed"] = bool(last and last.get("claimed"))
+    f["last_claim_price"] = (last.get("race_purse_or_price") if (last and f["last_claimed"]) else None)
+    f["today_claiming_price"] = race.get("claiming_price")
+    f["prior_claiming_starts"] = sum(1 for p in pp if p.get("class_code") in ("CLM", "MCL"))
+    f["first_time_for_tag"] = bool(race.get("class_code") == "CLM" and len(pp) >= 2 and f["prior_claiming_starts"] == 0)
+    f["last_maiden_win"] = bool(f["last_won"] and last and last.get("class_code") in ("MSW", "MCL", "MOC"))
+    f["last_maiden_win_claiming"] = bool(f["last_maiden_win"] and last.get("class_code") == "MCL")
+    ct = race.get("class_text") or ""
+    f["today_n1x"] = bool(re.search(r"n1x|nw1|N1X|n1y", ct))
+    f["today_n2l"] = bool(re.search(r"n2L|n2l|N2L", ct))
+    f["last_speed_vs_par"] = (f["last_speed"] - par) if (par is not None and f["last_speed"] is not None) else None
+    f["paired_figs"] = len(spd3) >= 2 and abs(spd3[0] - spd3[1]) <= 2
+    f["best_two_recent"] = max(spd3[:2]) if spd3 else None
+    # back class: has the horse already been competitive at a level above today's (last 10 starts)?
+    lv = [(class_level(p["class_code"], p.get("race_purse_or_price"), p.get("race_type", "")), p) for p in clean[:10]]
+    comp = [l for l, p in lv if l is not None and p.get("beaten_lengths") is not None and p["beaten_lengths"] <= 2]
+    f["best_competitive_level"] = max(comp) if comp else None
+    comp3 = [l for l, p in lv[:3] if l is not None and p.get("beaten_lengths") is not None and p["beaten_lengths"] <= 2]
+    f["back_class"] = bool(f["today_level"] is not None and f["best_competitive_level"] is not None
+                           and f["best_competitive_level"] >= f["today_level"] + 2
+                           and not any(l >= f["today_level"] for l in comp3))
+    f["freshened"] = bool(f["days_since"] is not None and 28 <= f["days_since"] <= 60 and f["declining"]
+                          and f["works_since_last"] >= 2)
+    f["last_lost_fast"] = bool(not f["last_won"] and f["last_speed_vs_par"] is not None and f["last_speed_vs_par"] >= 2
+                               and f["last_beaten"] is not None and f["last_beaten"] >= 4)
+    f["debut_speed"] = spd3[-1] if (f["starts"] == 1 and spd3) else None
 
     # ---- Brisnet QuickPlay comments
     f["positives"] = h.get("positives", [])
@@ -380,6 +423,15 @@ def race_context(race: dict, feats: dict[str, dict]) -> dict:
         ctx["pace_shape"] = "soft"
     else:
         ctx["pace_shape"] = "honest"
+    ctx["best_last3_by_pgm"] = {pgm: f["best_last3"] for pgm, f in feats.items()}
+    # probable pace leader by Brisnet E1 figure (Brohamer / Sartin "pace line" matchup)
+    e1s = sorted(((f["avg_e1"], pgm, f["run_style"]) for pgm, f in feats.items()
+                  if f["avg_e1"] is not None and f["run_style"] in ("E", "E/P")), reverse=True)
+    ctx["e1_leaders"] = [{"pgm": pgm, "avg_e1": v, "run_style": rs} for v, pgm, rs in e1s]
+    # morning-line favourite (lowest ML)
+    mls = [(f["ml_decimal"], pgm) for pgm, f in feats.items() if f.get("ml_decimal") is not None]
+    ctx["ml_favorite"] = min(mls)[1] if mls else None
+    ctx["ml_favorite_odds"] = min(mls)[0] if mls else None
     # bias
     bias = race.get("bias") or {}
     ctx["bias_meet"] = bias.get("meet") or {}
