@@ -25,7 +25,7 @@ from collections import defaultdict
 
 from . import rules as R
 from . import multirace as MR
-from .wagering import DEFAULT_WAGERING, make_wager
+from .wagering import DEFAULT_UNITS, DEFAULT_WAGERING, make_wager
 from .features import horse_features, race_context
 
 DEFAULT_CONFIG = {
@@ -233,7 +233,7 @@ def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
     for i, r in enumerate(out["races"]):
         nxt = out["races"][i + 1] if i + 1 < len(out["races"]) else None
         r["wagers"] = primary_wagers(r, cfg["selection"])
-        r["other_wagers"] = other_wagers(r, nxt, cfg["selection"], r["wagers"])
+        r["other_wagers"] = other_wagers(r, nxt, cfg["selection"], r["wagers"], units=cfg.get("wagering", {}).get("units"))
     out["multirace"] = MR.build_all(out, cfg["multirace"]) if multirace else None
     return out
 
@@ -263,7 +263,7 @@ def primary_wagers(r: dict, sel: dict) -> list[dict]:
     return W
 
 
-def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = None) -> list[str]:
+def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = None, units: dict | None = None) -> list[str]:
     """Exotic / secondary wagers for one race, built from the ranked live horses, the race confidence and the
     leg grading (A/B, vulnerable favourite) when it is available.  Deterministic; every line names the horses.
 
@@ -276,7 +276,7 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
       * low / contentious: no win bet unless an overlay; trifecta box of the top three (four when the 4th is
         within spread_gap); treat the race as a spread leg in the Pick 3 / 4.
       * vulnerable favourite (H5): structure exactas with the favourite underneath only.
-      * daily double: this race's A horses with the next race's A horses (cost in $1 combinations).
+      * daily double: this race's A horses with the next race's A horses (cost at the configured double unit).
     """
     live = [x for x in r["sheets"] if not x["eliminated"] and not x["flags"]]
     if len(live) < 2:
@@ -347,7 +347,8 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
         add("EXACTA", [over, under])
     if leg.get("A") and nxt and (nxt.get("leg") or {}).get("A"):
         na = nxt["leg"]["A"]
-        W.append(f"DAILY DOUBLE {hs(*leg['A'])} with R{nxt['race_no']} {hs(*na)} ({len(set(leg['A'])) * len(set(na))} x $1)")
+        du = float((units or {}).get("DOUBLE", DEFAULT_UNITS["DOUBLE"]))
+        W.append(f"DAILY DOUBLE {hs(*leg['A'])} with R{nxt['race_no']} {hs(*na)} ({len(set(leg['A'])) * len(set(na))} x ${du:g})")
         add("DOUBLE", [list(leg["A"]), list(na)], races=[r["race_no"], nxt["race_no"]])
     return W
 

@@ -47,7 +47,7 @@ sys.path.insert(0, ROOT)
 from handicapper.engine import format_report, load_config   # noqa: E402
 from handicapper.pipeline import run_card                     # noqa: E402
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
-from handicapper.wagering import evaluate_card, format_evaluation, rollup  # noqa: E402
+from handicapper.wagering import evaluate_card, format_evaluation, format_units, rollup, units_table  # noqa: E402
 from ocr_results import ocr_folder   # noqa: E402
 
 STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
@@ -272,7 +272,9 @@ class Desk:
 
     # ---------------------------------------------------------------- analysis
     def analysis(self) -> dict:
-        cfg = load_config(self.config)["wagering"]
+        full = load_config(self.config)
+        cfg = full["wagering"]
+        units = units_table(cfg) | {"PICK3": full["multirace"]["pick3"]["base"], "PICK4": full["multirace"]["pick4"]["base"]}
         evals, cards, rules = [], [], {}
         bench = {"races": 0, "engine_wins": 0, "brisnet_wins": 0, "brisnet_top3": 0, "best_bets": 0, "best_bet_wins": 0}
         for c in self.cards():
@@ -306,7 +308,8 @@ class Desk:
         for ev in evals:
             for x in ev["rows"]:
                 rows.append(dict(x, card=ev["card_code"], track=ev["track_code"], date=ev.get("date")))
-        return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench, "unit": cfg["unit"]}
+        return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench,
+                "units": units, "units_text": format_units(units)}
 
     # ---------------------------------------------------------------- uploads
     def save_upload(self, card: str, kind: str, filename: str, data: bytes, race_no: int | None = None) -> dict:

@@ -77,17 +77,33 @@ class TestCard(unittest.TestCase):
                                "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "1/3", "payout": 20.0}]},
                               {"race_no": 5, "finish": ["1", "2", "3"], "win": 3.6}]}
         ev = evaluate_card(res, results, CFG["wagering"])
-        self.assertEqual(ev["unit"], 1.0)
+        self.assertEqual(ev["units"]["WIN"], 2.0)
+        self.assertEqual(ev["units"]["SUPERFECTA"], 0.10)
         r2 = [x for x in ev["rows"] if x["race_no"] == 2 and len(x["races"]) == 1]
-        self.assertTrue(any(x["type"] == "WIN" and x["hit"] and x["ret"] == 4.0 for x in r2))
-        self.assertTrue(any(x["type"] == "EXACTA" and x["hit"] and x["ret"] == 20.0 for x in r2))
+        # $2 win stake returns the $2 payout; $1 exacta returns the per-dollar payout
+        self.assertTrue(any(x["type"] == "WIN" and x["hit"] and x["unit"] == 2.0 and x["cost"] == 2.0 and x["ret"] == 8.0 for x in r2))
+        self.assertTrue(any(x["type"] == "EXACTA" and x["hit"] and x["unit"] == 1.0 and x["ret"] == 20.0 for x in r2))
+        for x in ev["rows"]:
+            if x["type"] == "TRIFECTA":
+                self.assertEqual(x["unit"], 0.5)
+            if x["type"] == "SUPERFECTA":
+                self.assertEqual(x["unit"], 0.1)
+            if x["type"] in ("PICK3", "PICK4"):
+                self.assertEqual(x["unit"], {"PICK3": 1.0, "PICK4": 0.5}[x["type"]], "Pick 3/4 priced at the ticket base")
         self.assertTrue(any(not x["known"] for x in ev["rows"]), "races without results are unknown, not misses")
         ru = rollup([ev, ev])
         self.assertEqual(ru["all"]["bets"], 2 * ev["totals"]["bets"])
         self.assertEqual([c["track"] for c in ru["chart"]], ["DMR", "ALL"])
         self.assertEqual(ru["chart"][-1]["hits"], ru["all"]["hits"])
         self.assertIn("WIN", ru["by_type"])
-        format_evaluation(ev); format_rollup(ru)
+        txt = format_evaluation(ev); format_rollup(ru)
+        self.assertIn("Unit stakes: $2 win, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double, $1 Pick 3, $0.50 Pick 4.", txt)
+
+    def test_unit_for_old_config(self):
+        from handicapper.wagering import unit_for
+        self.assertEqual(unit_for({"type": "WIN"}, {"unit": 1.0}), 1.0, "single-unit config still honoured")
+        self.assertEqual(unit_for({"type": "WIN"}, {}), 2.0)
+        self.assertEqual(unit_for({"type": "PICK3", "unit": 3.0}, {}), 3.0, "a ticket's own denomination wins")
 
 
 if __name__ == "__main__":
