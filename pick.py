@@ -27,7 +27,7 @@ def main() -> int:
     ap.add_argument("card", nargs="?", help="Brisnet Ultimate PPs PDF, or JSON produced by brisnet_pp.parser")
     ap.add_argument("-o", "--out", help="output directory for card.json / picks.json / picks.md")
     ap.add_argument("-c", "--config", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "rules_config.json"))
-    ap.add_argument("--detail", type=int, default=1, help="0 terse, 1 table (default), 2 full audit")
+    ap.add_argument("--detail", type=int, default=1, help="0 wagering summary only, 1 summary + race tables (default), 2 summary + full audit")
     ap.add_argument("--rules-doc", action="store_true", help="print the rule catalog as markdown and exit")
     ap.add_argument("--race", type=int, help="only this race number")
     ap.add_argument("--no-multi", action="store_true", help="skip the Pick 3 / Pick 4 construction section")

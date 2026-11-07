@@ -7,7 +7,8 @@ with a one-line justification.
 ```
 pip install pdfplumber              # the only dependency (poppler not required)
 
-python pick.py dmr1106y.pdf                         # parse + score, print the report
+python pick.py dmr1106y.pdf                         # parse + score, print the report (wagering summary first, then details)
+python pick.py dmr1106y.pdf --detail 0              # wagering summary only: the bets per race + Pick 3/4 tickets
 python pick.py dmr1106y.pdf -o out/                 # also write <card>.card.json / .picks.json / .picks.md
 python pick.py out/dmr1106y.card.json --race 4 --detail 2    # full rule-by-rule audit, one race
 python pick.py --rules-doc > RULES.md               # regenerate the rule catalog
