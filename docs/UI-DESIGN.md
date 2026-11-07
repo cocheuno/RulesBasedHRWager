@@ -91,9 +91,18 @@ across legs), scales the payout to the base bet, and records `{cost, hit, return
 aggregates by bet type, confidence, track, profile and rule.  Exotic pools missing from a results file are
 reported as "unknown", never as a miss.
 
-Policy choices the analysis makes explicit (all in `rules_config.json -> wagering`): the unit stake per wager
-type, whether "other wagers" count as bets placed or as suggestions, and whether a Pick N window that was not
-the recommended one counts.
+Policy decisions (in `rules_config.json -> wagering`): **$1 unit stake on every bet type**; **the "other wagers"
+count as bets placed**; overlapping suggestions (the primary WIN and the "other" WIN on the same horse, a box inside
+a part-wheel) are counted once; only the recommended Pick 3 / Pick 4 window counts, and only windows the track's
+wager menu offers are built (rule H10).
+
+### Hit / miss bar charts
+
+The Analysis screen shows one horizontal stacked bar per track plus an **ALL** bar: successful bets (hits) and
+unsuccessful bets (misses) side by side on one axis, with the counts at the bar ends and a legend; unknown
+results (payout not on file) are excluded from the bar and listed beside it.  Filters above the chart (date
+range, bet type, confidence) re-draw it.  Colors: hits blue `#2a78d6`, misses orange `#eb6834` (validated
+colour-blind-safe pair); the by-track table under the chart is the accessible table view of the same data.
 
 ## Per-card state (`data/cards/<card>.json`)
 
