@@ -258,6 +258,12 @@ def build_card() -> dict:
             pp(75, "OC", 20000, 84, 91, 90, 79, 3, 2.0, "willing", c1=2, c2=2, odds=6.0, cr=108),
         ], works=[work(10, 5, 10, 30)], prime_power=112.0, ped={"fst": "110", "off": "100", "dis": "104", "trf": "92"},
             angles=[stat("Dirt to Turf", 20, 5, 20, -0.5)]),
+        horse(9, "Turf Returner", "8/1", "P", 3, [
+            pp(30, "OC", 20000, 70, 84, 84, 74, 7, 12.0, "no factor", c1=6, c2=7, odds=9.0, cr=108),                    # dirt flop
+            pp(65, "OC", 20000, 86, 86, 87, 86, 3, 2.0, "rallied", surface="turf", c1=5, c2=5, odds=6.0, cr=108),
+            pp(100, "OC", 20000, 84, 85, 86, 85, 2, 1.0, "gamely", surface="turf", c1=6, c2=5, odds=7.0, cr=108),
+        ], works=[work(9, 4, 6, 30)], trainer_pct=13, prime_power=113.0, post=9,
+            positives=["May improve while returning to Turf"]),
     ]
     races.append(race(3, "OC 20000n1x", "OC", 20000, 8.0, "turf", {"e1": 84, "e2": 84, "late": 82, "speed": 84}, r3,
                       header="OC 20000n1x 1 Mile (T) 3&up Friday, November 06, 2026",

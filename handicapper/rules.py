@@ -206,6 +206,26 @@ def s9(f, ctx):
     return None
 
 
+@rule("S10", "Off-surface last race excused", "speed", 2)
+def s10(f, ctx):
+    """The last race was on a different surface from today's, the horse has two or more earlier starts on today's
+    surface, and the off-surface figure is below its best recent same-surface figure: the speed rules (S1-S9, X1)
+    read its most recent same-surface figures instead of the off-surface line, F5 does not count the off-surface
+    flop, and this rule adds +0.5 when the best same-surface figure is within 2 of today's par (returning to a
+    surface it handles), +0.2 otherwise.  A single same-surface line is not enough evidence to switch, and a good
+    race on the wrong surface is not excused - it still counts as form.
+    Basis: Beyer / Quinn - a figure earned on the wrong surface says little about today; judge the horse on the
+    races run under today's conditions.  Brisnet prints the same idea as "May improve while returning to Turf"."""
+    if not f["use_surface_figs"]:
+        return None
+    par = ctx["par_speed"]
+    last = f["last"]
+    where = (last or {}).get("surface", "?")
+    good = par is not None and f["best_last3"] is not None and f["best_last3"] >= par - 2
+    return (0.5 if good else 0.2), (f"last race on {where} ({f['off_surface_speed']}) excused; "
+                                    f"{ctx['race']['surface']} figures {f['speed_last3'][::-1]} used")
+
+
 @rule("D7", "Best figure at the exact distance", "distance", 2)
 def d7(f, ctx):
     """Brisnet 'best speed at distance' (Dis record) ranks 1st in the field: 1.0; 2nd: 0.5.
@@ -621,8 +641,9 @@ def f4(f, ctx):
 def f5(f, ctx):
     """Last race comment is negative (faded, tired, no factor, eased, stopped...) and beaten 8+ lengths
     with no trouble: -1.0.  Beaten 15+: -1.5.
+    Not applied when the last race was on another surface and the horse has form on today's (S10 excuses it).
     Basis: Davidowitz - a no-excuse thrashing is a form (or soundness) warning until the horse shows otherwise."""
-    if f["last_beaten"] is None or f["last_trouble"]:
+    if f["last_beaten"] is None or f["last_trouble"] or f["use_surface_figs"]:
         return None
     if f["last_beaten"] >= 15:
         return -1.5, f"beaten {f['last_beaten']}L last"
