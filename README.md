@@ -165,21 +165,25 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
 
 ## Local data layout
 
-Only transcribed results JSON is committed.  PDFs and result screenshots live in `data/`, which `.gitignore`
-excludes entirely (as are all `*.pdf`, `*.png`, `*.card.json` anywhere):
+PDFs and `*.card.json` never enter the repository.  Result screenshots (public payoff pages) and the engine's
+`picks.json` do, so the after-race processing can be done from any clone:
 
 ```
 RulesBasedHRWager/
-  results/dmr1106y.results.json        committed: payoffs / finish order (public data)
-  data/                                ignored:  never reaches GitHub
-    pps/dmr1106y.pdf                   the TwinSpires / Brisnet download, named <trk><mmdd><y>.pdf
-    results-png/dmr1106y/r1.png ...    one screenshot per race
-    out/                               pick.py -o data/out  (card.json, picks.json, picks.md)
+  results/dmr1106y.results.json        committed: payoffs / finish order, transcribed from the screenshots
+  results/dmr1106y.backtest.md         committed: the back-test report for that card
+  data/
+    pps/dmr1106y.pdf                   ignored: the TwinSpires / Brisnet download, named <trk><mmdd><y>.pdf
+    results-png/dmr1106y/r1.png ...    committed: one payout-page screenshot per race, r<N>.png
+    out/dmr1106y.picks.json            committed: pick.py -o data/out (card.json and picks.md stay ignored)
 ```
 
-Per card: `python pick.py data/pps/dmr1106y.pdf --scratch "..." -o data/out`, type each race's payout page into
-`results/dmr1106y.results.json` with `addresult.py` (one line per race, see its docstring), run `python backtest.py data/out/dmr1106y.picks.json results/dmr1106y.results.json`,
-then commit `results/` only.
+Before the races (local): `python pick.py data/pps/dmr1106y.pdf --scratch "..." -o data/out`.
+After the races (local): save each payout page as `data/results-png/dmr1106y/r<N>.png`, then
+`git add data/results-png data/out/*.picks.json`, commit, push.
+Processing (from any clone): read the screenshots into `results/dmr1106y.results.json` (by hand or with
+`addresult.py`), run `python backtest.py data/out/dmr1106y.picks.json results/dmr1106y.results.json > results/dmr1106y.backtest.md`,
+commit `results/`.
 
 ## Results, scratches and back-testing
 
