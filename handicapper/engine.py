@@ -24,6 +24,7 @@ import os
 from collections import defaultdict
 
 from . import rules as R
+from . import multirace as MR
 from .features import horse_features, race_context
 
 DEFAULT_CONFIG = {
@@ -40,6 +41,7 @@ DEFAULT_CONFIG = {
         "value_underlay": 0.60,
         "logit_scale": 12.0,       # points per e-fold in implied probability
     },
+    "multirace": dict(MR.DEFAULT_MULTIRACE),   # Pick 3 / Pick 4 construction (see multirace.py)
 }
 
 
@@ -50,6 +52,11 @@ def load_config(path: str | None) -> dict:
         cfg["weights"].update(user.get("weights", {}))
         cfg["disabled"] = user.get("disabled", cfg["disabled"])
         cfg["selection"].update(user.get("selection", {}))
+        for k, v in user.get("multirace", {}).items():
+            if isinstance(v, dict) and isinstance(cfg["multirace"].get(k), dict):
+                cfg["multirace"][k].update(v)
+            else:
+                cfg["multirace"][k] = v
     return cfg
 
 
@@ -180,10 +187,11 @@ def _select_live(live: list[dict], sel: dict):
     return picks, structure, confidence, note
 
 
-def score_card(card: dict, cfg: dict) -> dict:
+def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
     out = {"source": card.get("source"), "track": card.get("track"), "date": card.get("date"), "races": []}
     for race in card["races"]:
         out["races"].append(score_race(race, cfg))
+    out["multirace"] = MR.build_all(out, cfg["multirace"]) if multirace else None
     return out
 
 
@@ -216,6 +224,8 @@ def format_report(result: dict, detail: int = 1) -> str:
                 for h in s["hits"]:
                     L.append(f"- {h['rule']} {h['name']}: {h['points']:+.2f} — {h['note']}")
                 L.append("")
+    if result.get("multirace"):
+        L.append(MR.format_multirace(result["multirace"], result, detail))
     return "\n".join(L)
 
 
@@ -232,4 +242,14 @@ def rules_doc() -> str:
         for rl in rls:
             L.append(f"| {rl.id} | {rl.name} | {rl.weight}{' (hard)' if rl.hard else ''} | {' '.join(rl.doc.split())} |")
         L.append("")
+    L.append("## Horizontal (Pick 3 / Pick 4 construction)")
+    L.append("")
+    L.append("These rules grade legs and build tickets from the scored races (handicapper/multirace.py); "
+             "thresholds live in rules_config.json -> multirace.")
+    L.append("")
+    L.append("| Id | Rule | Definition |")
+    L.append("|---|---|---|")
+    for rl in MR.HRULES:
+        L.append(f"| {rl.id} | {rl.name} | {' '.join(rl.doc.split())} |")
+    L.append("")
     return "\n".join(L)

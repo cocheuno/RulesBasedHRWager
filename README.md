@@ -11,8 +11,10 @@ python pick.py dmr1106y.pdf                         # parse + score, print the r
 python pick.py dmr1106y.pdf -o out/                 # also write <card>.card.json / .picks.json / .picks.md
 python pick.py out/dmr1106y.card.json --race 4 --detail 2    # full rule-by-rule audit, one race
 python pick.py --rules-doc > RULES.md               # regenerate the rule catalog
+python pick.py out/dmr1106y.card.json --budget4 48  # Pick 3 / Pick 4 tickets shaped to a budget (--no-multi to skip)
 python -m brisnet_pp.parser dmr1106y.pdf -o card.json        # parser only
 python validate_parse.py card.json                  # internal consistency checks on a parsed card
+python -m unittest discover -s tests -v             # rule + Pick 3/4 tests on a synthetic card (no real data needed)
 ```
 
 ## Layout
@@ -24,8 +26,12 @@ brisnet_pp/
                  race summary table, track-bias stats, ranking boxes)
 handicapper/
   features.py    per-horse derived features + field-relative ranks + pace scenario
-  rules.py       the rule catalog (61 rules, each a pure function with its definition in the docstring)
+  rules.py       the rule catalog (72 rules, each a pure function with its definition and expert basis in the docstring)
+  multirace.py   Pick 3 / Pick 4 construction (9 H-rules: singles, A/B coverage, vulnerable favourites, tickets, budget)
   engine.py      scoring, value overlay, selection policy, markdown report
+tests/
+  synthetic_card.py   invented card in parser output shape (no proprietary data) used by the tests
+  test_rules.py, test_multirace.py
 pick.py          CLI
 rules_config.json   weight overrides / disabled rules / selection thresholds (versioned governance)
 validate_parse.py   parser self-checks
@@ -94,7 +100,40 @@ compares the score-implied win probability (softmax over the field) with the mor
 
 Categories: **S** speed · **C** class · **P** pace & bias · **F** form · **K** connections ·
 **D** distance/surface · **E** equipment · **Q** QuickPlay comments · **M** maidens ·
-**A** age/weight · **X** eliminations · **V** value.  See `RULES.md`.
+**A** age/weight · **X** eliminations · **V** value · **H** horizontal (Pick 3 / Pick 4).  See `RULES.md`.
+
+### Expert basis
+
+Every rule's docstring ends with a **Basis:** sentence naming the published handicapping practice it encodes
+(Beyer on figures, pairing, bounce and trips; Brohamer on E1/E2/LP pace matchups; Quirin on early speed and
+impact values; Davidowitz on class drops, claimed horses, beaten favourites and trainer intent; Quinn on the
+condition book; Litfin on form cycles; Meadow and Crist on odds lines and multi-race tickets; Brisnet's own
+Prime Power / run-style FAQs).  The weights are set so that the primary factors (speed, class, pace, form)
+decide and the composites (Prime Power, QuickPlay comments) only break ties, because the composites already
+contain the primary factors.
+
+How the PPs *with comments* are read: the running-line comment is the only trip note on the page, so it is used
+across the last three races (F3, F11 trouble; F12 pace pressure; F13 beaten-favourite excuses; F1 manner of
+victory), and Brisnet's QuickPlay bullets are scored lightly (Q1/Q2) as a cross-check.
+
+### Pick 3 / Pick 4 (`handicapper/multirace.py`)
+
+After every race is scored, each leg's live horses get a blended win probability (rules-engine softmax blended
+35/65 with the morning line, H1) and are graded Crist-style:
+
+* **single** (H2) only when the top horse has >= 45% and is 7+ points clear and carries no bounce / duel /
+  underlay / suspicious-drop hit - a short-priced single is still a single, the saving buys coverage elsewhere;
+* **chaos legs** (H3: 4+ horses within 4 points, or 10+ runners with no horse over 25%) get wider coverage;
+* otherwise A horses until 55% of the leg is covered, B horses until 78% (H4);
+* the ML favourite is demoted to a B when it is beatable (H5) - that leg becomes the *price leg*;
+* also-eligibles and X-eliminated horses are never on a ticket (H6);
+* tickets are the main (all A) plus one "A's with one B" backup per leg (H7), trimmed to the budget by dropping
+  the weakest B's first (H8);
+* every consecutive window on the card is costed and ranked by hit probability x (1 + 0.25 x singles) x
+  (1 + 0.35 x price legs); the ML parlay of the shortest A's is printed as a will-pay yardstick (H9).
+
+Budgets, coverage targets and thresholds are in `rules_config.json -> multirace`; `--budget3/--budget4` override
+the budgets from the command line and `--no-multi` suppresses the section.
 
 Selection (`rules_config.json → selection`): the top horse is a **single** when it is
 `single_gap` (7) points clear and the race is not contentious (fewer than 4 horses within
@@ -107,8 +146,10 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
 * Change a weight: `"weights": {"S7": 5, "P5": 2}`; switch a rule off: `"disabled": ["V1"]`.
 * Every run writes `*.picks.json`, which contains the full per-horse feature set and every
   rule hit — join it with results to back-test weights.
-* Add a rule: write a function in `rules.py` with the `@rule` decorator and a docstring; it
-  appears in the audit and in `RULES.md` automatically.
+* Add a rule: write a function in `rules.py` with the `@rule` decorator and a docstring ending in a
+  `Basis:` sentence; it appears in the audit and in `RULES.md` automatically (the tests enforce the basis line).
+* Pick 3/4 behaviour: `multirace` block in `rules_config.json` (budgets, `single_prob`, coverage targets,
+  `fav_vulnerable_rules`, `ml_blend`).
 
 ## Known limits
 

@@ -12,5 +12,31 @@
     "value_overlay": 1.30,
     "value_underlay": 0.60,
     "logit_scale": 12.0
+  },
+  "multirace": {
+    "_comment": "Pick 3 / Pick 4 construction (handicapper/multirace.py, rules H1-H9). Budgets in dollars; base = ticket denomination.",
+    "pick3": {"base": 1.0, "budget": 60.0},
+    "pick4": {"base": 0.5, "budget": 100.0},
+    "logit_scale": 18.0,
+    "ml_blend": 0.35,
+    "single_prob": 0.45,
+    "single_gap": 7.0,
+    "a_coverage": 0.55,
+    "b_coverage": 0.78,
+    "max_a": 3,
+    "max_b": 3,
+    "chaos_a_coverage": 0.65,
+    "chaos_b_coverage": 0.85,
+    "chaos_max_a": 4,
+    "chaos_max_b": 4,
+    "chaos_field": 10,
+    "chaos_top_prob": 0.25,
+    "spread_gap": 4.0,
+    "min_b_prob": 0.06,
+    "fav_vulnerable_ratio": 0.8,
+    "fav_vulnerable_rules": ["S6", "P2", "V1", "C9", "C10", "F5", "X1", "X4"],
+    "single_backup": false,
+    "price_leg_bonus": 0.35,
+    "single_bonus": 0.25
   }
 }

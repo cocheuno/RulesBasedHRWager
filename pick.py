@@ -7,6 +7,7 @@ End-to-end: Brisnet Ultimate PPs PDF (or parsed JSON)  ->  1-3 horses per race.
     python pick.py card.json --detail 2          # full rule-by-rule audit for every horse
     python pick.py --rules-doc > RULES.md        # print the rule catalog
     python pick.py card.pdf --config rules_config.json
+    python pick.py card.json --budget4 48           # Pick 4 tickets shaped to a $48 budget
 """
 from __future__ import annotations
 
@@ -29,6 +30,9 @@ def main() -> int:
     ap.add_argument("--detail", type=int, default=1, help="0 terse, 1 table (default), 2 full audit")
     ap.add_argument("--rules-doc", action="store_true", help="print the rule catalog as markdown and exit")
     ap.add_argument("--race", type=int, help="only this race number")
+    ap.add_argument("--no-multi", action="store_true", help="skip the Pick 3 / Pick 4 construction section")
+    ap.add_argument("--budget3", type=float, help="override the Pick 3 budget in dollars (rules_config.json -> multirace.pick3.budget)")
+    ap.add_argument("--budget4", type=float, help="override the Pick 4 budget in dollars (rules_config.json -> multirace.pick4.budget)")
     args = ap.parse_args()
 
     if args.rules_doc:
@@ -45,7 +49,11 @@ def main() -> int:
     if args.race:
         card["races"] = [r for r in card["races"] if r["race_no"] == args.race]
     cfg = load_config(args.config)
-    result = score_card(card, cfg)
+    if args.budget3 is not None:
+        cfg["multirace"]["pick3"]["budget"] = args.budget3
+    if args.budget4 is not None:
+        cfg["multirace"]["pick4"]["budget"] = args.budget4
+    result = score_card(card, cfg, multirace=not args.no_multi)
     report = format_report(result, detail=args.detail)
     print(report)
     if args.out:
