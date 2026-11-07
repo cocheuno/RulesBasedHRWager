@@ -1,116 +1,54 @@
 # Race-day cheat sheet
 
-All commands run in PowerShell from the `RulesBasedHRWager` folder.
-`<card>` is the TwinSpires file code, e.g. `dmr1106y` (track + mmdd + y). Use it everywhere: PDF name,
-screenshot folder, results file.
+Everything happens in Race Day Desk, the local app. PowerShell is used only to start it, stop it, and push the
+results at the end of the day. All commands run from the `RulesBasedHRWager` folder.
 
-## The screen instead of PowerShell
+`<card>` is the TwinSpires file code, e.g. `dmr1106y` (track + mmdd + y). The PP file, the results folder and the
+results file all use it.
 
-Everything below can be done on one page: `python ui.py start` opens http://127.0.0.1:8765 in the background and
-gives the prompt back (`python ui.py stop` ends it, `python ui.py status` checks; plain `python ui.py` runs in
-the window with Ctrl+C to stop). Load tab: drop the PDFs and
-PNGs. Desk tab: Run picks, tick scratches, Re-run, read the bets; after the race enter or view the result and the
-bet results. Analysis tab: hit/miss bars and ROI tables. The commands remain for scripting and for Claude.
-
-## 0. Once per day, before anything else
+## 1. Once a day, before anything else
 
 ```powershell
 git pull origin main
 ```
 
-If `git status` ever shows files deleted that you did not delete (OneDrive), restore them first:
-
 ```powershell
-git restore .
+python ui.py start
 ```
 
-## 1. Morning: get the selections
+The browser opens http://127.0.0.1:8765 and the prompt comes back. If the page looks like yesterday's after a pull,
+press Ctrl+F5 once.
 
-1. Download **Ultimate PPs with QuickPlay Comments** from TwinSpires into `data\pps\<card>.pdf`.
-2. First look (summary only: top three per race, primary play, other wagers, Pick 3/4 tickets):
+## 2. Before the races
 
-```powershell
-python pick.py data\pps\<card>.pdf --detail 0
-```
+1. Download from TwinSpires into `data\pps\`: the **Ultimate PPs with QuickPlay Comments** as `<card>.pdf` and, if you
+   take it, the **Power Play quick sheet** as `<card>q.pdf` (it turns on the key-race rule and the Brisnet benchmark).
+   Or drop them on the Load tab, which saves them to the same place.
+2. Pick the card in the selector at the top and press **Run picks**. The Desk shows each race's top three with rank,
+   ML, score, win chance and A/B grade, the primary play, the other wagers, and the Pick 3 / Pick 4 tickets.
+3. When scratches are posted: tick the scratched horses in the table (or paste the list on the Load tab, as
+   `race:program` pairs such as `2:10, 4:2, 4:11`) and press **Re-run with scratches**. Also-eligibles draw in by
+   themselves. That run is the one to bet from.
+4. Click any horse for its rule-by-rule audit; click a race on the left to switch races.
 
-## 2. After scratches are posted: the run you bet from
+Reading the bets: **Confidence** high = one horse, medium = two, low = contentious. "Price leg" on a Pick 3/4 means
+the favourite is only a B. The other wagers list keys for a standout, boxes for a contentious race, win bets only on
+overlays, and the favourite underneath when it looks beatable.
 
-Scratches are `race:program` pairs, in quotes, comma-separated. Also-eligibles draw in automatically.
+## 3. After the last race
 
-```powershell
-python pick.py data\pps\<card>.pdf --scratch "2:10, 4:2, 4:11, 7:13" -o data\out
-```
-
-If you also downloaded the Power Play quick sheet (`<card>q.pdf`), add `--sheet data\pps\<card>q.pdf`: it turns on
-the key-race rule (F16) and lets the back-test compare the engine with Brisnet's own picks.
-
-This prints the full report and writes `data\out\<card>.picks.md` (summary first, then every rule hit) and
-`data\out\<card>.picks.json` (needed for the back-test).  Re-run it if more scratches come in.
-
-Optional, during the card: once three or more races on a surface are done, enter them (step 4) and re-run
-with `--results results\<card>.results.json` to let the same-day bias rule (P10) see them.
-
-Useful variants:
-
-| Want | Command |
-|---|---|
-| One race, every rule hit | `python pick.py data\pps\<card>.pdf --race 6 --detail 2` |
-| Pick 4 shaped to a $48 budget | `python pick.py data\pps\<card>.pdf --budget4 48 --detail 0` |
-| Skip the Pick 3/4 section | add `--no-multi` |
-| Re-score without re-parsing the PDF | use `data\out\<card>.card.json` in place of the PDF |
-
-## 3. Reading the output
-
-- **Wagering summary** (top of the report): per race the top three with rank, ML, score, win chance and A/B
-  grade; the primary play; other wagers (exacta/trifecta keys or boxes, win only on overlays, "chalk
-  underneath" when the favourite looks beatable, daily double with the next race's A horses).
-- **Pick 3 / Pick 4**: the recommended window with its tickets and cost; "single" legs are one horse,
-  "price leg" means the favourite is only a B.
-- **Confidence** high = single-horse play; medium = two horses; low = contentious, spread or pass.
-- **Race details** below the summary: the rule-by-rule audit for every horse, if you want to know why.
-
-## 4. After the last race: hand the results to Claude
-
-1. Best: download each race's **chart PDF** ("View chart") into `data\results-png\<card>\` as downloaded
-   (e.g. `20261106BELUSA1.pdf`) — it carries every finisher, final odds and the track condition, no OCR needed.
-   Otherwise save the **PAYOUTS** page screenshot as `data\results-png\<card>\r<N>.png` (r1.png, r2.png, ...).
-2. Push the screenshots and the picks file:
+1. Download each race's **chart PDF** ("View chart") into `data\results-png\<card>\`, named as downloaded
+   (`20261106BELUSA1.pdf`). Charts carry every finisher, final odds, the track condition and all payouts.
+   A payout-page screenshot (`r<N>.png`) works as a fallback for a race without a chart; it needs
+   `pip install rapidocr_onnxruntime` once.
+2. Press **Process results**. The app reads every chart, re-scores the card against the field that actually ran,
+   back-tests, and writes `results\<card>.results.json` and `results\<card>.backtest.md`. Each race's After tab
+   shows the finish, odds, payouts and what every suggested wager returned.
+3. Analysis tab: hit/miss bars per track and overall, ROI by bet type, by confidence, by rule and by card.
+4. Push the day's files (the charts themselves stay on your disk):
 
 ```powershell
-git add data\results-png data\out\*.picks.json
-```
-
-```powershell
-git commit -m "<card>: results screenshots"
-```
-
-```powershell
-git push origin main
-```
-
-3. Or do it yourself on the Desk: **Process results** reads every screenshot (needs `pip install rapidocr_onnxruntime`
-   once), shows "Check this result" on any race it is unsure about, and writes the back-test.
-   Tell Claude: **"process <card>"** if you would rather hand it over.  Claude transcribes the screenshots into
-   `results\<card>.results.json`, runs the back-test, commits `results\<card>.results.json` and
-   `results\<card>.backtest.md`, pushes, and reports how the selections and tickets did.
-4. Next morning's `git pull` brings those files down.
-
-## 4b. Doing the results yourself instead (optional)
-
-One line per race, straight off the payout page. First race of a card needs `--track` and `--date`:
-
-```powershell
-python addresult.py results\<card>.results.json 1 1/6/4/3 win=5.20 place=1:3.40,6:9.20 show=1:2.10,6:3.20,4:2.10 exacta=1:1/6:17.30 trifecta=0.5:1/6/4:13.50 super=0.1:1/6/4/3:12.46 --track "Del Mar" --date 2026-11-06
-```
-
-Then:
-
-```powershell
-python backtest.py data\out\<card>.picks.json results\<card>.results.json
-```
-
-```powershell
-git add results\
+git add results\ data\out\*.picks.json
 ```
 
 ```powershell
@@ -121,17 +59,40 @@ git commit -m "results: <card>"
 git push origin main
 ```
 
-## 5. Things that go wrong
+5. Done for the day:
+
+```powershell
+python ui.py stop
+```
+
+## 4. If something goes wrong
 
 | Symptom | Fix |
 |---|---|
-| `No such file or directory: data/pps/<card>.pdf` | PDF not copied in, or named differently: `Get-ChildItem data\pps` |
-| `results\` folder missing after a pull | OneDrive removed it: `git restore results` (consider moving the clone out of OneDrive) |
-| `mkdir -p` error | PowerShell: `New-Item -ItemType Directory -Force -Path data\pps` |
-| `RULE ERROR` in a horse's audit | a rule hit bad data; send Claude the race number, the run still completes |
-| `parser warning: page N: no race header found` | normal for the wager-menu page; ignore |
+| Card missing from the selector | its PP is not at `data\pps\<card>.pdf`; drop it on the Load tab, or check `Get-ChildItem data\pps` |
+| "needs a run (picks)" when pressing Process results | press Run picks first |
+| Process results reads nothing | the charts are not in `data\results-png\<card>\` (folder must match the PP name) |
+| A control described here is not on the page | `git pull origin main`, `python ui.py stop`, `python ui.py start`, then Ctrl+F5 |
+| "Check this result" banner on a race | a screenshot was read with doubts; compare with the image and correct it in the form below it |
+| `git push` rejected ("fetch first") | `git pull origin main`, then push again |
+| `results\` folder missing after a pull (OneDrive) | `git restore results`; consider keeping the clone outside OneDrive |
+| Something else errors in the app | the message is in the toast at the bottom right and in `data\ui.log`; paste it to Claude |
+
+Command-line equivalents, for scripting or for Claude to reproduce a run:
+
+```powershell
+python pick.py data\pps\<card>.pdf --sheet data\pps\<card>q.pdf --scratch "2:10, 4:2" -o data\out
+```
+
+```powershell
+python ocr_results.py data\results-png\<card> results\<card>.results.json --card data\out\<card>.card.json --force
+```
+
+```powershell
+python backtest.py data\out\<card>.picks.json results\<card>.results.json
+```
 
 ## Never commit
 
-PDFs, `*.card.json`, anything else in `data\pps`.  `.gitignore` blocks them, but add files by name
-(`git add results\`, `git add data\results-png`) rather than `git add .`.
+PDFs (PPs, quick sheets, charts) and `*.card.json`. `.gitignore` blocks them; add files by name
+(`git add results\ data\out\*.picks.json`) rather than `git add .`.
