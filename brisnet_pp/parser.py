@@ -343,18 +343,20 @@ class BrisnetPPParser:
         # e.g. "™MC 16000 1 Mile 3&up, F & M Friday, November 06, 2026"
         race["fillies_mares"] = SYM_FILLIES in h
         race["state_bred"] = SYM_STATEBRED in h
+        all_weather = SYM_AW in h            # Tapeta / synthetic main track (Gulfstream, Woodbine, Turfway ...)
         hc = clean_name(h.replace("\u00bd", " 1/2").replace("\u00bc", " 1/4").replace("\u00be", " 3/4"))
-        m = re.match(r"^(?P<cls>.+?)\s+(?P<dist>(?:\d+(?:\s\d/\d+)?|About\s+\d+[^\s]*)\s+(?:Furlongs?|Miles?|Yards)(?:\s+\d+/\d+)?)\s*(?P<surf>\([Tt]\))?\s+(?P<age>\S+)(?:,?\s*(?P<sex>F & M|F|C & G|Fillies(?: & Mares)?|Fillies and Mares|Colts(?: & Geldings)?|Mares))?\s+[A-Z][a-z]+day", hc)
+        hc = re.sub(r"\b(\d+)m\s?(\d+)\s?yds?\b", r"\1 Mile \2 Yards", hc)   # "1m70yds" -> "1 Mile 70 Yards"
+        m = re.match(r"^(?P<cls>.+?)\s+(?P<dist>(?:\d+(?:\s\d/\d+)?|About\s+\d+[^\s]*)\s+(?:Furlongs?|Miles?|Yards)(?:\s+\d+\s+Yards)?(?:\s+\d+/\d+)?)\s*(?P<surf>\([Tt]\))?\s+(?P<age>\S+)(?:,?\s*(?P<sex>F & M|F|C & G|Fillies(?: & Mares)?|Fillies and Mares|Colts(?: & Geldings)?|Mares))?\s+[A-Z][a-z]+day", hc)
         if m:
             race["class_text"] = m.group("cls").strip()
             race["distance_text"] = m.group("dist").strip()
-            race["surface"] = "turf" if m.group("surf") else "dirt"
+            race["surface"] = "turf" if m.group("surf") else ("aw" if all_weather else "dirt")
             race["age_text"] = m.group("age")
             race["sex_text"] = m.group("sex")
         else:
             race["class_text"] = hc
             race["distance_text"] = None
-            race["surface"] = "turf" if re.search(r"\([Tt]\)", hc) else "dirt"
+            race["surface"] = "turf" if re.search(r"\([Tt]\)", hc) else ("aw" if all_weather else "dirt")
             race["age_text"] = None
             race["sex_text"] = None
         race["distance_furlongs"] = distance_text_to_furlongs(race["distance_text"]) if race["distance_text"] else None
@@ -1010,7 +1012,7 @@ def distance_text_to_furlongs(t: str) -> float | None:
     t = t.strip()
     half = "\u00bd" in t
     t = t.replace("\u00bd", "")
-    m = re.match(r"^(?:About\s+)?(\d+)(?:\s+(\d)/(\d+))?\s*(Furlongs?|Miles?|Yards)(?:\s+(\d+)/(\d+))?", t)
+    m = re.match(r"^(?:About\s+)?(\d+)(?:\s+(\d)/(\d+))?\s*(Furlongs?|Miles?|Yards)(?:\s+(\d+)/(\d+))?(?:\s+(\d+)\s+Yards)?", t)
     if not m:
         return None
     n = int(m.group(1))
@@ -1020,10 +1022,11 @@ def distance_text_to_furlongs(t: str) -> float | None:
     elif m.group(5):
         frac = int(m.group(5)) / int(m.group(6))
     unit = m.group(4)
+    extra_yards = int(m.group(7)) / 220.0 if m.group(7) else 0.0
     if unit.startswith("Furlong"):
         return n + frac
     if unit.startswith("Mile"):
-        return (n + frac) * 8.0
+        return round((n + frac) * 8.0 + extra_yards, 2)
     if unit.startswith("Yard"):
         return n / 220.0
     return None

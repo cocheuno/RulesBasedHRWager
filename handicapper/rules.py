@@ -409,7 +409,8 @@ def c10(f, ctx):
 @rule("P1", "Lone early speed", "pace", 7)
 def p1(f, ctx):
     """Only one horse in the field has early-speed points >= 5 and is at least 2 points clear of all others,
-    with no other 'E' type: that horse gets 1.0 (uncontested lead).  Full credit on dirt, 0.7 on turf.
+    with no other 'E' type: that horse gets 1.0 (uncontested lead).  Full credit on dirt, 0.7 on turf and
+    all-weather (synthetic) surfaces, where closers fare better.
     Basis: Quirin - the first-call leader wins ~26% of all races and far more when unpressed; lone speed is the
     most powerful single pace angle, weaker on turf where closers fare better."""
     if ctx["lone_speed"] == f["pgm"]:
