@@ -296,6 +296,16 @@ class TestTrackProfiles(Base):
         self.assertEqual(p1["points"], 8.0)
 
 
+class TestPipeline(unittest.TestCase):
+    def test_track_code_stamped_on_result(self):
+        from handicapper.pipeline import run_card
+        card = build_card()
+        card.pop("track_code")                       # as a card.json written by the old parser
+        out = run_card(card, multirace=False)
+        self.assertEqual(out["result"]["track_code"], "DMR")
+        self.assertEqual(out["result"]["track_profile"], "DMR")
+
+
 class TestWeights(Base):
     def test_prime_power_and_comment_weights_are_moderate(self):
         w = {rl.id: rl.weight for rl in R.RULES}
