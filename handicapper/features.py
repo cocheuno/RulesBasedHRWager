@@ -128,13 +128,29 @@ def horse_features(h: dict, race: dict) -> dict:
     f["first_time_starter"] = f["starts"] == 0
     f["is_maiden"] = f["wins"] == 0
 
-    # ---- speed figures
-    spd3 = _figs(h, "speed", 3)
+    # ---- speed figures (surface-aware: an off-surface last race is excused when the horse has run on
+    #      today's surface before; the S rules then read its most recent same-surface lines)
+    surf_clean = [p for p in clean if p["surface"] == race["surface"]]
+    last_line = clean[0] if clean else None
+    f["last_off_surface"] = bool(last_line and last_line["surface"] != race["surface"])
+    f["surface_form_lines"] = len(surf_clean)
+    surf_spd = [p["speed"] for p in surf_clean if p.get("speed") is not None]
+    # switch only with 2+ same-surface lines AND an off-surface figure below the horse's same-surface form
+    # (a good race on the wrong surface is still evidence of form; a poor one is the excuse)
+    f["use_surface_figs"] = bool(f["last_off_surface"] and len(surf_spd) >= 2 and last_line.get("speed") is not None
+                                 and last_line["speed"] < max(surf_spd[:3]))
+    if f["use_surface_figs"]:
+        spd3 = [p["speed"] for p in surf_clean if p.get("speed") is not None][:3]
+        allspd = [p["speed"] for p in surf_clean if p.get("speed") is not None][:10]
+        f["off_surface_speed"] = last_line.get("speed")
+    else:
+        spd3 = _figs(h, "speed", 3)
+        allspd = _figs(h, "speed", 10)
+        f["off_surface_speed"] = None
     f["last_speed"] = spd3[0] if spd3 else None
     f["speed_last3"] = spd3
     f["best_last3"] = max(spd3) if spd3 else None
     f["avg_last3"] = round(mean(spd3), 1) if spd3 else None
-    allspd = _figs(h, "speed", 10)
     f["best_speed_10"] = max(allspd) if allspd else None
     f["prev_best"] = max(allspd[1:]) if len(allspd) > 1 else None
     f["career_top_last"] = (f["last_speed"] is not None and f["prev_best"] is not None and f["last_speed"] >= f["prev_best"] + 5)

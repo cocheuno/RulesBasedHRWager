@@ -83,6 +83,41 @@ class TestSpeedRules(Base):
         self.assertTrue(hits(s, "S8"))
 
 
+class TestSurfaceAwareForm(Base):
+    def test_returner_uses_same_surface_figures(self):
+        s = self.sheet(3, "Turf Returner")
+        f = s["features"]
+        self.assertTrue(f["last_off_surface"] and f["use_surface_figs"])
+        self.assertEqual(f["speed_last3"], [86, 84], "dirt 70 dropped, turf lines used")
+        self.assertEqual(f["last_speed"], 86)
+        self.assertTrue(hits(s, "S10"))
+        self.assertFalse(hits(s, "F5"), "the 12-length dirt loss is excused")
+        self.assertFalse(hits(s, "S5"))
+
+    def test_one_line_or_good_off_surface_race_does_not_switch(self):
+        from synthetic_card import build_card
+        from handicapper.engine import score_race
+        card = build_card()
+        r3 = card["races"][2]
+        h = next(x for x in r3["horses"] if x["name"] == "Turf Returner")
+        h["pp"] = h["pp"][:2]                       # only one turf line left -> no switch
+        s = next(x for x in score_race(r3, self.cfg)["sheets"] if x["name"] == "Turf Returner")
+        self.assertFalse(s["features"]["use_surface_figs"])
+        card = build_card()
+        r3 = card["races"][2]
+        h = next(x for x in r3["horses"] if x["name"] == "Turf Returner")
+        h["pp"][0]["speed"] = 90                    # dirt race was the horse's best figure -> still counts
+        s = next(x for x in score_race(r3, self.cfg)["sheets"] if x["name"] == "Turf Returner")
+        self.assertFalse(s["features"]["use_surface_figs"])
+        self.assertEqual(s["features"]["last_speed"], 90)
+
+    def test_first_timer_on_surface_gets_no_excuse(self):
+        s = self.sheet(3, "Dirt Shipper")       # last on dirt, no turf starts: D3 judges it, not S10
+        self.assertFalse(s["features"]["use_surface_figs"])
+        self.assertFalse(hits(s, "S10"))
+        self.assertTrue(hits(s, "D3"))
+
+
 class TestClassRules(Base):
     def test_c6_claimed_and_dropped(self):
         s = self.sheet(2, "Claimed Then Dropped")
