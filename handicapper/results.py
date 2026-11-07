@@ -69,8 +69,9 @@ def apply_scratches(card: dict, scratches: dict[int, list[str]]) -> list[str]:
             notes.append(f"R{race['race_no']}: program {p} not found (already absent?)")
         for h in gone:
             notes.append(f"R{race['race_no']}: scratched #{h['pgm']} {h['name']}")
+        body_scratches = sum(1 for h in gone if h.get("entry_status") != "AE")   # a scratched AE draws nobody in
         aes = sorted((h for h in race["horses"] if h.get("entry_status") == "AE"), key=lambda h: _pgm_key(h["pgm"]))
-        for h in aes[: len(gone)]:
+        for h in aes[:body_scratches]:
             h["entry_status"] = None
             notes.append(f"R{race['race_no']}: #{h['pgm']} {h['name']} draws in from the also-eligible list")
         race["field_size"] = len(race["horses"])

@@ -43,6 +43,10 @@ class TestScratches(unittest.TestCase):
         self.assertIsNone(ae["entry_status"], "one AE draws in per scratch")
         self.assertEqual(r1["field_size"], 6)
         self.assertTrue(any("draws in" in n for n in notes))
+        card2 = build_card()
+        apply_scratches(card2, {1: ["7"]})          # scratching the AE itself draws nobody in
+        self.assertFalse(any(h.get("entry_status") is None and h["name"] == "Also Ran" for h in card2["races"][0]["horses"]))
+        self.assertEqual(len(card2["races"][0]["horses"]), 6)
         # scratching the lone speed in R2 changes the pace shape and the pick
         res = score_card(card, CFG)
         self.assertNotEqual(res["races"][1]["lone_speed"], "1")
