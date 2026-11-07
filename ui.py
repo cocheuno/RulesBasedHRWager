@@ -42,11 +42,27 @@ def alive(port: int) -> bool:
         return False
 
 
+def stale(port: int) -> list[str]:
+    """Files changed on disk since the running app started (empty when current or unknown)."""
+    try:
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/status", timeout=1.5) as r:
+            st = json.load(r)
+        return st.get("changed_files", []) if st.get("code_changed") else []
+    except Exception:
+        return []
+
+
 def start(root: str, port: int, open_browser: bool) -> int:
     info = read_pid(root)
     if info and alive(info.get("port", port)):
-        print(f"Race Day Desk is already running at http://127.0.0.1:{info['port']}/")
-        return 0
+        ch = stale(info.get("port", port))
+        if ch:
+            print(f"Race Day Desk is running at http://127.0.0.1:{info['port']}/ but with OLD code: {', '.join(ch[:4])}"
+                  f"{', ...' if len(ch) > 4 else ''} changed since it started.  Restarting it now.")
+            stop(root)
+        else:
+            print(f"Race Day Desk is already running at http://127.0.0.1:{info['port']}/")
+            return 0
     cmd = [sys.executable, os.path.abspath(__file__), "--root", root, "--port", str(port)] + ([] if open_browser else ["--no-browser"])
     os.makedirs(os.path.join(root, "data"), exist_ok=True)
     log = open(os.path.join(root, "data", "ui.log"), "ab")
@@ -111,7 +127,11 @@ def main() -> int:
     if args.action == "status":
         info = read_pid(args.root)
         port = info.get("port", args.port) if info else args.port
-        print(f"running at http://127.0.0.1:{port}/" if alive(port) else "not running")
+        if not alive(port):
+            print("not running")
+            return 0
+        ch = stale(port)
+        print(f"running at http://127.0.0.1:{port}/" + (f"  (OLD code: {', '.join(ch[:4])} changed since start; python ui.py start restarts it)" if ch else ""))
         return 0
     serve(args.root, port=args.port, open_browser=not args.no_browser)
     return 0

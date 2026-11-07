@@ -27,7 +27,18 @@ function parseScratches(txt) {
 }
 
 // ------------------------------------------------------------------ loading
+async function checkStale() {
+  try {
+    const st = await api('/api/status');
+    let b = $('#stale');
+    if (st.code_changed) {
+      if (!b) { b = document.createElement('div'); b.id = 'stale'; b.className = 'stale'; document.body.insertBefore(b, document.body.firstChild); }
+      b.innerHTML = `<b>The app is running old code.</b> Files changed on disk since it started (${esc(st.changed_files.slice(0, 4).join(', '))}${st.changed_files.length > 4 ? ', …' : ''}). In PowerShell: <code>python ui.py stop</code> then <code>python ui.py start</code>, then reload this page. Picks run now would use the old rules and parser.`;
+    } else if (b) b.remove();
+  } catch (e) { /* older server without /api/status */ }
+}
 async function loadCards() {
+  await checkStale();
   S.cards = await api('/api/cards');
   const sel = $('#cardSelect');
   sel.innerHTML = S.cards.map(c => `<option value="${esc(c.card)}">${esc(c.card)}${c.track ? ' · ' + esc(c.track) : ''}${c.date ? ' · ' + esc(c.date) : ''}</option>`).join('') || '<option value="">no cards: load PPs</option>';

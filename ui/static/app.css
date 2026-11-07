@@ -76,3 +76,5 @@ main{max-width:1440px;margin:0 auto;padding:18px 20px 40px}
 .form label.wide{grid-column:1/-1}
 pre.report{white-space:pre-wrap;font:12px/1.5 ui-monospace,Consolas,monospace;background:#FBFAF7;padding:12px;border-radius:10px;max-height:360px;overflow:auto}
 @media (max-width:900px){.grid2,.grid3,.form{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.bar{grid-template-columns:60px minmax(0,1fr)}.bar .c{grid-column:2}}
+.stale{background:#7a1f1f;color:#fff;padding:10px 20px;font-size:14px;line-height:1.5}
+.stale code{background:rgba(255,255,255,.18);padding:1px 6px;border-radius:4px}
