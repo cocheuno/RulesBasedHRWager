@@ -1,7 +1,7 @@
 {
  "source": "data/pps/dmr1106y.pdf",
  "track": "Del Mar",
- "track_code": null,
+ "track_code": "DMR",
  "date": "2026-11-06",
  "track_profile": "DMR",
  "races": [
@@ -22891,18 +22891,18 @@
       2,
       3
      ],
-     "base": 0.5,
+     "base": 1.0,
      "budget": 60.0,
-     "cost": 9.0,
-     "cost_before_trim": 9.0,
+     "cost": 18.0,
+     "cost_before_trim": 18.0,
      "hit_prob": 0.5515,
      "score": 0.7445,
      "singles": 0,
      "price_legs": 1,
-     "ml_parlay": 17.32,
+     "ml_parlay": 34.65,
      "all_favorites_prob": 0.0547,
      "notes": [
-      "H10 offered on the R1 menu at $0.50"
+      "H10 offered on the R1 menu (minimum $0.50); bet at $1.00"
      ],
      "tickets": [
       {
@@ -22921,7 +22921,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       },
       {
        "name": "backup: B in R2",
@@ -22941,7 +22941,7 @@
         ]
        ],
        "combos": 12,
-       "cost": 6.0
+       "cost": 12.0
       },
       {
        "name": "backup: B in R3",
@@ -22958,7 +22958,7 @@
         ]
        ],
        "combos": 2,
-       "cost": 1.0
+       "cost": 2.0
       }
      ],
      "legs": [
@@ -23053,18 +23053,18 @@
       4,
       5
      ],
-     "base": 0.5,
+     "base": 1.0,
      "budget": 60.0,
-     "cost": 16.0,
-     "cost_before_trim": 16.0,
+     "cost": 32.0,
+     "cost_before_trim": 32.0,
      "hit_prob": 0.393,
      "score": 0.6682,
      "singles": 0,
      "price_legs": 2,
-     "ml_parlay": 35.44,
+     "ml_parlay": 70.88,
      "all_favorites_prob": 0.0202,
      "notes": [
-      "H10 offered on the R3 menu at $0.50"
+      "H10 offered on the R3 menu (minimum $0.50); bet at $1.00"
      ],
      "tickets": [
       {
@@ -23084,7 +23084,7 @@
         ]
        ],
        "combos": 8,
-       "cost": 4.0
+       "cost": 8.0
       },
       {
        "name": "backup: B in R3",
@@ -23102,7 +23102,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       },
       {
        "name": "backup: B in R4",
@@ -23122,7 +23122,7 @@
         ]
        ],
        "combos": 12,
-       "cost": 6.0
+       "cost": 12.0
       },
       {
        "name": "backup: B in R5",
@@ -23141,7 +23141,7 @@
         ]
        ],
        "combos": 8,
-       "cost": 4.0
+       "cost": 8.0
       }
      ],
      "legs": [
@@ -23244,18 +23244,18 @@
       3,
       4
      ],
-     "base": 0.5,
+     "base": 1.0,
      "budget": 60.0,
-     "cost": 12.0,
-     "cost_before_trim": 12.0,
+     "cost": 24.0,
+     "cost_before_trim": 24.0,
      "hit_prob": 0.3692,
      "score": 0.6277,
      "singles": 0,
      "price_legs": 2,
-     "ml_parlay": 35.44,
+     "ml_parlay": 70.88,
      "all_favorites_prob": 0.0173,
      "notes": [
-      "H10 offered on the R2 menu at $0.50"
+      "H10 offered on the R2 menu (minimum $0.50); bet at $1.00"
      ],
      "tickets": [
       {
@@ -23274,7 +23274,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       },
       {
        "name": "backup: B in R2",
@@ -23294,7 +23294,7 @@
         ]
        ],
        "combos": 12,
-       "cost": 6.0
+       "cost": 12.0
       },
       {
        "name": "backup: B in R3",
@@ -23311,7 +23311,7 @@
         ]
        ],
        "combos": 2,
-       "cost": 1.0
+       "cost": 2.0
       },
       {
        "name": "backup: B in R4",
@@ -23330,7 +23330,7 @@
         ]
        ],
        "combos": 6,
-       "cost": 3.0
+       "cost": 6.0
       }
      ],
      "legs": [
@@ -23433,18 +23433,18 @@
       5,
       6
      ],
-     "base": 0.5,
+     "base": 1.0,
      "budget": 60.0,
-     "cost": 7.0,
-     "cost_before_trim": 7.0,
+     "cost": 14.0,
+     "cost_before_trim": 14.0,
      "hit_prob": 0.2632,
      "score": 0.5593,
      "singles": 1,
      "price_legs": 2,
-     "ml_parlay": 45.56,
+     "ml_parlay": 91.12,
      "all_favorites_prob": 0.0072,
      "notes": [
-      "H10 offered on the R4 menu at $0.50"
+      "H10 offered on the R4 menu (minimum $0.50); bet at $1.00"
      ],
      "tickets": [
       {
@@ -23463,7 +23463,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       },
       {
        "name": "backup: B in R4",
@@ -23482,7 +23482,7 @@
         ]
        ],
        "combos": 6,
-       "cost": 3.0
+       "cost": 6.0
       },
       {
        "name": "backup: B in R5",
@@ -23500,7 +23500,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       }
      ],
      "legs": [
@@ -23611,7 +23611,7 @@
      "ml_parlay": 378.0,
      "all_favorites_prob": 0.0097,
      "notes": [
-      "H10 offered on the R6 menu at $3.00"
+      "H10 offered on the R6 menu (minimum $3.00); bet at $3.00"
      ],
      "tickets": [
       {
@@ -23772,18 +23772,18 @@
       6,
       7
      ],
-     "base": 0.5,
+     "base": 1.0,
      "budget": 60.0,
-     "cost": 6.0,
-     "cost_before_trim": 6.0,
+     "cost": 12.0,
+     "cost_before_trim": 12.0,
      "hit_prob": 0.2877,
      "score": 0.4855,
      "singles": 1,
      "price_legs": 1,
-     "ml_parlay": 40.5,
+     "ml_parlay": 81.0,
      "all_favorites_prob": 0.0221,
      "notes": [
-      "H10 offered on the R5 menu at $0.50"
+      "H10 offered on the R5 menu (minimum $0.50); bet at $1.00"
      ],
      "tickets": [
       {
@@ -23802,7 +23802,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       },
       {
        "name": "backup: B in R5",
@@ -23820,7 +23820,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       },
       {
        "name": "backup: B in R7",
@@ -23838,7 +23838,7 @@
         ]
        ],
        "combos": 4,
-       "cost": 2.0
+       "cost": 4.0
       }
      ],
      "legs": [
@@ -23938,18 +23938,18 @@
      2,
      3
     ],
-    "base": 0.5,
+    "base": 1.0,
     "budget": 60.0,
-    "cost": 9.0,
-    "cost_before_trim": 9.0,
+    "cost": 18.0,
+    "cost_before_trim": 18.0,
     "hit_prob": 0.5515,
     "score": 0.7445,
     "singles": 0,
     "price_legs": 1,
-    "ml_parlay": 17.32,
+    "ml_parlay": 34.65,
     "all_favorites_prob": 0.0547,
     "notes": [
-     "H10 offered on the R1 menu at $0.50"
+     "H10 offered on the R1 menu (minimum $0.50); bet at $1.00"
     ],
     "tickets": [
      {
@@ -23968,7 +23968,7 @@
        ]
       ],
       "combos": 4,
-      "cost": 2.0
+      "cost": 4.0
      },
      {
       "name": "backup: B in R2",
@@ -23988,7 +23988,7 @@
        ]
       ],
       "combos": 12,
-      "cost": 6.0
+      "cost": 12.0
      },
      {
       "name": "backup: B in R3",
@@ -24005,7 +24005,7 @@
        ]
       ],
       "combos": 2,
-      "cost": 1.0
+      "cost": 2.0
      }
     ],
     "legs": [
@@ -24120,7 +24120,7 @@
      "ml_parlay": 283.5,
      "all_favorites_prob": 0.0024,
      "notes": [
-      "H10 offered on the R5 menu at $0.50"
+      "H10 offered on the R5 menu (minimum $0.50); bet at $0.50"
      ],
      "tickets": [
       {
@@ -24358,7 +24358,7 @@
      "ml_parlay": 159.47,
      "all_favorites_prob": 0.0043,
      "notes": [
-      "H10 offered on the R2 menu at $0.50"
+      "H10 offered on the R2 menu (minimum $0.50); bet at $0.50"
      ],
      "tickets": [
       {
@@ -24617,7 +24617,7 @@
     "ml_parlay": 283.5,
     "all_favorites_prob": 0.0024,
     "notes": [
-     "H10 offered on the R5 menu at $0.50"
+     "H10 offered on the R5 menu (minimum $0.50); bet at $0.50"
     ],
     "tickets": [
      {
