@@ -8,8 +8,8 @@ Read result charts (PDF) and payout-page screenshots (PNG) into a results file.
 
 A chart PDF (Equibase/Brisnet, named r<N>.pdf or as downloaded, e.g. 20261106BELUSA1.pdf) is preferred over a
 screenshot of the same race: it is text, complete (every finisher, final odds, calls, condition, comments) and
-needs no OCR.  Screenshots are named r<N>.png and need an OCR engine.  Existing races in the results file are replaced only with --force; otherwise
-only races not yet on file are added.  Warnings (a name that does not match the card, a combo/name
+needs no OCR.  Screenshots are named r<N>.png and need an OCR engine.  Races already on file are left alone
+unless --force, except that a chart always replaces an entry that came from a screenshot or was typed in.  Warnings (a name that does not match the card, a combo/name
 disagreement) are printed and stored under each race's "ocr" block so the Desk can flag them.
 Needs an OCR engine:  pip install rapidocr_onnxruntime
 """
@@ -57,12 +57,14 @@ def ocr_folder(src: str, results_path: str, card_path: str | None = None, force:
         data = json.load(open(results_path, encoding="utf-8"))
     else:
         data = {"track": info.get("meta", {}).get("track"), "date": info.get("meta", {}).get("date"), "_source": "OCR of payout-page screenshots", "races": []}
-    have = {r["race_no"] for r in data["races"]}
+    have = {r["race_no"]: (r.get("source") or r.get("ocr", {}).get("source") or "manual") for r in data["races"]}
     done = []
     for p in files:
         rn = race_no_of(p)
-        if rn is None or (rn in have and not force):
+        if rn is None:
             continue
+        if rn in have and not force and not (p.lower().endswith(".pdf") and have[rn] != "chart"):
+            continue   # already on file - unless a chart can replace a screenshot / typed entry
         if p.lower().endswith(".pdf"):
             charts = parse_chart(p)
             if not charts:

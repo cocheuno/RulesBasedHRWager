@@ -58,6 +58,30 @@ class TestChart(unittest.TestCase):
         self.assertTrue(out["3"].startswith("GAMMA DELTA broke"))
         self.assertTrue(out["4"].startswith("DELTA never"))
 
+    def test_chart_replaces_typed_entry(self):
+        import json as _json, os as _os, shutil, tempfile
+        import ocr_results
+        tmp = tempfile.mkdtemp()
+        try:
+            res = _os.path.join(tmp, "x.results.json")
+            _json.dump({"track": "Belmont Park", "races": [{"race_no": 1, "finish": ["1", "2"], "win": 5.0}]}, open(res, "w"))
+            open(_os.path.join(tmp, "20261106BELUSA1.pdf"), "wb").write(b"%PDF")
+            chart = chart_to_result(parse_chart_rows(rows_from_fixture(_json.load(open(_os.path.join(HERE, "fixtures_chart_rows.json")))), 1))
+            orig = ocr_results.parse_chart
+            ocr_results.parse_chart = lambda path: [chart]
+            try:
+                out = ocr_results.ocr_folder(tmp, res)
+                data = _json.load(open(res))
+                self.assertEqual(len(out["races"]), 1, "the typed entry is replaced by the chart")
+                self.assertEqual(data["races"][0]["finish"], ["1", "2", "6", "5", "4", "3"])
+                self.assertEqual(data["races"][0]["source"], "chart")
+                out2 = ocr_results.ocr_folder(tmp, res)
+                self.assertEqual(out2["races"], [], "a chart entry is not re-read without --force")
+            finally:
+                ocr_results.parse_chart = orig
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
     def test_race_no_from_file_names(self):
         self.assertEqual(race_no_of("x/20261106BELUSA1.pdf"), 1)
         self.assertEqual(race_no_of("x/20261106GPXUSA11.pdf"), 11)
