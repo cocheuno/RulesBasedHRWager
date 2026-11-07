@@ -538,6 +538,36 @@ def p9(f, ctx):
     return None
 
 
+@rule("P10", "Same-day bias from earlier results", "pace", 2.5)
+def p10(f, ctx):
+    """Only when results of earlier races today are supplied (pick.py --results).  Among winners of the earlier races
+    on today's surface (3+ of them): if 75%+ were early types (E, E/P) the early types get +0.6 and the late types
+    (P, S) -0.4; if 75%+ were late types the reverse.  If 75%+ of those winners came from posts 1-3, posts 1-3 get
+    +0.3 and posts 8+ -0.3; if 75%+ came from posts 8+ the reverse.
+    Basis: Davidowitz / Beyer - a bias that shows up in the day's results is the most current information available
+    and overrides the meet-long bias stats; three races is the minimum before acting on it."""
+    db = ctx.get("day_bias")
+    if not db or db["n"] < 3:
+        return None
+    pts, notes = 0.0, []
+    n = db["n"]
+    if db["early_wins"] / n >= 0.75:
+        pts += 0.6 if f["early_type"] else -0.4
+        notes.append(f"{db['early_wins']} of {n} earlier {ctx['race']['surface']} winners were early types")
+    elif db["late_wins"] / n >= 0.75:
+        pts += 0.6 if f["closer_type"] else -0.4
+        notes.append(f"{db['late_wins']} of {n} earlier {ctx['race']['surface']} winners were closers")
+    post = f["post"]
+    if post is not None:
+        if db["inside_wins"] / n >= 0.75:
+            pts += 0.3 if post <= 3 else (-0.3 if post >= 8 else 0.0)
+            notes.append(f"{db['inside_wins']} of {n} winners from posts 1-3")
+        elif db["outside_wins"] / n >= 0.75:
+            pts += 0.3 if post >= 8 else (-0.3 if post <= 3 else 0.0)
+            notes.append(f"{db['outside_wins']} of {n} winners from posts 8+")
+    return (pts, "; ".join(notes)) if pts else None
+
+
 # =========================================================================
 # F — FORM
 # =========================================================================

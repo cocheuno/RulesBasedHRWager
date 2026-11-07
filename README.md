@@ -15,6 +15,9 @@ python pick.py --rules-doc > RULES.md               # regenerate the rule catalo
 python pick.py out/dmr1106y.card.json --budget4 48  # Pick 3 / Pick 4 tickets shaped to a budget (--no-multi to skip)
 python -m brisnet_pp.parser dmr1106y.pdf -o card.json        # parser only
 python validate_parse.py card.json                  # internal consistency checks on a parsed card
+python pick.py dmr1106y.pdf --scratch "3:3, 8:4, 8:9"             # remove scratches (also-eligibles draw in), re-rank
+python pick.py dmr1106y.pdf --results results/dmr1106y.results.json   # earlier races' winners feed the same-day bias rule P10
+python backtest.py out/dmr1106y.picks.json results/dmr1106y.results.json   # join picks with results: per-race and per-rule hit rates
 python -m unittest discover -s tests -v             # rule + Pick 3/4 tests on a synthetic card (no real data needed)
 ```
 
@@ -160,10 +163,21 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
 * Pick 3/4 behaviour: `multirace` block in `rules_config.json` (budgets, `single_prob`, coverage targets,
   `fav_vulnerable_rules`, `ml_blend`).
 
+## Results, scratches and back-testing
+
+* `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
+  Results and payoffs are public data and may be committed; PPs are not.
+* `--scratch "r:p, r:p"` removes scratched horses before scoring; one also-eligible draws in per scratch, in
+  program order (MTO horses stay flagged).  Pace shape and all field-relative ranks are recomputed.
+* `--results` reads the same file and, for each race, summarises the winners of the earlier races on the same
+  surface (run style, post) as `race["day_bias"]`, which rule **P10** scores once three such results exist.
+* `backtest.py` joins `picks.json` with results: winner's rank, top-pick hit rate, flat win-bet ROI, whether an
+  eliminated horse won, per-rule win% / ITM% when the rule fired, and whether the recommended Pick 3/4 hit.
+  This is the data the weights in `rules_config.json` should eventually be fitted on.
+
 ## Known limits
 
-* Scratches and track condition are not in the PPs; re-run after scratches by editing the
-  card JSON (delete the horse) or add a `--scratch` list (trivial to add in `pick.py`).
+* Track condition is not in the PPs (an off track changes the meaning of several rules).
 * Foreign (European / Meydan) lines carry no Brisnet figures; those horses are judged on
   class, comments and connections only (e.g. Tailgunner Joe, R6).
 * The class ladder in `features.class_level` is calibrated for the Southern California

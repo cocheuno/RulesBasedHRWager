@@ -432,6 +432,7 @@ def race_context(race: dict, feats: dict[str, dict]) -> dict:
     mls = [(f["ml_decimal"], pgm) for pgm, f in feats.items() if f.get("ml_decimal") is not None]
     ctx["ml_favorite"] = min(mls)[1] if mls else None
     ctx["ml_favorite_odds"] = min(mls)[0] if mls else None
+    ctx["day_bias"] = race.get("day_bias")   # from handicapper.results.attach_day_bias (pick.py --results)
     # bias
     bias = race.get("bias") or {}
     ctx["bias_meet"] = bias.get("meet") or {}
