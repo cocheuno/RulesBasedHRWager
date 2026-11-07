@@ -191,23 +191,112 @@ def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
     out = {"source": card.get("source"), "track": card.get("track"), "date": card.get("date"), "races": []}
     for race in card["races"]:
         out["races"].append(score_race(race, cfg))
+    for r in out["races"]:
+        r["leg"] = MR.leg_summary(r, cfg["multirace"]) if multirace else None
+    for i, r in enumerate(out["races"]):
+        nxt = out["races"][i + 1] if i + 1 < len(out["races"]) else None
+        r["other_wagers"] = other_wagers(r, nxt, cfg["selection"])
     out["multirace"] = MR.build_all(out, cfg["multirace"]) if multirace else None
     return out
+
+
+def other_wagers(r: dict, nxt: dict | None, sel: dict) -> list[str]:
+    """Exotic / secondary wagers for one race, built from the ranked live horses, the race confidence and the
+    leg grading (A/B, vulnerable favourite) when it is available.  Deterministic; every line names the horses.
+
+    Policy (Crist *Exotic Betting*, Meadow, Davidowitz):
+      * high confidence: key the top horse on top of exactas and trifectas (not boxes - a key costs a third of a
+        box and the opinion is that the key wins); no WIN bet under 3/2 ML, use it as a horizontal single instead;
+        a superfecta key only in 8+ horse fields.
+      * medium: exacta box of the top two and a part-wheel over the third; trifecta top two over top three over
+        top four; WIN only on a horse V1 marked as an overlay.
+      * low / contentious: no win bet unless an overlay; trifecta box of the top three (four when the 4th is
+        within spread_gap); treat the race as a spread leg in the Pick 3 / 4.
+      * vulnerable favourite (H5): structure exactas with the favourite underneath only.
+      * daily double: this race's A horses with the next race's A horses (cost in $1 combinations).
+    """
+    live = [x for x in r["sheets"] if not x["eliminated"] and not x["flags"]]
+    if len(live) < 2:
+        return ["PASS: fewer than two live contenders"]
+    p = [x["pgm"] for x in live[:5]]
+    a, b, c = p[0], p[1], (p[2] if len(p) > 2 else None)
+    d = p[3] if len(p) > 3 else None
+    e = p[4] if len(p) > 4 else None
+    top = live[0]
+    ml = top["ml_decimal"] or 99.0
+    conf = r["confidence"]
+    leg = r.get("leg") or {}
+    fav = leg.get("favorite")
+    overlays = [x for x in live[:3] if any(h["rule"] == "V1" and h["points"] > 0 for h in x["hits"])]
+    W: list[str] = []
+
+    def hs(*ks):
+        return ",".join(f"#{k}" for k in ks if k)
+
+    if conf == "high":
+        W.append(f"EXACTA key {hs(a)} over {hs(b, c, d)}")
+        if c:
+            W.append(f"TRIFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
+        if ml < sel["min_ml_for_win_bet"]:
+            W.append(f"no WIN bet on {hs(a)} (ML {top['ml_odds']} is below {sel['min_ml_for_win_bet']}-1): use it as a single in the Pick 3 / Pick 4 instead")
+        else:
+            W.append(f"WIN {hs(a)} (ML {top['ml_odds']}, fair {top['fair_odds']}-1)")
+        if r["field_size"] >= 8 and e:
+            W.append(f"SUPERFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
+    elif conf == "medium":
+        W.append(f"EXACTA box {hs(a, b)}" + (f"; EXACTA part-wheel {hs(a, b)} / {hs(a, b, c)}" if c else ""))
+        if c:
+            W.append(f"TRIFECTA {hs(a, b)} / {hs(a, b, c)} / {hs(a, b, c, d)}")
+        if overlays:
+            W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1)" for x in overlays))
+        else:
+            W.append("no WIN bet: neither of the top two is an overlay at the morning line")
+    else:
+        spread = [x["pgm"] for x in live[:4] if top["score"] - x["score"] <= sel["spread_gap"]]
+        box = [a, b, c] + ([d] if d and d in spread else [])
+        W.append(f"TRIFECTA box {'-'.join('#' + k for k in box if k)} (contentious: spread, do not key)")
+        W.append(f"EXACTA box {'-'.join('#' + k for k in box[:3] if k)}")
+        if overlays:
+            W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1)" for x in overlays))
+        else:
+            W.append("no WIN bet in a contentious race without an overlay; use the A/B spread in the Pick 3 / Pick 4")
+    if leg.get("price_leg") and fav and fav != a:
+        over = [k for k in (a, b) if k != fav]
+        under = list(dict.fromkeys(k for k in (a, b, c, fav) if k))   # ordered, no duplicates
+        W.append(f"favourite {hs(fav)} looks beatable (H5): EXACTA {hs(*over)} over {hs(*under)} - chalk underneath only, never on top")
+    if leg.get("A") and nxt and (nxt.get("leg") or {}).get("A"):
+        na = nxt["leg"]["A"]
+        W.append(f"DAILY DOUBLE {hs(*leg['A'])} with R{nxt['race_no']} {hs(*na)} ({len(leg['A']) * len(na)} x $1)")
+    return W
 
 
 # ----------------------------------------------------------------------------
 # Reporting
 # ----------------------------------------------------------------------------
 def format_summary(result: dict) -> str:
-    """The bets only: one line per race, then the recommended Pick 3 / Pick 4 tickets.  No rule detail."""
+    """The bets only: per race the top three ranked horses, the primary play and the other suggested wagers,
+    then the recommended Pick 3 / Pick 4 tickets.  No rule detail."""
     L = ["## Wagering summary", ""]
-    L.append("| Race | Class / distance | Play | Bet | Confidence |")
-    L.append("|---|---|---|---|---|")
     for r in result["races"]:
         names = {s["pgm"]: s for s in r["sheets"]}
+        live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
+        leg = r.get("leg") or {}
+        L.append(f"### Race {r['race_no']}: {r['class_text']}  {r['distance_text']} ({r['surface']})  field {r['field_size']}  — confidence {r['confidence']}")
+        L.append("")
+        L.append("| Rank | # | Horse | ML | Score | Win chance | Grade |")
+        L.append("|---|---|---|---|---|---|---|")
+        for i, s in enumerate(live[:3], 1):
+            grade = "A" if s["pgm"] in leg.get("A", []) else ("B" if s["pgm"] in leg.get("B", []) else "-")
+            prob = leg.get("probs", {}).get(s["pgm"], s["implied_prob"])
+            L.append(f"| {i} | {s['pgm']} | {s['name']} | {s['ml_odds']} | {s['score']:.1f} | {prob:.0%} | {grade} |")
         play = ", ".join(f"#{p} {names[p]['name']} ({names[p]['ml_odds']})" for p in r["picks"]) or "PASS"
-        L.append(f"| {r['race_no']} | {r['class_text']} {r['distance_text']} ({r['surface']}) | {play} | {r['bet_structure']} | {r['confidence']} |")
-    L.append("")
+        L.append("")
+        L.append(f"**Primary play:** {play} — {r['bet_structure']}")
+        L.append("")
+        L.append("Other wagers:")
+        for w in r.get("other_wagers", []):
+            L.append(f"- {w}")
+        L.append("")
     mr = result.get("multirace") or {}
     for key in ("pick3", "pick4"):
         rec = (mr.get(key) or {}).get("recommended")

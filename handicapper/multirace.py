@@ -345,6 +345,15 @@ def build_sequence(result: dict, start_idx: int, n: int, cfg: dict, name: str) -
     return seq
 
 
+def leg_summary(r: dict, cfg: dict) -> dict | None:
+    """Grade one race as a leg (H1-H6) without building tickets; used for the per-race wager suggestions."""
+    leg = make_leg(r, cfg)
+    if leg is None:
+        return None
+    return {"kind": leg.kind, "A": leg.A, "B": leg.B, "favorite": leg.favorite, "price_leg": leg.price_leg,
+            "probs": leg.probs, "audit": leg.audit}
+
+
 def build_all(result: dict, cfg: dict) -> dict:
     """All consecutive Pick 3 and Pick 4 windows on the card, ranked; `recommended` is the best window of each."""
     out = {}
