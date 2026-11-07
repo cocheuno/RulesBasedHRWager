@@ -64,6 +64,19 @@ class TestParse(unittest.TestCase):
         self.assertEqual(r["finish"], ["1", "6", "4", "3"], "combos still decide the order")
         self.assertTrue(any("combos say #1" in w for w in r["ocr"]["warnings"]))
 
+    def test_belmont_official_page_full_order_and_condition(self):
+        roster = {"1": "Bletchley", "2": "D. C.'s Army", "3": "Joven", "4": "Le Patron", "5": "Oyakata", "6": "Louisiana Baby"}
+        r = parse_payout_rows(rows_for("B1"), 1, roster)
+        self.assertEqual(r["finish"], ["1", "2", "6", "5", "4", "3"], "full finish order from the FINISH ORDER section")
+        self.assertEqual((r["track_condition"], r["surface"], r.get("official")), ("SLOPPY", "DIRT", True))
+        self.assertEqual(r["win"], 5.64)
+        self.assertEqual(r["place"], {"1": 3.82, "2": 4.04})
+        self.assertEqual(r["show"], {"1": 2.84, "2": 3.32, "6": 6.74})
+        self.assertEqual([e["combo"] for e in r["exotics"]], ["1/2", "1/2/6", "1/2/6/5"])
+        self.assertEqual(r["ocr"]["warnings"], [])
+        r2 = parse_payout_rows(rows_for("B1"), 1, None)
+        self.assertEqual(r2["finish"], ["1", "2", "6", "5"], "without a roster the top finishers come from the combinations")
+
     def test_without_roster(self):
         r = parse_payout_rows(rows_for(6), 6, None)
         self.assertEqual(r["finish"], ["8", "9", "2", "1"])

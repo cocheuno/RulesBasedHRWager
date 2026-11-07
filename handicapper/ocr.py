@@ -23,7 +23,8 @@ POOL_RE = re.compile(r"^\$?\s?(?P<base>\d+(?:\.\d+)?)\s*(?P<pool>EXACTA|EXACTOR|
 COMBO_RE = re.compile(r"^[\dA-Z]{1,3}(?:[,/][\dA-Z]{1,3})+/?$")
 CONSOL_RE = re.compile(r"\(\s*\d+\s*of\s*\d+\s*\)", re.I)
 PP_RE = re.compile(r"^P\s?P\s?(\d{1,2}[A-Z]?)$", re.I)
-NOISE = re.compile(r"^(PROGRAM|POOLS|PPS|STATS|RESULTS|VIDEO.*|PAYOUTS|FINISH ORDER|VIEW CHART|RUNNER|WIN|PLACE|SHOW|POOL TYPE|RUNNERS|PAYOUT|BET|DE|RA|MY|M)$", re.I)
+NOISE = re.compile(r"^(PROGRAM|POOLS|PPS|STATS|RESULTS|VIDEO.*|PAYOUTS|FINISH ORDER|VIEW CHART|RUNNER|WIN|PLACE|SHOW|POOL TYPE|RUNNERS|PAYOUT|BET|DE|RA|MY|M|OFFICIAL|ADD TO STABLE|RACE \d+)$", re.I)
+COND_RE = re.compile(r"\b(DIRT|TURF|ALL ?WEATHER|SYNTHETIC|TAPETA|AW|INNER TURF|WIDENER)\s*[:\-]\s*([A-Z ]{3,12})\b", re.I)
 
 
 # ---------------------------------------------------------------------------
@@ -97,13 +98,22 @@ def parse_payout_rows(rows, race_no: int, roster: dict | None = None) -> dict:
     warnings, confs = [], []
     # column positions from the header row
     win_x = place_x = show_x = None
-    header_y = pool_y = None
+    header_y = pool_y = order_y = None
+    condition = surface = official = None
     for y, toks in rows:
         texts = {t.upper(): x for x, t, c in toks}
+        line = " ".join(t for x, t, c in toks)
         if "WIN" in texts and ("PLACE" in texts or "SHOW" in texts):
             win_x, place_x, show_x, header_y = texts.get("WIN"), texts.get("PLACE"), texts.get("SHOW"), y
         if any(t.upper().startswith("POOL TYPE") for x, t, c in toks):
             pool_y = y
+        if order_y is None and any(t.upper().replace(" ", "") == "FINISHORDER" for x, t, c in toks) and header_y is not None and y > header_y:
+            order_y = y
+        mc = COND_RE.search(line)
+        if mc and header_y is None:
+            surface, condition = mc.group(1).upper().replace(" ", ""), mc.group(2).strip().upper()
+        if "OFFICIAL" in texts and header_y is None:
+            official = True
     if header_y is None:
         warnings.append("no WIN/PLACE/SHOW header found")
     cols = [(k, x) for k, x in (("win", win_x), ("place", place_x), ("show", show_x)) if x is not None]
@@ -122,6 +132,8 @@ def parse_payout_rows(rows, race_no: int, roster: dict | None = None) -> dict:
         if header_y is not None and y <= header_y:
             continue
         if pool_y is not None and y >= pool_y:
+            break
+        if order_y is not None and y >= order_y:
             break
         amounts = [(x, _money(t), c) for x, t, c in toks if _money(t) is not None and "$" in t]
         post = next((m.group(1).upper() for x, t, c in toks if (m := PP_RE.match(t.replace(" ", "")))), None)
@@ -142,6 +154,27 @@ def parse_payout_rows(rows, race_no: int, roster: dict | None = None) -> dict:
                 continue
             last_text = (y, words[0][1])
             confs.append(words[0][2])
+    # full finish order section (the later "official" page lists every runner): name / jockey+PP / trainer blocks
+    full_names = []
+    if order_y is not None:
+        last_text, skip_trainer, seen_pp = None, False, False
+        for y, toks in rows:
+            if y <= order_y:
+                continue
+            post = next((m.group(1).upper() for x, t, c in toks if (m := PP_RE.match(t.replace(" ", "")))), None)
+            words = [(x, t, c) for x, t, c in toks if _money(t) is None and not PP_RE.match(t.replace(" ", ""))
+                     and not NOISE.match(t.strip()) and x < 600]
+            if post is not None or (words and last_text is not None and skip_trainer is False and full_names and y - last_text[0] <= 18):
+                # jockey row (carries the PP box) -> the row above was the horse name
+                if last_text and (not full_names or full_names[-1][0] != last_text[0]):
+                    full_names.append((last_text[0], last_text[1]))
+                skip_trainer, last_text = True, None
+                continue
+            if words:
+                if skip_trainer:
+                    skip_trainer = False
+                    continue
+                last_text = (y, words[0][1])
     # exotic pools
     exotics, seen = [], set()
     if pool_y is not None:
@@ -149,6 +182,8 @@ def parse_payout_rows(rows, race_no: int, roster: dict | None = None) -> dict:
         for y, toks in rows:
             if y <= pool_y:
                 continue
+            if order_y is not None and y >= order_y:
+                break
             first = toks[0][1] if toks else ""
             mp = POOL_RE.match(first.strip())
             if mp:
@@ -205,7 +240,26 @@ def parse_payout_rows(rows, race_no: int, roster: dict | None = None) -> dict:
         warnings.append("finish order taken from the runner names (no exotic combination read)")
     elif not finish:
         warnings.append("no finish order: no exotic combination read and no roster to match names")
+    # extend the finish with the full-order section when the roster can name every runner
+    full_pgms = []
+    if full_names and roster:
+        inv = {v.lower(): k for k, v in roster.items()}
+        for _, nm in full_names:
+            best = difflib.get_close_matches(nm.lower(), list(inv.keys()), n=1, cutoff=0.6)
+            full_pgms.append(inv[best[0]] if best else None)
+        if full_pgms and all(full_pgms) and len(set(full_pgms)) == len(full_pgms):
+            if full_pgms[:len(finish)] == [str(x) for x in finish]:
+                finish = [str(x) for x in full_pgms]
+            else:
+                warnings.append(f"finish-order section ({'/'.join(full_pgms)}) disagrees with the combinations ({'/'.join(finish)})")
+        else:
+            warnings.append("finish-order section: not every runner matched to the card; top finishers from the combinations only")
     race = {"race_no": race_no, "finish": finish, "exotics": [{k: v for k, v in e.items()} for e in exotics]}
+    if condition:
+        race["track_condition"] = condition
+        race["surface"] = surface
+    if official:
+        race["official"] = True
     by_pos = {}
     for i, r in enumerate(order[:3]):
         pg = finish[i] if i < len(finish) else None
@@ -221,8 +275,8 @@ def parse_payout_rows(rows, race_no: int, roster: dict | None = None) -> dict:
         race["show"] = show
     if len(runners) < 3:
         warnings.append(f"only {len(runners)} runner rows read")
-    race["ocr"] = {"names": names, "posts": posts, "name_pgms": name_pgms, "confidence": round(min(confs), 2) if confs else None,
-                   "warnings": warnings}
+    race["ocr"] = {"names": names, "posts": posts, "name_pgms": name_pgms, "full_order_names": [n for _, n in full_names],
+                   "confidence": round(min(confs), 2) if confs else None, "warnings": warnings}
     return race
 
 
