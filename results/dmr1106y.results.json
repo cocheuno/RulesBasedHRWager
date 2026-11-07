@@ -443,6 +443,12 @@
      "base": 0.5,
      "combo": "6/5/1",
      "payout": 58.4
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "1/6",
+     "payout": 15.8
     }
    ],
    "track_condition": "FIRM",
@@ -833,6 +839,18 @@
      "base": 0.5,
      "combo": "8/3/1",
      "payout": 79.2
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "6/8",
+     "payout": 29.8
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "1/6/8",
+     "payout": 19.55
     }
    ],
    "track_condition": "FAST",
@@ -1223,6 +1241,18 @@
      "base": 0.5,
      "combo": "7/4/8",
      "payout": 66.05
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "8/7",
+     "payout": 49.0
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "6/8/7",
+     "payout": 40.55
     }
    ],
    "track_condition": "FIRM",
@@ -1767,7 +1797,7 @@
     "Midnight Cowgirl(03Sep26\u00abDmr\u00ac)",
     "Dorie Miller(16Oct26\u00abSA\u00aa)",
     "Kool Mariah(16Oct26\u00abSA\u00a8)",
-    "Princess"
+    "Princess Snow(23Oct26\u00acSA\u00ad)"
    ],
    "claimed": [],
    "source": "chart",
@@ -1835,6 +1865,30 @@
      "base": 0.5,
      "combo": "2/7/8",
      "payout": 35.85
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "7/2",
+     "payout": 27.8
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "8/7/2",
+     "payout": 48.1
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "6/9/10/8/7/2",
+     "payout": 109.2
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "1/6/9/10/8/7/2",
+     "payout": 387.8
     }
    ],
    "track_condition": "FAST",
@@ -2338,6 +2392,18 @@
      "base": 0.5,
      "combo": "8/9/2",
      "payout": 18.5
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "2/8",
+     "payout": 23.2
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "7/2/8",
+     "payout": 25.1
     }
    ],
    "track_condition": "FIRM",
@@ -2846,6 +2912,18 @@
      "base": 0.5,
      "combo": "8/11/12",
      "payout": 168.85
+    },
+    {
+     "type": "DOUBLE",
+     "base": 2.0,
+     "combo": "8/8",
+     "payout": 41.0
+    },
+    {
+     "type": "PICK3",
+     "base": 0.5,
+     "combo": "2/8/8",
+     "payout": 32.0
     }
    ],
    "track_condition": "FAST",
@@ -3394,6 +3472,36 @@
      "base": 0.5,
      "combo": "4/8/1",
      "payout": 165.0
+    },
+    {
+     "type": "DOUBLE",
+     "base": 5.0,
+     "combo": "8/4",
+     "payout": 317.5
+    },
+    {
+     "type": "PICK3",
+     "base": 3.0,
+     "combo": "8/8/4",
+     "payout": 810.6
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "2/8/8/4",
+     "payout": 477.8
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "7/2/8/8/4",
+     "payout": 1814.35
+    },
+    {
+     "type": "PICK6",
+     "base": 2.0,
+     "combo": "8/7/2/8/8/4",
+     "payout": 32455.0
     }
    ],
    "track_condition": "FIRM",

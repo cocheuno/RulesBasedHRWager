@@ -435,6 +435,12 @@
      "base": 0.5,
      "combo": "6/2/3",
      "payout": 147.83
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "1/6",
+     "payout": 37.53
     }
    ],
    "track_condition": "SLOPPY (sealed)",
@@ -823,6 +829,18 @@
      "base": 0.5,
      "combo": "7/11/1",
      "payout": 109.09
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "6/7",
+     "payout": 56.51
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "1/6/7",
+     "payout": 304.92
     }
    ],
    "track_condition": "FAST",
@@ -1359,6 +1377,18 @@
      "base": 0.5,
      "combo": "2/5/1",
      "payout": 22.04
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "7/2",
+     "payout": 15.17
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "6/7/2",
+     "payout": 339.53
     }
    ],
    "track_condition": "FAST",
@@ -1749,6 +1779,30 @@
      "base": 0.5,
      "combo": "5/10/2",
      "payout": 23.9
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "2/5",
+     "payout": 8.31
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "7/2/5",
+     "payout": 43.91
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "6/7/2/5",
+     "payout": 550.69
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "1/6/7/2/5",
+     "payout": 2048.84
     }
    ],
    "track_condition": "SLOPPY (sealed)",
@@ -2352,6 +2406,18 @@
      "base": 0.5,
      "combo": "8/5/2",
      "payout": 180.73
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "5/8",
+     "payout": 10.78
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "2/5/8",
+     "payout": 45.08
     }
    ],
    "track_condition": "FAST",
@@ -2882,6 +2948,24 @@
      "base": 0.5,
      "combo": "6/2/3",
      "payout": 54.11
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "8/6",
+     "payout": 37.04
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "5/8/6",
+     "payout": 111.23
+    },
+    {
+     "type": "GRANDSLAM",
+     "base": 1.0,
+     "combo": "1/2/5/2/5/10/2/5/6/8/6",
+     "payout": 47.02
     }
    ],
    "track_condition": "SLOPPY (sealed)",
@@ -3271,6 +3355,36 @@
      "base": 0.5,
      "combo": "3/2/10",
      "payout": 29.21
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "6/3",
+     "payout": 52.12
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "8/6/3",
+     "payout": 223.38
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "5/6/8/6/3",
+     "payout": 309.83
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "2/5/6/8/6/3",
+     "payout": 2070.29
+    },
+    {
+     "type": "PICK6",
+     "base": 1.0,
+     "combo": "7/2/5/6/8/6/3",
+     "payout": 13135.82
     }
    ],
    "track_condition": "FAST",
