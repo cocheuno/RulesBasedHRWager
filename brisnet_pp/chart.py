@@ -164,7 +164,9 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
                     out["times"].append(round((int(mins) if mins else 0) * 60 + float(secs), 2))
                 except ValueError:
                     pass
-    # ---- mutuels: "1-BLETCHLEY ..... 5.64 3.82 2.84"; amounts by column position relative to the first (win) row
+    # ---- mutuels: "1-BLETCHLEY ..... 5.64 3.82 2.84"; amounts by column position relative to the first (win) row.
+    # The winner's row defines the columns: three amounts = win/place/show, two = win/place (no show wagering in a
+    # four-horse field), one = win only.  Equibase prints no column header, so the count is the only signal.
     win_x = place_x = show_x = None
     mutuel_rows = []
     for r, t in texts:
@@ -176,20 +178,23 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
                 mutuel_rows.append((m.group(1), amts))
     if mutuel_rows:
         first = mutuel_rows[0][1]
-        if len(first) == 3:
-            win_x, place_x, show_x = (a[0] for a in first)
+        cols = [a[0] for a in first][:3]
+        win_x = cols[0]
+        place_x = cols[1] if len(cols) > 1 else None
+        show_x = cols[2] if len(cols) > 2 else None
         out["place"], out["show"] = {}, {}
+        out["pools"] = ["win", "place", "show"][:len(cols)]
         for pg, amts in mutuel_rows:
             for x, v in amts:
-                if win_x is not None and abs(x - win_x) < 8:
+                if abs(x - win_x) < 8:
                     out["win"] = v
                 elif place_x is not None and abs(x - place_x) < 8:
                     out["place"][pg] = v
                 elif show_x is not None and abs(x - show_x) < 8:
                     out["show"][pg] = v
-                elif len(amts) == 2 and x == amts[0][0]:
+                elif show_x is None:          # two-column chart: anything right of the win column is a place price
                     out["place"][pg] = v
-                elif len(amts) <= 2:
+                else:
                     out["show"][pg] = v
     # ---- exotics
     for r, t in texts:
