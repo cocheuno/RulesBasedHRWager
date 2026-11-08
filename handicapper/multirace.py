@@ -27,6 +27,7 @@ import re
 from dataclasses import dataclass
 from typing import Callable
 
+from .probability import DEFAULT_PROBABILITY, price_factor, race_probs
 from .rules import Rule
 
 HRULES: list[Rule] = []
@@ -34,8 +35,6 @@ HRULES: list[Rule] = []
 DEFAULT_MULTIRACE = {
     "pick3": {"base": 1.0, "budget": 60.0},
     "pick4": {"base": 0.50, "budget": 100.0},
-    "logit_scale": 18.0,        # points per e-fold for leg win probabilities (softer than V1's 12)
-    "ml_blend": 0.35,           # weight of the morning-line probability in the blend (H1)
     "single_prob": 0.45,        # top horse needs this blended probability ... (H2)
     "single_gap": 7.0,          # ... and this score gap to the 2nd live horse to be a single
     "a_coverage": 0.55,         # A horses cover this much probability (H4)
@@ -61,10 +60,6 @@ def hrule(id: str, name: str):
     return deco
 
 
-def _ml_prob(ml: float | None) -> float | None:
-    return None if ml is None else 1.0 / (ml + 1.0)
-
-
 @dataclass
 class Leg:
     race_no: int
@@ -80,6 +75,7 @@ class Leg:
     price_leg: bool = False
     audit: list = None
     class_text: str = ""
+    price_factor: float = 1.0   # share of the win probability left to live horses when pricing tickets
 
 
 # ---------------------------------------------------------------------------
@@ -87,28 +83,25 @@ class Leg:
 # ---------------------------------------------------------------------------
 @hrule("H1", "Leg win probabilities")
 def h1(leg: Leg, cfg: dict):
-    """Each live horse's chance in a leg is a blend of the rules-engine probability (softmax of the score, scale
-    `logit_scale`) and the morning-line probability (1/(ML+1), renormalised over the live horses):
-    p = (1 - ml_blend) * model + ml_blend * ML.  Eliminated horses get 0.
+    """Each live horse's chance in a leg is the engine's one win probability (handicapper/probability.py): the
+    softmax of the ability score (scale `probability.logit_scale`) blended with the morning line renormalised over
+    the live horses, p = (1 - ml_blend) * model + ml_blend * ML.  The same numbers appear on the race report and the
+    screen.  Eliminated horses get 0 here; when a ticket is priced each keeps `elim_floor` (H7 hit probability).
+    A leg with a horse that has no morning line uses the model probabilities alone, and says so.
     Basis: Benter (1994) - a handicapping model improves markedly when combined with the public's odds; Crist - grade
     horses by how likely they are to win, not by how much you like them."""
-    scale, lam = cfg["logit_scale"], cfg["ml_blend"]
-    scores = {s["pgm"]: s["score"] for s in leg.sheets}
-    m = max(scores.values())
-    ex = {k: math.exp((v - m) / scale) for k, v in scores.items()}
-    z = sum(ex.values())
-    leg.model_probs = {k: v / z for k, v in ex.items()}
-    raw = {s["pgm"]: _ml_prob(s["ml_decimal"]) for s in leg.sheets}
-    missing = [k for k, v in raw.items() if v is None]
-    if raw and not missing:
-        zz = sum(raw.values())
-        leg.ml_probs = {k: v / zz for k, v in raw.items()}
-    else:   # a horse without a morning line has no market price: the blend is skipped, never guessed
-        leg.ml_probs = dict(leg.model_probs)
-        lam = 0.0
-    leg.probs = {k: round((1 - lam) * leg.model_probs[k] + lam * leg.ml_probs[k], 4) for k in scores}
+    if all("win_prob" in s for s in leg.sheets):            # computed once by the engine
+        leg.model_probs = {s["pgm"]: s["model_prob"] for s in leg.sheets}
+        leg.ml_probs = {s["pgm"]: (s["market_prob"] if s.get("market_prob") is not None else s["model_prob"]) for s in leg.sheets}
+        leg.probs = {s["pgm"]: s["win_prob"] for s in leg.sheets}
+        missing = [s["pgm"] for s in leg.sheets if s.get("ml_decimal") is None]
+        lam = 0.0 if missing else cfg.get("probability", DEFAULT_PROBABILITY)["ml_blend"]
+    else:                                                    # sheets scored elsewhere: same function, same numbers
+        pr = race_probs(leg.sheets, cfg.get("probability"))
+        leg.model_probs, leg.probs, lam, missing = pr["model"], pr["win"], pr["blend"], pr["missing"]
+        leg.ml_probs = pr["market"] or dict(pr["model"])
     top = max(leg.probs, key=leg.probs.get)
-    leg.audit.append(f"H1 blended probabilities (model {1 - lam:.0%} / ML {lam:.0%}); top #{top} {leg.probs[top]:.0%}"
+    leg.audit.append(f"H1 win probabilities (model {1 - lam:.0%} / ML {lam:.0%}); top #{top} {leg.probs[top]:.0%}"
                      + (f"; no morning line for #{', #'.join(missing)}: model probabilities only" if missing else ""))
 
 
@@ -297,14 +290,14 @@ def h8(seq: dict, cfg: dict):
 @hrule("H9", "Sequence ranking")
 def h9(seq: dict, cfg: dict):
     """Hit probability = P(all A's win) + sum over legs of P(that leg's B wins and every other leg's A wins), using the
-    H1 probabilities.  Sequence score = hit probability x (1 + single_bonus x singles) x (1 + price_leg_bonus x price
+    H1 probabilities scaled by the leg's pricing factor (each eliminated horse keeps `elim_floor`, pricing only).  Sequence score = hit probability x (1 + single_bonus x singles) x (1 + price_leg_bonus x price
     legs).  The ML parlay of the lowest-priced A in each leg is reported as a conservative will-pay yardstick, and
     the probability that every leg's favourite wins is reported as the "chalk" risk.
     Basis: Crist - prefer sequences where you have at least one strong opinion and at least one beatable favourite;
     Meadow - a multi-race bet has to beat the parlay of its parts to be worth the extra takeout."""
     legs = seq["legs"]
-    PA = [sum(l.probs[k] for k in l.A) for l in legs]
-    PB = [sum(l.probs[k] for k in l.B) for l in legs]
+    PA = [l.price_factor * sum(l.probs[k] for k in l.A) for l in legs]
+    PB = [l.price_factor * sum(l.probs[k] for k in l.B) for l in legs]
     hit = math.prod(PA)
     for i in range(len(legs)):
         hit += PB[i] * math.prod(PA[j] for j in range(len(legs)) if j != i)
@@ -359,8 +352,13 @@ def make_leg(r: dict, cfg: dict) -> Leg | None:
     if not live:
         return None
     mls = [(s["ml_decimal"], s["pgm"]) for s in live if s["ml_decimal"] is not None]
+    n_elim = sum(1 for s in r["sheets"] if s["eliminated"])
     leg = Leg(race_no=r["race_no"], sheets=live, excluded=excluded, probs={}, model_probs={}, ml_probs={},
-              favorite=min(mls)[1] if mls else None, A=[], B=[], audit=[], class_text=r.get("class_text") or "")
+              favorite=min(mls)[1] if mls else None, A=[], B=[], audit=[], class_text=r.get("class_text") or "",
+              price_factor=price_factor(n_elim, cfg.get("probability")))
+    if n_elim:
+        leg.audit.append(f"pricing keeps {cfg.get('probability', DEFAULT_PROBABILITY)['elim_floor']:.0%} for each of the "
+                         f"{n_elim} eliminated horse(s): live probabilities x {leg.price_factor:.2f} in the hit probability only")
     _rules_for_leg(leg, cfg)
     return leg
 
@@ -387,7 +385,7 @@ def leg_summary(r: dict, cfg: dict) -> dict | None:
     if leg is None:
         return None
     return {"kind": leg.kind, "A": leg.A, "B": leg.B, "favorite": leg.favorite, "price_leg": leg.price_leg,
-            "probs": leg.probs, "audit": leg.audit}
+            "probs": leg.probs, "price_factor": leg.price_factor, "audit": leg.audit}
 
 
 def build_all(result: dict, cfg: dict) -> dict:
@@ -423,7 +421,7 @@ def _serialize(seq: dict) -> dict:
         "tickets": [{"name": t["name"], "legs": t["legs"], "combos": math.prod(len(x) for x in t["legs"]),
                      "cost": round(math.prod(len(x) for x in t["legs"]) * seq["base"], 2)} for t in seq["tickets"]],
         "legs": [{"race_no": l.race_no, "class_text": l.class_text, "kind": l.kind, "A": l.A, "B": l.B, "favorite": l.favorite,
-                  "price_leg": l.price_leg, "probs": l.probs, "audit": l.audit} for l in seq["legs"]],
+                  "price_leg": l.price_leg, "probs": l.probs, "price_factor": l.price_factor, "audit": l.audit} for l in seq["legs"]],
     }
 
 

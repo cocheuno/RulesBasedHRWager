@@ -104,8 +104,12 @@ boxes (Prime Power, speed-last-race, class) reconcile with the per-horse data; 0
 
 `rules.py` registers every rule with `@rule(id, name, category, weight)`.  A rule returns
 `None` (no opinion) or `(factor, note)`; the engine adds `factor × weight` to the horse and
-keeps the note.  Hard rules (`X*`) eliminate (negative factor) or flag (AE/MTO).  `V1`
-compares the score-implied win probability (softmax over the field) with the morning line.
+keeps the note.  Hard rules (`X*`) eliminate (negative factor) or flag (AE/MTO).  The score is a pure
+*ability* score.  `handicapper/probability.py` turns it into the one win probability every report and every
+Pick 3/4 leg reads (softmax of the score, blended with the morning line); `V1` compares the engine's fair odds
+from that model with the morning line and is reported as *value* beside the score, never added to it, so a
+horse's rank does not move because its price is generous or short.  Eliminated horses have probability 0 for
+selection; only when a Pick 3/4 ticket is priced does each keep a 2% floor (`elim_floor`).
 
 Categories: **S** speed · **C** class · **P** pace & bias · **F** form · **K** connections ·
 **D** distance/surface · **E** equipment · **Q** QuickPlay comments · **M** maidens ·
@@ -174,7 +178,7 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
 * Add a rule: write a function in `rules.py` with the `@rule` decorator and a docstring ending in a
   `Basis:` sentence; it appears in the audit and in `RULES.md` automatically (the tests enforce the basis line).
 * Pick 3/4 behaviour: `multirace` block in `rules_config.json` (budgets, `single_prob`, coverage targets,
-  `fav_vulnerable_rules`, `ml_blend`).
+  `fav_vulnerable_rules`); the probability model in the `probability` block (`logit_scale`, `ml_blend`, `elim_floor`).
 
 ## Race Day Desk (`python ui.py`)
 
