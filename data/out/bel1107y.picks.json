@@ -15315,58 +15315,6 @@
      ]
     },
     {
-     "type": "TRIFECTA",
-     "legs": [
-      [
-       "4"
-      ],
-      [
-       "3",
-       "6",
-       "5"
-      ],
-      [
-       "3",
-       "6",
-       "5"
-      ]
-     ],
-     "box": false,
-     "combos": 6,
-     "label": "TRIFECTA key #4 / #3,#6,#5 / #3,#6,#5",
-     "source": "other",
-     "race_no": 6,
-     "races": [
-      6
-     ]
-    },
-    {
-     "type": "TRIFECTA",
-     "legs": [
-      [
-       "3",
-       "6",
-       "5"
-      ],
-      [
-       "4"
-      ],
-      [
-       "3",
-       "6",
-       "5"
-      ]
-     ],
-     "box": false,
-     "combos": 6,
-     "label": "TRIFECTA key second #3,#6,#5 / #4 / #3,#6,#5 (a standout that runs second still pays)",
-     "source": "other",
-     "race_no": 6,
-     "races": [
-      6
-     ]
-    },
-    {
      "type": "DOUBLE",
      "legs": [
       [
@@ -15390,8 +15338,7 @@
    ],
    "other_wagers": [
     "EXACTA key #4 over #3,#6,#5",
-    "TRIFECTA key #4 / #3,#6,#5 / #3,#6,#5",
-    "TRIFECTA key second #3,#6,#5 / #4 / #3,#6,#5 (a standout that runs second still pays)",
+    "no trifecta: 4 starters, under the 5-horse pool minimum",
     "no WIN bet on #4 (ML 3/5 is below 1.5-1): use it as a single in the Pick 3 / Pick 4 instead",
     "DAILY DOUBLE #4 with R7 #7,#6 (2 x $1)"
    ]
@@ -31698,12 +31645,12 @@
   "track: Belmont Park (BEL); profile: BEL"
  ],
  "run": {
-  "at_utc": "2026-11-08T03:14:52Z",
+  "at_utc": "2026-11-08T03:28:36Z",
   "scratches": "2:10, 2:5, 2:7, 4:4, 4:9, 6:1, 6:2, 7:1, 7:3, 8:5, 8:7, 9:1, 9:4, 9:8, 10:11, 10:13, 10:8",
   "parser_version": "2026-11-07.2",
-  "config_hash": "1da347161884a90c",
+  "config_hash": "bc89d3535d99fdb8",
   "track_profile": "BEL",
-  "code_version": "4d955b4",
+  "code_version": "c8267c9",
   "source": "bel1107y.card.json",
   "source_sha256": "3a2ddc53fff9a1fcc27163347899cdf97128c4819e9229ffb24c75fdc9c607f0",
   "sheet": "bel1107q.pdf",

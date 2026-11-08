@@ -2695,7 +2695,10 @@
      "races": [
       1
      ],
-     "min_odds": 2.0
+     "min_odds": 2.0,
+     "min_odds_by": {
+      "2": 2.0
+     }
     },
     {
      "type": "EXACTA",
@@ -2746,6 +2749,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "3",
+       "1",
+       "8"
+      ],
+      [
+       "2"
+      ],
+      [
+       "3",
+       "1",
+       "8",
+       "4"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #3,#1,#8 / #2 / #3,#1,#8,#4 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -2760,7 +2790,10 @@
      "races": [
       1
      ],
-     "min_odds": 2.0
+     "min_odds": 2.0,
+     "min_odds_by": {
+      "2": 2.0
+     }
     },
     {
      "type": "SUPERFECTA",
@@ -2841,6 +2874,7 @@
    "other_wagers": [
     "EXACTA key #2 over #3,#1,#8",
     "TRIFECTA key #2 / #3,#1,#8 / #3,#1,#8,#4",
+    "TRIFECTA key second #3,#1,#8 / #2 / #3,#1,#8,#4 (a standout that runs second still pays)",
     "WIN #2 (ML 7/2, take 2-1 or better; fair 1.7-1)",
     "SUPERFECTA key #2 / #3,#1,#8 / #3,#1,#8 / #3,#1,#8,#4",
     "favourite #1 looks beatable (H5): EXACTA #2,#3 over #2,#3,#1 - chalk underneath only, never on top",
@@ -5281,7 +5315,10 @@
      "races": [
       2
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "6": 1.5
+     }
     },
     {
      "type": "EXACTA",
@@ -5332,6 +5369,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "5",
+       "3",
+       "7"
+      ],
+      [
+       "6"
+      ],
+      [
+       "5",
+       "3",
+       "7",
+       "1"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #5,#3,#7 / #6 / #5,#3,#7,#1 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 2,
+     "races": [
+      2
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -5346,7 +5410,10 @@
      "races": [
       2
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "6": 1.5
+     }
     },
     {
      "type": "EXACTA",
@@ -5395,6 +5462,7 @@
    "other_wagers": [
     "EXACTA key #6 over #5,#3,#7",
     "TRIFECTA key #6 / #5,#3,#7 / #5,#3,#7,#1",
+    "TRIFECTA key second #5,#3,#7 / #6 / #5,#3,#7,#1 (a standout that runs second still pays)",
     "WIN #6 (ML 3/1, take 1.5-1 or better; fair 0.5-1)",
     "favourite #5 looks beatable (H5): EXACTA #6 over #6,#5,#3 - chalk underneath only, never on top",
     "DAILY DOUBLE #6 with R3 #7,#1,#2 (3 x $1)"
@@ -8601,6 +8669,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "1",
+       "2",
+       "4"
+      ],
+      [
+       "7"
+      ],
+      [
+       "1",
+       "2",
+       "4",
+       "6"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #1,#2,#4 / #7 / #1,#2,#4,#6 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 3,
+     "races": [
+      3
+     ]
+    },
+    {
      "type": "SUPERFECTA",
      "legs": [
       [
@@ -8659,6 +8754,7 @@
    "other_wagers": [
     "EXACTA key #7 over #1,#2,#4",
     "TRIFECTA key #7 / #1,#2,#4 / #1,#2,#4,#6",
+    "TRIFECTA key second #1,#2,#4 / #7 / #1,#2,#4,#6 (a standout that runs second still pays)",
     "no WIN bet on #7 (ML 2/1 is under fair 1.9-1 plus margin (2.2-1 needed)): use it as a single in the Pick 3 / Pick 4 instead",
     "SUPERFECTA key #7 / #1,#2,#4 / #1,#2,#4 / #1,#2,#4,#6",
     "DAILY DOUBLE #7,#1,#2 with R4 #3,#2 (6 x $1)"
@@ -10905,7 +11001,10 @@
      "races": [
       4
      ],
-     "min_odds": 2.1
+     "min_odds": 2.1,
+     "min_odds_by": {
+      "3": 2.1
+     }
     },
     {
      "type": "EXACTA",
@@ -10934,12 +11033,15 @@
      "legs": [
       [
        "3",
-       "2"
+       "2",
+       "5",
+       "6"
       ],
       [
        "3",
        "2",
-       "5"
+       "5",
+       "6"
       ],
       [
        "3",
@@ -10948,9 +11050,9 @@
        "6"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #3,#2 / #3,#2,#5 / #3,#2,#5,#6",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #3-#2-#5-#6",
      "source": "other",
      "race_no": 4,
      "races": [
@@ -10971,7 +11073,11 @@
      "race_no": 4,
      "races": [
       4
-     ]
+     ],
+     "min_odds_by": {
+      "3": 2.1
+     },
+     "min_odds": 2.1
     },
     {
      "type": "EXACTA",
@@ -11021,7 +11127,7 @@
    ],
    "other_wagers": [
     "EXACTA box #3,#2; EXACTA part-wheel #3,#2 / #3,#2,#5",
-    "TRIFECTA #3,#2 / #3,#2,#5 / #3,#2,#5,#6",
+    "TRIFECTA box #3-#2-#5-#6",
     "WIN on the overlay: #3 (ML 3/1 vs fair 1.8-1; take 2.1-1 or better)",
     "favourite #5 looks beatable (H5): EXACTA #3,#2 over #3,#2,#5 - chalk underneath only, never on top",
     "DAILY DOUBLE #3,#2 with R5 #2,#10,#8 (6 x $1)"
@@ -14237,7 +14343,10 @@
      "races": [
       5
      ],
-     "min_odds": 3.6
+     "min_odds": 3.6,
+     "min_odds_by": {
+      "10": 3.6
+     }
     },
     {
      "type": "EXACTA",
@@ -14266,12 +14375,15 @@
      "legs": [
       [
        "2",
-       "10"
+       "10",
+       "8",
+       "6"
       ],
       [
        "2",
        "10",
-       "8"
+       "8",
+       "6"
       ],
       [
        "2",
@@ -14280,9 +14392,9 @@
        "6"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #2,#10 / #2,#10,#8 / #2,#10,#8,#6",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #2-#10-#8-#6",
      "source": "other",
      "race_no": 5,
      "races": [
@@ -14314,7 +14426,7 @@
    ],
    "other_wagers": [
     "EXACTA box #2,#10; EXACTA part-wheel #2,#10 / #2,#10,#8",
-    "TRIFECTA #2,#10 / #2,#10,#8 / #2,#10,#8,#6",
+    "TRIFECTA box #2-#10-#8-#6",
     "no WIN bet: neither of the top two is an overlay at the morning line",
     "DAILY DOUBLE #2,#10,#8 with R6 #10 (3 x $1)"
    ]
@@ -17577,7 +17689,10 @@
      "races": [
       6
      ],
-     "min_odds": 2.1
+     "min_odds": 2.1,
+     "min_odds_by": {
+      "10": 2.1
+     }
     },
     {
      "type": "EXACTA",
@@ -17606,12 +17721,15 @@
      "legs": [
       [
        "10",
-       "3"
+       "3",
+       "9",
+       "8"
       ],
       [
        "10",
        "3",
-       "9"
+       "9",
+       "8"
       ],
       [
        "10",
@@ -17620,9 +17738,9 @@
        "8"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #10,#3 / #10,#3,#9 / #10,#3,#9,#8",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #10-#3-#9-#8",
      "source": "other",
      "race_no": 6,
      "races": [
@@ -17643,7 +17761,11 @@
      "race_no": 6,
      "races": [
       6
-     ]
+     ],
+     "min_odds_by": {
+      "10": 2.1
+     },
+     "min_odds": 2.1
     },
     {
      "type": "EXACTA",
@@ -17692,7 +17814,7 @@
    ],
    "other_wagers": [
     "EXACTA box #10,#3; EXACTA part-wheel #10,#3 / #10,#3,#9",
-    "TRIFECTA #10,#3 / #10,#3,#9 / #10,#3,#9,#8",
+    "TRIFECTA box #10-#3-#9-#8",
     "WIN on the overlay: #10 (ML 6/1 vs fair 1.8-1; take 2.1-1 or better)",
     "favourite #3 looks beatable (H5): EXACTA #10 over #10,#3,#9 - chalk underneath only, never on top",
     "DAILY DOUBLE #10 with R7 #2,#3,#11,#9 (4 x $1)"
@@ -21141,12 +21263,15 @@
      "legs": [
       [
        "2",
-       "11"
+       "11",
+       "3",
+       "9"
       ],
       [
        "2",
        "11",
-       "3"
+       "3",
+       "9"
       ],
       [
        "2",
@@ -21155,9 +21280,9 @@
        "9"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #2,#11 / #2,#11,#3 / #2,#11,#3,#9",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #2-#11-#3-#9",
      "source": "other",
      "race_no": 7,
      "races": [
@@ -21178,7 +21303,11 @@
      "race_no": 7,
      "races": [
       7
-     ]
+     ],
+     "min_odds_by": {
+      "11": 5.3
+     },
+     "min_odds": 5.3
     },
     {
      "type": "DOUBLE",
@@ -21207,7 +21336,7 @@
    ],
    "other_wagers": [
     "EXACTA box #2,#11; EXACTA part-wheel #2,#11 / #2,#11,#3",
-    "TRIFECTA #2,#11 / #2,#11,#3 / #2,#11,#3,#9",
+    "TRIFECTA box #2-#11-#3-#9",
     "WIN on the overlay: #11 (ML 8/1 vs fair 4.6-1; take 5.3-1 or better)",
     "DAILY DOUBLE #2,#3,#11,#9 with R8 #1,#4 (8 x $1)"
    ]
@@ -23694,12 +23823,15 @@
      "legs": [
       [
        "5",
-       "4"
+       "4",
+       "1",
+       "2"
       ],
       [
        "5",
        "4",
-       "1"
+       "1",
+       "2"
       ],
       [
        "5",
@@ -23708,9 +23840,9 @@
        "2"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #5,#4 / #5,#4,#1 / #5,#4,#1,#2",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #5-#4-#1-#2",
      "source": "other",
      "race_no": 8,
      "races": [
@@ -23727,12 +23859,12 @@
       [
        "7",
        "1",
-       "6"
+       "5"
       ]
      ],
      "box": false,
      "combos": 6,
-     "label": "DAILY DOUBLE #1,#4 with R9 #7,#1,#6 (6 x $1)",
+     "label": "DAILY DOUBLE #1,#4 with R9 #7,#1,#5 (6 x $1)",
      "source": "other",
      "race_no": 8,
      "races": [
@@ -23743,9 +23875,9 @@
    ],
    "other_wagers": [
     "EXACTA box #5,#4; EXACTA part-wheel #5,#4 / #5,#4,#1",
-    "TRIFECTA #5,#4 / #5,#4,#1 / #5,#4,#1,#2",
+    "TRIFECTA box #5-#4-#1-#2",
     "no WIN bet: neither of the top two is an overlay at the morning line",
-    "DAILY DOUBLE #1,#4 with R9 #7,#1,#6 (6 x $1)"
+    "DAILY DOUBLE #1,#4 with R9 #7,#1,#5 (6 x $1)"
    ]
   },
   {
@@ -23767,9 +23899,9 @@
    "picks": [
     "7"
    ],
-   "bet_structure": "WIN (take 1.7-1 or better)",
+   "bet_structure": "WIN (take 2-1 or better)",
    "confidence": "high",
-   "selection_note": "#7 is 16.5 points clear",
+   "selection_note": "#7 is 14.0 points clear",
    "brisnet": {
     "top_pick": "7",
     "top3": [
@@ -23804,7 +23936,7 @@
      "run_style": "S",
      "speed_pts": 2,
      "prime_power": 140.8,
-     "score": 56.75,
+     "score": 55.75,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -23885,6 +24017,12 @@
        "name": "Pace figures vs. par",
        "points": 2.5,
        "note": "LP avg 91.3 vs par 82 into a hot pace"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F1",
@@ -23969,7 +24107,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "overlay: ML 7/2 vs fair 1.5-1 (value, not in the ability score)"
+       "note": "overlay: ML 7/2 vs fair 1.7-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -24173,19 +24311,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 6
      },
-     "model_prob": 0.3925,
+     "model_prob": 0.3676,
      "market_prob": 0.177,
-     "win_prob": 0.3171,
-     "implied_prob": 0.3925,
-     "fair_odds": 1.5,
+     "win_prob": 0.3008,
+     "implied_prob": 0.3676,
+     "fair_odds": 1.7,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 1.33
+      "edge": 1.06
      },
      "rank": 1,
      "conditional_rank": null,
-     "min_win_odds": 1.7
+     "min_win_odds": 2.0
     },
     {
      "pgm": "1",
@@ -24195,7 +24333,7 @@
      "run_style": "E/P",
      "speed_pts": 8,
      "prime_power": 127.9,
-     "score": 40.2,
+     "score": 41.7,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -24252,6 +24390,12 @@
        "name": "Post position vs. bias",
        "points": 2.0,
        "note": "post 1 (RAIL) IV 1.7"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F2",
@@ -24330,7 +24474,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "overlay: ML 8/1 vs fair 5.4-1 (value, not in the ability score)"
+       "note": "overlay: ML 8/1 vs fair 4.9-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -24533,19 +24677,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 8
      },
-     "model_prob": 0.1565,
+     "model_prob": 0.1684,
      "market_prob": 0.0885,
-     "win_prob": 0.1327,
-     "implied_prob": 0.1565,
-     "fair_odds": 5.4,
+     "win_prob": 0.1404,
+     "implied_prob": 0.1684,
+     "fair_odds": 4.9,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 0.48
+      "edge": 0.63
      },
      "rank": 2,
      "conditional_rank": null,
-     "min_win_odds": 6.2
+     "min_win_odds": 5.6
     },
     {
      "pgm": "5",
@@ -24555,7 +24699,7 @@
      "run_style": "E/P",
      "speed_pts": 3,
      "prime_power": 129.1,
-     "score": 29.75,
+     "score": 31.25,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -24594,6 +24738,12 @@
        "name": "Best late pace figure",
        "points": 1.6,
        "note": "2nd best late pace 94"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F3",
@@ -24847,19 +24997,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 4
      },
-     "model_prob": 0.0876,
+     "model_prob": 0.0942,
      "market_prob": 0.0885,
-     "win_prob": 0.0879,
-     "implied_prob": 0.0876,
-     "fair_odds": 10.4,
+     "win_prob": 0.0922,
+     "implied_prob": 0.0942,
+     "fair_odds": 9.6,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.23
+      "edge": -0.17
      },
      "rank": 3,
      "conditional_rank": null,
-     "min_win_odds": 12.0
+     "min_win_odds": 11.0
     },
     {
      "pgm": "3",
@@ -24869,7 +25019,7 @@
      "run_style": "P",
      "speed_pts": 3,
      "prime_power": 122.2,
-     "score": 28.3,
+     "score": 27.3,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -24914,6 +25064,12 @@
        "name": "Pace figures vs. par",
        "points": 2.5,
        "note": "LP avg 85.3 vs par 82 into a hot pace"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F2",
@@ -25159,19 +25315,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0808,
+     "model_prob": 0.0757,
      "market_prob": 0.0613,
-     "win_prob": 0.074,
-     "implied_prob": 0.0808,
-     "fair_odds": 11.4,
+     "win_prob": 0.0706,
+     "implied_prob": 0.0757,
+     "fair_odds": 12.2,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": 0.05
+      "edge": -0.02
      },
      "rank": 4,
      "conditional_rank": null,
-     "min_win_odds": 13.1
+     "min_win_odds": 14.0
     },
     {
      "pgm": "8",
@@ -25181,7 +25337,7 @@
      "run_style": "E/P",
      "speed_pts": 7,
      "prime_power": 127.3,
-     "score": 25.35,
+     "score": 26.85,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -25214,6 +25370,12 @@
        "name": "Post position vs. bias",
        "points": -2.0,
        "note": "post 8 (8+) IV 0.45"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F2",
@@ -25292,13 +25454,6 @@
        "name": "QuickPlay negative comments",
        "points": -0.4,
        "note": "Outside posts have poor win%"
-      },
-      {
-       "rule": "V1",
-       "name": "Morning-line value",
-       "points": -2.4,
-       "value": true,
-       "note": "underlay: ML 8/1 vs fair 13.6-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -25497,19 +25652,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0686,
+     "model_prob": 0.0738,
      "market_prob": 0.0885,
-     "win_prob": 0.0756,
-     "implied_prob": 0.0686,
-     "fair_odds": 13.6,
+     "win_prob": 0.0789,
+     "implied_prob": 0.0738,
+     "fair_odds": 12.6,
      "value": {
-      "label": "underlay",
-      "points": -2.4,
-      "edge": -0.41
+      "label": "fair",
+      "points": 0.0,
+      "edge": -0.37
      },
      "rank": 5,
      "conditional_rank": null,
-     "min_win_odds": 15.6
+     "min_win_odds": 14.5
     },
     {
      "pgm": "6",
@@ -25519,7 +25674,7 @@
      "run_style": "E",
      "speed_pts": 6,
      "prime_power": 125.4,
-     "score": 20.1,
+     "score": 21.6,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -25558,6 +25713,12 @@
        "name": "Running style vs. track bias",
        "points": -4.0,
        "note": "meet E IV 0.55, week E IV 0.66"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F1",
@@ -25612,7 +25773,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 4/1 vs fair 18.5-1 (value, not in the ability score)"
+       "note": "underlay: ML 4/1 vs fair 17.1-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -25808,19 +25969,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.0512,
+     "model_prob": 0.0551,
      "market_prob": 0.1593,
-     "win_prob": 0.0891,
-     "implied_prob": 0.0512,
-     "fair_odds": 18.5,
+     "win_prob": 0.0916,
+     "implied_prob": 0.0551,
+     "fair_odds": 17.1,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.78
+      "edge": -0.77
      },
      "rank": 6,
      "conditional_rank": null,
-     "min_win_odds": 21.3
+     "min_win_odds": 19.7
     },
     {
      "pgm": "2",
@@ -25830,7 +25991,7 @@
      "run_style": "E/P",
      "speed_pts": 5,
      "prime_power": 121.8,
-     "score": 19.1,
+     "score": 20.6,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -25869,6 +26030,12 @@
        "name": "Post position vs. bias",
        "points": 2.0,
        "note": "post 2 (1-3) IV 1.42"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F2",
@@ -25929,7 +26096,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 10/1 vs fair 19.6-1 (value, not in the ability score)"
+       "note": "underlay: ML 10/1 vs fair 18.2-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -26130,19 +26297,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0485,
+     "model_prob": 0.0521,
      "market_prob": 0.0724,
-     "win_prob": 0.0568,
-     "implied_prob": 0.0485,
-     "fair_odds": 19.6,
+     "win_prob": 0.0592,
+     "implied_prob": 0.0521,
+     "fair_odds": 18.2,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.49
+      "edge": -0.45
      },
      "rank": 7,
      "conditional_rank": null,
-     "min_win_odds": 22.5
+     "min_win_odds": 20.9
     },
     {
      "pgm": "11",
@@ -26152,7 +26319,7 @@
      "run_style": "S",
      "speed_pts": 3,
      "prime_power": 123.8,
-     "score": 18.8,
+     "score": 17.8,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -26205,6 +26372,12 @@
        "note": "LP avg 90.3 vs par 82 into a hot pace"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier turf winners were early types"
+      },
+      {
        "rule": "K1",
        "name": "Trainer win percentage (year)",
        "points": 1.8,
@@ -26251,7 +26424,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 8/1 vs fair 20.0-1 (value, not in the ability score)"
+       "note": "underlay: ML 8/1 vs fair 21.4-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -26452,19 +26625,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0477,
+     "model_prob": 0.0446,
      "market_prob": 0.0885,
-     "win_prob": 0.062,
-     "implied_prob": 0.0477,
-     "fair_odds": 20.0,
+     "win_prob": 0.06,
+     "implied_prob": 0.0446,
+     "fair_odds": 21.4,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.6
+      "edge": -0.63
      },
      "rank": 8,
      "conditional_rank": null,
-     "min_win_odds": 23.0
+     "min_win_odds": 24.6
     },
     {
      "pgm": "10",
@@ -26474,7 +26647,7 @@
      "run_style": "E/P",
      "speed_pts": 8,
      "prime_power": 124.6,
-     "score": 11.4,
+     "score": 12.9,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -26519,6 +26692,12 @@
        "name": "Post position vs. bias",
        "points": -2.0,
        "note": "post 10 (8+) IV 0.45"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F1",
@@ -26597,7 +26776,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 8/1 vs fair 30.6-1 (value, not in the ability score)"
+       "note": "underlay: ML 8/1 vs fair 28.4-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -26798,19 +26977,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 6
      },
-     "model_prob": 0.0316,
+     "model_prob": 0.034,
      "market_prob": 0.0885,
-     "win_prob": 0.0515,
-     "implied_prob": 0.0316,
-     "fair_odds": 30.6,
+     "win_prob": 0.0531,
+     "implied_prob": 0.034,
+     "fair_odds": 28.4,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.74
+      "edge": -0.72
      },
      "rank": 9,
      "conditional_rank": null,
-     "min_win_odds": 35.2
+     "min_win_odds": 32.7
     },
     {
      "pgm": "4",
@@ -26820,7 +26999,7 @@
      "run_style": "P",
      "speed_pts": 4,
      "prime_power": 116.0,
-     "score": 5.3,
+     "score": 4.3,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -26847,6 +27026,12 @@
        "name": "Running style vs. track bias",
        "points": 4.0,
        "note": "meet P IV 1.38, week P IV 1.31"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier turf winners were early types"
       },
       {
        "rule": "F1",
@@ -26889,7 +27074,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 15/1 vs fair 43.4-1 (value, not in the ability score)"
+       "note": "underlay: ML 15/1 vs fair 46.4-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -27090,19 +27275,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0225,
+     "model_prob": 0.0211,
      "market_prob": 0.0498,
-     "win_prob": 0.0321,
-     "implied_prob": 0.0225,
-     "fair_odds": 43.4,
+     "win_prob": 0.0311,
+     "implied_prob": 0.0211,
+     "fair_odds": 46.4,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.65
+      "edge": -0.68
      },
      "rank": 10,
      "conditional_rank": null,
-     "min_win_odds": 49.9
+     "min_win_odds": 53.4
     },
     {
      "pgm": "9",
@@ -27112,7 +27297,7 @@
      "run_style": "E",
      "speed_pts": 7,
      "prime_power": 116.7,
-     "score": -5.4,
+     "score": -3.9,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -27165,6 +27350,12 @@
        "note": "post 9 (8+) IV 0.45"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier turf winners were early types"
+      },
+      {
        "rule": "F5",
        "name": "Bad effort last out",
        "points": -3.0,
@@ -27205,7 +27396,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 20/1 vs fair 79.6-1 (value, not in the ability score)"
+       "note": "underlay: ML 20/1 vs fair 73.6-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -27406,19 +27597,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 5
      },
-     "model_prob": 0.0124,
+     "model_prob": 0.0134,
      "market_prob": 0.0379,
-     "win_prob": 0.0214,
-     "implied_prob": 0.0124,
-     "fair_odds": 79.6,
+     "win_prob": 0.022,
+     "implied_prob": 0.0134,
+     "fair_odds": 73.6,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.75
+      "edge": -0.73
      },
      "rank": 11,
      "conditional_rank": null,
-     "min_win_odds": 91.5
+     "min_win_odds": 84.6
     }
    ],
    "leg": {
@@ -27426,32 +27617,32 @@
     "A": [
      "7",
      "1",
-     "6"
+     "5"
     ],
     "B": [
-     "5",
+     "6",
      "8",
      "3"
     ],
     "favorite": "7",
     "price_leg": false,
     "probs": {
-     "7": 0.3171,
-     "1": 0.1327,
-     "5": 0.0879,
-     "3": 0.074,
-     "8": 0.0756,
-     "6": 0.0891,
-     "2": 0.0568,
-     "11": 0.062,
-     "10": 0.0515,
-     "4": 0.0321,
-     "9": 0.0214
+     "7": 0.3008,
+     "1": 0.1404,
+     "5": 0.0922,
+     "3": 0.0706,
+     "8": 0.0789,
+     "6": 0.0916,
+     "2": 0.0592,
+     "11": 0.06,
+     "10": 0.0531,
+     "4": 0.0311,
+     "9": 0.022
     },
     "price_factor": 1.0,
     "audit": [
-     "H1 win probabilities (model 65% / ML 35%); top #7 32%",
-     "H4 A=['7', '1', '6'] (54%) B=['5', '8', '3'] (78%) targets 55%/78%",
+     "H1 win probabilities (model 65% / ML 35%); top #7 30%",
+     "H4 A=['7', '1', '5'] (53%) B=['6', '8', '3'] (77%) targets 55%/78%",
      "H5 favourite #7 (7/2) looks legitimate"
     ]
    },
@@ -27465,13 +27656,16 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #7 (take 1.7-1 or better)",
+     "label": "WIN #7 (take 2-1 or better)",
      "source": "primary",
      "race_no": 9,
      "races": [
       9
      ],
-     "min_odds": 1.7
+     "min_odds": 2.0,
+     "min_odds_by": {
+      "7": 2.0
+     }
     },
     {
      "type": "EXACTA",
@@ -27522,6 +27716,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "1",
+       "5",
+       "3"
+      ],
+      [
+       "7"
+      ],
+      [
+       "1",
+       "5",
+       "3",
+       "8"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #1,#5,#3 / #7 / #1,#5,#3,#8 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 9,
+     "races": [
+      9
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -27530,13 +27751,16 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #7 (ML 7/2, take 1.7-1 or better; fair 1.5-1)",
+     "label": "WIN #7 (ML 7/2, take 2-1 or better; fair 1.7-1)",
      "source": "other",
      "race_no": 9,
      "races": [
       9
      ],
-     "min_odds": 1.7
+     "min_odds": 2.0,
+     "min_odds_by": {
+      "7": 2.0
+     }
     },
     {
      "type": "SUPERFECTA",
@@ -27574,7 +27798,8 @@
    "other_wagers": [
     "EXACTA key #7 over #1,#5,#3",
     "TRIFECTA key #7 / #1,#5,#3 / #1,#5,#3,#8",
-    "WIN #7 (ML 7/2, take 1.7-1 or better; fair 1.5-1)",
+    "TRIFECTA key second #1,#5,#3 / #7 / #1,#5,#3,#8 (a standout that runs second still pays)",
+    "WIN #7 (ML 7/2, take 2-1 or better; fair 1.7-1)",
     "SUPERFECTA key #7 / #1,#5,#3 / #1,#5,#3 / #1,#5,#3,#8"
    ]
   }
@@ -27603,8 +27828,10 @@
      "budget": 60.0,
      "cost": 28.0,
      "cost_before_trim": 28.0,
-     "hit_prob": 0.4224,
-     "score": 0.7181,
+     "hit_prob": 0.2112,
+     "hit_prob_raw": 0.4224,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.359,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 42.0,
@@ -27797,8 +28024,10 @@
      "budget": 60.0,
      "cost": 31.0,
      "cost_before_trim": 31.0,
-     "hit_prob": 0.3822,
-     "score": 0.6498,
+     "hit_prob": 0.1911,
+     "hit_prob_raw": 0.3822,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3249,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 54.0,
@@ -27994,8 +28223,10 @@
      "budget": 60.0,
      "cost": 30.0,
      "cost_before_trim": 30.0,
-     "hit_prob": 0.3372,
-     "score": 0.5733,
+     "hit_prob": 0.1686,
+     "hit_prob_raw": 0.3372,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2866,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 98.0,
@@ -28191,8 +28422,10 @@
      "budget": 60.0,
      "cost": 60.0,
      "cost_before_trim": 66.0,
-     "hit_prob": 0.4172,
-     "score": 0.5632,
+     "hit_prob": 0.2086,
+     "hit_prob_raw": 0.4172,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2816,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 42.0,
@@ -28396,8 +28629,10 @@
      "budget": 60.0,
      "cost": 54.0,
      "cost_before_trim": 54.0,
-     "hit_prob": 0.345,
-     "score": 0.4657,
+     "hit_prob": 0.1725,
+     "hit_prob_raw": 0.345,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2328,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 98.0,
@@ -28605,8 +28840,10 @@
      "budget": 60.0,
      "cost": 40.0,
      "cost_before_trim": 40.0,
-     "hit_prob": 0.27,
-     "score": 0.4589,
+     "hit_prob": 0.135,
+     "hit_prob_raw": 0.27,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2295,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 98.0,
@@ -28807,12 +29044,14 @@
      "budget": 60.0,
      "cost": 54.0,
      "cost_before_trim": 288.0,
-     "hit_prob": 0.0986,
-     "score": 0.1331,
+     "hit_prob": 0.0488,
+     "hit_prob_raw": 0.0976,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.0659,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 189.0,
-     "all_favorites_prob": 0.0153,
+     "all_favorites_prob": 0.0146,
      "notes": [
       "H10 offered on the R7 menu (minimum $3.00); bet at $3.00",
       "H8 over budget $288.00 > $60.00: dropped B #6 from R8",
@@ -28822,7 +29061,7 @@
       "H8 over budget $174.00 > $60.00: dropped B #8 from R9",
       "H8 over budget $150.00 > $60.00: dropped B #5 from R7",
       "H8 over budget $132.00 > $60.00: dropped B #5 from R8",
-      "H8 over budget $96.00 > $60.00: dropped B #5 from R9",
+      "H8 over budget $96.00 > $60.00: dropped B #6 from R9",
       "H8 over budget $72.00: dropped A #9 from R7"
      ],
      "tickets": [
@@ -28841,7 +29080,7 @@
         [
          "7",
          "1",
-         "6"
+         "5"
         ]
        ],
        "combos": 18,
@@ -28915,28 +29154,28 @@
        "A": [
         "7",
         "1",
-        "6"
+        "5"
        ],
        "B": [],
        "favorite": "7",
        "price_leg": false,
        "probs": {
-        "7": 0.3171,
-        "1": 0.1327,
-        "5": 0.0879,
-        "3": 0.074,
-        "8": 0.0756,
-        "6": 0.0891,
-        "2": 0.0568,
-        "11": 0.062,
-        "10": 0.0515,
-        "4": 0.0321,
-        "9": 0.0214
+        "7": 0.3008,
+        "1": 0.1404,
+        "5": 0.0922,
+        "3": 0.0706,
+        "8": 0.0789,
+        "6": 0.0916,
+        "2": 0.0592,
+        "11": 0.06,
+        "10": 0.0531,
+        "4": 0.0311,
+        "9": 0.022
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #7 32%",
-        "H4 A=['7', '1', '6'] (54%) B=['5', '8', '3'] (78%) targets 55%/78%",
+        "H1 win probabilities (model 65% / ML 35%); top #7 30%",
+        "H4 A=['7', '1', '5'] (53%) B=['6', '8', '3'] (77%) targets 55%/78%",
         "H5 favourite #7 (7/2) looks legitimate"
        ]
       }
@@ -28954,8 +29193,10 @@
     "budget": 60.0,
     "cost": 28.0,
     "cost_before_trim": 28.0,
-    "hit_prob": 0.4224,
-    "score": 0.7181,
+    "hit_prob": 0.2112,
+    "hit_prob_raw": 0.4224,
+    "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+    "score": 0.359,
     "singles": 0,
     "price_legs": 2,
     "ml_parlay": 42.0,
@@ -29157,8 +29398,10 @@
      "budget": 100.0,
      "cost": 51.0,
      "cost_before_trim": 51.0,
-     "hit_prob": 0.2862,
-     "score": 0.4865,
+     "hit_prob": 0.1431,
+     "hit_prob_raw": 0.2862,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2433,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 84.0,
@@ -29431,12 +29674,14 @@
      "budget": 100.0,
      "cost": 72.0,
      "cost_before_trim": 72.0,
-     "hit_prob": 0.1602,
-     "score": 0.2724,
+     "hit_prob": 0.0795,
+     "hit_prob_raw": 0.159,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.1351,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 220.5,
-     "all_favorites_prob": 0.0046,
+     "all_favorites_prob": 0.0043,
      "notes": [
       "H10 offered on the R6 menu (minimum $0.50); bet at $0.50"
      ],
@@ -29460,7 +29705,7 @@
         [
          "7",
          "1",
-         "6"
+         "5"
         ]
        ],
        "combos": 24,
@@ -29486,7 +29731,7 @@
         [
          "7",
          "1",
-         "6"
+         "5"
         ]
        ],
        "combos": 48,
@@ -29509,7 +29754,7 @@
         [
          "7",
          "1",
-         "6"
+         "5"
         ]
        ],
        "combos": 12,
@@ -29535,7 +29780,7 @@
         [
          "7",
          "1",
-         "6"
+         "5"
         ]
        ],
        "combos": 36,
@@ -29558,7 +29803,7 @@
          "4"
         ],
         [
-         "5",
+         "6",
          "8",
          "3"
         ]
@@ -29672,32 +29917,32 @@
        "A": [
         "7",
         "1",
-        "6"
+        "5"
        ],
        "B": [
-        "5",
+        "6",
         "8",
         "3"
        ],
        "favorite": "7",
        "price_leg": false,
        "probs": {
-        "7": 0.3171,
-        "1": 0.1327,
-        "5": 0.0879,
-        "3": 0.074,
-        "8": 0.0756,
-        "6": 0.0891,
-        "2": 0.0568,
-        "11": 0.062,
-        "10": 0.0515,
-        "4": 0.0321,
-        "9": 0.0214
+        "7": 0.3008,
+        "1": 0.1404,
+        "5": 0.0922,
+        "3": 0.0706,
+        "8": 0.0789,
+        "6": 0.0916,
+        "2": 0.0592,
+        "11": 0.06,
+        "10": 0.0531,
+        "4": 0.0311,
+        "9": 0.022
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #7 32%",
-        "H4 A=['7', '1', '6'] (54%) B=['5', '8', '3'] (78%) targets 55%/78%",
+        "H1 win probabilities (model 65% / ML 35%); top #7 30%",
+        "H4 A=['7', '1', '5'] (53%) B=['6', '8', '3'] (77%) targets 55%/78%",
         "H5 favourite #7 (7/2) looks legitimate"
        ]
       }
@@ -29716,8 +29961,10 @@
     "budget": 100.0,
     "cost": 51.0,
     "cost_before_trim": 51.0,
-    "hit_prob": 0.2862,
-    "score": 0.4865,
+    "hit_prob": 0.1431,
+    "hit_prob_raw": 0.2862,
+    "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+    "score": 0.2433,
     "singles": 0,
     "price_legs": 2,
     "ml_parlay": 84.0,
@@ -29994,17 +30241,27 @@
   "track: Del Mar (DMR); profile: DMR"
  ],
  "run": {
-  "at_utc": "2026-11-08T02:49:31Z",
+  "at_utc": "2026-11-08T03:25:03Z",
   "scratches": "6:11, 6:12, 6:13, 7:12, 7:13, 7:14, 8:3, 8:7",
   "parser_version": "2026-11-07.2",
-  "config_hash": "58cd8eaf8fa66308",
+  "config_hash": "6459b3ec7cf77a27",
   "track_profile": "DMR",
-  "code_version": "52659d5",
+  "code_version": "9046d79",
   "source": "dmr1107y.card.json",
   "source_sha256": "d1ba1716d4c16c43f115f79840726367353e153a0235333effd2e0fe9f218668",
   "sheet": "dmr1107q.pdf",
-  "results_known": [],
+  "results_known": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
   "odds_source": "morning line",
-  "kind": "pre-race"
+  "kind": "post-results"
  }
 }
