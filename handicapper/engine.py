@@ -277,6 +277,11 @@ def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
         nxt = out["races"][i + 1] if i + 1 < len(out["races"]) else None
         r["wagers"] = primary_wagers(r, cfg["selection"])
         r["other_wagers"] = other_wagers(r, nxt, cfg["selection"], r["wagers"], units=cfg.get("wagering", {}).get("units"))
+        mins = {s["pgm"]: s.get("min_win_odds") for s in r["sheets"]}
+        for w in r["wagers"]:
+            if w["type"] == "WIN":        # the price each horse must show at post time; the evaluation checks it
+                w["min_odds_by"] = {k: mins.get(k) for k in w["legs"][0]}
+                w.setdefault("min_odds", w["min_odds_by"].get(w["legs"][0][0]))
     out["multirace"] = MR.build_all(out, mr_cfg) if multirace else None
     return out
 

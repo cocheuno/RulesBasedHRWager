@@ -99,6 +99,39 @@ class TestCard(unittest.TestCase):
         txt = format_evaluation(ev); format_rollup(ru)
         self.assertIn("Unit stakes: $2 win, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double, $1 Pick 3, $0.50 Pick 4.", txt)
 
+    def test_win_bet_is_passed_when_final_odds_are_under_the_minimum(self):
+        by = {4: {"race_no": 4, "finish": ["7", "2", "3"], "win": 3.6, "final_odds": {"7": 0.8, "2": 5.0}}}
+        w = make_wager("WIN", [["7"]], race_no=4) | {"min_odds": 1.5, "min_odds_by": {"7": 1.5}}
+        r = evaluate_wager(w, by, 2.0)
+        self.assertFalse(r["placed"]); self.assertEqual(r["cost"], 0.0); self.assertFalse(r["hit"]); self.assertIn("passed at the window", r["note"])
+        w2 = make_wager("WIN", [["7"]], race_no=4) | {"min_odds": 0.5, "min_odds_by": {"7": 0.5}}
+        r2 = evaluate_wager(w2, by, 2.0)
+        self.assertTrue(r2["placed"] and r2["hit"]); self.assertEqual((r2["cost"], r2["ret"]), (2.0, 3.6))
+        # no final odds on file: the morning line decided, the bet stands
+        by_no_fo = {4: {"race_no": 4, "finish": ["7"], "win": 3.6}}
+        self.assertTrue(evaluate_wager(w, by_no_fo, 2.0)["placed"])
+        # two overlays in one WIN line: only the one under its minimum is passed
+        w3 = make_wager("WIN", [["7", "2"]], race_no=4) | {"min_odds_by": {"7": 1.5, "2": 3.0}}
+        r3 = evaluate_wager(w3, by, 2.0)
+        self.assertTrue(r3["placed"]); self.assertEqual(r3["cost"], 2.0); self.assertFalse(r3["hit"], "the winner was the horse that was passed")
+        # totals and roll-up leave passed bets out
+        w5 = make_wager("WIN", [["1"]], race_no=5) | {"min_odds_by": {"1": 1.5}}        # placed and hit in another race
+        picks = {"source": "x", "track_code": "T", "races": [{"race_no": 4, "confidence": "high", "wagers": [w]},
+                                                              {"race_no": 5, "confidence": "high", "wagers": [w5]}], "multirace": None}
+        results = {"races": [by[4], {"race_no": 5, "finish": ["1", "2"], "win": 6.0, "final_odds": {"1": 2.0}}]}
+        ev = evaluate_card(picks, results, {})
+        self.assertEqual((ev["totals"]["bets"], ev["totals"]["passed"], ev["totals"]["hits"]), (1, 1, 1))
+        ru = rollup([ev]); self.assertEqual((ru["all"]["bets"], ru["all"]["passed"]), (1, 1))
+        self.assertIn("passed", format_evaluation(ev))
+
+    def test_engine_win_wagers_carry_minimum_prices(self):
+        res = score_card(build_card(), CFG)
+        wins = [w for r in res["races"] for w in r["wagers"] if w["type"] == "WIN"]
+        self.assertTrue(wins)
+        for w in wins:
+            self.assertEqual(set(w["min_odds_by"]), set(w["legs"][0]))
+            self.assertTrue(all(v is not None and v >= 1.5 for v in w["min_odds_by"].values()))
+
     def test_unit_for_old_config(self):
         from handicapper.wagering import unit_for
         self.assertEqual(unit_for({"type": "WIN"}, {"unit": 1.0}), 1.0, "single-unit config still honoured")
