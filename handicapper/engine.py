@@ -38,6 +38,7 @@ DEFAULT_CONFIG = {
         "spread_gap": 4.0,         # 4+ horses within this => contentious
         "max_picks": 3,
         "min_ml_for_win_bet": 1.5,  # <= 6/5 ML: no win bet, exotics only
+        "win_margin": 0.15,        # a win bet also needs odds >= fair odds x (1 + margin): no bet at or under fair
         "value_overlay": 1.30,
         "value_underlay": 0.60,
         "logit_scale": 12.0,       # points per e-fold in implied probability
@@ -168,6 +169,7 @@ def score_race(race: dict, cfg: dict) -> dict:
     sheets.sort(key=lambda s: (s["eliminated"], -s["score"]))
     for i, s in enumerate(sheets, 1):
         s["rank"] = i
+        s["min_win_odds"] = None if s["eliminated"] else win_price(s, sel)["min_odds"]
     picks, structure, confidence, note = select(sheets, sel)
     return {
         "race_no": race["race_no"], "class_text": race.get("class_text"), "distance_text": race.get("distance_text"),
@@ -176,6 +178,25 @@ def score_race(race: dict, cfg: dict) -> dict:
         "picks": picks, "bet_structure": structure, "confidence": confidence, "selection_note": note,
         "brisnet": race.get("brisnet"), "wagers_menu": race.get("wagers"), "sheets": sheets,
     }
+
+
+def win_price(s: dict, sel: dict) -> dict:
+    """Minimum acceptable odds for a win bet on this horse, and whether the morning line meets it.
+    min_odds = max(min_ml_for_win_bet, fair_odds x (1 + win_margin)).  ok is True (bet), False (price too short)
+    or None when the PPs carry no morning line: then the price is unknown, the bet is advisory ("take X-1 or
+    better on the board") and is never counted as a bet placed.  A missing price is never treated as a long one."""
+    floor = float(sel["min_ml_for_win_bet"])
+    fair = s.get("fair_odds")
+    min_odds = floor if fair is None else max(floor, round(fair * (1 + sel.get("win_margin", 0.0)), 1))
+    ml = s.get("ml_decimal")
+    out = {"min_odds": min_odds, "ml": ml, "fair": fair}
+    if ml is None:
+        return out | {"ok": None, "why": f"no morning line in the PPs; take {min_odds:g}-1 or better on the board"}
+    if ml < floor:
+        return out | {"ok": False, "why": f"ML {s.get('ml_odds')} is below {floor:g}-1"}
+    if ml < min_odds:
+        return out | {"ok": False, "why": f"ML {s.get('ml_odds')} is under fair {fair}-1 plus margin ({min_odds:g}-1 needed)"}
+    return out | {"ok": True, "why": f"ML {s.get('ml_odds')}, take {min_odds:g}-1 or better"}
 
 
 def select(sheets: list[dict], sel: dict):
@@ -211,15 +232,21 @@ def _select_live(live: list[dict], sel: dict):
         confidence = "low" if contentious else "medium"
         note = f"gap to 2nd {gap2:.1f}, to 3rd {gap3:.1f}" + (", contentious" if contentious else "")
     picks = picks[: sel["max_picks"]]
-    # bet structure
-    ml = top["ml_decimal"] or 99
+    # bet structure: a win bet only at an acceptable price; no morning line = price unknown, advisory only
+    wp = win_price(top, sel)
+    if wp["ok"] is True:
+        win = f"WIN (take {wp['min_odds']:g}-1 or better)"
+    elif wp["ok"] is None:
+        win = f"WIN only if the board shows {wp['min_odds']:g}-1 or better (no morning line in the PPs)"
+    else:
+        win = None
     if len(picks) == 1:
-        structure = "WIN" if ml >= sel["min_ml_for_win_bet"] else "KEY in exactas/trifectas (ML too short for a win bet)"
+        structure = win if win else f"KEY in exactas/trifectas, no win bet ({wp['why']})"
     elif len(picks) == 2:
         a, b = picks
-        structure = f"EXACTA box {a}-{b}; WIN on the longer-priced of the two if ML >= 5/2"
+        structure = f"EXACTA box {a}-{b}; WIN on the longer-priced of the two at 5/2 or better"
     else:
-        structure = f"TRIFECTA box {'-'.join(picks)}; EXACTA box top two; WIN on #{picks[0]}" if ml >= sel["min_ml_for_win_bet"] else f"TRIFECTA box {'-'.join(picks)}; EXACTA {picks[0]} over {picks[1]},{picks[2]}"
+        structure = f"TRIFECTA box {'-'.join(picks)}; EXACTA box top two; " + (win.replace("WIN", f"WIN on #{picks[0]}", 1) if win else f"no win bet on #{picks[0]} ({wp['why']})")
     return picks, structure, confidence, note
 
 
@@ -244,22 +271,29 @@ def primary_wagers(r: dict, sel: dict) -> list[dict]:
     if not p:
         return []
     names = {s["pgm"]: s for s in r["sheets"]}
-    ml = names[p[0]]["ml_decimal"] or 99
+    wp = win_price(names[p[0]], sel)
     n = r["race_no"]
     W = []
+
+    def win(k, extra=""):
+        w = win_price(names[k], sel)
+        return make_wager("WIN", [[k]], False, f"WIN #{k}{extra} (take {w['min_odds']:g}-1 or better)", "primary", n) | {"min_odds": w["min_odds"]}
+
     if len(p) == 1:
-        if ml >= sel["min_ml_for_win_bet"]:
-            W.append(make_wager("WIN", [[p[0]]], False, f"WIN #{p[0]}", "primary", n))
+        if wp["ok"] is True:
+            W.append(win(p[0]))
     elif len(p) == 2:
         W.append(make_wager("EXACTA", [p, p], True, f"EXACTA box #{p[0]}-#{p[1]}", "primary", n))
-        longer = max(p, key=lambda k: names[k]["ml_decimal"] or 0)
-        if (names[longer]["ml_decimal"] or 0) >= 2.5:
-            W.append(make_wager("WIN", [[longer]], False, f"WIN #{longer} (longer-priced of the pair)", "primary", n))
+        priced = [k for k in p if names[k]["ml_decimal"] is not None]
+        if len(priced) == 2:                      # the longer-priced of the pair, only when both are priced
+            longer = max(priced, key=lambda k: names[k]["ml_decimal"])
+            if names[longer]["ml_decimal"] >= 2.5 and win_price(names[longer], sel)["ok"] is True:
+                W.append(win(longer, " (longer-priced of the pair)"))
     else:
         W.append(make_wager("TRIFECTA", [p, p, p], True, "TRIFECTA box " + "-".join("#" + k for k in p), "primary", n))
         W.append(make_wager("EXACTA", [p[:2], p[:2]], True, f"EXACTA box #{p[0]}-#{p[1]}", "primary", n))
-        if ml >= sel["min_ml_for_win_bet"]:
-            W.append(make_wager("WIN", [[p[0]]], False, f"WIN #{p[0]}", "primary", n))
+        if wp["ok"] is True:
+            W.append(win(p[0]))
     return W
 
 
@@ -286,7 +320,7 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
     d = p[3] if len(p) > 3 else None
     e = p[4] if len(p) > 4 else None
     top = live[0]
-    ml = top["ml_decimal"] or 99.0
+    wp = win_price(top, sel)
     conf = r["confidence"]
     leg = r.get("leg") or {}
     fav = leg.get("favorite")
@@ -308,11 +342,14 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
         if c:
             W.append(f"TRIFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
             add("TRIFECTA", [[a], [b, c, d], [b, c, d, e]])
-        if ml < sel["min_ml_for_win_bet"]:
-            W.append(f"no WIN bet on {hs(a)} (ML {top['ml_odds']} is below {sel['min_ml_for_win_bet']}-1): use it as a single in the Pick 3 / Pick 4 instead")
-        else:
-            W.append(f"WIN {hs(a)} (ML {top['ml_odds']}, fair {top['fair_odds']}-1)")
+        if wp["ok"] is True:
+            W.append(f"WIN {hs(a)} ({wp['why']}; fair {top['fair_odds']}-1)")
             add("WIN", [[a]])
+            structs[-1]["min_odds"] = wp["min_odds"]
+        elif wp["ok"] is None:
+            W.append(f"WIN {hs(a)} only if the board shows {wp['min_odds']:g}-1 or better (no morning line in the PPs; fair {top['fair_odds']}-1) - not counted as a bet")
+        else:
+            W.append(f"no WIN bet on {hs(a)} ({wp['why']}): use it as a single in the Pick 3 / Pick 4 instead")
         if r["field_size"] >= 8 and e:
             W.append(f"SUPERFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
             add("SUPERFECTA", [[a], [b, c, d], [b, c, d], [b, c, d, e]])
@@ -323,7 +360,7 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
             W.append(f"TRIFECTA {hs(a, b)} / {hs(a, b, c)} / {hs(a, b, c, d)}")
             add("TRIFECTA", [[a, b], [a, b, c], [a, b, c, d]])
         if overlays:
-            W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1)" for x in overlays))
+            W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1; take {win_price(x, sel)['min_odds']:g}-1 or better)" for x in overlays))
             add("WIN", [[x["pgm"] for x in overlays]])
         else:
             W.append("no WIN bet: neither of the top two is an overlay at the morning line")
@@ -336,7 +373,7 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
         W.append(f"EXACTA box {'-'.join('#' + k for k in box[:3])}")
         add("EXACTA", [box[:3], box[:3]], box=True)
         if overlays:
-            W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1)" for x in overlays))
+            W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1; take {win_price(x, sel)['min_odds']:g}-1 or better)" for x in overlays))
             add("WIN", [[x["pgm"] for x in overlays]])
         else:
             W.append("no WIN bet in a contentious race without an overlay; use the A/B spread in the Pick 3 / Pick 4")
@@ -408,14 +445,14 @@ def format_report(result: dict, detail: int = 1) -> str:
         L.append(f"**PLAY: {', '.join('#' + p + ' ' + names[p]['name'] + ' (' + str(names[p]['ml_odds']) + ')' for p in r['picks'])}**  — {r['bet_structure']}")
         L.append(f"Confidence: {r['confidence']} — {r['selection_note']}")
         L.append("")
-        L.append("| Rk | # | Horse | ML | Style/pts | PP | Score | Prob | Fair | Top reasons |")
+        L.append("| Rk | # | Horse | ML | Style/pts | PP | Score | Prob | Fair / min | Top reasons |")
         L.append("|---|---|---|---|---|---|---|---|---|---|")
         for s in r["sheets"]:
             hits = sorted([h for h in s["hits"] if h["points"]], key=lambda h: -abs(h["points"]))
             top = "; ".join(f"{h['rule']} {h['points']:+.1f} {h['note'][:60]}" for h in hits[:4 if detail else 2])
             elim = " **ELIM**" if s["eliminated"] else ""
             flag = (" [" + "; ".join(s["flags"]) + "]") if s["flags"] else ""
-            L.append(f"| {s['rank']} | {s['pgm']} | {s['name']}{elim}{flag} | {s['ml_odds']} | {s['run_style']}/{s['speed_pts']} | {s['prime_power']} | {s['score']:.1f} | {s['implied_prob']:.0%} | {s['fair_odds']} | {top} |")
+            L.append(f"| {s['rank']} | {s['pgm']} | {s['name']}{elim}{flag} | {s['ml_odds']} | {s['run_style']}/{s['speed_pts']} | {s['prime_power']} | {s['score']:.1f} | {s['implied_prob']:.0%} | {s['fair_odds']}{'' if s.get('min_win_odds') is None else ' / ' + format(s['min_win_odds'], 'g')} | {top} |")
         L.append("")
         if detail >= 2:
             for s in r["sheets"]:

@@ -37,7 +37,9 @@ app). A picks run made before the restart used the old rules and parser.
 
 Reading the bets: **Confidence** high = one horse, medium = two, low = contentious. "Price leg" on a Pick 3/4 means
 the favourite is only a B. The other wagers list keys for a standout, boxes for a contentious race, win bets only on
-overlays, and the favourite underneath when it looks beatable.
+overlays, and the favourite underneath when it looks beatable. Every win bet names the price to take ("take 2.6-1 or
+better"): the morning line must be above the engine's fair odds plus a margin, or there is no win bet. A horse with
+no morning line in the PPs gets no win bet counted; the line says what the board must show before you bet it.
 
 ## 3. After the last race
 

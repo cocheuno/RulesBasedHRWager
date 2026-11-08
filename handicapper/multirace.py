@@ -99,14 +99,17 @@ def h1(leg: Leg, cfg: dict):
     z = sum(ex.values())
     leg.model_probs = {k: v / z for k, v in ex.items()}
     raw = {s["pgm"]: _ml_prob(s["ml_decimal"]) for s in leg.sheets}
-    if all(v is not None for v in raw.values()) and raw:
+    missing = [k for k, v in raw.items() if v is None]
+    if raw and not missing:
         zz = sum(raw.values())
         leg.ml_probs = {k: v / zz for k, v in raw.items()}
-    else:
+    else:   # a horse without a morning line has no market price: the blend is skipped, never guessed
         leg.ml_probs = dict(leg.model_probs)
+        lam = 0.0
     leg.probs = {k: round((1 - lam) * leg.model_probs[k] + lam * leg.ml_probs[k], 4) for k in scores}
     top = max(leg.probs, key=leg.probs.get)
-    leg.audit.append(f"H1 blended probabilities (model {1 - lam:.0%} / ML {lam:.0%}); top #{top} {leg.probs[top]:.0%}")
+    leg.audit.append(f"H1 blended probabilities (model {1 - lam:.0%} / ML {lam:.0%}); top #{top} {leg.probs[top]:.0%}"
+                     + (f"; no morning line for #{', #'.join(missing)}: model probabilities only" if missing else ""))
 
 
 @hrule("H3", "Chaos (spread) leg")
