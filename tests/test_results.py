@@ -31,6 +31,7 @@ RESULTS = {"track": "Del Mar", "date": "2026-11-06", "races": [
 class TestScratches(unittest.TestCase):
     def test_parse(self):
         self.assertEqual(parse_scratch_spec("3:3, 4:6 8:4,8:9"), {3: ["3"], 4: ["6"], 8: ["4", "9"]})
+        self.assertEqual(parse_scratch_spec("1:2, 1:+7, 1:-7a"), {1: ["2", "+7", "-7A"]})
         with self.assertRaises(ValueError):
             parse_scratch_spec("8-4")
 
@@ -47,6 +48,15 @@ class TestScratches(unittest.TestCase):
         apply_scratches(card2, {1: ["7"]})          # scratching the AE itself draws nobody in
         self.assertFalse(any(h.get("entry_status") is None and h["name"] == "Also Ran" for h in card2["races"][0]["horses"]))
         self.assertEqual(len(card2["races"][0]["horses"]), 6)
+        # official status beats the automatic rule: '-7' holds the AE out despite a scratch; '+7' puts it in without one
+        card3 = build_card()
+        notes3 = apply_scratches(card3, {1: ["2", "-7"]})
+        self.assertEqual(next(h for h in card3["races"][0]["horses"] if h["name"] == "Also Ran")["entry_status"], "AE")
+        self.assertTrue(any("held out" in n for n in notes3))
+        card4 = build_card()
+        notes4 = apply_scratches(card4, {1: ["+7"]})
+        self.assertIsNone(next(h for h in card4["races"][0]["horses"] if h["name"] == "Also Ran")["entry_status"])
+        self.assertTrue(any("officially in" in n for n in notes4))
         # scratching the lone speed in R2 changes the pace shape and the pick
         res = score_card(card, CFG)
         self.assertNotEqual(res["races"][1]["lone_speed"], "1")

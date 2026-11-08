@@ -159,8 +159,9 @@ double with the next race's A horses.
 Selection (`rules_config.json → selection`): the top horse is a **single** when it is
 `single_gap` (7) points clear and the race is not contentious (fewer than 4 horses within
 `spread_gap`); the 2nd is added when within `pair_gap` (4) or the race is contentious; a 3rd
-when within `third_gap` (7).  Also-eligibles are never picked outright — they are reported
-as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics rather than bet to win.
+when within `third_gap` (7).  Also-eligibles are never picked outright — they hold no rank among the
+runners and are reported as "would rank N if it draws in".  ML ≤ 6/5 singles are keyed in exotics rather than
+bet to win.
 
 ### Tuning
 
@@ -227,7 +228,11 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
   Results and payoffs are public data and may be committed; PPs are not.
 * `--scratch "r:p, r:p"` removes scratched horses before scoring; one also-eligible draws in per scratch, in
-  program order (MTO horses stay flagged).  Pace shape and all field-relative ranks are recomputed.
+  program order (MTO horses stay flagged).  `r:+p` states that an AE/MTO is officially in (also when the race
+  comes off the turf), `r:-p` that it stays out although a scratch would normally bring it in.  Pace shape and
+  all field-relative ranks are recomputed over the active field only: an alternate that has not drawn in is in no
+  denominator, no pace count and no probability; it is scored against a field that includes it and reported with
+  the rank it *would* hold ("(4)").
 * `--results` reads the same file and, for each race, summarises the winners of the earlier races on the same
   surface (run style, post) as `race["day_bias"]`, which rule **P10** scores once three such results exist.
 * **Result charts are the best source.** The Equibase/Brisnet chart PDF (the track site's "View chart", e.g.

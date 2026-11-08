@@ -32,7 +32,9 @@ app). A picks run made before the restart used the old rules and parser.
    ML, score, win chance and A/B grade, the primary play, the other wagers, and the Pick 3 / Pick 4 tickets.
 3. When scratches are posted: tick the scratched horses in the table (or paste the list on the Load tab, as
    `race:program` pairs such as `2:10, 4:2, 4:11`) and press **Re-run with scratches**. Also-eligibles draw in by
-   themselves. That run is the one to bet from.
+   themselves, lowest program first; when the track says otherwise, type it: `4:+12` puts AE or MTO #12 in,
+   `4:-12` keeps it out. An AE that is not in shows its rank in brackets and is in no bet. That run is the one to
+   bet from.
 4. Click any horse for its rule-by-rule audit; click a race on the left to switch races.
 
 Reading the bets: **Confidence** high = one horse, medium = two, low = contentious. "Price leg" on a Pick 3/4 means

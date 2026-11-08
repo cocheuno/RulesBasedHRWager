@@ -400,7 +400,14 @@ def _rating(s: str | None) -> int | None:
 # Race context: field-relative ranks and pace scenario
 # ---------------------------------------------------------------------------
 def race_context(race: dict, feats: dict[str, dict]) -> dict:
-    ctx: dict = {"race": race, "n": len(feats)}
+    """Field-relative context (ranks, pace scenario, favourite, field size) over the *active* field: horses on
+    the also-eligible list or main-track-only are not in the race unless something changes, so they are left out
+    of every denominator and listed in ctx["alternates"].  The engine scores each alternate against a conditional
+    context that includes it (as if it had drawn in) without touching the active horses' numbers."""
+    alternates = sorted(pgm for pgm, f in feats.items() if f.get("entry_status"))
+    active = {pgm: f for pgm, f in feats.items() if not f.get("entry_status")} or dict(feats)
+    ctx: dict = {"race": race, "n": len(active), "alternates": alternates, "n_alternates": len(alternates)}
+    feats = active
     pars = race.get("pars") or {}
     ctx["par_speed"] = pars.get("speed")
     ctx["par_e1"] = pars.get("e1")

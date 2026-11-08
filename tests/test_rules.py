@@ -384,6 +384,36 @@ class TestAbilityAndValue(Base):
         self.assertEqual([s["pgm"] for s in r["sheets"] if s["eliminated"] and s["win_prob"]], [], "selection untouched")
 
 
+class TestAlternatesOutOfField(Base):
+    """An also-eligible that has not drawn in is not in the race: it changes nothing for the horses that are."""
+
+    def test_inactive_ae_does_not_change_active_field(self):
+        cfg = load_config(None)
+        card = build_card()
+        r1 = card["races"][0]
+        ae = next(h for h in r1["horses"] if h["entry_status"] == "AE")
+        with_ae = score_race(r1, cfg)
+        r1["horses"] = [h for h in r1["horses"] if h["pgm"] != ae["pgm"]]
+        without = score_race(r1, cfg)
+        act = lambda res: [(s["pgm"], s["score"], s["rank"], s["win_prob"]) for s in res["sheets"] if not s["flags"]]
+        self.assertEqual(act(with_ae), act(without), "scores, ranks and probabilities of the runners are identical")
+        self.assertEqual((with_ae["pace_shape"], with_ae["num_early"], with_ae["lone_speed"], with_ae["field_size"]),
+                         (without["pace_shape"], without["num_early"], without["lone_speed"], without["field_size"]))
+        self.assertEqual(with_ae["alternates"], [ae["pgm"]])
+        self.assertEqual(with_ae["picks"], without["picks"])
+
+    def test_alternate_is_judged_conditionally(self):
+        r = self.result["races"][0]
+        ae = next(s for s in r["sheets"] if s["flags"])
+        self.assertIsNone(ae["rank"])
+        self.assertTrue(1 <= ae["conditional_rank"] <= len(r["sheets"]))
+        self.assertEqual(ae["win_prob"], 0.0)
+        self.assertTrue(ae["hits"], "the alternate is still scored, against a field that includes it")
+        self.assertEqual(sorted(s["rank"] for s in r["sheets"] if not s["flags"]), list(range(1, r["field_size"] + 1)))
+        if ae["conditional_rank"] <= 3:
+            self.assertIn("would rank", r["selection_note"])
+
+
 class TestWinPrice(Base):
     """A win bet needs a price: never bet when the morning line is missing, at or under fair, or under the floor."""
 

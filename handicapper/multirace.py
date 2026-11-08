@@ -226,8 +226,8 @@ def h6(leg: Leg, cfg: dict):
     ticket either; if one would have graded A or B it is reported as an alternate to add if it draws in.
     Basis: Crist - a ticket built around a horse that may not run is a refund at best and a dead ticket at worst."""
     for s in leg.excluded:
-        if s["rank"] <= 3:
-            leg.audit.append(f"H6 #{s['pgm']} {s['name']} is {'/'.join(s['flags'])} (rank {s['rank']}): add if it draws in")
+        if (s.get("conditional_rank") or 99) <= 3:
+            leg.audit.append(f"H6 #{s['pgm']} {s['name']} is {'/'.join(s['flags'])} (would rank {s['conditional_rank']}): add if it draws in")
 
 
 def _rules_for_leg(leg: Leg, cfg: dict):

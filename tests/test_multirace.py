@@ -71,7 +71,8 @@ class TestLegs(Base):
         l1 = next(l for w in self.mr["pick3"]["windows"] for l in w["legs"] if l["race_no"] == 1)
         ae = next(s for s in self.by_race[1]["sheets"] if s["pgm"] == "7")
         self.assertTrue(ae["flags"])
-        self.assertEqual(any(a.startswith("H6 #7") for a in l1["audit"]), ae["rank"] <= 3)
+        self.assertIsNone(ae["rank"], "an alternate holds no rank among the runners")
+        self.assertEqual(any(a.startswith("H6 #7") for a in l1["audit"]), ae["conditional_rank"] <= 3)
 
 
 class TestTickets(Base):
