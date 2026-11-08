@@ -263,7 +263,9 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double; Pick 3 $1 and Pick 4 $0.50 from `multirace.pickN.base`,
   or the track menu's minimum when higher), overlapping suggestions are
   counted once, a win bet is **placed only if the chart's final odds meet the minimum price the engine asked for**
-  (otherwise it is "passed at the window": no cost, not a bet), the recommended Pick 3 / Pick 4 tickets are
+  (otherwise it is "passed at the window": no cost, not a bet), a pool that an official chart does not list was
+  **not offered** by the track and the wager is reported as such (no cost, not a bet; the engine also suggests no
+  trifecta under 5 starters and no superfecta under 7, `selection.min_field_trifecta/superfecta`), the recommended Pick 3 / Pick 4 tickets are
   evaluated and listed but **tracked, not counted** (`wagering.count_multirace`, off until the sequences have a
   measured hit rate; their hit probability is an estimate, the formula × `multirace.hit_prob_shrink`), and the
   roll-up gives bets / hits / misses / cost / return / ROI by bet type, track and confidence

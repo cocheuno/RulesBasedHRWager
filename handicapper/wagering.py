@@ -83,6 +83,16 @@ def _pool(res_race: dict, wtype: str):
     return None
 
 
+def _not_offered(res: dict | None, wtype: str) -> bool:
+    """An official chart lists every pool that paid; when a race was read from a chart and the pool is not on it,
+    the track did not offer that wager (a trifecta in a four-horse field, say).  Typed or OCR results are not
+    complete enough to say, so there the pool is merely unknown."""
+    if not res:
+        return False
+    src = res.get("source") or (res.get("ocr") or {}).get("source")
+    return src == "chart" and _pool(res, wtype) is None
+
+
 def _per_dollar(e: dict) -> float | None:
     if e is None or e.get("payout") is None or not e.get("base"):
         return None
@@ -98,7 +108,7 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
     """Return {unit, cost, hit, ret, known}.  known=False when the result or the pool payout is not on file.
     Returns are scaled to the stake: a $2 win payout x (unit / 2), an exotic's per-dollar payout x unit."""
     cost = round(w["combos"] * unit, 2)
-    row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True, "placed": True, "note": ""}
+    row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True, "placed": True, "status": None, "note": ""}
     wtype = w["type"]
     if wtype in ("WIN", "EXACTA", "TRIFECTA", "SUPERFECTA"):
         res = by_no.get(w["race_no"])
@@ -123,11 +133,15 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
             if passed:
                 row["note"] = "passed at the window: " + "; ".join(passed)
             if not placed:
+                row["status"] = "passed"
                 return row
             if fin[0] in placed:
                 row["hit"] = True
                 row["ret"] = round(unit * (res["win"] / 2.0), 2) if res.get("win") is not None else None
                 row["known"] = res.get("win") is not None
+            return row
+        if _not_offered(res, wtype):
+            row.update(cost=0.0, placed=False, status="not offered", note=f"no {wtype.lower()} pool on the chart: the track did not offer it")
             return row
         k = SLOTS[wtype]
         if len(fin) < k:
@@ -148,6 +162,9 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
             row["known"] = False
             return row
         winners.append(res["finish"][0])
+    if _not_offered(by_no[w["races"][-1]], wtype):
+        row.update(cost=0.0, placed=False, status="not offered", note=f"no {wtype.lower()} pool on the chart of R{w['races'][-1]}: the track did not offer it")
+        return row
     if all(wn in leg for wn, leg in zip(winners, w["legs"])):
         row["hit"] = True
         last = by_no[w["races"][-1]]
@@ -217,7 +234,9 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
     tracked = [x for x in rows if x["tracked_only"]]
     placed = [x for x in rows if x.get("placed", True) and not x["tracked_only"]]
     known = [x for x in placed if x["known"]]
-    tot = {"bets": len(placed), "passed": len(rows) - len(placed) - len(tracked), "known": len(known), "hits": sum(1 for x in known if x["hit"]),
+    tot = {"bets": len(placed), "passed": sum(1 for x in rows if x.get("status") == "passed" and not x["tracked_only"]),
+           "not_offered": sum(1 for x in rows if x.get("status") == "not offered" and not x["tracked_only"]),
+           "known": len(known), "hits": sum(1 for x in known if x["hit"]),
            "cost": round(sum(x["cost"] for x in known), 2), "ret": round(sum(x["ret"] or 0 for x in known), 2)}
     tot["roi"] = round((tot["ret"] - tot["cost"]) / tot["cost"], 3) if tot["cost"] else None
     tk = [x for x in tracked if x["known"]]
@@ -248,7 +267,7 @@ def format_units(units: dict) -> str:
 def rollup(evaluations: list[dict]) -> dict:
     """Aggregate several cards: by bet type, by track, by confidence, and hit/miss counts per track + all."""
     def agg(keyfn):
-        g = defaultdict(lambda: {"bets": 0, "passed": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0})
+        g = defaultdict(lambda: {"bets": 0, "passed": 0, "not_offered": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0})
         for ev in evaluations:
             for x in ev["rows"]:
                 if x.get("tracked_only"):
@@ -256,7 +275,7 @@ def rollup(evaluations: list[dict]) -> dict:
                 k = keyfn(ev, x)
                 d = g[k]
                 if not x.get("placed", True):
-                    d["passed"] += 1
+                    d["not_offered" if x.get("status") == "not offered" else "passed"] += 1
                     continue
                 d["bets"] += 1
                 if not x["known"]:
@@ -273,9 +292,9 @@ def rollup(evaluations: list[dict]) -> dict:
     out = {"by_type": agg(lambda ev, x: x["type"]), "by_track": by_track,
            "by_confidence": agg(lambda ev, x: x.get("confidence") or "?"),
            "by_track_type": agg(lambda ev, x: f"{ev.get('track_code') or '?'} {x['type']}")}
-    allc = {"bets": 0, "passed": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0}
+    allc = {"bets": 0, "passed": 0, "not_offered": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0}
     for d in by_track.values():
-        for k in ("bets", "passed", "hits", "misses", "unknown", "cost", "ret"):
+        for k in ("bets", "passed", "not_offered", "hits", "misses", "unknown", "cost", "ret"):
             allc[k] += d[k]
     allc["cost"], allc["ret"] = round(allc["cost"], 2), round(allc["ret"], 2)
     allc["roi"] = round((allc["ret"] - allc["cost"]) / allc["cost"], 3) if allc["cost"] else None
@@ -296,7 +315,8 @@ def format_evaluation(ev: dict) -> str:
     t = ev["totals"]
     L = [f"## Wagers — {t['bets']} bets placed ({t['known']} with known results): "
          f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else "")
-         + (f"; {t['passed']} win bet(s) passed because the final odds were under the minimum" if t.get("passed") else ""), "",
+         + (f"; {t['passed']} win bet(s) passed because the final odds were under the minimum" if t.get("passed") else "")
+         + (f"; {t['not_offered']} wager(s) not offered by the track (no pool on the chart)" if t.get("not_offered") else ""), "",
          "Unit stakes: " + format_units(ev.get("units") or DEFAULT_UNITS) + ".", ""]
     L.append("| Race | Wager | Unit | Cost | Result | Return |")
     L.append("|---|---|---|---|---|---|")
@@ -304,7 +324,7 @@ def format_evaluation(ev: dict) -> str:
         if x.get("tracked_only"):
             continue
         rn = "R" + "-".join(str(n) for n in x["races"]) if len(x["races"]) > 1 else f"R{x['race_no']}"
-        res = "passed" if not x.get("placed", True) else ("HIT" if x["hit"] else ("miss" if x["known"] else "unknown"))
+        res = (x.get("status") or "passed") if not x.get("placed", True) else ("HIT" if x["hit"] else ("miss" if x["known"] else "unknown"))
         ret = "" if x["ret"] is None else f"${x['ret']:.2f}"
         if x["hit"] and x["ret"] is None:
             ret = "payout not on file"
