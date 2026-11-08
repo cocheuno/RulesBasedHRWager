@@ -56,7 +56,8 @@
     ],
     "single_backup": false,
     "price_leg_bonus": 0.35,
-    "single_bonus": 0.25
+    "single_bonus": 0.25,
+    "hit_prob_shrink": 0.5
   },
   "_tracks_comment": "Track profiles layer over the global weights/selection/multirace above and are chosen by the track code the parser reads off the PP (pick.py --track-profile overrides). Every value here is an expert prior, not a fitted weight: fit them per track with backtest.py once enough cards are on file.",
   "track_aliases": {
@@ -196,7 +197,7 @@
     }
   },
   "wagering": {
-    "_comment": "Wagering analysis (handicapper/wagering.py): unit stake per bet type, in dollars, whatever the track's minimum; Pick 3 / Pick 4 tickets are priced at multirace.pick3/pick4.base. Other wagers count as bets placed.",
+    "_comment": "Wagering analysis (handicapper/wagering.py): unit stake per bet type, in dollars, whatever the track's minimum; Pick 3 / Pick 4 tickets are priced at multirace.pick3/pick4.base. Other wagers count as bets placed; Pick 3/4 tickets are tracked but not counted (count_multirace) until they have a record.",
     "units": {
       "WIN": 2.0,
       "PLACE": 2.0,
@@ -206,6 +207,7 @@
       "SUPERFECTA": 0.1,
       "DOUBLE": 1.0
     },
-    "count_other_wagers": true
+    "count_other_wagers": true,
+    "count_multirace": false
   }
 }

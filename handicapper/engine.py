@@ -467,7 +467,8 @@ def format_summary(result: dict) -> str:
         rec = (mr.get(key) or {}).get("recommended")
         if not rec:
             continue
-        L.append(f"**{rec['name']}** — ${rec['cost']:.2f} total (${rec['base']:.2f} base), hit probability {rec['hit_prob']:.0%}")
+        L.append(f"**{rec['name']}** — ${rec['cost']:.2f} total (${rec['base']:.2f} base), hit probability est. {rec['hit_prob']:.0%} "
+                 f"(tracked, not counted as a bet until the sequences have a record)")
         for t in rec["tickets"]:
             L.append(f"- {t['name']}: " + " / ".join(",".join(x) for x in t["legs"]) + f"  (${t['cost']:.2f})")
         L.append("")

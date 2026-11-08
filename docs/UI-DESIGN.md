@@ -92,7 +92,7 @@ aggregates by bet type, confidence, track, profile and rule.  Exotic pools missi
 reported as "unknown", never as a miss.
 
 Policy decisions (in `rules_config.json -> wagering`): **a unit stake per bet type ($2 win/place/show, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double, $1 Pick 3, $0.50 Pick 4)**; **the "other wagers"
-count as bets placed**; overlapping suggestions (the primary WIN and the "other" WIN on the same horse, a box inside
+count as bets placed**; **Pick 3 / Pick 4 tickets are tracked but not counted** (`count_multirace`, off until the sequences have a measured hit rate; their hit probability is reported as an estimate, formula × `hit_prob_shrink`); overlapping suggestions (the primary WIN and the "other" WIN on the same horse, a box inside
 a part-wheel) are counted once; only the recommended Pick 3 / Pick 4 window counts, and only windows the track's
 wager menu offers are built (rule H10).
 

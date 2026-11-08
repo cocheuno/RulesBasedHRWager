@@ -5,8 +5,9 @@ Policy (rules_config.json -> "wagering"):
   * a unit stake per bet type (`units`: $2 win/place/show, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double),
     whatever the track's minimum; a recommended Pick 3 / Pick 4 ticket is priced at the denomination it was built
     at (multirace.pick3/pick4.base: $1 and $0.50, or the menu minimum when that is higher);
-  * the "other wagers" count as bets placed (`count_other_wagers`), alongside the primary play and the
-    recommended Pick 3 / Pick 4 tickets.
+  * the "other wagers" count as bets placed (`count_other_wagers`), alongside the primary play;
+  * the recommended Pick 3 / Pick 4 tickets are evaluated and reported but kept out of the totals
+    (`count_multirace`, default False) until the sequences have a measured hit rate.
 
 A wager is a structure the engine now emits beside its text:
   {"type": "WIN"|"EXACTA"|"TRIFECTA"|"SUPERFECTA"|"DOUBLE"|"PICK3"|"PICK4", "legs": [[pgms], ...],
@@ -25,7 +26,9 @@ from collections import defaultdict
 
 DEFAULT_UNITS = {"WIN": 2.0, "PLACE": 2.0, "SHOW": 2.0, "EXACTA": 1.0, "TRIFECTA": 0.5, "SUPERFECTA": 0.10,
                  "DOUBLE": 1.0, "PICK3": 1.0, "PICK4": 0.5}
-DEFAULT_WAGERING = {"units": dict(DEFAULT_UNITS), "count_other_wagers": True}
+DEFAULT_WAGERING = {"units": dict(DEFAULT_UNITS), "count_other_wagers": True,
+                    "count_multirace": False}   # Pick 3/4 tickets are evaluated and shown but kept out of the totals
+                                                 # until they have a record (0 for 50 after the first two days)
 SLOTS = {"EXACTA": 2, "TRIFECTA": 3, "SUPERFECTA": 4}
 
 
@@ -198,7 +201,8 @@ def card_wagers(picks: dict, cfg: dict) -> list[dict]:
             continue
         for t in rec["tickets"]:
             out.append(make_wager(wtype, t["legs"], False, f"{rec['name']} {t['name']}", "multirace",
-                                  race_no=rec["races"][0], races=rec["races"], unit=rec.get("base")) | {"confidence": "multirace"})
+                                  race_no=rec["races"][0], races=rec["races"], unit=rec.get("base"))
+                       | {"confidence": "multirace", "tracked_only": not cfg.get("count_multirace", False)})
     return out
 
 
@@ -209,12 +213,16 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
     for w in card_wagers(picks, cfg):
         ev = evaluate_wager(w, by_no, unit_for(w, cfg))
         rows.append({"race_no": w["race_no"], "races": w["races"], "type": w["type"], "label": w["label"],
-                     "source": w["source"], "confidence": w.get("confidence"), **ev})
-    placed = [x for x in rows if x.get("placed", True)]
+                     "source": w["source"], "confidence": w.get("confidence"), "tracked_only": bool(w.get("tracked_only")), **ev})
+    tracked = [x for x in rows if x["tracked_only"]]
+    placed = [x for x in rows if x.get("placed", True) and not x["tracked_only"]]
     known = [x for x in placed if x["known"]]
-    tot = {"bets": len(placed), "passed": len(rows) - len(placed), "known": len(known), "hits": sum(1 for x in known if x["hit"]),
+    tot = {"bets": len(placed), "passed": len(rows) - len(placed) - len(tracked), "known": len(known), "hits": sum(1 for x in known if x["hit"]),
            "cost": round(sum(x["cost"] for x in known), 2), "ret": round(sum(x["ret"] or 0 for x in known), 2)}
     tot["roi"] = round((tot["ret"] - tot["cost"]) / tot["cost"], 3) if tot["cost"] else None
+    tk = [x for x in tracked if x["known"]]
+    tot["tracked"] = {"tickets": len(tracked), "known": len(tk), "hits": sum(1 for x in tk if x["hit"]),
+                      "cost": round(sum(x["cost"] for x in tk), 2), "ret": round(sum(x["ret"] or 0 for x in tk), 2)}
     return {"card": picks.get("source"), "track_code": picks.get("track_code"), "date": picks.get("date"),
             "units": units_table(cfg), "rows": rows, "totals": tot}
 
@@ -243,6 +251,8 @@ def rollup(evaluations: list[dict]) -> dict:
         g = defaultdict(lambda: {"bets": 0, "passed": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0})
         for ev in evaluations:
             for x in ev["rows"]:
+                if x.get("tracked_only"):
+                    continue                      # Pick 3/4 tickets: tracked in ev["totals"]["tracked"], not bets
                 k = keyfn(ev, x)
                 d = g[k]
                 if not x.get("placed", True):
@@ -270,6 +280,12 @@ def rollup(evaluations: list[dict]) -> dict:
     allc["cost"], allc["ret"] = round(allc["cost"], 2), round(allc["ret"], 2)
     allc["roi"] = round((allc["ret"] - allc["cost"]) / allc["cost"], 3) if allc["cost"] else None
     out["all"] = allc
+    tr = {"tickets": 0, "known": 0, "hits": 0, "cost": 0.0, "ret": 0.0}
+    for ev in evaluations:
+        for k in tr:
+            tr[k] += (ev["totals"].get("tracked") or {}).get(k, 0)
+    tr["cost"], tr["ret"] = round(tr["cost"], 2), round(tr["ret"], 2)
+    out["tracked_multirace"] = tr
     # bar-chart series: one bar pair (hits, misses) per track, plus ALL
     out["chart"] = [{"track": t, "hits": d["hits"], "misses": d["misses"]} for t, d in by_track.items()] + \
                    [{"track": "ALL", "hits": allc["hits"], "misses": allc["misses"]}]
@@ -285,6 +301,8 @@ def format_evaluation(ev: dict) -> str:
     L.append("| Race | Wager | Unit | Cost | Result | Return |")
     L.append("|---|---|---|---|---|---|")
     for x in ev["rows"]:
+        if x.get("tracked_only"):
+            continue
         rn = "R" + "-".join(str(n) for n in x["races"]) if len(x["races"]) > 1 else f"R{x['race_no']}"
         res = "passed" if not x.get("placed", True) else ("HIT" if x["hit"] else ("miss" if x["known"] else "unknown"))
         ret = "" if x["ret"] is None else f"${x['ret']:.2f}"
@@ -293,6 +311,18 @@ def format_evaluation(ev: dict) -> str:
         if x.get("note"):
             ret = (ret + " " if ret else "") + f"({x['note']})"
         L.append(f"| {rn} | {x['label']} | ${x.get('unit', 1.0):.2f} | ${x['cost']:.2f} | {res} | {ret} |")
+    tracked = [x for x in ev["rows"] if x.get("tracked_only")]
+    if tracked:
+        tk = t.get("tracked") or {}
+        L += ["", f"### Pick 3 / Pick 4 tickets — tracked, not counted as bets ({tk.get('tickets', len(tracked))} tickets, "
+              f"{tk.get('hits', 0)} hit, would have cost ${tk.get('cost', 0):.2f}, returned ${tk.get('ret', 0):.2f})", "",
+              "The sequences are 0 for 50 over the first two days against hit probabilities that predicted about five; "
+              "they rejoin the totals (`wagering.count_multirace`) once a measured hit rate exists.", "",
+              "| Races | Ticket | Unit | Cost | Result | Return |", "|---|---|---|---|---|---|"]
+        for x in tracked:
+            rn = "R" + "-".join(str(n) for n in x["races"])
+            res = "HIT" if x["hit"] else ("miss" if x["known"] else "unknown")
+            L.append(f"| {rn} | {x['label']} | ${x.get('unit', 1.0):.2f} | ${x['cost']:.2f} | {res} | {'' if x['ret'] is None else '$%.2f' % x['ret']} |")
     return "\n".join(L)
 
 

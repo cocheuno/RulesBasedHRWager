@@ -92,10 +92,12 @@ class TestTickets(Base):
         PA = [l["price_factor"] * sum(l["probs"][k] for k in l["A"]) for l in w["legs"]]
         PB = [l["price_factor"] * sum(l["probs"][k] for k in l["B"]) for l in w["legs"]]
         hit = math.prod(PA) + sum(PB[i] * math.prod(PA[j] for j in range(4) if j != i) for i in range(4))
-        self.assertAlmostEqual(hit, w["hit_prob"], places=3)
+        self.assertAlmostEqual(hit, w["hit_prob_raw"], places=3)
+        self.assertAlmostEqual(hit * 0.5, w["hit_prob"], places=3, msg="reported hit probability is the formula x hit_prob_shrink")
+        self.assertIn("estimate", w["hit_prob_note"])
         self.assertTrue(all(0.5 <= l["price_factor"] <= 1.0 for l in w["legs"]))
         self.assertTrue(any(l["price_factor"] < 1.0 for l in w["legs"]), "a leg with eliminated horses prices below 1")
-        self.assertLess(w["all_favorites_prob"], w["hit_prob"])
+        self.assertLess(w["all_favorites_prob"], w["hit_prob_raw"])
 
     def test_budget_trim_respects_singles_and_records_notes(self):
         cfg = copy.deepcopy(self.cfg)
