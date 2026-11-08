@@ -153,7 +153,8 @@ the budgets from the command line and `--no-multi` suppresses the section.
 The wagering summary lists each race's top three ranked live horses (score, blended win chance, A/B grade) and a
 set of secondary wagers chosen by the race's confidence: exacta / trifecta / superfecta **keys** on a standout
 (a key costs a third of a box), exacta box plus part-wheel and a 2/3/4 trifecta in a medium race, boxes only in a
-contentious one, WIN only on a V1 overlay, the favourite kept underneath when H5 finds it beatable, and a daily
+contentious one (trifectas: the standout keyed first *or* second over the next three; a four-horse box in medium
+and contentious races), WIN only on a V1 overlay, the favourite kept underneath when H5 finds it beatable, and a daily
 double with the next race's A horses.
 
 Selection (`rules_config.json → selection`): the top horse is a **single** when it is
