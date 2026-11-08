@@ -324,6 +324,64 @@ class TestPipeline(unittest.TestCase):
         self.assertEqual(out["result"]["track_profile"], "DMR")
 
 
+class TestWinPrice(Base):
+    """A win bet needs a price: never bet when the morning line is missing, at or under fair, or under the floor."""
+
+    def test_win_price_cases(self):
+        from handicapper.engine import win_price
+        sel = {"min_ml_for_win_bet": 1.5, "win_margin": 0.15}
+        self.assertIsNone(win_price({"fair_odds": 2.0, "ml_decimal": None, "ml_odds": None}, sel)["ok"])
+        self.assertEqual(win_price({"fair_odds": 2.0, "ml_decimal": None}, sel)["min_odds"], 2.3)
+        self.assertFalse(win_price({"fair_odds": 2.0, "ml_decimal": 2.0, "ml_odds": "2/1"}, sel)["ok"], "at fair: no bet")
+        self.assertFalse(win_price({"fair_odds": 0.3, "ml_decimal": 1.2, "ml_odds": "6/5"}, sel)["ok"], "under the floor")
+        self.assertTrue(win_price({"fair_odds": 2.0, "ml_decimal": 2.5, "ml_odds": "5/2"}, sel)["ok"])
+        self.assertEqual(win_price({"fair_odds": 0.3, "ml_decimal": 3.0, "ml_odds": "3/1"}, sel)["min_odds"], 1.5, "floor applies when fair is short")
+
+    def test_missing_morning_line_is_not_a_long_price(self):
+        card = build_card()
+        cfg = load_config(None)
+        base = score_card(card, cfg, multirace=False)
+        r_with = next(r for r in base["races"] if len(r["picks"]) == 1 and any(w["type"] == "WIN" for w in r["wagers"]))
+        top = r_with["picks"][0]
+        race = next(x for x in card["races"] if x["race_no"] == r_with["race_no"])
+        for h in race["horses"]:
+            if h["pgm"] == top:
+                h["ml_odds"], h["ml_decimal"] = None, None
+        res = score_card(card, cfg, multirace=False)
+        r = next(x for x in res["races"] if x["race_no"] == r_with["race_no"])
+        self.assertEqual(r["picks"][0], top, "the pick itself does not depend on the price")
+        self.assertFalse([w for w in r["wagers"] if w["type"] == "WIN"], "no WIN wager without a price")
+        self.assertIn("no morning line", r["bet_structure"])
+        self.assertTrue(any("not counted as a bet" in w for w in r["other_wagers"]))
+        self.assertIsNotNone(next(s for s in r["sheets"] if s["pgm"] == top)["min_win_odds"])
+
+    def test_price_under_fair_gets_no_win_bet(self):
+        card = build_card()
+        cfg = load_config(None)
+        base = score_card(card, cfg, multirace=False)
+        r_with = next(r for r in base["races"] if len(r["picks"]) == 1 and any(w["type"] == "WIN" for w in r["wagers"]))
+        top = r_with["picks"][0]
+        race = next(x for x in card["races"] if x["race_no"] == r_with["race_no"])
+        for h in race["horses"]:
+            if h["pgm"] == top:
+                h["ml_odds"], h["ml_decimal"] = "8/5", 1.6      # above the 3/2 floor
+        cfg["selection"]["win_margin"] = 5.0                   # so fair x 6 is surely above 8/5
+        res = score_card(card, cfg, multirace=False)
+        r = next(x for x in res["races"] if x["race_no"] == r_with["race_no"])
+        self.assertFalse([w for w in r["wagers"] if w["type"] == "WIN"])
+        self.assertIn("no win bet", r["bet_structure"].lower())
+        win_lines = [w for w in r["wagers"] if w["type"] == "WIN"]
+        self.assertEqual(win_lines, [])
+
+    def test_h1_skips_market_blend_when_a_price_is_missing(self):
+        card = build_card()
+        card["races"][0]["horses"][0]["ml_odds"] = None
+        card["races"][0]["horses"][0]["ml_decimal"] = None
+        res = score_card(card, load_config(None))
+        leg = res["races"][0]["leg"]
+        self.assertTrue(any("model probabilities only" in a for a in leg["audit"]))
+
+
 class TestWeights(Base):
     def test_prime_power_and_comment_weights_are_moderate(self):
         w = {rl.id: rl.weight for rl in R.RULES}
