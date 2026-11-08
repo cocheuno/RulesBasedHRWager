@@ -13,7 +13,9 @@ A wager is a structure the engine now emits beside its text:
    "box": bool, "combos": n, "label": "...", "source": "primary"|"other"|"multirace", "race_no": n, "races": [...]}
 `combos` counts distinct outcomes covered (a key or box never pays twice for the same horse in two slots).
 
-evaluate_card(picks, results, cfg) -> per-race rows {label, type, cost, hit, ret, known} and totals;
+evaluate_card(picks, results, cfg) -> per-race rows {label, type, cost, hit, ret, known, placed, note} and totals;
+  a WIN row is `placed` only when the horse's final odds (from the chart) meet the minimum price the engine asked
+  for; otherwise it is "passed at the window", costs nothing and is not a bet;
 rollup(evaluations) -> by bet type, by track, by confidence, plus hit/miss counts for the bar charts.
 """
 from __future__ import annotations
@@ -93,7 +95,7 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
     """Return {unit, cost, hit, ret, known}.  known=False when the result or the pool payout is not on file.
     Returns are scaled to the stake: a $2 win payout x (unit / 2), an exotic's per-dollar payout x unit."""
     cost = round(w["combos"] * unit, 2)
-    row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True}
+    row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True, "placed": True, "note": ""}
     wtype = w["type"]
     if wtype in ("WIN", "EXACTA", "TRIFECTA", "SUPERFECTA"):
         res = by_no.get(w["race_no"])
@@ -102,8 +104,24 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
             return row
         fin = res["finish"]
         if wtype == "WIN":
-            win = w["legs"][0]
-            if fin[0] in win:
+            # the bet is placed only at the asked price: when the chart gives the final odds and they are under
+            # the horse's minimum, the window was passed (cost 0, no hit); without final odds the ML decided
+            fo = res.get("final_odds") or {}
+            mins = w.get("min_odds_by") or {k: w.get("min_odds") for k in w["legs"][0]}
+            placed, passed = [], []
+            for k in w["legs"][0]:
+                mn = mins.get(k)
+                if fo.get(k) is not None and mn is not None and fo[k] < mn:
+                    passed.append(f"#{k} {fo[k]:g}-1 under the {mn:g}-1 minimum")
+                else:
+                    placed.append(k)
+            row["cost"] = round(len(placed) * unit, 2)
+            row["placed"] = bool(placed)
+            if passed:
+                row["note"] = "passed at the window: " + "; ".join(passed)
+            if not placed:
+                return row
+            if fin[0] in placed:
                 row["hit"] = True
                 row["ret"] = round(unit * (res["win"] / 2.0), 2) if res.get("win") is not None else None
                 row["known"] = res.get("win") is not None
@@ -192,8 +210,9 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
         ev = evaluate_wager(w, by_no, unit_for(w, cfg))
         rows.append({"race_no": w["race_no"], "races": w["races"], "type": w["type"], "label": w["label"],
                      "source": w["source"], "confidence": w.get("confidence"), **ev})
-    known = [x for x in rows if x["known"]]
-    tot = {"bets": len(rows), "known": len(known), "hits": sum(1 for x in known if x["hit"]),
+    placed = [x for x in rows if x.get("placed", True)]
+    known = [x for x in placed if x["known"]]
+    tot = {"bets": len(placed), "passed": len(rows) - len(placed), "known": len(known), "hits": sum(1 for x in known if x["hit"]),
            "cost": round(sum(x["cost"] for x in known), 2), "ret": round(sum(x["ret"] or 0 for x in known), 2)}
     tot["roi"] = round((tot["ret"] - tot["cost"]) / tot["cost"], 3) if tot["cost"] else None
     return {"card": picks.get("source"), "track_code": picks.get("track_code"), "date": picks.get("date"),
@@ -221,11 +240,14 @@ def format_units(units: dict) -> str:
 def rollup(evaluations: list[dict]) -> dict:
     """Aggregate several cards: by bet type, by track, by confidence, and hit/miss counts per track + all."""
     def agg(keyfn):
-        g = defaultdict(lambda: {"bets": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0})
+        g = defaultdict(lambda: {"bets": 0, "passed": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0})
         for ev in evaluations:
             for x in ev["rows"]:
                 k = keyfn(ev, x)
                 d = g[k]
+                if not x.get("placed", True):
+                    d["passed"] += 1
+                    continue
                 d["bets"] += 1
                 if not x["known"]:
                     d["unknown"] += 1
@@ -241,9 +263,9 @@ def rollup(evaluations: list[dict]) -> dict:
     out = {"by_type": agg(lambda ev, x: x["type"]), "by_track": by_track,
            "by_confidence": agg(lambda ev, x: x.get("confidence") or "?"),
            "by_track_type": agg(lambda ev, x: f"{ev.get('track_code') or '?'} {x['type']}")}
-    allc = {"bets": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0}
+    allc = {"bets": 0, "passed": 0, "hits": 0, "misses": 0, "unknown": 0, "cost": 0.0, "ret": 0.0}
     for d in by_track.values():
-        for k in ("bets", "hits", "misses", "unknown", "cost", "ret"):
+        for k in ("bets", "passed", "hits", "misses", "unknown", "cost", "ret"):
             allc[k] += d[k]
     allc["cost"], allc["ret"] = round(allc["cost"], 2), round(allc["ret"], 2)
     allc["roi"] = round((allc["ret"] - allc["cost"]) / allc["cost"], 3) if allc["cost"] else None
@@ -256,17 +278,20 @@ def rollup(evaluations: list[dict]) -> dict:
 
 def format_evaluation(ev: dict) -> str:
     t = ev["totals"]
-    L = [f"## Wagers — {t['bets']} bets ({t['known']} with known results): "
-         f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else ""), "",
+    L = [f"## Wagers — {t['bets']} bets placed ({t['known']} with known results): "
+         f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else "")
+         + (f"; {t['passed']} win bet(s) passed because the final odds were under the minimum" if t.get("passed") else ""), "",
          "Unit stakes: " + format_units(ev.get("units") or DEFAULT_UNITS) + ".", ""]
     L.append("| Race | Wager | Unit | Cost | Result | Return |")
     L.append("|---|---|---|---|---|---|")
     for x in ev["rows"]:
         rn = "R" + "-".join(str(n) for n in x["races"]) if len(x["races"]) > 1 else f"R{x['race_no']}"
-        res = "HIT" if x["hit"] else ("miss" if x["known"] else "unknown")
+        res = "passed" if not x.get("placed", True) else ("HIT" if x["hit"] else ("miss" if x["known"] else "unknown"))
         ret = "" if x["ret"] is None else f"${x['ret']:.2f}"
         if x["hit"] and x["ret"] is None:
             ret = "payout not on file"
+        if x.get("note"):
+            ret = (ret + " " if ret else "") + f"({x['note']})"
         L.append(f"| {rn} | {x['label']} | ${x.get('unit', 1.0):.2f} | ${x['cost']:.2f} | {res} | {ret} |")
     return "\n".join(L)
 

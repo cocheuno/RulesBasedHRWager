@@ -261,7 +261,8 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   against the results file at a **unit stake per bet type** (`rules_config.json -> wagering.units`: $2 win/place/show,
   $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double; Pick 3 $1 and Pick 4 $0.50 from `multirace.pickN.base`,
   or the track menu's minimum when higher), overlapping suggestions are
-  counted once, and the roll-up gives bets / hits / misses / cost / return / ROI by bet type, track and confidence
+  counted once, a win bet is **placed only if the chart's final odds meet the minimum price the engine asked for**
+  (otherwise it is "passed at the window": no cost, not a bet), and the roll-up gives bets / hits / misses / cost / return / ROI by bet type, track and confidence
   plus the hit-miss counts per track for the charts.  Pick 3/4 windows are only built where the PP's wager menu
   offers them, at the offered denomination (rule H10).
 
