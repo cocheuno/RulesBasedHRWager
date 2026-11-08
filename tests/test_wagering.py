@@ -166,6 +166,38 @@ class TestCard(unittest.TestCase):
         self.assertFalse([x for x in ev2["rows"] if x["tracked_only"]], "the switch puts them back in the totals")
         self.assertIn("PICK3", rollup([ev2])["by_type"])
 
+    def test_pool_absent_from_chart_is_not_offered(self):
+        chart = {"race_no": 3, "finish": ["2", "4", "6", "7"], "win": 3.6, "source": "chart",
+                 "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "2/4", "payout": 5.5}]}
+        typed = dict(chart, source="manual")
+        tri = make_wager("TRIFECTA", [["2"], ["4", "6"], ["4", "6", "7"]], race_no=3)
+        r = evaluate_wager(tri, {3: chart}, 0.5)
+        self.assertEqual((r["placed"], r["status"], r["cost"], r["hit"]), (False, "not offered", 0.0, False))
+        self.assertIn("no trifecta pool", r["note"])
+        r2 = evaluate_wager(tri, {3: typed}, 0.5)
+        self.assertTrue(r2["placed"] and r2["hit"] and r2["ret"] is None and not r2["known"], "a typed result cannot say the pool was absent")
+        ex = make_wager("EXACTA", [["2"], ["4"]], race_no=3)
+        self.assertEqual(evaluate_wager(ex, {3: chart}, 1.0)["ret"], 5.5)
+        # multi-race: the pool is on the last race's chart
+        dbl = make_wager("DOUBLE", [["1"], ["2"]], race_no=2, races=[2, 3])
+        by = {2: {"race_no": 2, "finish": ["1"], "source": "chart", "exotics": []}, 3: chart}
+        self.assertEqual(evaluate_wager(dbl, by, 1.0)["status"], "not offered")
+        picks = {"source": "x", "track_code": "T", "races": [{"race_no": 3, "confidence": "high", "wagers": [tri, ex]}], "multirace": None}
+        ev = evaluate_card(picks, {"races": [chart]}, {})
+        self.assertEqual((ev["totals"]["bets"], ev["totals"]["not_offered"], ev["totals"]["hits"]), (1, 1, 1))
+        ru = rollup([ev]); self.assertEqual(ru["all"]["not_offered"], 1); self.assertNotIn("TRIFECTA", {k for k, d in ru["by_type"].items() if d["bets"]})
+        self.assertIn("not offered", format_evaluation(ev))
+
+    def test_no_trifecta_or_superfecta_below_pool_minimum(self):
+        card = build_card()
+        for race in card["races"]:
+            race["horses"] = race["horses"][:4]          # four starters everywhere
+        res = score_card(card, CFG)
+        for r in res["races"]:
+            self.assertFalse([w for w in r["wagers"] if w["type"] in ("TRIFECTA", "SUPERFECTA")], f"R{r['race_no']} suggested an exotic the track would not offer")
+            if len([s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]) >= 3:
+                self.assertTrue(any("no trifecta" in w for w in r["other_wagers"]), f"R{r['race_no']} should say why")
+
     def test_unit_for_old_config(self):
         from handicapper.wagering import unit_for
         self.assertEqual(unit_for({"type": "WIN"}, {"unit": 1.0}), 1.0, "single-unit config still honoured")

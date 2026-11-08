@@ -41,6 +41,8 @@ DEFAULT_CONFIG = {
         "max_picks": 3,
         "min_ml_for_win_bet": 1.5,  # <= 6/5 ML: no win bet, exotics only
         "win_margin": 0.15,        # a win bet also needs odds >= fair odds x (1 + margin): no bet at or under fair
+        "min_field_trifecta": 5,   # tracks do not open a trifecta pool below this many starters ...
+        "min_field_superfecta": 7, # ... nor a superfecta below this: no suggestion in a smaller field
         "value_overlay": 1.30,     # V1 overlay: ML >= fair x 1.30
         "value_underlay": 0.60,    # V1 underlay: ML <= fair x 0.60
     },
@@ -311,7 +313,8 @@ def primary_wagers(r: dict, sel: dict) -> list[dict]:
             if names[longer]["ml_decimal"] >= 2.5 and win_price(names[longer], sel)["ok"] is True:
                 W.append(win(longer, " (longer-priced of the pair)"))
     else:
-        W.append(make_wager("TRIFECTA", [p, p, p], True, "TRIFECTA box " + "-".join("#" + k for k in p), "primary", n))
+        if r["field_size"] >= sel.get("min_field_trifecta", 5):
+            W.append(make_wager("TRIFECTA", [p, p, p], True, "TRIFECTA box " + "-".join("#" + k for k in p), "primary", n))
         W.append(make_wager("EXACTA", [p[:2], p[:2]], True, f"EXACTA box #{p[0]}-#{p[1]}", "primary", n))
         if wp["ok"] is True:
             W.append(win(p[0]))
@@ -345,6 +348,8 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
     top = live[0]
     wp = win_price(top, sel)
     conf = r["confidence"]
+    tri_ok = r["field_size"] >= sel.get("min_field_trifecta", 5)       # no pool below the track minimum
+    super_ok = r["field_size"] >= sel.get("min_field_superfecta", 7)
     leg = r.get("leg") or {}
     fav = leg.get("favorite")
     overlays = [x for x in live[:3] if any(h["rule"] == "V1" and h["points"] > 0 for h in x["hits"])]
@@ -362,11 +367,13 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
     if conf == "high":
         W.append(f"EXACTA key {hs(a)} over {hs(b, c, d)}")
         add("EXACTA", [[a], [b, c, d]])
-        if c:
+        if c and tri_ok:
             W.append(f"TRIFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
             add("TRIFECTA", [[a], [b, c, d], [b, c, d, e]])
             W.append(f"TRIFECTA key second {hs(b, c, d)} / {hs(a)} / {hs(b, c, d, e)} (a standout that runs second still pays)")
             add("TRIFECTA", [[b, c, d], [a], [b, c, d, e]])
+        elif c:
+            W.append(f"no trifecta: {r['field_size']} starters, under the {sel.get('min_field_trifecta', 5)}-horse pool minimum")
         if wp["ok"] is True:
             W.append(f"WIN {hs(a)} ({wp['why']}; fair {top['fair_odds']}-1)")
             add("WIN", [[a]])
@@ -375,16 +382,18 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
             W.append(f"WIN {hs(a)} only if the board shows {wp['min_odds']:g}-1 or better (no morning line in the PPs; fair {top['fair_odds']}-1) - not counted as a bet")
         else:
             W.append(f"no WIN bet on {hs(a)} ({wp['why']}): use it as a single in the Pick 3 / Pick 4 instead")
-        if r["field_size"] >= 8 and e:
+        if super_ok and r["field_size"] >= 8 and e:
             W.append(f"SUPERFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
             add("SUPERFECTA", [[a], [b, c, d], [b, c, d], [b, c, d, e]])
     elif conf == "medium":
         W.append(f"EXACTA box {hs(a, b)}" + (f"; EXACTA part-wheel {hs(a, b)} / {hs(a, b, c)}" if c else ""))
         add("EXACTA", [[a, b], [a, b, c]] if c else [[a, b], [a, b]])
-        if c:
+        if c and tri_ok:
             box = [k for k in (a, b, c, d) if k]
             W.append(f"TRIFECTA box {'-'.join('#' + k for k in box)}")
             add("TRIFECTA", [box, box, box], box=True)
+        elif c:
+            W.append(f"no trifecta: {r['field_size']} starters, under the {sel.get('min_field_trifecta', 5)}-horse pool minimum")
         if overlays:
             W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1; take {win_price(x, sel)['min_odds']:g}-1 or better)" for x in overlays))
             add("WIN", [[x["pgm"] for x in overlays]])
@@ -392,9 +401,11 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
             W.append("no WIN bet: neither of the top two is an overlay at the morning line")
     else:
         box = [k for k in (a, b, c, d) if k]
-        W.append(f"TRIFECTA box {'-'.join('#' + k for k in box)} (contentious: spread, do not key)")
-        if len(box) >= 3:
+        if tri_ok and len(box) >= 3:
+            W.append(f"TRIFECTA box {'-'.join('#' + k for k in box)} (contentious: spread, do not key)")
             add("TRIFECTA", [box, box, box], box=True)
+        elif len(box) >= 3:
+            W.append(f"no trifecta: {r['field_size']} starters, under the {sel.get('min_field_trifecta', 5)}-horse pool minimum")
         W.append(f"EXACTA box {'-'.join('#' + k for k in box[:3])}")
         add("EXACTA", [box[:3], box[:3]], box=True)
         if overlays:
