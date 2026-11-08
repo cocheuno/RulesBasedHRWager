@@ -77,6 +77,59 @@ class TestDesk(Base):
         self.assertEqual([c["track"] for c in an["rollup"]["chart"]], ["DMR", "ALL"])
         self.assertTrue(an["rules"])
 
+    def test_snapshots_are_append_only_and_labelled(self):
+        import glob, time
+        from handicapper.snapshot import list_snapshots, latest_snapshot, write_snapshot
+        tmp = tempfile.mkdtemp(prefix="racedesk-snap-")          # a fresh card: no results on file yet
+        self.addCleanup(shutil.rmtree, tmp, True)
+        shutil.copy(os.path.join(ROOT, "rules_config.json"), os.path.join(tmp, "rules_config.json"))
+        os.makedirs(os.path.join(tmp, "data", "out"))
+        with open(os.path.join(tmp, "data", "out", "synth.card.json"), "w", encoding="utf-8") as fh:
+            json.dump(build_card(), fh)
+        d = Desk(tmp)
+        d.run("synth", "")
+        time.sleep(1.1)
+        d.run("synth", "4:6")                                  # a second pre-race run: a second file, first untouched
+        snaps = list_snapshots(d.out, "synth")
+        pre = [s for s in snaps if s["kind"] == "pre-race"]
+        self.assertGreaterEqual(len(pre), 2)
+        self.assertEqual(pre[-1]["scratches"], "4:6")
+        first = open(pre[0]["path"], encoding="utf-8").read()
+        d.save_result("synth", {"race_no": 2, "finish": ["3", "5", "4"], "win": "8.00"})
+        time.sleep(1.1)
+        pl = d.run("synth", "4:6")                             # after a result is on file: post-results, not pre-race
+        self.assertEqual(pl["state"]["runs"][-1]["kind"], "post-results")
+        self.assertEqual(open(pre[0]["path"], encoding="utf-8").read(), first, "an earlier snapshot is never rewritten")
+        self.assertEqual(latest_snapshot(d.out, "synth", "pre-race")["scratches"], "4:6")
+        snap = latest_snapshot(d.out, "synth", "pre-race")
+        self.assertNotIn("features", snap["races"][0]["sheets"][0], "snapshots drop the bulky features")
+        self.assertTrue(snap["run"]["at_utc"].endswith("Z") and snap["run"]["config_hash"])
+        self.assertEqual(snap["run"]["results_known"], [])
+        self.assertTrue(pl["pre_race"], "payload scores the pre-race snapshot once results exist")
+        self.assertEqual(pl["pre_race"]["snapshot"]["kind"], "pre-race")
+        self.assertEqual(pl["picks"]["run"]["results_known"], [2])
+        # process: the as-run re-score is its own kind; the report has both sections
+        rp = os.path.join(tmp, "results", "synth.results.json")
+        data = json.load(open(rp))
+        for r in data["races"]:
+            if r["race_no"] == 2:
+                r["runners"] = [{"pgm": p, "name": ""} for p in ("1", "2", "3", "4", "6")]
+                r["source"] = "chart"
+        json.dump(data, open(rp, "w"))
+        time.sleep(1.1)
+        pl = d.process("synth")
+        self.assertEqual(pl["latest_kind"], "as-run")
+        self.assertIn("## Pre-race prediction, as bet", pl["report"])
+        self.assertIn("## As-run re-score", pl["report"])
+        self.assertIn("cannot change", pl["report"])
+        kinds = [s["kind"] for s in list_snapshots(d.out, "synth")]
+        self.assertEqual(kinds[-1], "as-run")
+        self.assertIn("pre-race", kinds)
+        with self.assertRaises(ValueError):
+            write_snapshot(d.out, "synth", pl["picks"], "guess")
+        an = d.analysis()
+        self.assertEqual(next(c for c in an["cards"] if c["card"] == "synth")["basis"], "pre-race")
+
     def test_reparse_reason(self):
         import time
         from brisnet_pp.parser import PARSER_VERSION

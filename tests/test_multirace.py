@@ -71,7 +71,8 @@ class TestLegs(Base):
         l1 = next(l for w in self.mr["pick3"]["windows"] for l in w["legs"] if l["race_no"] == 1)
         ae = next(s for s in self.by_race[1]["sheets"] if s["pgm"] == "7")
         self.assertTrue(ae["flags"])
-        self.assertEqual(any(a.startswith("H6 #7") for a in l1["audit"]), ae["rank"] <= 3)
+        self.assertIsNone(ae["rank"], "an alternate holds no rank among the runners")
+        self.assertEqual(any(a.startswith("H6 #7") for a in l1["audit"]), ae["conditional_rank"] <= 3)
 
 
 class TestTickets(Base):
@@ -88,10 +89,12 @@ class TestTickets(Base):
 
     def test_hit_probability_formula(self):
         w = self.mr["pick4"]["recommended"]
-        PA = [sum(l["probs"][k] for k in l["A"]) for l in w["legs"]]
-        PB = [sum(l["probs"][k] for k in l["B"]) for l in w["legs"]]
+        PA = [l["price_factor"] * sum(l["probs"][k] for k in l["A"]) for l in w["legs"]]
+        PB = [l["price_factor"] * sum(l["probs"][k] for k in l["B"]) for l in w["legs"]]
         hit = math.prod(PA) + sum(PB[i] * math.prod(PA[j] for j in range(4) if j != i) for i in range(4))
         self.assertAlmostEqual(hit, w["hit_prob"], places=3)
+        self.assertTrue(all(0.5 <= l["price_factor"] <= 1.0 for l in w["legs"]))
+        self.assertTrue(any(l["price_factor"] < 1.0 for l in w["legs"]), "a leg with eliminated horses prices below 1")
         self.assertLess(w["all_favorites_prob"], w["hit_prob"])
 
     def test_budget_trim_respects_singles_and_records_notes(self):

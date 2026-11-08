@@ -22,6 +22,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from handicapper.engine import format_report, rules_doc  # noqa: E402
+from handicapper.snapshot import write_snapshot            # noqa: E402
 from handicapper.pipeline import run_card                # noqa: E402
 
 
@@ -64,7 +65,8 @@ def main() -> int:
             json.dump(result, fh, indent=1, ensure_ascii=False, default=str)
         with open(os.path.join(args.out, f"{base}.picks.md"), "w", encoding="utf-8") as fh:
             fh.write(format_report(result, detail=2))
-        print(f"\nwrote {args.out}/{base}.card.json, {base}.picks.json, {base}.picks.md", file=sys.stderr)
+        snap = write_snapshot(args.out, base, result, "post-results" if result["run"]["results_known"] else "pre-race")
+        print(f"\nwrote {args.out}/{base}.card.json, {base}.picks.json, {base}.picks.md; snapshot {os.path.relpath(snap, args.out)}", file=sys.stderr)
     return 0
 
 

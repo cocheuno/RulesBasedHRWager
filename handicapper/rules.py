@@ -1285,9 +1285,11 @@ def x4(f, ctx):
 # =========================================================================
 @rule("V1", "Morning-line value", "value", 3)
 def v1(f, ctx):
-    """Applied after scoring (see engine): compares the horse's score-implied win probability with the
-    morning-line implied probability.  Overlay (fair odds < ML by 30%+): +1.0; underlay (ML < 60% of fair): -0.8.
-    Chalk at 6/5 or lower never gets a value bonus.
+    """Applied after scoring (see engine): compares the engine's fair odds (from the model win probability) with
+    the morning line.  Overlay (ML >= fair x 1.30): +1.0; underlay (ML <= fair x 0.60): -0.8.  Chalk at 6/5 or
+    lower never gets a value bonus.  The points are a *value* assessment reported beside the ability score and used
+    by the wagering lines (overlay win bets, H5 beatable favourite); they are never added to the score, so a
+    horse's ability rank does not move because its price is generous or short.
     Basis: Meadow / Crist - make your own line and bet only overlays; the morning line is a stand-in for the public's
     line until the real odds are known."""
     return None   # evaluated by the engine with knowledge of the whole field

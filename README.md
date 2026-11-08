@@ -104,8 +104,12 @@ boxes (Prime Power, speed-last-race, class) reconcile with the per-horse data; 0
 
 `rules.py` registers every rule with `@rule(id, name, category, weight)`.  A rule returns
 `None` (no opinion) or `(factor, note)`; the engine adds `factor × weight` to the horse and
-keeps the note.  Hard rules (`X*`) eliminate (negative factor) or flag (AE/MTO).  `V1`
-compares the score-implied win probability (softmax over the field) with the morning line.
+keeps the note.  Hard rules (`X*`) eliminate (negative factor) or flag (AE/MTO).  The score is a pure
+*ability* score.  `handicapper/probability.py` turns it into the one win probability every report and every
+Pick 3/4 leg reads (softmax of the score, blended with the morning line); `V1` compares the engine's fair odds
+from that model with the morning line and is reported as *value* beside the score, never added to it, so a
+horse's rank does not move because its price is generous or short.  Eliminated horses have probability 0 for
+selection; only when a Pick 3/4 ticket is priced does each keep a 2% floor (`elim_floor`).
 
 Categories: **S** speed · **C** class · **P** pace & bias · **F** form · **K** connections ·
 **D** distance/surface · **E** equipment · **Q** QuickPlay comments · **M** maidens ·
@@ -155,8 +159,9 @@ double with the next race's A horses.
 Selection (`rules_config.json → selection`): the top horse is a **single** when it is
 `single_gap` (7) points clear and the race is not contentious (fewer than 4 horses within
 `spread_gap`); the 2nd is added when within `pair_gap` (4) or the race is contentious; a 3rd
-when within `third_gap` (7).  Also-eligibles are never picked outright — they are reported
-as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics rather than bet to win.
+when within `third_gap` (7).  Also-eligibles are never picked outright — they hold no rank among the
+runners and are reported as "would rank N if it draws in".  ML ≤ 6/5 singles are keyed in exotics rather than
+bet to win.
 
 ### Tuning
 
@@ -174,7 +179,7 @@ as "would be a play if it draws in".  ML ≤ 6/5 singles are keyed in exotics ra
 * Add a rule: write a function in `rules.py` with the `@rule` decorator and a docstring ending in a
   `Basis:` sentence; it appears in the audit and in `RULES.md` automatically (the tests enforce the basis line).
 * Pick 3/4 behaviour: `multirace` block in `rules_config.json` (budgets, `single_prob`, coverage targets,
-  `fav_vulnerable_rules`, `ml_blend`).
+  `fav_vulnerable_rules`); the probability model in the `probability` block (`logit_scale`, `ml_blend`, `elim_floor`).
 
 ## Race Day Desk (`python ui.py`)
 
@@ -220,10 +225,21 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 
 ## Results, scratches and back-testing
 
+* **Snapshots** (`handicapper/snapshot.py`): every run is also frozen, append-only, as
+  `data/out/snapshots/<card>/<UTC>_<kind>.picks.json` with a `run` block (UTC time, scratches, parser version,
+  configuration hash, git version, source file hash, which races had results on file, odds source).  Kinds:
+  `pre-race` (no result on file yet: the run you could bet from), `post-results`, `as-run` (the retrospective
+  re-score with the chart's field).  `picks.json` stays the *latest* run.  The back-test and the Analysis screen
+  score the newest pre-race snapshot and label the as-run numbers as retrospective; a card with no pre-race
+  snapshot says so.
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
   Results and payoffs are public data and may be committed; PPs are not.
 * `--scratch "r:p, r:p"` removes scratched horses before scoring; one also-eligible draws in per scratch, in
-  program order (MTO horses stay flagged).  Pace shape and all field-relative ranks are recomputed.
+  program order (MTO horses stay flagged).  `r:+p` states that an AE/MTO is officially in (also when the race
+  comes off the turf), `r:-p` that it stays out although a scratch would normally bring it in.  Pace shape and
+  all field-relative ranks are recomputed over the active field only: an alternate that has not drawn in is in no
+  denominator, no pace count and no probability; it is scored against a field that includes it and reported with
+  the rank it *would* hold ("(4)").
 * `--results` reads the same file and, for each race, summarises the winners of the earlier races on the same
   surface (run style, post) as `race["day_bias"]`, which rule **P10** scores once three such results exist.
 * **Result charts are the best source.** The Equibase/Brisnet chart PDF (the track site's "View chart", e.g.

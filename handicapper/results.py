@@ -39,15 +39,17 @@ def load_results(path: str) -> dict:
 # Scratches
 # ---------------------------------------------------------------------------
 def parse_scratch_spec(spec: str | None) -> dict[int, list[str]]:
-    """'3:3, 4:6 8:4,8:9' -> {3: ['3'], 4: ['6'], 8: ['4', '9']}."""
+    """'3:3, 4:6 8:4,8:9' -> {3: ['3'], 4: ['6'], 8: ['4', '9']}.  Two extra forms state the official draw-in
+    status instead of leaving it to the automatic rule: '4:+12' = also-eligible / MTO #12 is officially in;
+    '4:-12' = #12 stays out even though a scratch would normally bring it in."""
     out: dict[int, list[str]] = {}
     for tok in re.split(r"[,\s]+", (spec or "").strip()):
         if not tok:
             continue
-        m = re.fullmatch(r"(\d+):(\d+[A-Za-z]?)", tok)
+        m = re.fullmatch(r"(\d+):([+-]?)(\d+[A-Za-z]?)", tok)
         if not m:
-            raise ValueError(f"bad scratch token {tok!r}; expected race:program like 8:4")
-        out.setdefault(int(m.group(1)), []).append(m.group(2).upper())
+            raise ValueError(f"bad scratch token {tok!r}; expected race:program like 8:4 (8:+4 draws in, 8:-4 stays out)")
+        out.setdefault(int(m.group(1)), []).append(m.group(2) + m.group(3).upper())
     return out
 
 
@@ -58,9 +60,12 @@ def apply_scratches(card: dict, scratches: dict[int, list[str]]) -> list[str]:
     Returns human-readable notes."""
     notes = []
     for race in card["races"]:
-        pg = scratches.get(race["race_no"], [])
-        if not pg:
+        toks = scratches.get(race["race_no"], [])
+        if not toks:
             continue
+        pg = [t for t in toks if t[0] not in "+-"]
+        force_in = [t[1:] for t in toks if t[0] == "+"]
+        hold_out = [t[1:] for t in toks if t[0] == "-"]
         before = len(race["horses"])
         gone = [h for h in race["horses"] if h["pgm"].upper() in pg]
         race["horses"] = [h for h in race["horses"] if h["pgm"].upper() not in pg]
@@ -69,11 +74,24 @@ def apply_scratches(card: dict, scratches: dict[int, list[str]]) -> list[str]:
             notes.append(f"R{race['race_no']}: program {p} not found (already absent?)")
         for h in gone:
             notes.append(f"R{race['race_no']}: scratched #{h['pgm']} {h['name']}")
+        # official status first: '+p' is in whatever the count says, '-p' never draws in automatically
+        for h in race["horses"]:
+            if h["pgm"].upper() in force_in and h.get("entry_status"):
+                notes.append(f"R{race['race_no']}: #{h['pgm']} {h['name']} officially in ({h['entry_status']} activated)")
+                h["entry_status"] = None
+        for p in force_in:
+            if p not in {h["pgm"].upper() for h in race["horses"]}:
+                notes.append(f"R{race['race_no']}: program {p} not found for draw-in")
         body_scratches = sum(1 for h in gone if h.get("entry_status") != "AE")   # a scratched AE draws nobody in
-        aes = sorted((h for h in race["horses"] if h.get("entry_status") == "AE"), key=lambda h: _pgm_key(h["pgm"]))
-        for h in aes[:body_scratches]:
+        body_scratches -= sum(1 for h in race["horses"] if h["pgm"].upper() in force_in)   # an official draw-in uses a slot
+        aes = sorted((h for h in race["horses"] if h.get("entry_status") == "AE" and h["pgm"].upper() not in hold_out),
+                     key=lambda h: _pgm_key(h["pgm"]))
+        for h in aes[:max(0, body_scratches)]:
             h["entry_status"] = None
             notes.append(f"R{race['race_no']}: #{h['pgm']} {h['name']} draws in from the also-eligible list")
+        for h in race["horses"]:
+            if h["pgm"].upper() in hold_out and h.get("entry_status"):
+                notes.append(f"R{race['race_no']}: #{h['pgm']} {h['name']} held out ({h['entry_status']} stays on the list)")
         race["field_size"] = len(race["horses"])
         if race.get("summary"):
             race["summary"] = [e for e in race["summary"] if str(e.get("pgm", "")).upper() not in pg]

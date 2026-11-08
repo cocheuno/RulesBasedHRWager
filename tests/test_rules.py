@@ -46,7 +46,8 @@ class TestInvariants(Base):
         ids = {rl.id for rl in R.RULES}
         for r in self.result["races"]:
             for s in r["sheets"]:
-                self.assertAlmostEqual(s["score"], round(sum(h["points"] for h in s["hits"]), 2), places=1)
+                # the ability score is the sum of the rule points; the V1 value points sit beside it, never in it
+                self.assertAlmostEqual(s["score"], round(sum(h["points"] for h in s["hits"] if not h.get("value")), 2), places=1)
                 for h in s["hits"]:
                     self.assertIn(h["rule"], ids)
                     self.assertTrue(h["note"])
@@ -277,7 +278,8 @@ class TestTrackProfiles(Base):
         self.assertEqual(dmr["weights"]["P1"], 8)
         self.assertEqual(dmr["multirace"]["pick3"]["base"], 1.0, "Pick 3 denomination is global ($1), not per track")
         self.assertEqual(dmr["multirace"]["pick3"]["budget"], 60.0)
-        self.assertEqual(dmr["multirace"]["logit_scale"], base["multirace"]["logit_scale"], "untouched keys survive the layer")
+        self.assertEqual(dmr["multirace"]["single_prob"], base["multirace"]["single_prob"], "untouched keys survive the layer")
+        self.assertEqual(dmr["probability"], base["probability"], "one probability model for every track unless a profile says otherwise")
         unknown = load_config(self.CFG_PATH, track_code="ZZZ")
         self.assertTrue(unknown["track_profile"].startswith("default"))
         self.assertEqual(unknown["weights"], base["weights"])
@@ -322,6 +324,94 @@ class TestPipeline(unittest.TestCase):
         out = run_card(card, multirace=False)
         self.assertEqual(out["result"]["track_code"], "DMR")
         self.assertEqual(out["result"]["track_profile"], "DMR")
+
+
+class TestAbilityAndValue(Base):
+    """Ability (score, rank) is independent of the price; value (V1) and probabilities are reported beside it, and
+    every report reads the same probability."""
+
+    def test_changing_the_morning_line_does_not_move_score_or_rank(self):
+        cfg = load_config(None)
+        card = build_card()
+        base = score_card(card, cfg, multirace=False)
+        for race in card["races"]:
+            for h in race["horses"]:
+                if h["ml_decimal"] is not None:
+                    h["ml_odds"], h["ml_decimal"] = "30/1", 30.0        # every horse a huge overlay
+        res = score_card(card, cfg, multirace=False)
+        for r0, r1 in zip(base["races"], res["races"]):
+            self.assertEqual([(s["pgm"], s["score"]) for s in r0["sheets"]], [(s["pgm"], s["score"]) for s in r1["sheets"]])
+            self.assertEqual([s["rank"] for s in r0["sheets"]], [s["rank"] for s in r1["sheets"]])
+            self.assertEqual(r0["picks"], r1["picks"], "the picks are an ability call")
+            # ... but the value assessment and the market side of the probability do move
+            self.assertTrue(any(s["value"] and s["value"]["label"] == "overlay" for s in r1["sheets"] if not s["eliminated"]))
+
+    def test_value_is_reported_not_scored(self):
+        for r in self.result["races"]:
+            for s in r["sheets"]:
+                v1 = hits(s, "V1")
+                if v1:
+                    self.assertTrue(v1[0].get("value"))
+                    self.assertIn("not in the ability score", v1[0]["note"])
+                    self.assertEqual(s["value"]["points"], v1[0]["points"])
+                    self.assertIn(s["value"]["label"], ("overlay", "underlay"))
+                elif s["value"]:
+                    self.assertEqual(s["value"]["label"], "fair")
+
+    def test_one_probability_everywhere(self):
+        for r in self.result["races"]:
+            live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
+            self.assertAlmostEqual(sum(s["win_prob"] for s in live), 1.0, places=2)
+            self.assertAlmostEqual(sum(s["model_prob"] for s in live), 1.0, places=2)
+            for s in r["sheets"]:
+                if s["eliminated"] or s["flags"]:
+                    self.assertEqual(s["win_prob"], 0.0, "eliminated and AE/MTO horses have no probability in selection")
+                    self.assertIsNone(s["fair_odds"])
+            leg = r["leg"]
+            if leg:
+                for s in live:
+                    self.assertEqual(leg["probs"][s["pgm"]], s["win_prob"], "the leg reads the sheet's probability")
+                self.assertEqual(s["implied_prob"], s["model_prob"], "old name is an alias")
+
+    def test_elimination_floor_prices_only(self):
+        from handicapper.probability import price_factor
+        self.assertEqual(price_factor(0), 1.0)
+        self.assertAlmostEqual(price_factor(3), 0.94)
+        self.assertEqual(price_factor(40), 0.5, "floor never takes more than half")
+        r = next(r for r in self.result["races"] if any(s["eliminated"] for s in r["sheets"]))
+        self.assertLess(r["leg"]["price_factor"], 1.0)
+        self.assertTrue(any("pricing keeps" in a for a in r["leg"]["audit"]))
+        self.assertEqual([s["pgm"] for s in r["sheets"] if s["eliminated"] and s["win_prob"]], [], "selection untouched")
+
+
+class TestAlternatesOutOfField(Base):
+    """An also-eligible that has not drawn in is not in the race: it changes nothing for the horses that are."""
+
+    def test_inactive_ae_does_not_change_active_field(self):
+        cfg = load_config(None)
+        card = build_card()
+        r1 = card["races"][0]
+        ae = next(h for h in r1["horses"] if h["entry_status"] == "AE")
+        with_ae = score_race(r1, cfg)
+        r1["horses"] = [h for h in r1["horses"] if h["pgm"] != ae["pgm"]]
+        without = score_race(r1, cfg)
+        act = lambda res: [(s["pgm"], s["score"], s["rank"], s["win_prob"]) for s in res["sheets"] if not s["flags"]]
+        self.assertEqual(act(with_ae), act(without), "scores, ranks and probabilities of the runners are identical")
+        self.assertEqual((with_ae["pace_shape"], with_ae["num_early"], with_ae["lone_speed"], with_ae["field_size"]),
+                         (without["pace_shape"], without["num_early"], without["lone_speed"], without["field_size"]))
+        self.assertEqual(with_ae["alternates"], [ae["pgm"]])
+        self.assertEqual(with_ae["picks"], without["picks"])
+
+    def test_alternate_is_judged_conditionally(self):
+        r = self.result["races"][0]
+        ae = next(s for s in r["sheets"] if s["flags"])
+        self.assertIsNone(ae["rank"])
+        self.assertTrue(1 <= ae["conditional_rank"] <= len(r["sheets"]))
+        self.assertEqual(ae["win_prob"], 0.0)
+        self.assertTrue(ae["hits"], "the alternate is still scored, against a field that includes it")
+        self.assertEqual(sorted(s["rank"] for s in r["sheets"] if not s["flags"]), list(range(1, r["field_size"] + 1)))
+        if ae["conditional_rank"] <= 3:
+            self.assertIn("would rank", r["selection_note"])
 
 
 class TestWinPrice(Base):

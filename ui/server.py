@@ -7,7 +7,8 @@ Serves ui/static/ and a JSON API that calls the engine directly (handicapper.pip
 screen and pick.py always agree.  Files live where the command line puts them:
 
     data/pps/<card>.pdf, data/pps/<card>q.pdf      PPs and quick sheet (ignored by git)
-    data/out/<card>.card.json / .picks.json / .picks.md
+    data/out/<card>.card.json / .picks.json / .picks.md   (latest run)
+    data/out/snapshots/<card>/<UTC>_<kind>.picks.json     (every run, append-only: pre-race / post-results / as-run)
     data/results-png/<card>/r<N>.png              result screenshots
     data/cards/<card>.json                        UI state: scratches, runs
     results/<card>.results.json, <card>.backtest.md
@@ -51,6 +52,7 @@ from brisnet_pp.parser import PARSER_VERSION                  # noqa: E402
 from handicapper.engine import format_report, load_config   # noqa: E402
 from handicapper.pipeline import run_card                     # noqa: E402
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
+from handicapper.snapshot import latest_snapshot, list_snapshots, write_snapshot   # noqa: E402
 from handicapper.wagering import evaluate_card, format_evaluation, format_units, rollup, units_table  # noqa: E402
 from ocr_results import ocr_folder   # noqa: E402
 
@@ -177,7 +179,9 @@ class Desk:
         st["activity"] = st["activity"][-50:]
 
     # ---------------------------------------------------------------- engine
-    def run(self, card: str, scratches: str | None = None, reparse: bool = False) -> dict:
+    def run(self, card: str, scratches: str | None = None, reparse: bool = False, kind: str | None = None) -> dict:
+        """kind: None = decide from the results on file (pre-race / post-results); "as-run" for the retrospective
+        re-score.  Every run is also frozen as an append-only snapshot (handicapper/snapshot.py)."""
         f = self.files(card)
         source = f["pp"] or f["card_json"]
         if not source:
@@ -197,14 +201,19 @@ class Desk:
             cj = os.path.join(self.out, f"{card}.card.json")
             out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config)
             result = out["result"]
+            kind = kind or ("post-results" if result["run"]["results_known"] else "pre-race")
+            result["run"]["kind"] = kind
             with open(os.path.join(self.out, f"{card}.picks.json"), "w", encoding="utf-8") as fh:
                 json.dump(result, fh, indent=1, ensure_ascii=False, default=str)
             with open(os.path.join(self.out, f"{card}.picks.md"), "w", encoding="utf-8") as fh:
                 fh.write(format_report(result, detail=2))
+            snap = write_snapshot(self.out, card, result, kind)
         st.setdefault("runs", []).append({"at": datetime.now().isoformat(timespec="seconds"), "scratches": st.get("scratches", ""),
-                                          "profile": result.get("track_profile"), "notes": out["notes"]})
-        self.log(st, "Run picks", f"{len(result['races'])} races scored, profile {result.get('track_profile')}" +
-                 (f", scratches: {st['scratches']}" if st.get("scratches") else ""))
+                                          "profile": result.get("track_profile"), "notes": out["notes"], "kind": kind,
+                                          "snapshot": os.path.basename(snap)})
+        self.log(st, "Run picks" if kind != "as-run" else "As-run re-score",
+                 f"{len(result['races'])} races scored, profile {result.get('track_profile')}" +
+                 (f", scratches: {st['scratches']}" if st.get("scratches") else "") + f"; snapshot {kind} {os.path.basename(snap)}")
         self.save_state(st)
         return self.payload(card)
 
@@ -229,12 +238,35 @@ class Desk:
         if picks and not picks.get("track_code") and meta.get("track_code"):
             picks["track_code"] = meta["track_code"]
         results = load_results(f["results"]) if f["results"] else None
-        bt = ev = None
+        bt = ev = pre = None
         if picks and results:
+            wcfg = load_config(self.config)["wagering"]
             bt = backtest(picks, results)
-            ev = evaluate_card(picks, results, load_config(self.config)["wagering"])
+            ev = evaluate_card(picks, results, wcfg)
+            pre = self.pre_race(card, results, wcfg)
+        snaps = [{k: v for k, v in s.items() if k != "path"} for s in list_snapshots(self.out, card)]
         return {"card": card, "meta": meta, "files": {k: (bool(v) if k not in ("pngs", "charts") else v) for k, v in f.items()},
-                "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev}
+                "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev,
+                "latest_kind": (picks or {}).get("run", {}).get("kind") or ("as-run" if picks and "as-run" in str(st.get("activity", [])[-1:]) else None),
+                "pre_race": pre, "snapshots": snaps}
+
+    def pre_race(self, card: str, results: dict, wcfg: dict) -> dict | None:
+        """Back-test and wager evaluation of the newest pre-race snapshot: what the engine said before any result
+        was on file, which no later run can change.  None when the card has no pre-race snapshot."""
+        snap = latest_snapshot(self.out, card, "pre-race")
+        if not snap:
+            return None
+        if not snap.get("track_code"):
+            snap["track_code"] = self.payload_meta(card).get("track_code")
+        return {"snapshot": snap["snapshot"], "run": snap.get("run"), "scratches": snap.get("scratches", ""),
+                "backtest": backtest(snap, results), "evaluation": evaluate_card(snap, results, wcfg)}
+
+    def payload_meta(self, card: str) -> dict:
+        f = self.files(card)
+        if not f["card_json"]:
+            return {}
+        cj = json.load(open(f["card_json"], encoding="utf-8"))
+        return {"track": cj.get("track"), "date": cj.get("date"), "track_code": cj.get("track_code")}
 
     # ---------------------------------------------------------------- results
     def save_result(self, card: str, race: dict) -> dict:
@@ -304,20 +336,42 @@ class Desk:
                 merged = ", ".join(sorted(have | want, key=lambda t: (int(t.split(":")[0]), t.split(":")[1])))
                 self.log(st, "As-run re-score", f"charts show these did not run: {', '.join(sorted(want - have))}; re-running with scratches {merged}")
                 self.save_state(st)
-                self.run(card, merged)
+                self.run(card, merged, kind="as-run")
         pl = self.payload(card)
         if not (pl["picks"] and pl["results"]):
             raise ValueError("needs a run (picks) and at least one race result (a chart PDF, a screenshot r<N>.png or an entered result)")
-        text = "# " + card + "\n\n" + format_backtest(pl["backtest"]) + "\n\n" + format_evaluation(pl["evaluation"])
+        text = self.backtest_text(card, pl)
         with open(os.path.join(self.results, f"{card}.backtest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)
         st = self.state(card)
-        s = pl["backtest"]["summary"]
-        self.log(st, "Process results", f"top pick won {s['top_pick_wins']}/{s['races']}, winner in top 3 {s['winner_in_top3']}/{s['races']}; "
-                 f"wagers {pl['evaluation']['totals']['hits']}/{pl['evaluation']['totals']['bets']} hit")
+        head = pl["pre_race"] or {"backtest": pl["backtest"], "evaluation": pl["evaluation"]}
+        s, t = head["backtest"]["summary"], head["evaluation"]["totals"]
+        basis = "pre-race snapshot" if pl["pre_race"] else "latest run (no pre-race snapshot on file)"
+        self.log(st, "Process results", f"{basis}: top pick won {s['top_pick_wins']}/{s['races']}, winner in top 3 "
+                 f"{s['winner_in_top3']}/{s['races']}; wagers {t['hits']}/{t['bets']} hit")
         self.save_state(st)
         pl["report"] = text
         return pl
+
+    def backtest_text(self, card: str, pl: dict) -> str:
+        """Two labelled sections: the pre-race prediction as bet (immutable snapshot) and the as-run re-score."""
+        L = ["# " + card, ""]
+        pre = pl.get("pre_race")
+        if pre:
+            L += [f"## Pre-race prediction, as bet  (snapshot {pre['snapshot']['file']}, {pre['snapshot']['at_utc']} UTC"
+                  + (f", scratches {pre['scratches']}" if pre["scratches"] else "") + ")", "",
+                  "These numbers cannot change: the snapshot was frozen before any result for this card was on file.", "",
+                  format_backtest(pre["backtest"]), "", format_evaluation(pre["evaluation"]), ""]
+        else:
+            L += ["## No pre-race snapshot on file", "",
+                  "This card was run before snapshots existed (or only after results were entered); the section below is "
+                  "retrospective and must not be read as what the engine said before the races.", ""]
+        kind = pl.get("latest_kind") or "latest"
+        label = {"as-run": "As-run re-score  (retrospective: the field as the charts say it ran)",
+                 "post-results": "Latest run  (made after some results were on file: retrospective for those races)",
+                 "pre-race": "Latest run  (pre-race)"}.get(kind, "Latest run")
+        L += [f"## {label}", "", format_backtest(pl["backtest"]), "", format_evaluation(pl["evaluation"])]
+        return "\n".join(L)
 
     # ---------------------------------------------------------------- analysis
     def analysis(self) -> dict:
@@ -330,14 +384,17 @@ class Desk:
             f = self.files(c["card"])
             if not (f["picks_json"] and f["results"]):
                 continue
-            picks = json.load(open(f["picks_json"], encoding="utf-8"))
+            snap = latest_snapshot(self.out, c["card"], "pre-race")
+            picks = snap or json.load(open(f["picks_json"], encoding="utf-8"))
+            basis = "pre-race" if snap else "latest (retrospective)"
             res = load_results(f["results"])
             bt = backtest(picks, res)
             ev = evaluate_card(picks, res, cfg)
-            ev["card_code"], ev["track_code"] = c["card"], picks.get("track_code") or c.get("track_code") or self.payload(c["card"])["meta"].get("track_code")
+            ev["card_code"], ev["track_code"] = c["card"], picks.get("track_code") or c.get("track_code") or self.payload_meta(c["card"]).get("track_code")
+            ev["basis"] = basis
             evals.append(ev)
             s = bt["summary"]
-            cards.append({"card": c["card"], "track": ev["track_code"], "date": picks.get("date"), "races": s["races"],
+            cards.append({"card": c["card"], "track": ev["track_code"], "date": picks.get("date"), "races": s["races"], "basis": basis,
                           "top_pick_wins": s["top_pick_wins"], "winner_in_top3": s["winner_in_top3"],
                           "bets": ev["totals"]["bets"], "hits": ev["totals"]["hits"], "cost": ev["totals"]["cost"], "ret": ev["totals"]["ret"],
                           "multirace": {k: v.get("hit") for k, v in bt["multirace"].items() if v.get("known")}})
@@ -356,7 +413,7 @@ class Desk:
         rows = []
         for ev in evals:
             for x in ev["rows"]:
-                rows.append(dict(x, card=ev["card_code"], track=ev["track_code"], date=ev.get("date")))
+                rows.append(dict(x, card=ev["card_code"], track=ev["track_code"], date=ev.get("date"), basis=ev["basis"]))
         return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench,
                 "units": units, "units_text": format_units(units)}
 
