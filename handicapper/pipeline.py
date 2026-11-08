@@ -6,8 +6,11 @@ so the command line and the screen can never disagree.
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import os
+import subprocess
+from datetime import datetime, timezone
 
 from brisnet_pp.parser import parse_pdf
 from brisnet_pp.sheet import merge_sheet, parse_sheet
@@ -16,6 +19,31 @@ from .results import apply_scratches, attach_day_bias, load_results, parse_scrat
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_CONFIG = os.path.join(ROOT, "rules_config.json")
+
+
+def _sha256(path: str | None) -> str | None:
+    try:
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+    except (OSError, TypeError):
+        return None
+
+
+def code_version() -> str | None:
+    """git HEAD of the repository the engine runs from (None outside a checkout or without git)."""
+    try:
+        out = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True, timeout=3)
+        return out.stdout.strip() or None
+    except Exception:
+        return None
+
+
+def config_hash(cfg: dict) -> str:
+    """Fingerprint of the effective configuration (weights, selection, probability, multirace, wagering)."""
+    return hashlib.sha256(json.dumps(cfg, sort_keys=True, default=str).encode()).hexdigest()[:16]
 
 
 def load_card(source) -> tuple[dict, list[str]]:
@@ -42,6 +70,7 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
         notes.extend("sheet: " + n for n in merge_sheet(card, parse_sheet(sheet)))
     if scratch:
         notes.extend("scratch: " + n for n in apply_scratches(card, parse_scratch_spec(scratch)))
+    res = None
     if results:
         res = results if isinstance(results, dict) else load_results(results)
         notes.extend("results: " + n for n in attach_day_bias(card, res))
@@ -62,4 +91,15 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
     result["scratches"] = scratch or ""
     result["parser_version"] = card.get("parser_version")
     result["run_notes"] = list(notes)
+    res_known = sorted(r["race_no"] for r in (res.get("races", []) if results else []) if r.get("finish"))
+    result["run"] = {
+        "at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "scratches": scratch or "", "parser_version": card.get("parser_version"),
+        "config_hash": config_hash(cfg), "track_profile": cfg.get("track_profile"), "code_version": code_version(),
+        "source": None if isinstance(source, dict) else os.path.basename(str(source)),
+        "source_sha256": None if isinstance(source, dict) else _sha256(str(source)),
+        "sheet": os.path.basename(sheet) if sheet else None,
+        "results_known": res_known,           # races whose results were on file when this run was made
+        "odds_source": "morning line",        # the only market input today
+    }
     return {"card": card, "raw": raw, "result": result, "cfg": cfg, "track_code": code, "notes": notes}

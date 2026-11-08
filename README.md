@@ -225,6 +225,13 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 
 ## Results, scratches and back-testing
 
+* **Snapshots** (`handicapper/snapshot.py`): every run is also frozen, append-only, as
+  `data/out/snapshots/<card>/<UTC>_<kind>.picks.json` with a `run` block (UTC time, scratches, parser version,
+  configuration hash, git version, source file hash, which races had results on file, odds source).  Kinds:
+  `pre-race` (no result on file yet: the run you could bet from), `post-results`, `as-run` (the retrospective
+  re-score with the chart's field).  `picks.json` stays the *latest* run.  The back-test and the Analysis screen
+  score the newest pre-race snapshot and label the as-run numbers as retrospective; a card with no pre-race
+  snapshot says so.
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
   Results and payoffs are public data and may be committed; PPs are not.
 * `--scratch "r:p, r:p"` removes scratched horses before scoring; one also-eligible draws in per scratch, in

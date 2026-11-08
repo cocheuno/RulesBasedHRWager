@@ -43,6 +43,10 @@ overlays, and the favourite underneath when it looks beatable. Every win bet nam
 better"): the morning line must be above the engine's fair odds plus a margin, or there is no win bet. A horse with
 no morning line in the PPs gets no win bet counted; the line says what the board must show before you bet it.
 
+Every run you make is also frozen under `data/out/snapshots/<card>/` and never rewritten. The run made before any
+result was on file is the one the analysis scores ("pre-race"); the re-score after the charts arrive is shown as
+"as-run" and is retrospective. Push `data/out` and the snapshots travel with the picks.
+
 ## 3. After the last race
 
 1. Download each race's **chart PDF** ("View chart") into `data\results-png\<card>\`, named as downloaded
