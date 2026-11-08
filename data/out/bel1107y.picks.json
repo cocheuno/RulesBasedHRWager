@@ -2405,7 +2405,10 @@
      "races": [
       1
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "5": 1.5
+     }
     },
     {
      "type": "EXACTA",
@@ -2452,6 +2455,30 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "6",
+       "2"
+      ],
+      [
+       "5"
+      ],
+      [
+       "6",
+       "2"
+      ]
+     ],
+     "box": false,
+     "combos": 2,
+     "label": "TRIFECTA key second #6,#2 / #5 / #6,#2 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 1,
+     "races": [
+      1
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -2466,7 +2493,10 @@
      "races": [
       1
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "5": 1.5
+     }
     },
     {
      "type": "DOUBLE",
@@ -2494,6 +2524,7 @@
    "other_wagers": [
     "EXACTA key #5 over #6,#2",
     "TRIFECTA key #5 / #6,#2 / #6,#2",
+    "TRIFECTA key second #6,#2 / #5 / #6,#2 (a standout that runs second still pays)",
     "WIN #5 (ML 8/5, take 1.5-1 or better; fair 0.4-1)",
     "DAILY DOUBLE #5,#6 with R2 #3,#9 (4 x $1)"
    ]
@@ -4918,7 +4949,10 @@
      "races": [
       2
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "3": 1.5
+     }
     },
     {
      "type": "EXACTA",
@@ -4969,6 +5003,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "9",
+       "6",
+       "4"
+      ],
+      [
+       "3"
+      ],
+      [
+       "9",
+       "6",
+       "4",
+       "1"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #9,#6,#4 / #3 / #9,#6,#4,#1 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 2,
+     "races": [
+      2
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -4983,7 +5044,10 @@
      "races": [
       2
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "3": 1.5
+     }
     },
     {
      "type": "EXACTA",
@@ -5034,6 +5098,7 @@
    "other_wagers": [
     "EXACTA key #3 over #9,#6,#4",
     "TRIFECTA key #3 / #9,#6,#4 / #9,#6,#4,#1",
+    "TRIFECTA key second #9,#6,#4 / #3 / #9,#6,#4,#1 (a standout that runs second still pays)",
     "WIN #3 (ML 3/1, take 1.5-1 or better; fair 1.0-1)",
     "favourite #6 looks beatable (H5): EXACTA #3,#9 over #3,#9,#6 - chalk underneath only, never on top",
     "DAILY DOUBLE #3,#9 with R3 #1,#2,#4 (6 x $1)"
@@ -7582,12 +7647,15 @@
      "legs": [
       [
        "1",
-       "4"
+       "4",
+       "2",
+       "6"
       ],
       [
        "1",
        "4",
-       "2"
+       "2",
+       "6"
       ],
       [
        "1",
@@ -7596,9 +7664,9 @@
        "6"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #1,#4 / #1,#4,#2 / #1,#4,#2,#6",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #1-#4-#2-#6",
      "source": "other",
      "race_no": 3,
      "races": [
@@ -7619,7 +7687,11 @@
      "race_no": 3,
      "races": [
       3
-     ]
+     ],
+     "min_odds_by": {
+      "4": 3.6
+     },
+     "min_odds": 3.6
     },
     {
      "type": "EXACTA",
@@ -7671,7 +7743,7 @@
    ],
    "other_wagers": [
     "EXACTA box #1,#4; EXACTA part-wheel #1,#4 / #1,#4,#2",
-    "TRIFECTA #1,#4 / #1,#4,#2 / #1,#4,#2,#6",
+    "TRIFECTA box #1-#4-#2-#6",
     "WIN on the overlay: #4 (ML 12/1 vs fair 3.1-1; take 3.6-1 or better)",
     "favourite #3 looks beatable (H5): EXACTA #1,#4 over #1,#4,#2,#3 - chalk underneath only, never on top",
     "DAILY DOUBLE #1,#2,#4 with R4 #2,#10,#7 (9 x $1)"
@@ -10132,7 +10204,10 @@
      "races": [
       4
      ],
-     "min_odds": 3.1
+     "min_odds": 3.1,
+     "min_odds_by": {
+      "10": 3.1
+     }
     },
     {
      "type": "EXACTA",
@@ -10161,12 +10236,15 @@
      "legs": [
       [
        "2",
-       "10"
+       "10",
+       "7",
+       "8"
       ],
       [
        "2",
        "10",
-       "7"
+       "7",
+       "8"
       ],
       [
        "2",
@@ -10175,9 +10253,9 @@
        "8"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #2,#10 / #2,#10,#7 / #2,#10,#7,#8",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #2-#10-#7-#8",
      "source": "other",
      "race_no": 4,
      "races": [
@@ -10198,7 +10276,11 @@
      "race_no": 4,
      "races": [
       4
-     ]
+     ],
+     "min_odds_by": {
+      "10": 3.1
+     },
+     "min_odds": 3.1
     },
     {
      "type": "EXACTA",
@@ -10251,7 +10333,7 @@
    ],
    "other_wagers": [
     "EXACTA box #2,#10; EXACTA part-wheel #2,#10 / #2,#10,#7",
-    "TRIFECTA #2,#10 / #2,#10,#7 / #2,#10,#7,#8",
+    "TRIFECTA box #2-#10-#7-#8",
     "WIN on the overlay: #10 (ML 8/1 vs fair 2.7-1; take 3.1-1 or better)",
     "favourite #8 looks beatable (H5): EXACTA #2,#10 over #2,#10,#7,#8 - chalk underneath only, never on top",
     "DAILY DOUBLE #2,#10,#7 with R5 #2,#4,#1,#9 (12 x $1)"
@@ -13522,7 +13604,10 @@
      "races": [
       5
      ],
-     "min_odds": 3.2
+     "min_odds": 3.2,
+     "min_odds_by": {
+      "2": 3.2
+     }
     },
     {
      "type": "EXACTA",
@@ -13573,6 +13658,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "4",
+       "9",
+       "1"
+      ],
+      [
+       "2"
+      ],
+      [
+       "4",
+       "9",
+       "1",
+       "6"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #4,#9,#1 / #2 / #4,#9,#1,#6 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 5,
+     "races": [
+      5
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -13587,7 +13699,10 @@
      "races": [
       5
      ],
-     "min_odds": 3.2
+     "min_odds": 3.2,
+     "min_odds_by": {
+      "2": 3.2
+     }
     },
     {
      "type": "SUPERFECTA",
@@ -13671,6 +13786,7 @@
    "other_wagers": [
     "EXACTA key #2 over #4,#9,#1",
     "TRIFECTA key #2 / #4,#9,#1 / #4,#9,#1,#6",
+    "TRIFECTA key second #4,#9,#1 / #2 / #4,#9,#1,#6 (a standout that runs second still pays)",
     "WIN #2 (ML 8/1, take 3.2-1 or better; fair 2.8-1)",
     "SUPERFECTA key #2 / #4,#9,#1 / #4,#9,#1 / #4,#9,#1,#6",
     "favourite #3 looks beatable (H5): EXACTA #2,#4 over #2,#4,#9,#3 - chalk underneath only, never on top",
@@ -15225,6 +15341,32 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "3",
+       "6",
+       "5"
+      ],
+      [
+       "4"
+      ],
+      [
+       "3",
+       "6",
+       "5"
+      ]
+     ],
+     "box": false,
+     "combos": 6,
+     "label": "TRIFECTA key second #3,#6,#5 / #4 / #3,#6,#5 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 6,
+     "races": [
+      6
+     ]
+    },
+    {
      "type": "DOUBLE",
      "legs": [
       [
@@ -15249,6 +15391,7 @@
    "other_wagers": [
     "EXACTA key #4 over #3,#6,#5",
     "TRIFECTA key #4 / #3,#6,#5 / #3,#6,#5",
+    "TRIFECTA key second #3,#6,#5 / #4 / #3,#6,#5 (a standout that runs second still pays)",
     "no WIN bet on #4 (ML 3/5 is below 1.5-1): use it as a single in the Pick 3 / Pick 4 instead",
     "DAILY DOUBLE #4 with R7 #7,#6 (2 x $1)"
    ]
@@ -18070,7 +18213,10 @@
      "races": [
       7
      ],
-     "min_odds": 2.3
+     "min_odds": 2.3,
+     "min_odds_by": {
+      "7": 2.3
+     }
     },
     {
      "type": "EXACTA",
@@ -18099,12 +18245,15 @@
      "legs": [
       [
        "7",
-       "4"
+       "4",
+       "6",
+       "8"
       ],
       [
        "7",
        "4",
-       "6"
+       "6",
+       "8"
       ],
       [
        "7",
@@ -18113,9 +18262,9 @@
        "8"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #7,#4 / #7,#4,#6 / #7,#4,#6,#8",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #7-#4-#6-#8",
      "source": "other",
      "race_no": 7,
      "races": [
@@ -18137,7 +18286,12 @@
      "race_no": 7,
      "races": [
       7
-     ]
+     ],
+     "min_odds_by": {
+      "7": 2.3,
+      "6": 7.2
+     },
+     "min_odds": 2.3
     },
     {
      "type": "EXACTA",
@@ -18185,7 +18339,7 @@
    ],
    "other_wagers": [
     "EXACTA box #7,#4; EXACTA part-wheel #7,#4 / #7,#4,#6",
-    "TRIFECTA #7,#4 / #7,#4,#6 / #7,#4,#6,#8",
+    "TRIFECTA box #7-#4-#6-#8",
     "WIN on the overlay: #7 (ML 6/1 vs fair 2.0-1; take 2.3-1 or better); #6 (ML 10/1 vs fair 6.3-1; take 7.2-1 or better)",
     "favourite #4 looks beatable (H5): EXACTA #7 over #7,#4,#6 - chalk underneath only, never on top",
     "DAILY DOUBLE #7,#6 with R8 #9,#1 (4 x $1)"
@@ -21137,7 +21291,10 @@
      "races": [
       8
      ],
-     "min_odds": 3.6
+     "min_odds": 3.6,
+     "min_odds_by": {
+      "1": 3.6
+     }
     },
     {
      "type": "EXACTA",
@@ -21166,12 +21323,15 @@
      "legs": [
       [
        "1",
-       "8"
+       "8",
+       "9",
+       "6"
       ],
       [
        "1",
        "8",
-       "9"
+       "9",
+       "6"
       ],
       [
        "1",
@@ -21180,9 +21340,9 @@
        "6"
       ]
      ],
-     "box": false,
-     "combos": 8,
-     "label": "TRIFECTA #1,#8 / #1,#8,#9 / #1,#8,#9,#6",
+     "box": true,
+     "combos": 24,
+     "label": "TRIFECTA box #1-#8-#9-#6",
      "source": "other",
      "race_no": 8,
      "races": [
@@ -21204,7 +21364,12 @@
      "race_no": 8,
      "races": [
       8
-     ]
+     ],
+     "min_odds_by": {
+      "1": 3.6,
+      "8": 5.8
+     },
+     "min_odds": 3.6
     },
     {
      "type": "EXACTA",
@@ -21254,7 +21419,7 @@
    ],
    "other_wagers": [
     "EXACTA box #1,#8; EXACTA part-wheel #1,#8 / #1,#8,#9",
-    "TRIFECTA #1,#8 / #1,#8,#9 / #1,#8,#9,#6",
+    "TRIFECTA box #1-#8-#9-#6",
     "WIN on the overlay: #1 (ML 15/1 vs fair 3.1-1; take 3.6-1 or better); #8 (ML 8/1 vs fair 5.0-1; take 5.8-1 or better)",
     "favourite #6 looks beatable (H5): EXACTA #1,#8 over #1,#8,#9,#6 - chalk underneath only, never on top",
     "DAILY DOUBLE #9,#1 with R9 #7,#3 (4 x $1)"
@@ -24254,7 +24419,10 @@
      "races": [
       9
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "7": 1.5
+     }
     },
     {
      "type": "EXACTA",
@@ -24305,6 +24473,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "3",
+       "10",
+       "9"
+      ],
+      [
+       "7"
+      ],
+      [
+       "3",
+       "10",
+       "9",
+       "11"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #3,#10,#9 / #7 / #3,#10,#9,#11 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 9,
+     "races": [
+      9
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -24319,7 +24514,10 @@
      "races": [
       9
      ],
-     "min_odds": 1.5
+     "min_odds": 1.5,
+     "min_odds_by": {
+      "7": 1.5
+     }
     },
     {
      "type": "SUPERFECTA",
@@ -24379,6 +24577,7 @@
    "other_wagers": [
     "EXACTA key #7 over #3,#10,#9",
     "TRIFECTA key #7 / #3,#10,#9 / #3,#10,#9,#11",
+    "TRIFECTA key second #3,#10,#9 / #7 / #3,#10,#9,#11 (a standout that runs second still pays)",
     "WIN #7 (ML 5/2, take 1.5-1 or better; fair 0.2-1)",
     "SUPERFECTA key #7 / #3,#10,#9 / #3,#10,#9 / #3,#10,#9,#11",
     "DAILY DOUBLE #7,#3 with R10 #5,#6 (4 x $1)"
@@ -27588,7 +27787,10 @@
      "races": [
       10
      ],
-     "min_odds": 2.2
+     "min_odds": 2.2,
+     "min_odds_by": {
+      "5": 2.2
+     }
     },
     {
      "type": "EXACTA",
@@ -27639,6 +27841,33 @@
      ]
     },
     {
+     "type": "TRIFECTA",
+     "legs": [
+      [
+       "6",
+       "1",
+       "12"
+      ],
+      [
+       "5"
+      ],
+      [
+       "6",
+       "1",
+       "12",
+       "3"
+      ]
+     ],
+     "box": false,
+     "combos": 9,
+     "label": "TRIFECTA key second #6,#1,#12 / #5 / #6,#1,#12,#3 (a standout that runs second still pays)",
+     "source": "other",
+     "race_no": 10,
+     "races": [
+      10
+     ]
+    },
+    {
      "type": "WIN",
      "legs": [
       [
@@ -27653,7 +27882,10 @@
      "races": [
       10
      ],
-     "min_odds": 2.2
+     "min_odds": 2.2,
+     "min_odds_by": {
+      "5": 2.2
+     }
     },
     {
      "type": "SUPERFECTA",
@@ -27713,6 +27945,7 @@
    "other_wagers": [
     "EXACTA key #5 over #6,#1,#12",
     "TRIFECTA key #5 / #6,#1,#12 / #6,#1,#12,#3",
+    "TRIFECTA key second #6,#1,#12 / #5 / #6,#1,#12,#3 (a standout that runs second still pays)",
     "WIN #5 (ML 4/1, take 2.2-1 or better; fair 1.9-1)",
     "SUPERFECTA key #5 / #6,#1,#12 / #6,#1,#12 / #6,#1,#12,#3",
     "favourite #1 looks beatable (H5): EXACTA #5,#6 over #5,#6,#1 - chalk underneath only, never on top"
@@ -27735,8 +27968,10 @@
      "budget": 60.0,
      "cost": 45.0,
      "cost_before_trim": 45.0,
-     "hit_prob": 0.4484,
-     "score": 0.9192,
+     "hit_prob": 0.2242,
+     "hit_prob_raw": 0.4484,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.4596,
      "singles": 0,
      "price_legs": 3,
      "ml_parlay": 64.0,
@@ -27929,8 +28164,10 @@
      "budget": 60.0,
      "cost": 26.0,
      "cost_before_trim": 26.0,
-     "hit_prob": 0.4841,
-     "score": 0.8229,
+     "hit_prob": 0.242,
+     "hit_prob_raw": 0.4841,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.4114,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 41.6,
@@ -28095,8 +28332,10 @@
      "budget": 60.0,
      "cost": 25.0,
      "cost_before_trim": 25.0,
-     "hit_prob": 0.3567,
-     "score": 0.7579,
+     "hit_prob": 0.1783,
+     "hit_prob_raw": 0.3567,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.379,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 32.0,
@@ -28268,8 +28507,10 @@
      "budget": 60.0,
      "cost": 26.0,
      "cost_before_trim": 26.0,
-     "hit_prob": 0.3427,
-     "score": 0.7282,
+     "hit_prob": 0.1713,
+     "hit_prob_raw": 0.3427,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3641,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 56.0,
@@ -28442,8 +28683,10 @@
      "budget": 60.0,
      "cost": 57.0,
      "cost_before_trim": 99.0,
-     "hit_prob": 0.3403,
-     "score": 0.6976,
+     "hit_prob": 0.1701,
+     "hit_prob_raw": 0.3403,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3488,
      "singles": 0,
      "price_legs": 3,
      "ml_parlay": 80.0,
@@ -28628,8 +28871,10 @@
      "budget": 60.0,
      "cost": 36.0,
      "cost_before_trim": 36.0,
-     "hit_prob": 0.3879,
-     "score": 0.6594,
+     "hit_prob": 0.194,
+     "hit_prob_raw": 0.3879,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3297,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 52.5,
@@ -28825,8 +29070,10 @@
      "budget": 60.0,
      "cost": 36.0,
      "cost_before_trim": 36.0,
-     "hit_prob": 0.3727,
-     "score": 0.6336,
+     "hit_prob": 0.1863,
+     "hit_prob_raw": 0.3727,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3168,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 73.5,
@@ -29020,8 +29267,10 @@
      "budget": 60.0,
      "cost": 16.0,
      "cost_before_trim": 16.0,
-     "hit_prob": 0.2749,
-     "score": 0.5842,
+     "hit_prob": 0.1375,
+     "hit_prob_raw": 0.2749,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2921,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 33.6,
@@ -29186,8 +29435,10 @@
     "budget": 60.0,
     "cost": 45.0,
     "cost_before_trim": 45.0,
-    "hit_prob": 0.4484,
-    "score": 0.9192,
+    "hit_prob": 0.2242,
+    "hit_prob_raw": 0.4484,
+    "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+    "score": 0.4596,
     "singles": 0,
     "price_legs": 3,
     "ml_parlay": 64.0,
@@ -29386,8 +29637,10 @@
      "budget": 100.0,
      "cost": 96.0,
      "cost_before_trim": 117.0,
-     "hit_prob": 0.2997,
-     "score": 0.7194,
+     "hit_prob": 0.1499,
+     "hit_prob_raw": 0.2997,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3597,
      "singles": 0,
      "price_legs": 4,
      "ml_parlay": 160.0,
@@ -29667,8 +29920,10 @@
      "budget": 100.0,
      "cost": 45.0,
      "cost_before_trim": 45.0,
-     "hit_prob": 0.3478,
-     "score": 0.713,
+     "hit_prob": 0.1739,
+     "hit_prob_raw": 0.3478,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3565,
      "singles": 0,
      "price_legs": 3,
      "ml_parlay": 83.2,
@@ -29903,8 +30158,10 @@
      "budget": 100.0,
      "cost": 49.5,
      "cost_before_trim": 49.5,
-     "hit_prob": 0.2668,
-     "score": 0.6836,
+     "hit_prob": 0.1334,
+     "hit_prob_raw": 0.2668,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3418,
      "singles": 1,
      "price_legs": 3,
      "ml_parlay": 64.0,
@@ -30148,8 +30405,10 @@
      "budget": 100.0,
      "cost": 43.0,
      "cost_before_trim": 43.0,
-     "hit_prob": 0.2361,
-     "score": 0.605,
+     "hit_prob": 0.1181,
+     "hit_prob_raw": 0.2361,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.3025,
      "singles": 1,
      "price_legs": 3,
      "ml_parlay": 112.0,
@@ -30392,8 +30651,10 @@
      "budget": 100.0,
      "cost": 38.0,
      "cost_before_trim": 38.0,
-     "hit_prob": 0.1931,
-     "score": 0.4949,
+     "hit_prob": 0.0966,
+     "hit_prob_raw": 0.1931,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2475,
      "singles": 1,
      "price_legs": 3,
      "ml_parlay": 84.0,
@@ -30636,8 +30897,10 @@
      "budget": 100.0,
      "cost": 18.0,
      "cost_before_trim": 18.0,
-     "hit_prob": 0.2034,
-     "score": 0.4323,
+     "hit_prob": 0.1017,
+     "hit_prob_raw": 0.2034,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2161,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 58.8,
@@ -30866,8 +31129,10 @@
      "budget": 100.0,
      "cost": 48.0,
      "cost_before_trim": 48.0,
-     "hit_prob": 0.2096,
-     "score": 0.4296,
+     "hit_prob": 0.1048,
+     "hit_prob_raw": 0.2096,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2148,
      "singles": 0,
      "price_legs": 3,
      "ml_parlay": 183.75,
@@ -31137,8 +31402,10 @@
     "budget": 100.0,
     "cost": 96.0,
     "cost_before_trim": 117.0,
-    "hit_prob": 0.2997,
-    "score": 0.7194,
+    "hit_prob": 0.1499,
+    "hit_prob_raw": 0.2997,
+    "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+    "score": 0.3597,
     "singles": 0,
     "price_legs": 4,
     "ml_parlay": 160.0,
@@ -31431,12 +31698,12 @@
   "track: Belmont Park (BEL); profile: BEL"
  ],
  "run": {
-  "at_utc": "2026-11-08T02:50:14Z",
+  "at_utc": "2026-11-08T03:14:52Z",
   "scratches": "2:10, 2:5, 2:7, 4:4, 4:9, 6:1, 6:2, 7:1, 7:3, 8:5, 8:7, 9:1, 9:4, 9:8, 10:11, 10:13, 10:8",
   "parser_version": "2026-11-07.2",
-  "config_hash": "c7874df8a04b54e1",
+  "config_hash": "1da347161884a90c",
   "track_profile": "BEL",
-  "code_version": "52659d5",
+  "code_version": "4d955b4",
   "source": "bel1107y.card.json",
   "source_sha256": "3a2ddc53fff9a1fcc27163347899cdf97128c4819e9229ffb24c75fdc9c607f0",
   "sheet": "bel1107q.pdf",
@@ -31453,6 +31720,6 @@
    10
   ],
   "odds_source": "morning line",
-  "kind": "as-run"
+  "kind": "post-results"
  }
 }
