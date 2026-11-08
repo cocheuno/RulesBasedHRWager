@@ -50,6 +50,9 @@ DEFAULT_MULTIRACE = {
     "single_backup": False,     # add the 2nd horse as a B in single legs (a backup ticket)
     "price_leg_bonus": 0.35,    # sequence score multipliers (H9)
     "single_bonus": 0.25,
+    "hit_prob_shrink": 0.5,     # the reported hit probability is the formula x this factor (H9): the formula assumed
+                                # independent, well-calibrated legs and predicted 2.8 hits on the first 8 sequences
+                                # (0 came in); keep until 50+ sequences give a measured hit rate
 }
 
 
@@ -290,7 +293,11 @@ def h8(seq: dict, cfg: dict):
 @hrule("H9", "Sequence ranking")
 def h9(seq: dict, cfg: dict):
     """Hit probability = P(all A's win) + sum over legs of P(that leg's B wins and every other leg's A wins), using the
-    H1 probabilities scaled by the leg's pricing factor (each eliminated horse keeps `elim_floor`, pricing only).  Sequence score = hit probability x (1 + single_bonus x singles) x (1 + price_leg_bonus x price
+    H1 probabilities scaled by the leg's pricing factor (each eliminated horse keeps `elim_floor`, pricing only),
+    then multiplied by `hit_prob_shrink` (0.5): the formula treats the legs as independent and the leg probabilities
+    as calibrated, and neither is true yet - the first eight recommended sequences carried 2.8 predicted hits and
+    none came in.  The number is reported as an *estimate* and the raw formula value is kept beside it
+    (`hit_prob_raw`).  Sequence score = hit probability x (1 + single_bonus x singles) x (1 + price_leg_bonus x price
     legs).  The ML parlay of the lowest-priced A in each leg is reported as a conservative will-pay yardstick, and
     the probability that every leg's favourite wins is reported as the "chalk" risk.
     Basis: Crist - prefer sequences where you have at least one strong opinion and at least one beatable favourite;
@@ -301,6 +308,8 @@ def h9(seq: dict, cfg: dict):
     hit = math.prod(PA)
     for i in range(len(legs)):
         hit += PB[i] * math.prod(PA[j] for j in range(len(legs)) if j != i)
+    seq["hit_prob_raw"] = round(hit, 4)
+    hit = hit * cfg.get("hit_prob_shrink", 1.0)
     seq["hit_prob"] = round(hit, 4)
     seq["singles"] = sum(1 for l in legs if l.kind == "single")
     seq["price_legs"] = sum(1 for l in legs if l.price_leg)
@@ -416,6 +425,7 @@ def _serialize(seq: dict) -> dict:
     return {
         "name": seq["name"], "races": seq["races"], "base": seq["base"], "budget": seq["budget"],
         "cost": seq["cost"], "cost_before_trim": round(seq["cost_before_trim"], 2), "hit_prob": seq["hit_prob"],
+        "hit_prob_raw": seq["hit_prob_raw"], "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
         "score": seq["score"], "singles": seq["singles"], "price_legs": seq["price_legs"],
         "ml_parlay": seq["ml_parlay"], "all_favorites_prob": seq["all_favorites_prob"], "notes": seq["notes"],
         "tickets": [{"name": t["name"], "legs": t["legs"], "combos": math.prod(len(x) for x in t["legs"]),
@@ -439,7 +449,7 @@ def format_multirace(mr: dict, result: dict, detail: int = 1) -> str:
             continue
         rec = blk["recommended"]
         L.append(f"### {rec['name']}  — cost ${rec['cost']:.2f} (base ${rec['base']:.2f}, budget ${rec['budget']:.0f}), "
-                 f"hit probability {rec['hit_prob']:.0%}, {rec['singles']} single(s), {rec['price_legs']} price leg(s)")
+                 f"hit probability est. {rec['hit_prob']:.0%} (formula {rec['hit_prob_raw']:.0%} x shrink), {rec['singles']} single(s), {rec['price_legs']} price leg(s)")
         L.append(f"ML parlay of the shortest A's ${rec['ml_parlay']:.2f}; chance every favourite wins {rec['all_favorites_prob']:.0%}")
         L.append("")
         L.append("| Leg | Race | Type | A | B | Fav | Notes |")

@@ -132,6 +132,40 @@ class TestCard(unittest.TestCase):
             self.assertEqual(set(w["min_odds_by"]), set(w["legs"][0]))
             self.assertTrue(all(v is not None and v >= 1.5 for v in w["min_odds_by"].values()))
 
+    def test_trifecta_structure_by_confidence(self):
+        res = score_card(build_card(), CFG)
+        seen = set()
+        for r in res["races"]:
+            live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
+            tris = [w for w in r["wagers"] if w["type"] == "TRIFECTA" and w["source"] == "other"]
+            if r["confidence"] == "high" and len(live) >= 3:
+                seen.add("high")
+                a = live[0]["pgm"]
+                self.assertTrue(any(w["legs"][0] == [a] for w in tris), "key first")
+                self.assertTrue(any(w["legs"][1] == [a] and a not in w["legs"][0] for w in tris), "key second")
+            elif r["confidence"] in ("medium", "low") and len(live) >= 4:
+                seen.add(r["confidence"])
+                box = [w for w in tris if w["box"]]
+                self.assertTrue(box and len(box[0]["legs"][0]) == 4 and box[0]["combos"] == 24, "four-horse box")
+        self.assertIn("high", seen); self.assertTrue(seen & {"medium", "low"})
+
+    def test_multirace_tickets_tracked_not_counted(self):
+        res = score_card(build_card(), CFG)
+        results = {"races": [{"race_no": n, "finish": ["1", "2", "3"], "win": 4.0} for n in range(1, 7)]}
+        ev = evaluate_card(res, results, CFG["wagering"])
+        tracked = [x for x in ev["rows"] if x["tracked_only"]]
+        self.assertTrue(tracked, "Pick 3/4 tickets are still evaluated")
+        self.assertTrue(all(x["type"] in ("PICK3", "PICK4") for x in tracked))
+        self.assertEqual(ev["totals"]["bets"], sum(1 for x in ev["rows"] if not x["tracked_only"] and x.get("placed", True)))
+        self.assertEqual(ev["totals"]["tracked"]["tickets"], len(tracked))
+        ru = rollup([ev])
+        self.assertNotIn("PICK3", ru["by_type"]); self.assertNotIn("PICK4", ru["by_type"])
+        self.assertEqual(ru["tracked_multirace"]["tickets"], len(tracked))
+        self.assertIn("tracked, not counted as bets", format_evaluation(ev))
+        ev2 = evaluate_card(res, results, dict(CFG["wagering"], count_multirace=True))
+        self.assertFalse([x for x in ev2["rows"] if x["tracked_only"]], "the switch puts them back in the totals")
+        self.assertIn("PICK3", rollup([ev2])["by_type"])
+
     def test_unit_for_old_config(self):
         from handicapper.wagering import unit_for
         self.assertEqual(unit_for({"type": "WIN"}, {"unit": 1.0}), 1.0, "single-unit config still honoured")

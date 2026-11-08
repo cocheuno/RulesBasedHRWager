@@ -151,9 +151,10 @@ the budgets from the command line and `--no-multi` suppresses the section.
 ### Other wagers per race (`engine.other_wagers`)
 
 The wagering summary lists each race's top three ranked live horses (score, blended win chance, A/B grade) and a
-set of secondary wagers chosen by the race's confidence: exacta / trifecta / superfecta **keys** on a standout
-(a key costs a third of a box), exacta box plus part-wheel and a 2/3/4 trifecta in a medium race, boxes only in a
-contentious one, WIN only on a V1 overlay, the favourite kept underneath when H5 finds it beatable, and a daily
+set of secondary wagers chosen by the race's confidence: exacta and superfecta **keys** on a standout and two
+trifecta tickets with it keyed first *or* second over the next three; exacta box plus part-wheel and a four-horse
+trifecta box in a medium race; boxes only in a contentious one; WIN only on a V1 overlay, the favourite kept
+underneath when H5 finds it beatable, and a daily
 double with the next race's A horses.
 
 Selection (`rules_config.json → selection`): the top horse is a **single** when it is
@@ -262,7 +263,10 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double; Pick 3 $1 and Pick 4 $0.50 from `multirace.pickN.base`,
   or the track menu's minimum when higher), overlapping suggestions are
   counted once, a win bet is **placed only if the chart's final odds meet the minimum price the engine asked for**
-  (otherwise it is "passed at the window": no cost, not a bet), and the roll-up gives bets / hits / misses / cost / return / ROI by bet type, track and confidence
+  (otherwise it is "passed at the window": no cost, not a bet), the recommended Pick 3 / Pick 4 tickets are
+  evaluated and listed but **tracked, not counted** (`wagering.count_multirace`, off until the sequences have a
+  measured hit rate; their hit probability is an estimate, the formula × `multirace.hit_prob_shrink`), and the
+  roll-up gives bets / hits / misses / cost / return / ROI by bet type, track and confidence
   plus the hit-miss counts per track for the charts.  Pick 3/4 windows are only built where the PP's wager menu
   offers them, at the offered denomination (rule H10).
 

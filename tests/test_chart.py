@@ -49,6 +49,29 @@ class TestChart(unittest.TestCase):
         self.assertEqual(sorted((e["type"], e["base"], e["combo"], e["payout"]) for e in r["exotics"]),
                          [("EXACTA", 1.0, "1/2", 10.82), ("SUPERFECTA", 0.1, "1/2/6/5", 22.85), ("TRIFECTA", 0.5, "1/2/6", 38.42)])
 
+    def test_two_column_mutuels_small_field(self):
+        """A four-horse field has no show wagering: the winner's row carries two amounts (win, place) and the
+        runner-up's one.  The reader must not shift them into place and show."""
+        import copy, re
+        data = copy.deepcopy(json.load(open(os.path.join(HERE, "fixtures_chart_rows.json"), encoding="utf-8")))
+        rows = rows_from_fixture(data)
+        two_col = []
+        for r in rows:
+            toks = r.tokens()
+            t = " ".join(tk["text"] for tk in toks)
+            if re.match(r"^\d{1,2}[A-Z]?-\s*[A-Z]", t.replace("$2 Mutuel Prices:", "").strip()):
+                amts = [tk for tk in toks if re.fullmatch(r"\d+\.\d{2}", tk["text"]) and tk["x0"] > 150]
+                if amts:                       # drop the right-most amount (the show column) from every mutuel row
+                    cut = amts[-1]["x0"] - 0.5
+                    r.chars = [c for c in r.chars if c["x0"] < cut]
+            two_col.append(r)
+        c = parse_chart_rows(two_col, 1)
+        self.assertEqual(c["win"], 5.64)
+        self.assertEqual(c["place"], {"1": 3.82, "2": 4.04})
+        self.assertEqual(c["show"], {})
+        self.assertEqual(c["pools"], ["win", "place"])
+        self.assertEqual(c["finish"][:3], self.c["finish"][:3], "finish order untouched")
+
     def test_comment_split(self):
         prose = ("ALPHA chased the pace and bumped BETA at the start, then drew clear. BETA got bumped by ALPHA and tired. "
                  "GAMMA DELTA broke slowly; DELTA never threatened.")

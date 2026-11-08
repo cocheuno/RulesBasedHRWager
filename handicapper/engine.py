@@ -323,13 +323,15 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
     leg grading (A/B, vulnerable favourite) when it is available.  Deterministic; every line names the horses.
 
     Policy (Crist *Exotic Betting*, Meadow, Davidowitz):
-      * high confidence: key the top horse on top of exactas and trifectas (not boxes - a key costs a third of a
-        box and the opinion is that the key wins); no WIN bet under 3/2 ML, use it as a horizontal single instead;
-        a superfecta key only in 8+ horse fields.
-      * medium: exacta box of the top two and a part-wheel over the third; trifecta top two over top three over
-        top four; WIN only on a horse V1 marked as an overlay.
-      * low / contentious: no win bet unless an overlay; trifecta box of the top three (four when the 4th is
-        within spread_gap); treat the race as a spread leg in the Pick 3 / 4.
+      * high confidence: key the top horse on top of exactas; in trifectas key it first OR second over the next
+        three (a standout that runs second still pays the ticket); no WIN bet under 3/2 ML, use it as a horizontal
+        single instead; a superfecta key only in 8+ horse fields.
+      * medium: exacta box of the top two and a part-wheel over the third; trifecta BOX of the top four (the
+        opinion is "one of these", not "this one on top"); WIN only on a horse V1 marked as an overlay.
+      * low / contentious: no win bet unless an overlay; trifecta box of the top four (three when only three are
+        live); treat the race as a spread leg in the Pick 3 / 4.
+      Structure note (11/07 review): on 41 races the engine's top four filled the whole trifecta nine times and
+      the keyed part-wheels cashed none of them; a four-horse box at $0.50 ($12) would have cashed all nine.
       * vulnerable favourite (H5): structure exactas with the favourite underneath only.
       * daily double: this race's A horses with the next race's A horses (cost at the configured double unit).
     """
@@ -363,6 +365,8 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
         if c:
             W.append(f"TRIFECTA key {hs(a)} / {hs(b, c, d)} / {hs(b, c, d, e)}")
             add("TRIFECTA", [[a], [b, c, d], [b, c, d, e]])
+            W.append(f"TRIFECTA key second {hs(b, c, d)} / {hs(a)} / {hs(b, c, d, e)} (a standout that runs second still pays)")
+            add("TRIFECTA", [[b, c, d], [a], [b, c, d, e]])
         if wp["ok"] is True:
             W.append(f"WIN {hs(a)} ({wp['why']}; fair {top['fair_odds']}-1)")
             add("WIN", [[a]])
@@ -378,16 +382,16 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
         W.append(f"EXACTA box {hs(a, b)}" + (f"; EXACTA part-wheel {hs(a, b)} / {hs(a, b, c)}" if c else ""))
         add("EXACTA", [[a, b], [a, b, c]] if c else [[a, b], [a, b]])
         if c:
-            W.append(f"TRIFECTA {hs(a, b)} / {hs(a, b, c)} / {hs(a, b, c, d)}")
-            add("TRIFECTA", [[a, b], [a, b, c], [a, b, c, d]])
+            box = [k for k in (a, b, c, d) if k]
+            W.append(f"TRIFECTA box {'-'.join('#' + k for k in box)}")
+            add("TRIFECTA", [box, box, box], box=True)
         if overlays:
             W.append("WIN on the overlay: " + "; ".join(f"{hs(x['pgm'])} (ML {x['ml_odds']} vs fair {x['fair_odds']}-1; take {win_price(x, sel)['min_odds']:g}-1 or better)" for x in overlays))
             add("WIN", [[x["pgm"] for x in overlays]])
         else:
             W.append("no WIN bet: neither of the top two is an overlay at the morning line")
     else:
-        spread = [x["pgm"] for x in live[:4] if top["score"] - x["score"] <= sel["spread_gap"]]
-        box = [k for k in [a, b, c] + ([d] if d and d in spread else []) if k]
+        box = [k for k in (a, b, c, d) if k]
         W.append(f"TRIFECTA box {'-'.join('#' + k for k in box)} (contentious: spread, do not key)")
         if len(box) >= 3:
             add("TRIFECTA", [box, box, box], box=True)
@@ -463,7 +467,8 @@ def format_summary(result: dict) -> str:
         rec = (mr.get(key) or {}).get("recommended")
         if not rec:
             continue
-        L.append(f"**{rec['name']}** — ${rec['cost']:.2f} total (${rec['base']:.2f} base), hit probability {rec['hit_prob']:.0%}")
+        L.append(f"**{rec['name']}** — ${rec['cost']:.2f} total (${rec['base']:.2f} base), hit probability est. {rec['hit_prob']:.0%} "
+                 f"(tracked, not counted as a bet until the sequences have a record)")
         for t in rec["tickets"]:
             L.append(f"- {t['name']}: " + " / ".join(",".join(x) for x in t["legs"]) + f"  (${t['cost']:.2f})")
         L.append("")
