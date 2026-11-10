@@ -361,7 +361,7 @@ def make_leg(r: dict, cfg: dict) -> Leg | None:
     if not live:
         return None
     mls = [(s["ml_decimal"], s["pgm"]) for s in live if s["ml_decimal"] is not None]
-    n_elim = sum(1 for s in r["sheets"] if s["eliminated"])
+    n_elim = sum(1 for s in r["sheets"] if s["eliminated"] and not s["flags"])
     leg = Leg(race_no=r["race_no"], sheets=live, excluded=excluded, probs={}, model_probs={}, ml_probs={},
               favorite=min(mls)[1] if mls else None, A=[], B=[], audit=[], class_text=r.get("class_text") or "",
               price_factor=price_factor(n_elim, cfg.get("probability")))

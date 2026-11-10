@@ -108,3 +108,16 @@ python backtest.py data\out\<card>.picks.json results\<card>.results.json
 
 PDFs (PPs, quick sheets, charts) and `*.card.json`. `.gitignore` blocks them; add files by name
 (`git add results\ data\out\*.picks.json`) rather than `git add .`.
+
+## Prediction timing and PASS
+
+Contender rankings are retained even when the recommendation is PASS. WIN bets need a known price that
+meets the printed minimum. Exotic keys/boxes and Pick 3/4 constructions are optional, unpriced scenarios;
+they do not automatically become bets when a WIN price is rejected.
+
+To record before-post timing, use the Load page's **Post times** map (race number to ISO timestamp with an
+explicit timezone, such as `{"1":"2030-05-01T18:30:00Z"}`), or pass the same JSON file with `--post-times`.
+Leave times unknown when they are unavailable. The default Analysis view includes only predictions made
+before every supplied post time; choose timing-unverified or retrospective in the Evidence filter to inspect
+other runs separately. Legacy pre-race filenames alone do not qualify. Snapshots retain their original policy
+and stakes; evaluations are hypothetical recommendations, not executed-bet receipts.
