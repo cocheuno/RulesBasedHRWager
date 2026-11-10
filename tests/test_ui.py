@@ -9,7 +9,6 @@ import tempfile
 import threading
 import unittest
 import urllib.request
-from datetime import datetime, timezone, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -20,14 +19,6 @@ from synthetic_card import build_card          # noqa: E402
 from ui.server import Desk, make_server, parse_multipart, reparse_reason   # noqa: E402
 
 
-def timed_card():
-    card = build_card()
-    card["date"] = datetime.now(timezone.utc).date().isoformat()
-    for r in card["races"]:
-        r["post_at_utc"] = (datetime.now(timezone.utc) + timedelta(days=1, minutes=r["race_no"])).isoformat()
-    return card
-
-
 class Base(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -35,7 +26,7 @@ class Base(unittest.TestCase):
         shutil.copy(os.path.join(ROOT, "rules_config.json"), os.path.join(cls.tmp, "rules_config.json"))
         os.makedirs(os.path.join(cls.tmp, "data", "out"))
         with open(os.path.join(cls.tmp, "data", "out", "synth.card.json"), "w", encoding="utf-8") as fh:
-            json.dump(timed_card(), fh)
+            json.dump(build_card(), fh)
         cls.desk = Desk(cls.tmp)
 
     @classmethod
@@ -94,7 +85,7 @@ class TestDesk(Base):
         shutil.copy(os.path.join(ROOT, "rules_config.json"), os.path.join(tmp, "rules_config.json"))
         os.makedirs(os.path.join(tmp, "data", "out"))
         with open(os.path.join(tmp, "data", "out", "synth.card.json"), "w", encoding="utf-8") as fh:
-            json.dump(timed_card(), fh)
+            json.dump(build_card(), fh)
         d = Desk(tmp)
         d.run("synth", "")
         time.sleep(1.1)
@@ -128,16 +119,16 @@ class TestDesk(Base):
         time.sleep(1.1)
         pl = d.process("synth")
         self.assertEqual(pl["latest_kind"], "as-run")
-        self.assertIn("## Verified before-post prediction (hypothetical recommendations)", pl["report"])
+        self.assertIn("## Pre-race prediction, as bet", pl["report"])
         self.assertIn("## As-run re-score", pl["report"])
-        self.assertIn("evaluation policy are frozen", pl["report"])
+        self.assertIn("cannot change", pl["report"])
         kinds = [s["kind"] for s in list_snapshots(d.out, "synth")]
         self.assertEqual(kinds[-1], "as-run")
         self.assertIn("pre-race", kinds)
         with self.assertRaises(ValueError):
             write_snapshot(d.out, "synth", pl["picks"], "guess")
         an = d.analysis()
-        self.assertEqual(next(c for c in an["cards"] if c["card"] == "synth")["basis"], "verified-pre-race")
+        self.assertEqual(next(c for c in an["cards"] if c["card"] == "synth")["basis"], "pre-race")
 
     def test_reparse_reason(self):
         import time

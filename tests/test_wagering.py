@@ -49,7 +49,7 @@ class TestCard(unittest.TestCase):
     def test_structured_wagers_match_text(self):
         res = score_card(build_card(), CFG)
         for r in res["races"]:
-            self.assertEqual(r["wager_status"], "BET" if r["wagers"] else "PASS")
+            self.assertTrue(r["wagers"], f"R{r['race_no']} has no structured wagers")
             others = [w for w in r["wagers"] if w["source"] == "other"]
             self.assertEqual(len(others), sum(1 for t in r["other_wagers"] if not t.startswith("no WIN") and not t.startswith("PASS")))
             for w in r["wagers"]:
@@ -82,7 +82,7 @@ class TestCard(unittest.TestCase):
         r2 = [x for x in ev["rows"] if x["race_no"] == 2 and len(x["races"]) == 1]
         # $2 win stake returns the $2 payout; $1 exacta returns the per-dollar payout
         self.assertTrue(any(x["type"] == "WIN" and x["hit"] and x["unit"] == 2.0 and x["cost"] == 2.0 and x["ret"] == 8.0 for x in r2))
-        self.assertFalse([x for x in r2 if x["type"] == "EXACTA"], "optional exotics are not recommended bets")
+        self.assertTrue(any(x["type"] == "EXACTA" and x["hit"] and x["unit"] == 1.0 and x["ret"] == 20.0 for x in r2))
         for x in ev["rows"]:
             if x["type"] == "TRIFECTA":
                 self.assertEqual(x["unit"], 0.5)
@@ -137,7 +137,7 @@ class TestCard(unittest.TestCase):
         seen = set()
         for r in res["races"]:
             live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
-            tris = [w for w in r["wager_options"] if w["type"] == "TRIFECTA" and w["source"] == "other"]
+            tris = [w for w in r["wagers"] if w["type"] == "TRIFECTA" and w["source"] == "other"]
             if r["confidence"] == "high" and len(live) >= 3:
                 seen.add("high")
                 a = live[0]["pgm"]
@@ -163,7 +163,8 @@ class TestCard(unittest.TestCase):
         self.assertEqual(ru["tracked_multirace"]["tickets"], len(tracked))
         self.assertIn("tracked, not counted as bets", format_evaluation(ev))
         ev2 = evaluate_card(res, results, dict(CFG["wagering"], count_multirace=True))
-        self.assertEqual(ev2, ev, "saved policy and optional scenarios are unaffected by later switches")
+        self.assertFalse([x for x in ev2["rows"] if x["tracked_only"]], "the switch puts them back in the totals")
+        self.assertIn("PICK3", rollup([ev2])["by_type"])
 
     def test_pool_absent_from_chart_is_not_offered(self):
         chart = {"race_no": 3, "finish": ["2", "4", "6", "7"], "win": 3.6, "source": "chart",
@@ -193,9 +194,9 @@ class TestCard(unittest.TestCase):
             race["horses"] = race["horses"][:4]          # four starters everywhere
         res = score_card(card, CFG)
         for r in res["races"]:
-            self.assertFalse([w for w in r["wager_options"] if w["type"] in ("TRIFECTA", "SUPERFECTA")], f"R{r['race_no']} suggested an exotic the track would not offer")
+            self.assertFalse([w for w in r["wagers"] if w["type"] in ("TRIFECTA", "SUPERFECTA")], f"R{r['race_no']} suggested an exotic the track would not offer")
             if len([s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]) >= 3:
-                self.assertTrue(any("no trifecta" in w for w in r["option_notes"]), f"R{r['race_no']} should say why")
+                self.assertTrue(any("no trifecta" in w for w in r["other_wagers"]), f"R{r['race_no']} should say why")
 
     def test_unit_for_old_config(self):
         from handicapper.wagering import unit_for

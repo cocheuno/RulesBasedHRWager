@@ -442,7 +442,7 @@ class TestWinPrice(Base):
         self.assertEqual(r["picks"][0], top, "the pick itself does not depend on the price")
         self.assertFalse([w for w in r["wagers"] if w["type"] == "WIN"], "no WIN wager without a price")
         self.assertIn("no morning line", r["bet_structure"])
-        self.assertEqual(r["wager_status"], "PASS")
+        self.assertTrue(any("not counted as a bet" in w for w in r["other_wagers"]))
         self.assertIsNotNone(next(s for s in r["sheets"] if s["pgm"] == top)["min_win_odds"])
 
     def test_price_under_fair_gets_no_win_bet(self):
