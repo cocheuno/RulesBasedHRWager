@@ -160,6 +160,7 @@ function audit(p) {
 }
 function afterPanel(r, p, res) {
   const names = {}; r.horses.forEach(h => names[h.pgm] = h.name);
+  if (S.data.results_error) return `<div class="card"><h2>Results refused</h2><p class="neg">${esc(S.data.results_error)}</p><p class="muted">The results file in results/ is not this card's. Remove it or load the right charts, then Process results.</p></div>`;
   const places = ['1st', '2nd', '3rd', '4th', '5th'];
   const odds = res.final_odds || {}, runners = {}; (res.runners || []).forEach(x => runners[x.pgm] = x);
   const finish = `<div class="finish">${res.finish.slice(0, 6).map((pg, i) => `<div><span class="p">${places[i] || (i + 1) + 'th'}</span><span class="n">#${esc(pg)}</span><span class="h">${esc(names[pg] || (runners[pg] || {}).name || '')}</span>${odds[pg] != null ? `<span class="h">${odds[pg]}-1${runners[pg] && runners[pg].beaten ? ' · ' + runners[pg].beaten + 'L' : ''}</span>` : ''}</div>`).join('')}</div>`;
