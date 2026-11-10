@@ -472,6 +472,40 @@ class TestWinPrice(Base):
         self.assertTrue(any("model probabilities only" in a for a in leg["audit"]))
 
 
+class TestConfigValidation(Base):
+    CFG_PATH = os.path.join(os.path.dirname(HERE), "rules_config.json")
+
+    def test_probability_ranges(self):
+        from handicapper.probability import validate, race_probs
+        with self.assertRaises(ValueError): validate({"ml_blend": 2})
+        with self.assertRaises(ValueError): validate({"logit_scale": 0})
+        with self.assertRaises(ValueError): validate({"logit_scale": float("inf")})
+        with self.assertRaises(ValueError): validate({"elim_floor": 0.5})
+        self.assertEqual(validate({"ml_blend": 0.35})["logit_scale"], 18.0)
+        live = [{"pgm": "1", "score": 50, "ml_decimal": 2.0}, {"pgm": "2", "score": 40, "ml_decimal": 3.0}]
+        with self.assertRaises(ValueError): race_probs(live, {"ml_blend": 2})
+        pr = race_probs(live, {"ml_blend": 1.0})
+        self.assertTrue(all(0 <= p <= 1 for p in pr["win"].values()))
+
+    def test_load_config_rejects_bad_settings(self):
+        import json, tempfile
+        from handicapper.engine import validate_config
+        cfg = load_config(self.CFG_PATH)
+        validate_config(cfg)                                 # the shipped config is valid
+        for bad in ({"probability": {"ml_blend": 1.5}}, {"weights": {"ZZ9": 3}}, {"weights": {"S1": float("nan")}},
+                    {"disabled": ["nope"]}, {"selection": {"single_gap": -1}}, {"selection": {"max_picks": 9}}):
+            d = tempfile.mkdtemp(); p = os.path.join(d, "rules_config.json")
+            json.dump(bad, open(p, "w"))
+            with self.assertRaises(ValueError, msg=str(bad)):
+                load_config(p)
+        # a track profile is validated too
+        d = tempfile.mkdtemp(); p = os.path.join(d, "rules_config.json")
+        json.dump({"tracks": {"XX": {"probability": {"logit_scale": -5}}}}, open(p, "w"))
+        load_config(p)                                       # the global layer alone is fine
+        with self.assertRaises(ValueError):
+            load_config(p, track_code="XX")
+
+
 class TestWeights(Base):
     def test_prime_power_and_comment_weights_are_moderate(self):
         w = {rl.id: rl.weight for rl in R.RULES}

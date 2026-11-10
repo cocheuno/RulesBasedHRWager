@@ -25,8 +25,8 @@ from collections import defaultdict
 
 from . import rules as R
 from . import multirace as MR
-from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs
-from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs
+from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
+from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
 from .wagering import DEFAULT_UNITS, DEFAULT_WAGERING, make_wager
 from .features import horse_features, race_context
 
@@ -87,7 +87,36 @@ def load_config(path: str | None, track_code: str | None = None) -> dict:
         cfg["track_profile"] = code
     elif code:
         cfg["track_profile"] = f"default (no profile for {code})"
+    validate_config(cfg)
     return cfg
+
+
+def validate_config(cfg: dict) -> None:
+    """Reject settings that would make the engine print nonsense: probability ranges, non-finite weights, negative
+    selection gaps, and rule ids in weights/disabled that no rule carries.  Raises ValueError naming each one."""
+    bad = []
+    try:
+        validate_probability(cfg.get("probability"))
+    except ValueError as e:
+        bad.append(str(e))
+    known = {rl.id for rl in R.RULES} | {rl.id for rl in MR.HRULES}
+    for rid, w in cfg.get("weights", {}).items():
+        if rid not in known:
+            bad.append(f"weights: unknown rule id {rid!r}")
+        elif not isinstance(w, (int, float)) or w != w or abs(w) == float("inf"):
+            bad.append(f"weights[{rid}] must be a finite number, not {w!r}")
+    for rid in cfg.get("disabled", []):
+        if rid not in known:
+            bad.append(f"disabled: unknown rule id {rid!r}")
+    sel = cfg.get("selection", {})
+    for k in ("single_gap", "pair_gap", "third_gap", "spread_gap", "min_ml_for_win_bet", "win_margin"):
+        v = sel.get(k)
+        if v is not None and (not isinstance(v, (int, float)) or v < 0):
+            bad.append(f"selection.{k} must be a number >= 0, not {v!r}")
+    if sel.get("max_picks") is not None and not (isinstance(sel["max_picks"], int) and 1 <= sel["max_picks"] <= 4):
+        bad.append(f"selection.max_picks must be 1..4, not {sel['max_picks']!r}")
+    if bad:
+        raise ValueError("rules_config: " + "; ".join(bad))
 
 
 def resolve_track_code(card: dict, cfg: dict) -> str | None:
