@@ -16,6 +16,7 @@ from brisnet_pp.parser import parse_pdf
 from brisnet_pp.sheet import merge_sheet, parse_sheet
 from .engine import load_config, resolve_track_code, score_card
 from .results import apply_scratches, attach_day_bias, load_results, parse_scratch_spec
+from .snapshot import timing_evidence, prediction_kind, aware_time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_CONFIG = os.path.join(ROOT, "rules_config.json")
@@ -61,10 +62,20 @@ def load_card(source) -> tuple[dict, list[str]]:
 
 def run_card(source, *, scratch: str | None = None, sheet: str | None = None, results: str | dict | None = None,
              config_path: str = DEFAULT_CONFIG, track_profile: str | None = None, multirace: bool = True,
-             budget3: float | None = None, budget4: float | None = None, race_no: int | None = None) -> dict:
+             budget3: float | None = None, budget4: float | None = None, race_no: int | None = None, post_times: dict | None = None) -> dict:
     """Returns {"card": the card as scored (after scratches), "raw": the card before scratches, "result": picks,
     "cfg": config used, "track_code", "notes": [...]}."""
     card, notes = load_card(source)
+    if post_times is not None:
+        if not isinstance(post_times, dict) or any(aware_time(v) is None for v in post_times.values()):
+            raise ValueError("post_times must map race numbers to ISO timestamps with an explicit timezone offset")
+        unknown = set(map(str, post_times)) - {str(r["race_no"]) for r in card["races"]}
+        if unknown:
+            raise ValueError("unknown race numbers in post_times: " + ", ".join(sorted(unknown)))
+        for r in card["races"]:
+            value = post_times.get(str(r["race_no"]), post_times.get(r["race_no"]))
+            if value:
+                r["post_at_utc"] = value
     raw = copy.deepcopy(card)
     if sheet:
         notes.extend("sheet: " + n for n in merge_sheet(card, parse_sheet(sheet)))
@@ -93,13 +104,17 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
     result["run_notes"] = list(notes)
     res_known = sorted(r["race_no"] for r in (res.get("races", []) if results else []) if r.get("finish"))
     result["run"] = {
-        "at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "at_utc": datetime.now(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z"),
         "scratches": scratch or "", "parser_version": card.get("parser_version"),
         "config_hash": config_hash(cfg), "track_profile": cfg.get("track_profile"), "code_version": code_version(),
         "source": None if isinstance(source, dict) else os.path.basename(str(source)),
-        "source_sha256": None if isinstance(source, dict) else _sha256(str(source)),
+        "source_sha256": hashlib.sha256(json.dumps(source, sort_keys=True, default=str).encode()).hexdigest() if isinstance(source, dict) else _sha256(str(source)),
         "sheet": os.path.basename(sheet) if sheet else None,
+        "sheet_sha256": _sha256(sheet),
+        "effective_config": copy.deepcopy(cfg),
         "results_known": res_known,           # races whose results were on file when this run was made
         "odds_source": "morning line",        # the only market input today
     }
+    result["run"]["timing"] = timing_evidence(card, datetime.fromisoformat(result["run"]["at_utc"].replace("Z", "+00:00")), res_known)
+    result["run"]["kind"] = prediction_kind(result)
     return {"card": card, "raw": raw, "result": result, "cfg": cfg, "track_code": code, "notes": notes}
