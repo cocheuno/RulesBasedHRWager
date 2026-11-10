@@ -224,6 +224,8 @@ def card_wagers(picks: dict, cfg: dict) -> list[dict]:
 
 
 def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
+    from .results import check_identity
+    identity = check_identity(picks, results)      # raises when the results are another card's
     cfg = dict(DEFAULT_WAGERING, **(cfg or {}))
     by_no = {r["race_no"]: r for r in results.get("races", [])}
     rows = []
@@ -243,7 +245,7 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
     tot["tracked"] = {"tickets": len(tracked), "known": len(tk), "hits": sum(1 for x in tk if x["hit"]),
                       "cost": round(sum(x["cost"] for x in tk), 2), "ret": round(sum(x["ret"] or 0 for x in tk), 2)}
     return {"card": picks.get("source"), "track_code": picks.get("track_code"), "date": picks.get("date"),
-            "units": units_table(cfg), "rows": rows, "totals": tot}
+            "units": units_table(cfg), "rows": rows, "totals": tot, "identity": identity}
 
 
 def units_table(cfg: dict) -> dict:

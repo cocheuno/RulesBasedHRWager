@@ -27,6 +27,31 @@ EARLY = ("E", "E/P")
 LATE = ("P", "S")
 
 
+def _norm_track(name) -> str:
+    return re.sub(r"[^a-z]", "", str(name or "").lower())
+
+
+def check_identity(card_or_picks: dict, results: dict) -> str:
+    """Results must belong to the card they are joined with.  The results file's track and date (top level, and
+    a chart's own track name on each race) are compared with the card's track name / code and date.  Returns
+    "verified" when they match, "unverified" when the results carry no track or date; raises ValueError on a
+    conflict, so a wrong-day or wrong-track file can never produce a back-test, a bias or a return."""
+    c_track, c_code, c_date = card_or_picks.get("track"), card_or_picks.get("track_code"), card_or_picks.get("date")
+    problems = []
+    r_track, r_date = results.get("track"), results.get("date")
+    if r_date and c_date and str(c_date) != str(r_date):
+        problems.append(f"date {r_date} vs card {c_date}")
+    if r_track and c_track and _norm_track(c_track) != _norm_track(r_track) and _norm_track(c_code) != _norm_track(r_track):
+        problems.append(f"track {r_track!r} vs card {c_track!r}")
+    for r in results.get("races", []):
+        t = r.get("track")
+        if t and c_track and _norm_track(t) != _norm_track(c_track) and _norm_track(c_code) != _norm_track(t):
+            problems.append(f"R{r.get('race_no')} chart is from {t!r}, card is {c_track!r}")
+    if problems:
+        raise ValueError("results do not belong to this card: " + "; ".join(problems))
+    return "verified" if (r_track and r_date) else "unverified"
+
+
 def load_results(path: str) -> dict:
     with open(path, encoding="utf-8") as fh:
         res = json.load(fh)
@@ -116,6 +141,8 @@ def attach_day_bias(card: dict, results: dict) -> list[str]:
     by_no = {r["race_no"]: r for r in results.get("races", [])}
     done = []
     notes = []
+    if check_identity(card, results) == "unverified":
+        notes.append("results file carries no track/date: identity unverified")
     for race in card["races"]:
         same = [d for d in done if d["surface"] == race["surface"]]
         race["day_bias"] = {
@@ -146,6 +173,7 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
     primary play won and what a flat win bet on the top pick returned, whether the top three covered the
     winner; per rule, how often a horse that triggered it positively / negatively won; and whether the
     recommended Pick 3 / Pick 4 tickets would have hit (payoff only if the results file carries it)."""
+    identity = check_identity(picks, results)
     by_no = {r["race_no"]: r for r in results.get("races", [])}
     races_out, rule_stats = [], {}
     bet, ret = 0.0, 0.0
@@ -196,7 +224,7 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
         st["itm_pct"] = round(100.0 * st["itm"] / st["fired"], 1)
     n = len(races_out)
     bench = [r for r in races_out if r["brisnet_pick"]]
-    return {"races": races_out, "rules": rules, "multirace": multi,
+    return {"races": races_out, "rules": rules, "multirace": multi, "identity": identity,
             "summary": {"races": n, "top_pick_wins": sum(r["top_pick_won"] for r in races_out),
                         "winner_in_top3": sum(r["winner_in_top3"] for r in races_out),
                         "brisnet_races": len(bench), "brisnet_pick_wins": sum(r["brisnet_won"] for r in bench),

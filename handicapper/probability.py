@@ -26,6 +26,32 @@ DEFAULT_PROBABILITY = {
 }
 
 
+def validate(cfg: dict | None) -> dict:
+    """The probability block with defaults filled in, or ValueError naming every setting outside its range:
+    logit_scale a positive finite number, ml_blend in [0, 1], elim_floor in [0, 0.25).  A blend above 1 would
+    print probabilities below zero and above one; this stops that at the config, not on the report."""
+    cfg = dict(DEFAULT_PROBABILITY, **(cfg or {}))
+    bad = []
+    try:
+        if not (0 < float(cfg["logit_scale"]) < float("inf")):
+            bad.append(f"logit_scale must be a positive finite number, not {cfg['logit_scale']!r}")
+    except (TypeError, ValueError):
+        bad.append(f"logit_scale must be a number, not {cfg['logit_scale']!r}")
+    try:
+        if not (0.0 <= float(cfg["ml_blend"]) <= 1.0):
+            bad.append(f"ml_blend must be between 0 and 1, not {cfg['ml_blend']!r}")
+    except (TypeError, ValueError):
+        bad.append(f"ml_blend must be a number, not {cfg['ml_blend']!r}")
+    try:
+        if not (0.0 <= float(cfg["elim_floor"]) < 0.25):
+            bad.append(f"elim_floor must be between 0 and 0.25, not {cfg['elim_floor']!r}")
+    except (TypeError, ValueError):
+        bad.append(f"elim_floor must be a number, not {cfg['elim_floor']!r}")
+    if bad:
+        raise ValueError("probability settings: " + "; ".join(bad))
+    return cfg
+
+
 def softmax(scores: dict[str, float], scale: float) -> dict[str, float]:
     """p_i = exp(s_i / scale) / sum_j exp(s_j / scale)."""
     if not scores:
@@ -51,7 +77,7 @@ def fair_odds(p: float) -> float | None:
 
 def race_probs(live: list[dict], cfg: dict | None = None) -> dict:
     """live: the sheets that can win (score, pgm, ml_decimal).  Returns {model, market, win, blend, missing}."""
-    cfg = dict(DEFAULT_PROBABILITY, **(cfg or {}))
+    cfg = validate(cfg)
     scores = {s["pgm"]: s["score"] for s in live}
     model = softmax(scores, cfg["logit_scale"])
     mkt = market({s["pgm"]: s.get("ml_decimal") for s in live})
@@ -64,5 +90,5 @@ def race_probs(live: list[dict], cfg: dict | None = None) -> dict:
 
 def price_factor(n_eliminated: int, cfg: dict | None = None) -> float:
     """Share of the win probability left to the live horses when each eliminated horse keeps elim_floor (pricing only)."""
-    cfg = dict(DEFAULT_PROBABILITY, **(cfg or {}))
+    cfg = validate(cfg)
     return max(0.5, 1.0 - n_eliminated * cfg["elim_floor"])

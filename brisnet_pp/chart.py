@@ -264,7 +264,7 @@ def parse_chart(path: str) -> list[dict]:
 def chart_to_result(chart: dict) -> dict:
     """The results-file entry (what backtest.py / wagering.py read) plus the extras, under the same keys."""
     keys = ("race_no", "finish", "win", "place", "show", "exotics", "track_condition", "surface", "official", "distance_text",
-            "class_text", "purse", "weather", "times", "off_at", "final_odds", "runners", "scratched", "claimed", "source")
+            "class_text", "purse", "weather", "times", "off_at", "final_odds", "runners", "scratched", "claimed", "source", "track")
     return {k: chart[k] for k in keys if k in chart}
 
 

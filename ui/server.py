@@ -239,14 +239,19 @@ class Desk:
             picks["track_code"] = meta["track_code"]
         results = load_results(f["results"]) if f["results"] else None
         bt = ev = pre = None
+        results_error = None
         if picks and results:
             wcfg = load_config(self.config)["wagering"]
-            bt = backtest(picks, results)
-            ev = evaluate_card(picks, results, wcfg)
-            pre = self.pre_race(card, results, wcfg)
+            try:
+                bt = backtest(picks, results)
+                ev = evaluate_card(picks, results, wcfg)
+                pre = self.pre_race(card, results, wcfg)
+            except ValueError as e:          # results from another card: refuse to score, say why
+                results_error = str(e)
         snaps = [{k: v for k, v in s.items() if k != "path"} for s in list_snapshots(self.out, card)]
         return {"card": card, "meta": meta, "files": {k: (bool(v) if k not in ("pngs", "charts") else v) for k, v in f.items()},
                 "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev,
+                "results_error": results_error,
                 "latest_kind": (picks or {}).get("run", {}).get("kind") or ("as-run" if picks and "as-run" in str(st.get("activity", [])[-1:]) else None),
                 "pre_race": pre, "snapshots": snaps}
 
@@ -277,20 +282,32 @@ class Desk:
             meta = self.payload(card)["meta"]
             data = {"track": meta.get("track"), "date": meta.get("date"), "_source": "entered in Race Day Desk", "races": []}
         rn = int(race["race_no"])
-        entry = {"race_no": rn, "finish": [str(x).strip() for x in race.get("finish", []) if str(x).strip()],
-                 "exotics": [{"type": e["type"].upper(), "base": float(e["base"]), "combo": e["combo"], "payout": float(e["payout"])}
-                             for e in race.get("exotics", []) if e.get("combo") and e.get("payout") not in (None, "")]}
+        # an edit corrects the submitted fields only; everything the chart gave (final odds, runners, condition,
+        # provenance) stays, and the correction is recorded beside the original source
+        existing = next((r for r in data["races"] if r["race_no"] == rn), None)
+        entry = dict(existing) if existing else {"race_no": rn}
+        fields = {"finish": [str(x).strip() for x in race.get("finish", []) if str(x).strip()],
+                  "exotics": [{"type": e["type"].upper(), "base": float(e["base"]), "combo": e["combo"], "payout": float(e["payout"])}
+                              for e in race.get("exotics", []) if e.get("combo") and e.get("payout") not in (None, "")]}
         if race.get("win") not in (None, ""):
-            entry["win"] = float(race["win"])
+            fields["win"] = float(race["win"])
         for k in ("place", "show"):
             if race.get(k):
-                entry[k] = {str(a): float(b) for a, b in race[k].items() if b not in (None, "")}
+                fields[k] = {str(a): float(b) for a, b in race[k].items() if b not in (None, "")}
+        changed = sorted(k for k, v in fields.items() if existing is None or existing.get(k) != v)
+        entry.update(fields)
+        if existing is not None and changed:
+            entry.setdefault("corrections", []).append({"at": datetime.now().isoformat(timespec="seconds"), "fields": changed,
+                                                        "original_source": existing.get("source") or (existing.get("ocr") or {}).get("source") or "manual"})
+        elif existing is None:
+            entry["source"] = "manual"
         data["races"] = [r for r in data["races"] if r["race_no"] != rn] + [entry]
         data["races"].sort(key=lambda r: r["race_no"])
         with open(p, "w", encoding="utf-8") as fh:
             json.dump(data, fh, indent=1)
         st = self.state(card)
-        self.log(st, f"Result R{rn}", f"finish {'/'.join(entry['finish'])}" + (f", win ${entry['win']:.2f}" if "win" in entry else ""))
+        self.log(st, f"Result R{rn}", f"finish {'/'.join(entry['finish'])}" + (f", win ${entry['win']:.2f}" if "win" in entry else "")
+                 + (f"; corrected {', '.join(changed)} (chart data kept)" if existing is not None and changed else ""))
         self.save_state(st)
         return self.payload(card)
 
