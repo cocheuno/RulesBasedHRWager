@@ -130,6 +130,31 @@ class TestDesk(Base):
         an = d.analysis()
         self.assertEqual(next(c for c in an["cards"] if c["card"] == "synth")["basis"], "pre-race")
 
+    def test_result_edit_keeps_chart_fields(self):
+        tmp = tempfile.mkdtemp(prefix="racedesk-edit-"); self.addCleanup(shutil.rmtree, tmp, True)
+        shutil.copy(os.path.join(ROOT, "rules_config.json"), os.path.join(tmp, "rules_config.json"))
+        os.makedirs(os.path.join(tmp, "data", "out")); os.makedirs(os.path.join(tmp, "results"))
+        with open(os.path.join(tmp, "data", "out", "synth.card.json"), "w", encoding="utf-8") as fh:
+            json.dump(build_card(), fh)
+        chart = {"race_no": 2, "finish": ["3", "5", "4", "1"], "win": 8.0, "place": {"3": 4.2}, "show": {}, "source": "chart",
+                 "final_odds": {"3": 3.0, "5": 0.8}, "runners": [{"pgm": "3", "name": "A"}, {"pgm": "5", "name": "B"}],
+                 "track_condition": "FAST", "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "3/5", "payout": 26.5}],
+                 "ocr": {"source": "chart", "warnings": [], "names": ["A", "B"], "confidence": 1.0}}
+        json.dump({"track": "Del Mar", "date": "2026-11-06", "races": [chart]}, open(os.path.join(tmp, "results", "synth.results.json"), "w"))
+        d = Desk(tmp)
+        d.run("synth", "")
+        pl = d.save_result("synth", {"race_no": 2, "finish": ["3", "5", "4", "1"], "win": "8.20", "place": {"3": "4.20"},
+                                     "exotics": [{"type": "exacta", "base": "1", "combo": "3/5", "payout": "26.50"}]})
+        r = next(x for x in pl["results"]["races"] if x["race_no"] == 2)
+        self.assertEqual(r["win"], 8.2, "the corrected field changed")
+        self.assertEqual(r["final_odds"], {"3": 3.0, "5": 0.8}, "chart data survives the edit")
+        self.assertEqual(len(r["runners"]), 2); self.assertEqual(r["track_condition"], "FAST"); self.assertEqual(r["source"], "chart")
+        self.assertEqual(r["corrections"][0]["fields"], ["win"]); self.assertEqual(r["corrections"][0]["original_source"], "chart")
+        # a new race entered by hand is marked manual, no correction record
+        pl = d.save_result("synth", {"race_no": 5, "finish": ["1", "2", "3"], "win": "3.60"})
+        r5 = next(x for x in pl["results"]["races"] if x["race_no"] == 5)
+        self.assertEqual(r5["source"], "manual"); self.assertNotIn("corrections", r5)
+
     def test_reparse_reason(self):
         import time
         from brisnet_pp.parser import PARSER_VERSION
