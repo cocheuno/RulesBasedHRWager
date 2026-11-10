@@ -19,12 +19,15 @@ async function api(path, opts = {}) {
 }
 
 // ------------------------------------------------------------------ scratches as race:program text <-> sets
+// S.scratches: race -> Set of tokens.  A plain program number is a scratch; "+12" says AE/MTO #12 is officially
+// in, "-12" that it stays out.  All three forms survive every round trip to the server (run, PUT, re-run).
 function scratchText() { return Object.entries(S.scratches).flatMap(([r, set]) => [...set].map(p => `${r}:${p}`)).join(', '); }
 function parseScratches(txt) {
   const out = {};
-  (txt || '').split(/[\s,]+/).forEach(tok => { const m = tok.match(/^(\d+):(\d+[A-Za-z]?)$/); if (m) (out[m[1]] = out[m[1]] || new Set()).add(m[2].toUpperCase()); });
+  (txt || '').split(/[\s,]+/).forEach(tok => { const m = tok.match(/^(\d+):([+-]?)(\d+[A-Za-z]?)$/); if (m) (out[m[1]] = out[m[1]] || new Set()).add(m[2] + m[3].toUpperCase()); });
   return out;
 }
+function statusOf(set, pgm) { const k = String(pgm).toUpperCase(); return set.has(k) ? 'scr' : set.has('+' + k) ? 'in' : set.has('-' + k) ? 'out' : ''; }
 
 // ------------------------------------------------------------------ loading
 async function checkStale() {
@@ -87,7 +90,7 @@ function render() {
 }
 function renderChips() {
   const c = $('#chips'); if (!S.data) { c.innerHTML = ''; return; }
-  const f = S.data.files, nScr = Object.values(S.scratches).reduce((n, s) => n + s.size, 0), nRes = (S.data.results ? S.data.results.races.length : 0), nRaces = S.data.roster.length;
+  const f = S.data.files, nScr = Object.values(S.scratches).reduce((n, s) => n + [...s].filter(t => !/^[+-]/.test(t)).length, 0), nRes = (S.data.results ? S.data.results.races.length : 0), nRaces = S.data.roster.length;
   const prof = S.data.picks ? S.data.picks.track_profile : '';
   c.innerHTML = [
     ['PPs', f.pp || f.card_json, 'good', 'bad'], ['Quick sheet', f.sheet, 'good', ''], [S.data.picks ? 'Picks · profile ' + prof : 'No run yet', !!S.data.picks, 'good', 'warn'],
@@ -128,12 +131,12 @@ function racePanel(r, p, res) {
   const head = `<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px"><div><h1>Race ${r.race_no} · ${esc(r.class_text || '')}</h1><div class="muted">${esc(r.distance_text || '')}${r.surface ? ' (' + r.surface + ')' : ''} · field ${r.horses.length - scr.size}${p ? ' · pace ' + p.pace_shape + ' · confidence ' + p.confidence : ''}${r.post_time ? ' · post ' + esc(r.post_time) : ''}</div></div>
     <div class="segtabs"><button type="button" data-tab="before" class="${S.tab === 'before' ? 'on' : ''}">Before the race</button><button type="button" data-tab="after" class="${S.tab === 'after' ? 'on' : ''}">After the race</button></div></div>`;
   const rows = r.horses.map(h => {
-    const s = sb[h.pgm], isScr = scr.has(String(h.pgm).toUpperCase());
+    const s = sb[h.pgm], st = statusOf(scr, h.pgm), isScr = st === 'scr';
     const grade = s ? (s.eliminated ? 'ELIM' : s.flags && s.flags.length ? 'AE' : (leg.A || []).includes(s.pgm) ? 'A' : (leg.B || []).includes(s.pgm) ? 'B' : '–') : '';
     const why = s ? s.hits.filter(x => x.points && !x.value).sort((a, b) => Math.abs(b.points) - Math.abs(a.points)).slice(0, 3).map(x => `${x.rule} ${x.points > 0 ? '+' : ''}${x.points.toFixed(1)} ${x.note}`).join('; ') : '';
     const prob = s ? (s.win_prob != null ? s.win_prob : (leg.probs && leg.probs[s.pgm] != null ? leg.probs[s.pgm] : s.implied_prob)) : null;
     const val = s && s.value ? (s.value.label === 'fair' || s.value.edge == null ? s.value.label : `${s.value.label} ${s.value.edge > 0 ? '+' : ''}${Math.round(s.value.edge * 100)}%`) : '';
-    return `<tr data-horse="${esc(h.pgm)}" class="clickable ${isScr ? 'scr' : ''} ${S.horse === String(h.pgm) ? 'sel' : ''}"><td><input type="checkbox" data-scr="${r.race_no}:${esc(String(h.pgm).toUpperCase())}" ${isScr ? 'checked' : ''} aria-label="Scratch ${esc(h.name)}"></td><td><b>${esc(h.pgm)}</b></td><td class="muted">${esc(h.post ?? '')}</td><td><b>${esc(h.name)}</b>${h.entry_status ? ' <span class="chip warn">' + esc(h.entry_status) + '</span>' : ''}</td><td>${esc(h.ml_odds ?? '')}</td><td>${esc(h.run_style ?? '')}${h.speed_pts != null ? ' ' + h.speed_pts : ''}</td><td>${s && !isScr ? (s.rank != null ? s.rank : (s.conditional_rank != null ? '(' + s.conditional_rank + ')' : '')) : ''}</td><td>${s && !isScr ? s.score.toFixed(1) : ''}</td><td>${s && !isScr && prob != null ? pct(prob) : ''}</td><td class="small ${val.startsWith('over') ? 'pos' : val.startsWith('under') ? 'neg' : 'muted'}">${s && !isScr ? esc(val) : ''}</td><td class="grade-${grade}">${isScr ? 'SCR' : grade}</td><td class="small muted" style="max-width:380px">${esc(why)}</td></tr>`;
+    return `<tr data-horse="${esc(h.pgm)}" class="clickable ${isScr ? 'scr' : ''} ${S.horse === String(h.pgm) ? 'sel' : ''}"><td><input type="checkbox" data-scr="${r.race_no}:${esc(String(h.pgm).toUpperCase())}" ${isScr ? 'checked' : ''} aria-label="Scratch ${esc(h.name)}"></td><td><b>${esc(h.pgm)}</b></td><td class="muted">${esc(h.post ?? '')}</td><td><b>${esc(h.name)}</b>${h.entry_status ? ' <span class="chip warn">' + esc(h.entry_status) + '</span>' : ''}${st === 'in' ? ' <span class="chip good">officially in</span>' : st === 'out' ? ' <span class="chip">held out</span>' : ''}</td><td>${esc(h.ml_odds ?? '')}</td><td>${esc(h.run_style ?? '')}${h.speed_pts != null ? ' ' + h.speed_pts : ''}</td><td>${s && !isScr ? (s.rank != null ? s.rank : (s.conditional_rank != null ? '(' + s.conditional_rank + ')' : '')) : ''}</td><td>${s && !isScr ? s.score.toFixed(1) : ''}</td><td>${s && !isScr && prob != null ? pct(prob) : ''}</td><td class="small ${val.startsWith('over') ? 'pos' : val.startsWith('under') ? 'neg' : 'muted'}">${s && !isScr ? esc(val) : ''}</td><td class="grade-${grade}">${isScr ? 'SCR' : grade}</td><td class="small muted" style="max-width:380px">${esc(why)}</td></tr>`;
   }).join('');
   const table = `<div class="card tight"><div class="head"><h2>Horses</h2><span class="small muted">tick a horse to mark it scratched, then re-run · click a row for its audit · (rank) = where an AE/MTO would stand if it draws in</span>${S.dirty ? '<span class="chip warn" style="margin-left:auto">scratches changed — re-run picks</span>' : ''}</div><div class="scroll"><table><thead><tr><th>Scr</th><th>Pgm</th><th>PP</th><th>Horse</th><th>ML</th><th>Style/pts</th><th>Rank</th><th>Score</th><th>Win %</th><th>Value</th><th>Grade</th><th>Top reasons</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
   let body = '';
@@ -210,7 +213,7 @@ function renderLoad(m) {
         <label class="drop" style="margin-top:8px">Payout-page screenshots named r1.png, r2.png …<br><span class="small">read by OCR; a chart for the same race wins</span><input type="file" accept="image/png" multiple data-kind="png" hidden></label>
         <div class="small muted" style="margin-top:8px">${(f.charts || []).concat(f.pngs || []).join(' · ')}</div>
         ${((f.charts || []).length || (f.pngs || []).length) ? '<button class="btn small" type="button" id="btnReread" style="margin-top:8px">Re-read all results files</button>' : ''}</div></div>
-    <div class="card" style="margin-top:16px"><h2>Scratches</h2><div class="filters" style="margin-top:8px"><input type="text" id="scrText" style="flex:1 1 420px" value="${esc(scratchText())}" placeholder="2:10, 4:2, 4:11, 7:13" aria-label="Scratch list"><button class="btn primary" type="button" id="btnApply">Apply and re-run picks</button></div><div class="small muted" style="margin-top:8px">race:program pairs; also-eligibles draw in automatically; or tick horses on the Desk.</div></div>
+    <div class="card" style="margin-top:16px"><h2>Scratches</h2><div class="filters" style="margin-top:8px"><input type="text" id="scrText" style="flex:1 1 420px" value="${esc(scratchText())}" placeholder="2:10, 4:2, 4:11, 7:13" aria-label="Scratch list"><button class="btn primary" type="button" id="btnApply">Apply and re-run picks</button></div><div class="small muted" style="margin-top:8px">race:program pairs; also-eligibles draw in automatically; 4:+12 = AE/MTO #12 officially in, 4:-12 = held out; or tick horses on the Desk.</div></div>
     <div class="grid2" style="margin-top:16px"><div class="card"><h2>Runs kept for this card</h2><div class="small muted">Every run is frozen in data/out/snapshots; "pre-race" runs are the ones the analysis is scored on.</div><table style="margin-top:8px"><thead><tr><th>When</th><th>Kind</th><th>Scratches</th><th>Profile</th></tr></thead><tbody>${(st.runs || []).slice().reverse().map(r => `<tr><td class="muted">${esc(r.at)}</td><td>${esc(r.kind || '')}</td><td>${esc(r.scratches || '—')}</td><td>${esc(r.profile || '')}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">none yet</td></tr>'}</tbody></table></div>
     <div class="card"><h2>Activity</h2><table style="margin-top:8px"><thead><tr><th>When</th><th>Step</th><th>Outcome</th></tr></thead><tbody>${(st.activity || []).slice().reverse().map(a => `<tr><td class="muted">${esc(a.at)}</td><td>${esc(a.step)}</td><td>${esc(a.outcome)}</td></tr>`).join('') || '<tr><td colspan="3" class="muted">nothing yet</td></tr>'}</tbody></table></div></div>`;
   m.querySelectorAll('input[type=file]').forEach(inp => inp.onchange = () => upload(inp.dataset.kind, inp.files));
