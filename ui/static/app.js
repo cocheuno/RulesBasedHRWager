@@ -90,7 +90,7 @@ function render() {
 }
 function renderChips() {
   const c = $('#chips'); if (!S.data) { c.innerHTML = ''; return; }
-  const f = S.data.files, nScr = Object.values(S.scratches).reduce((n, s) => n + s.size, 0), nRes = (S.data.results ? S.data.results.races.length : 0), nRaces = S.data.roster.length;
+  const f = S.data.files, nScr = Object.values(S.scratches).reduce((n, s) => n + [...s].filter(t => !/^[+-]/.test(t)).length, 0), nRes = (S.data.results ? S.data.results.races.length : 0), nRaces = S.data.roster.length;
   const prof = S.data.picks ? S.data.picks.track_profile : '';
   c.innerHTML = [
     ['PPs', f.pp || f.card_json, 'good', 'bad'], ['Quick sheet', f.sheet, 'good', ''], [S.data.picks ? 'Picks · profile ' + prof : 'No run yet', !!S.data.picks, 'good', 'warn'],
@@ -213,7 +213,7 @@ function renderLoad(m) {
         <label class="drop" style="margin-top:8px">Payout-page screenshots named r1.png, r2.png …<br><span class="small">read by OCR; a chart for the same race wins</span><input type="file" accept="image/png" multiple data-kind="png" hidden></label>
         <div class="small muted" style="margin-top:8px">${(f.charts || []).concat(f.pngs || []).join(' · ')}</div>
         ${((f.charts || []).length || (f.pngs || []).length) ? '<button class="btn small" type="button" id="btnReread" style="margin-top:8px">Re-read all results files</button>' : ''}</div></div>
-    <div class="card" style="margin-top:16px"><h2>Scratches</h2><div class="filters" style="margin-top:8px"><input type="text" id="scrText" style="flex:1 1 420px" value="${esc(scratchText())}" placeholder="2:10, 4:2, 4:11, 7:13" aria-label="Scratch list"><button class="btn primary" type="button" id="btnApply">Apply and re-run picks</button></div><div class="small muted" style="margin-top:8px">race:program pairs; also-eligibles draw in automatically; or tick horses on the Desk.</div></div>
+    <div class="card" style="margin-top:16px"><h2>Scratches</h2><div class="filters" style="margin-top:8px"><input type="text" id="scrText" style="flex:1 1 420px" value="${esc(scratchText())}" placeholder="2:10, 4:2, 4:11, 7:13" aria-label="Scratch list"><button class="btn primary" type="button" id="btnApply">Apply and re-run picks</button></div><div class="small muted" style="margin-top:8px">race:program pairs; also-eligibles draw in automatically; 4:+12 = AE/MTO #12 officially in, 4:-12 = held out; or tick horses on the Desk.</div></div>
     <div class="grid2" style="margin-top:16px"><div class="card"><h2>Runs kept for this card</h2><div class="small muted">Every run is frozen in data/out/snapshots; "pre-race" runs are the ones the analysis is scored on.</div><table style="margin-top:8px"><thead><tr><th>When</th><th>Kind</th><th>Scratches</th><th>Profile</th></tr></thead><tbody>${(st.runs || []).slice().reverse().map(r => `<tr><td class="muted">${esc(r.at)}</td><td>${esc(r.kind || '')}</td><td>${esc(r.scratches || '—')}</td><td>${esc(r.profile || '')}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">none yet</td></tr>'}</tbody></table></div>
     <div class="card"><h2>Activity</h2><table style="margin-top:8px"><thead><tr><th>When</th><th>Step</th><th>Outcome</th></tr></thead><tbody>${(st.activity || []).slice().reverse().map(a => `<tr><td class="muted">${esc(a.at)}</td><td>${esc(a.step)}</td><td>${esc(a.outcome)}</td></tr>`).join('') || '<tr><td colspan="3" class="muted">nothing yet</td></tr>'}</tbody></table></div></div>`;
   m.querySelectorAll('input[type=file]').forEach(inp => inp.onchange = () => upload(inp.dataset.kind, inp.files));
