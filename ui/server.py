@@ -52,7 +52,7 @@ from brisnet_pp.parser import PARSER_VERSION                  # noqa: E402
 from handicapper.engine import format_report, load_config   # noqa: E402
 from handicapper.pipeline import run_card                     # noqa: E402
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
-from handicapper.snapshot import latest_snapshot, list_snapshots, write_snapshot, prediction_kind, evaluation_basis   # noqa: E402
+from handicapper.snapshot import latest_snapshot, list_snapshots, write_snapshot   # noqa: E402
 from handicapper.wagering import evaluate_card, format_evaluation, format_units, rollup, units_table  # noqa: E402
 from ocr_results import ocr_folder   # noqa: E402
 
@@ -179,7 +179,7 @@ class Desk:
         st["activity"] = st["activity"][-50:]
 
     # ---------------------------------------------------------------- engine
-    def run(self, card: str, scratches: str | None = None, reparse: bool = False, kind: str | None = None, post_times: dict | None = None) -> dict:
+    def run(self, card: str, scratches: str | None = None, reparse: bool = False, kind: str | None = None) -> dict:
         """kind: None = decide from the results on file (pre-race / post-results); "as-run" for the retrospective
         re-score.  Every run is also frozen as an append-only snapshot (handicapper/snapshot.py)."""
         f = self.files(card)
@@ -199,12 +199,9 @@ class Desk:
                     json.dump(out["raw"], fh, indent=1, ensure_ascii=False)
                 self.log(st, "Re-read PPs", why or "asked for")
             cj = os.path.join(self.out, f"{card}.card.json")
-            out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"],
-                           config_path=self.config, post_times=post_times if post_times is not None else st.get("post_times"))
-            if post_times is not None:
-                st["post_times"] = post_times
+            out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config)
             result = out["result"]
-            kind = prediction_kind(result, kind)
+            kind = kind or ("post-results" if result["run"]["results_known"] else "pre-race")
             result["run"]["kind"] = kind
             with open(os.path.join(self.out, f"{card}.picks.json"), "w", encoding="utf-8") as fh:
                 json.dump(result, fh, indent=1, ensure_ascii=False, default=str)
@@ -250,13 +247,13 @@ class Desk:
         snaps = [{k: v for k, v in s.items() if k != "path"} for s in list_snapshots(self.out, card)]
         return {"card": card, "meta": meta, "files": {k: (bool(v) if k not in ("pngs", "charts") else v) for k, v in f.items()},
                 "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev,
-                "latest_kind": "as-run" if (picks or {}).get("run", {}).get("kind") == "as-run" else evaluation_basis(picks or {}),
+                "latest_kind": (picks or {}).get("run", {}).get("kind") or ("as-run" if picks and "as-run" in str(st.get("activity", [])[-1:]) else None),
                 "pre_race": pre, "snapshots": snaps}
 
     def pre_race(self, card: str, results: dict, wcfg: dict) -> dict | None:
         """Back-test and wager evaluation of the newest pre-race snapshot: what the engine said before any result
         was on file, which no later run can change.  None when the card has no pre-race snapshot."""
-        snap = latest_snapshot(self.out, card, None, basis="verified-pre-race")
+        snap = latest_snapshot(self.out, card, "pre-race")
         if not snap:
             return None
         if not snap.get("track_code"):
@@ -361,20 +358,18 @@ class Desk:
         L = ["# " + card, ""]
         pre = pl.get("pre_race")
         if pre:
-            L += [f"## Verified before-post prediction (hypothetical recommendations)  (snapshot {pre['snapshot']['file']}, {pre['snapshot']['at_utc']} UTC"
+            L += [f"## Pre-race prediction, as bet  (snapshot {pre['snapshot']['file']}, {pre['snapshot']['at_utc']} UTC"
                   + (f", scratches {pre['scratches']}" if pre["scratches"] else "") + ")", "",
-                  "Prediction and evaluation policy are frozen. Returns may change when results are corrected; no executed bets are recorded.", "",
+                  "These numbers cannot change: the snapshot was frozen before any result for this card was on file.", "",
                   format_backtest(pre["backtest"]), "", format_evaluation(pre["evaluation"]), ""]
         else:
-            L += ["## No verified before-post snapshot on file", "",
-                  "Timing is unverified or the run is historical; the section below is "
+            L += ["## No pre-race snapshot on file", "",
+                  "This card was run before snapshots existed (or only after results were entered); the section below is "
                   "retrospective and must not be read as what the engine said before the races.", ""]
         kind = pl.get("latest_kind") or "latest"
         label = {"as-run": "As-run re-score  (retrospective: the field as the charts say it ran)",
                  "post-results": "Latest run  (made after some results were on file: retrospective for those races)",
-                 "verified-pre-race": "Latest run (verified before post; hypothetical)",
-                 "timing-unverified": "Latest run (timing unverified)",
-                 "retrospective": "Latest run (retrospective)"}.get(kind, "Latest run (timing unverified)")
+                 "pre-race": "Latest run  (pre-race)"}.get(kind, "Latest run")
         L += [f"## {label}", "", format_backtest(pl["backtest"]), "", format_evaluation(pl["evaluation"])]
         return "\n".join(L)
 
@@ -389,9 +384,9 @@ class Desk:
             f = self.files(c["card"])
             if not (f["picks_json"] and f["results"]):
                 continue
-            snap = latest_snapshot(self.out, c["card"], None, basis="verified-pre-race")
+            snap = latest_snapshot(self.out, c["card"], "pre-race")
             picks = snap or json.load(open(f["picks_json"], encoding="utf-8"))
-            basis = evaluation_basis(picks)
+            basis = "pre-race" if snap else "latest (retrospective)"
             res = load_results(f["results"])
             bt = backtest(picks, res)
             ev = evaluate_card(picks, res, cfg)
@@ -403,11 +398,11 @@ class Desk:
                           "top_pick_wins": s["top_pick_wins"], "winner_in_top3": s["winner_in_top3"],
                           "bets": ev["totals"]["bets"], "hits": ev["totals"]["hits"], "cost": ev["totals"]["cost"], "ret": ev["totals"]["ret"],
                           "multirace": {k: v.get("hit") for k, v in bt["multirace"].items() if v.get("known")}})
-            for st in (bt["rules"] if basis == "verified-pre-race" else []):
+            for st in bt["rules"]:
                 k = (st["rule"], st["sign"])
                 d = rules.setdefault(k, {"rule": st["rule"], "sign": st["sign"], "fired": 0, "won": 0, "itm": 0})
                 d["fired"] += st["fired"]; d["won"] += st["won"]; d["itm"] += st["itm"]
-            if basis == "verified-pre-race" and s.get("brisnet_races"):
+            if s.get("brisnet_races"):
                 bench["races"] += s["brisnet_races"]; bench["brisnet_wins"] += s["brisnet_pick_wins"]; bench["brisnet_top3"] += s["brisnet_top3"]
                 bench["best_bets"] += s["brisnet_best_bets"]; bench["best_bet_wins"] += s["brisnet_best_bet_wins"]
                 bench["engine_wins"] += sum(1 for r in bt["races"] if r.get("brisnet_pick") and r["top_pick_won"])
@@ -419,13 +414,8 @@ class Desk:
         for ev in evals:
             for x in ev["rows"]:
                 rows.append(dict(x, card=ev["card_code"], track=ev["track_code"], date=ev.get("date"), basis=ev["basis"]))
-        groups = {basis: rollup([ev for ev in evals if ev["basis"] == basis])
-                  for basis in ("verified-pre-race", "timing-unverified", "retrospective")}
-        return {"rollup": groups["verified-pre-race"], "rollups_by_basis": groups,
-                "basis": "verified-pre-race", "cards": cards, "rules": rule_rows,
-                "rows": [r for r in rows if r["basis"] == "verified-pre-race"], "rows_by_basis": {
-                    basis: [r for r in rows if r["basis"] == basis] for basis in groups}, "benchmark": bench,
-                "units": units, "units_text": "Saved per-run units; legacy evaluations use current settings"}
+        return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench,
+                "units": units, "units_text": format_units(units)}
 
     # ---------------------------------------------------------------- uploads
     def save_upload(self, card: str, kind: str, filename: str, data: bytes, race_no: int | None = None) -> dict:
@@ -563,7 +553,7 @@ class Handler(SimpleHTTPRequestHandler):
             if m:
                 card, action = unquote(m.group(1)), m.group(2)
                 if action == "run":
-                    return self._json(self.desk.run(card, payload.get("scratches"), bool(payload.get("reparse")), post_times=payload.get("post_times")))
+                    return self._json(self.desk.run(card, payload.get("scratches"), bool(payload.get("reparse"))))
                 if action == "ocr":
                     rn = payload.get("race_no")
                     return self._json(self.desk.ocr(card, int(rn) if rn else None, bool(payload.get("force"))))

@@ -148,23 +148,21 @@ After every race is scored, each leg's live horses get a blended win probability
 Budgets, coverage targets and thresholds are in `rules_config.json -> multirace`; `--budget3/--budget4` override
 the budgets from the command line and `--no-multi` suppresses the section.
 
-### Recommendations and optional wager scenarios
+### Other wagers per race (`engine.other_wagers`)
 
-Ability picks remain the top 1–3 contenders. They are not automatic bets. Every primary and secondary
-WIN recommendation uses the same `win_price` decision: the morning line must be present and meet both
-`min_ml_for_win_bet` and fair odds times `(1 + win_margin)`. The report names the minimum acceptable odds.
-Morning-line eligibility is provisional; final-odds evaluation is hypothetical and is not proof a bet was executed.
-When no candidate qualifies, `wager_status` and `bet_structure` say PASS while preserving contender rankings.
+The wagering summary lists each race's top three ranked live horses (score, blended win chance, A/B grade) and a
+set of secondary wagers chosen by the race's confidence: exacta and superfecta **keys** on a standout and two
+trifecta tickets with it keyed first *or* second over the next three; exacta box plus part-wheel and a four-horse
+trifecta box in a medium race; boxes only in a contentious one; WIN only on a V1 overlay, the favourite kept
+underneath when H5 finds it beatable, and a daily
+double with the next race's A horses.
 
-Schema version 2 keeps only eligible WIN recommendations in `races[].wagers`. Exacta, trifecta, superfecta,
-and double constructions remain in `wager_options` with `advisory: true`; their value has not been established
-from payout estimates. The Desk exposes them under Optional exotic scenarios. Pick 3/4 scenarios remain
-tracked separately and cannot enter recommended-bet totals via a later configuration change.
-
-Ability selection still uses the configured score gaps (`single_gap`, `pair_gap`, `third_gap`, `spread_gap`).
-AE/MTO runners have no active rank or probability. Their conditional score and rank come from re-scoring
-the entire hypothetical field with that runner activated. An inactive runner cannot change ticket pricing,
-even if a hard rule also eliminates it.
+Selection (`rules_config.json → selection`): the top horse is a **single** when it is
+`single_gap` (7) points clear and the race is not contentious (fewer than 4 horses within
+`spread_gap`); the 2nd is added when within `pair_gap` (4) or the race is contentious; a 3rd
+when within `third_gap` (7).  Also-eligibles are never picked outright — they hold no rank among the
+runners and are reported as "would rank N if it draws in".  ML ≤ 6/5 singles are keyed in exotics rather than
+bet to win.
 
 ### Tuning
 
@@ -175,7 +173,8 @@ even if a hard rule also eliminates it.
   `pick.py --track-profile SA` forces one.  The report header and `picks.json["track_profile"]` say which profile
   scored the card.  The rule logic is common to all tracks; what the profiles carry is how much each factor counts
   (pace rules P1/P3/P4/P7, course specialists D5/D6, post bias P6, trainer thresholds) and the ticket parameters
-  (denominations, budgets, chaos-leg field size).  The shipped profiles are expert priors; use `backtest.py` to assess them as cards accumulate. It does not fit weights.
+  (denominations, budgets, chaos-leg field size).  The shipped profiles are expert priors; fit them per track with
+  `backtest.py` as cards accumulate.
 * Every run writes `*.picks.json`, which contains the full per-horse feature set and every
   rule hit — join it with results to back-test weights.
 * Add a rule: write a function in `rules.py` with the `@rule` decorator and a docstring ending in a
@@ -227,20 +226,13 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 
 ## Results, scratches and back-testing
 
-* **Snapshots** (`handicapper/snapshot.py`): runs are saved append-only with exclusive file creation and
-  timestamp/sequence ordering. UTC timestamps, source/sheet hashes, effective configuration, evaluation policy,
-  code version and results already known are retained. The full latest artifact remains in `picks.json`.
-  `pre-race` now requires explicit offset-aware `post_at_utc` times for every selected race, all later than the
-  run timestamp, with no known results. It means before the supplied post times, not independent certification
-  of actual off times. No post times means `timing-unverified`; past posts or historical cards are retrospective.
-  `post-results` and `as-run` remain retrospective for card-level evaluation.
-  Old snapshots are never rewritten: their legacy pre-race label is treated as timing-unverified without timing
-  evidence. CLI backtests and the Desk Analysis page separate verified-pre-race, timing-unverified, and retrospective
-  groups; the default summary, rule statistics and benchmark include only verified-pre-race records.
-* **Frozen evaluation policy**: new recommendations carry their stake per combination and the artifact carries
-  `evaluation_policy`. Evaluation uses that saved policy, ignoring later configuration changes. Results corrections
-  may still change returns. Legacy artifacts without a saved policy are labeled `legacy-current-settings` rather
-  than being assigned invented historical stakes. No executed-bet ledger is implemented.
+* **Snapshots** (`handicapper/snapshot.py`): every run is also frozen, append-only, as
+  `data/out/snapshots/<card>/<UTC>_<kind>.picks.json` with a `run` block (UTC time, scratches, parser version,
+  configuration hash, git version, source file hash, which races had results on file, odds source).  Kinds:
+  `pre-race` (no result on file yet: the run you could bet from), `post-results`, `as-run` (the retrospective
+  re-score with the chart's field).  `picks.json` stays the *latest* run.  The back-test and the Analysis screen
+  score the newest pre-race snapshot and label the as-run numbers as retrospective; a card with no pre-race
+  snapshot says so.
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
   Results and payoffs are public data and may be committed; PPs are not.
 * `--scratch "r:p, r:p"` removes scratched horses before scoring; one also-eligible draws in per scratch, in
@@ -288,23 +280,3 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 * The class ladder in `features.class_level` is calibrated for the Southern California
   circuit; adjust for other circuits.
 * Weights are expert priors, not fitted; the audit trail exists precisely so they can be.
-
-## Explicit timing inputs
-
-For JSON cards, add `post_at_utc` to each race, e.g. `"2030-05-01T18:30:00Z"`.
-For PDFs or cached cards, create a JSON map of race numbers to offset-aware timestamps and run:
-
-```sh
-python pick.py data/pps/example.pdf --post-times /tmp/post-times.json -o /tmp/predictions
-```
-
-Example map: `{"1": "2030-05-01T14:30:00-04:00", "2": "2030-05-01T15:00:00-04:00"}`.
-Provide all race times for a full-card verified timing assessment; partial maps remain unverified.
-With `--race`, all selected races must have usable times. Never enter made-up times to obtain a pre-race label.
-The Desk Load page accepts the same map under Post times, saves it per card, and re-runs the pipeline.
-Naive timestamps and unknown race numbers are rejected. PP clock strings without a date/timezone are not guessed.
-
-The displayed contender win percentages are conditional on an active, non-eliminated contender winning.
-Horizontal hit probabilities additionally reserve the configured upset share for active eliminated runners.
-The 2% default reserve remains an expert assumption, not a calibrated estimate. Track weights are unchanged;
-weight fitting, bankroll sizing and coupled-interest settlement remain separate work.

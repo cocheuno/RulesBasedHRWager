@@ -18,7 +18,6 @@ Selection policy (all thresholds in rules_config.json -> "selection"):
 """
 from __future__ import annotations
 
-import copy
 import json
 import math
 import os
@@ -27,7 +26,8 @@ from collections import defaultdict
 from . import rules as R
 from . import multirace as MR
 from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs
-from .wagering import DEFAULT_UNITS, DEFAULT_WAGERING, make_wager, unit_for
+from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs
+from .wagering import DEFAULT_UNITS, DEFAULT_WAGERING, make_wager
 from .features import horse_features, race_context
 
 DEFAULT_CONFIG = {
@@ -39,7 +39,7 @@ DEFAULT_CONFIG = {
         "third_gap": 7.0,          # 3rd within this of 1st => include
         "spread_gap": 4.0,         # 4+ horses within this => contentious
         "max_picks": 3,
-        "min_ml_for_win_bet": 1.5,  # a rejected win price does not authorize an exotic bet
+        "min_ml_for_win_bet": 1.5,  # <= 6/5 ML: no win bet, exotics only
         "win_margin": 0.15,        # a win bet also needs odds >= fair odds x (1 + margin): no bet at or under fair
         "min_field_trifecta": 5,   # tracks do not open a trifecta pool below this many starters ...
         "min_field_superfecta": 7, # ... nor a superfecta below this: no suggestion in a smaller field
@@ -106,18 +106,12 @@ def score_race(race: dict, cfg: dict) -> dict:
     feats = {h["pgm"]: horse_features(h, race) for h in race["horses"]}
     ctx = race_context(race, feats)                       # active field only (no AE / MTO)
     active = {k: v for k, v in feats.items() if k not in ctx["alternates"]}
-    conditional = {}
-    for alt in ctx["alternates"]:
-        scenario = copy.deepcopy(race)
-        scenario["horses"] = [h for h in scenario["horses"] if h["pgm"] in active or h["pgm"] == alt]
-        for h in scenario["horses"]:
-            h["entry_status"] = None
-        conditional[alt] = score_race(scenario, cfg)
+    cond_ctx = {alt: race_context(race, dict(active, **{alt: feats[alt]})) for alt in ctx["alternates"]}
     sel = cfg["selection"]
     sheets = []
     for h in race["horses"]:
         f = feats[h["pgm"]]
-        ctx_h = ctx
+        ctx_h = cond_ctx.get(h["pgm"], ctx)              # an alternate is judged as if it had drawn in
         hits, total, eliminated, flags = [], 0.0, False, []
         for rl in R.RULES:
             if rl.id in cfg["disabled"]:
@@ -149,8 +143,7 @@ def score_race(race: dict, cfg: dict) -> dict:
         sheets.append({
             "pgm": h["pgm"], "name": h["name"], "ml_odds": h["ml_odds"], "ml_decimal": h["ml_decimal"],
             "run_style": h["run_style"], "speed_pts": h["speed_pts"], "prime_power": h["prime_power"],
-            "score": round(total, 2), "eliminated": eliminated,
-            "flags": flags or ([f"{h['entry_status']} - inactive until officially activated"] if h.get("entry_status") else []), "hits": hits,
+            "score": round(total, 2), "eliminated": eliminated, "flags": flags, "hits": hits,
             "features": {k: v for k, v in f.items() if not k.startswith("_") and k not in ("last", "positives", "negatives", "trainer_angles", "trainer_flagged")},
         })
     # ---- probabilities: one model for the race, over the horses that can win (not eliminated, not AE/MTO)
@@ -190,15 +183,8 @@ def score_race(race: dict, cfg: dict) -> dict:
     for s in sheets:
         if s["flags"]:
             s["rank"] = None
-            scenario = conditional[s["pgm"]]
-            alternate = next(x for x in scenario["sheets"] if x["pgm"] == s["pgm"])
-            s["score"] = alternate["score"]
-            s["eliminated"] = alternate["eliminated"]
-            s["hits"] = [h for h in alternate["hits"] if not h.get("value")] + [h for h in s["hits"] if h["rule"] == "X3"]
-            s["conditional_rank"] = alternate["rank"]
-            s["conditional"] = {"pace_shape": scenario["pace_shape"],
-                                "rankings": [{"pgm": x["pgm"], "score": x["score"], "rank": x["rank"]}
-                                             for x in scenario["sheets"]]}
+            s["conditional_rank"] = 1 + sum(1 for x in running if x["eliminated"] < s["eliminated"] or
+                                            (x["eliminated"] == s["eliminated"] and x["score"] > s["score"]))
         s["min_win_odds"] = None if (s["eliminated"] or s["flags"]) else win_price(s, sel)["min_odds"]
     picks, structure, confidence, note = select(sheets, sel)
     return {
@@ -220,8 +206,6 @@ def win_price(s: dict, sel: dict) -> dict:
     min_odds = floor if fair is None else max(floor, round(fair * (1 + sel.get("win_margin", 0.0)), 1))
     ml = s.get("ml_decimal")
     out = {"min_odds": min_odds, "ml": ml, "fair": fair}
-    if fair is None:
-        return out | {"ok": None, "why": "fair odds unavailable; no priced win recommendation"}
     if ml is None:
         return out | {"ok": None, "why": f"no morning line in the PPs; take {min_odds:g}-1 or better on the board"}
     if ml < floor:
@@ -265,11 +249,21 @@ def _select_live(live: list[dict], sel: dict):
         confidence = "low" if contentious else "medium"
         note = f"gap to 2nd {gap2:.1f}, to 3rd {gap3:.1f}" + (", contentious" if contentious else "")
     picks = picks[: sel["max_picks"]]
-    # Recommendations and human-readable text share the same structured price decision.
-    candidates = primary_wagers({"picks": picks, "sheets": live, "race_no": 0, "field_size": len(live)}, sel)
-    structure = "; ".join(w["label"] for w in candidates if w["type"] == "WIN")
-    if not structure:
-        structure = "PASS: no win bet; " + win_price(top, sel)["why"]
+    # bet structure: a win bet only at an acceptable price; no morning line = price unknown, advisory only
+    wp = win_price(top, sel)
+    if wp["ok"] is True:
+        win = f"WIN (take {wp['min_odds']:g}-1 or better)"
+    elif wp["ok"] is None:
+        win = f"WIN only if the board shows {wp['min_odds']:g}-1 or better (no morning line in the PPs)"
+    else:
+        win = None
+    if len(picks) == 1:
+        structure = win if win else f"KEY in exactas/trifectas, no win bet ({wp['why']})"
+    elif len(picks) == 2:
+        a, b = picks
+        structure = f"EXACTA box {a}-{b}; WIN on the longer-priced of the two at 5/2 or better"
+    else:
+        structure = f"TRIFECTA box {'-'.join(picks)}; EXACTA box top two; " + (win.replace("WIN", f"WIN on #{picks[0]}", 1) if win else f"no win bet on #{picks[0]} ({wp['why']})")
     return picks, structure, confidence, note
 
 
@@ -290,26 +284,7 @@ def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
             if w["type"] == "WIN":        # the price each horse must show at post time; the evaluation checks it
                 w["min_odds_by"] = {k: mins.get(k) for k in w["legs"][0]}
                 w.setdefault("min_odds", w["min_odds_by"].get(w["legs"][0][0]))
-        for w in r["wagers"]:
-            w["unit"] = unit_for(w, cfg["wagering"])
-        r["wager_options"] = [w for w in r["wagers"] if w["type"] != "WIN"]
-        for w in r["wager_options"]:
-            w["advisory"] = True
-        r["wagers"] = [w for w in r["wagers"] if w["type"] == "WIN"]
-        r["wager_status"] = "BET" if r["wagers"] else "PASS"
-        r["bet_structure"] = "; ".join(w["label"] for w in r["wagers"]) or "PASS: no win candidate meets the price requirements"
-        r["option_notes"] = [line for line in r["other_wagers"] if line.startswith("no trifecta")]
-        r["other_wagers"] = [w["label"] for w in r["wagers"] if w["source"] == "other"]
-        if not r["wagers"]:
-            live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
-            why = "; ".join("#" + s["pgm"] + ": " + win_price(s, cfg["selection"])["why"] for s in live[:3])
-            r["bet_structure"] = "PASS: no win bet; " + why
     out["multirace"] = MR.build_all(out, mr_cfg) if multirace else None
-    for block in (out["multirace"] or {}).values():
-        if block.get("recommended"):
-            block["recommended"]["advisory"] = True
-    out["schema_version"] = 2
-    out["evaluation_policy"] = copy.deepcopy(cfg["wagering"])
     return out
 
 
@@ -377,8 +352,7 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
     super_ok = r["field_size"] >= sel.get("min_field_superfecta", 7)
     leg = r.get("leg") or {}
     fav = leg.get("favorite")
-    overlays = [x for x in live[:3] if win_price(x, sel)["ok"] is True and
-                any(h["rule"] == "V1" and h["points"] > 0 for h in x["hits"])]
+    overlays = [x for x in live[:3] if any(h["rule"] == "V1" and h["points"] > 0 for h in x["hits"])]
     W: list[str] = []
 
     def hs(*ks):
@@ -403,8 +377,7 @@ def other_wagers(r: dict, nxt: dict | None, sel: dict, structs: list | None = No
         if wp["ok"] is True:
             W.append(f"WIN {hs(a)} ({wp['why']}; fair {top['fair_odds']}-1)")
             add("WIN", [[a]])
-            if structs is not None:
-                structs[-1]["min_odds"] = wp["min_odds"]
+            structs[-1]["min_odds"] = wp["min_odds"]
         elif wp["ok"] is None:
             W.append(f"WIN {hs(a)} only if the board shows {wp['min_odds']:g}-1 or better (no morning line in the PPs; fair {top['fair_odds']}-1) - not counted as a bet")
         else:
@@ -466,6 +439,16 @@ def value_text(s: dict) -> str:
     return f"{v['label']} {v['edge']:+.0%}"
 
 
+def value_text(s: dict) -> str:
+    """'overlay +45%' / 'underlay -30%' / 'fair' / '-' (no morning line)."""
+    v = s.get("value")
+    if not v:
+        return "-"
+    if v["label"] == "fair" or v.get("edge") is None:
+        return v["label"]
+    return f"{v['label']} {v['edge']:+.0%}"
+
+
 def format_summary(result: dict) -> str:
     """The bets only: per race the top three ranked horses, the primary play and the other suggested wagers,
     then the recommended Pick 3 / Pick 4 tickets.  No rule detail."""
@@ -477,7 +460,7 @@ def format_summary(result: dict) -> str:
         alts = f" (+{len(r['alternates'])} AE/MTO)" if r.get("alternates") else ""
         L.append(f"### Race {r['race_no']}: {r['class_text']}  {r['distance_text']} ({r['surface']})  field {r['field_size']}{alts}  — confidence {r['confidence']}")
         L.append("")
-        L.append("| Rank | # | Horse | ML | Score | Conditional win chance | Fair | Value | Grade |")
+        L.append("| Rank | # | Horse | ML | Score | Win chance | Fair | Value | Grade |")
         L.append("|---|---|---|---|---|---|---|---|---|")
         for i, s in enumerate(live[:3], 1):
             grade = "A" if s["pgm"] in leg.get("A", []) else ("B" if s["pgm"] in leg.get("B", []) else "-")
@@ -486,12 +469,9 @@ def format_summary(result: dict) -> str:
         L.append("")
         L.append(f"**Primary play:** {play} — {r['bet_structure']}")
         L.append("")
-        L.append("Other eligible win recommendations:")
+        L.append("Other wagers:")
         for w in r.get("other_wagers", []):
             L.append(f"- {w}")
-        if r.get("wager_options"):
-            L.append("Optional exotic scenarios (value unverified; excluded from recommended bets):")
-            L.extend("- " + w["label"] for w in r["wager_options"])
         L.append("")
     mr = result.get("multirace") or {}
     for key in ("pick3", "pick4"):
@@ -510,9 +490,6 @@ def format_report(result: dict, detail: int = 1) -> str:
     L = []
     L.append(f"# {result.get('track')} — {result.get('date')}  (picks generated by rules engine; track profile: {result.get('track_profile', 'default')})")
     L.append("")
-    if result.get("run"):
-        L.append("Timing: " + result["run"].get("kind", "timing-unverified") + "; hypothetical recommendations.")
-        L.append("")
     L.append(format_summary(result))
     if detail <= 0:
         return "\n".join(L)

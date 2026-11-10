@@ -208,8 +208,7 @@ def card_wagers(picks: dict, cfg: dict) -> list[dict]:
     de-duplicated so no combination is paid for twice."""
     out = []
     for r in picks["races"]:
-        ws = [w for w in r.get("wagers", []) if not w.get("advisory") and
-              (w["source"] != "other" or cfg.get("count_other_wagers", True))]
+        ws = [w for w in r.get("wagers", []) if w["source"] != "other" or cfg.get("count_other_wagers", True)]
         for w in _dedupe(ws):
             out.append(dict(w, confidence=r["confidence"]))
     mr = picks.get("multirace") or {}
@@ -220,13 +219,12 @@ def card_wagers(picks: dict, cfg: dict) -> list[dict]:
         for t in rec["tickets"]:
             out.append(make_wager(wtype, t["legs"], False, f"{rec['name']} {t['name']}", "multirace",
                                   race_no=rec["races"][0], races=rec["races"], unit=rec.get("base"))
-                       | {"confidence": "multirace", "tracked_only": bool(rec.get("advisory")) or not cfg.get("count_multirace", False)})
+                       | {"confidence": "multirace", "tracked_only": not cfg.get("count_multirace", False)})
     return out
 
 
 def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
-    saved_policy = picks.get("evaluation_policy")
-    cfg = dict(DEFAULT_WAGERING, **(saved_policy if saved_policy is not None else (cfg or {})))
+    cfg = dict(DEFAULT_WAGERING, **(cfg or {}))
     by_no = {r["race_no"]: r for r in results.get("races", [])}
     rows = []
     for w in card_wagers(picks, cfg):
@@ -245,9 +243,7 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
     tot["tracked"] = {"tickets": len(tracked), "known": len(tk), "hits": sum(1 for x in tk if x["hit"]),
                       "cost": round(sum(x["cost"] for x in tk), 2), "ret": round(sum(x["ret"] or 0 for x in tk), 2)}
     return {"card": picks.get("source"), "track_code": picks.get("track_code"), "date": picks.get("date"),
-            "units": units_table(cfg), "rows": rows, "totals": tot,
-            "policy_basis": "saved" if saved_policy is not None else "legacy-current-settings",
-            "execution_basis": "hypothetical recommendations; final-odds checks are simulated, not a bet receipt"}
+            "units": units_table(cfg), "rows": rows, "totals": tot}
 
 
 def units_table(cfg: dict) -> dict:
@@ -321,8 +317,7 @@ def format_evaluation(ev: dict) -> str:
          f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else "")
          + (f"; {t['passed']} win bet(s) passed because the final odds were under the minimum" if t.get("passed") else "")
          + (f"; {t['not_offered']} wager(s) not offered by the track (no pool on the chart)" if t.get("not_offered") else ""), "",
-         "Unit stakes: " + format_units(ev.get("units") or DEFAULT_UNITS) + ".",
-         "Evaluation: " + ev.get("execution_basis", "hypothetical") + "; policy: " + ev.get("policy_basis", "unspecified") + ".", ""]
+         "Unit stakes: " + format_units(ev.get("units") or DEFAULT_UNITS) + ".", ""]
     L.append("| Race | Wager | Unit | Cost | Result | Return |")
     L.append("|---|---|---|---|---|---|")
     for x in ev["rows"]:

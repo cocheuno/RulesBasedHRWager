@@ -38,7 +38,6 @@ def main() -> int:
     ap.add_argument("--results", help="results JSON for this card (results/<card>.results.json); earlier races feed the same-day bias rule P10")
     ap.add_argument("--sheet", help="Brisnet Power Play quick sheet PDF (<card>q.pdf): key-race angles (F16) and Brisnet's picks for the back-test")
     ap.add_argument("--track-profile", help="force a track profile from rules_config.json -> tracks (default: the track code read from the PP)")
-    ap.add_argument("--post-times", help="JSON file mapping race numbers to post timestamps with explicit timezone offsets")
     ap.add_argument("--no-multi", action="store_true", help="skip the Pick 3 / Pick 4 construction section")
     ap.add_argument("--budget3", type=float, help="override the Pick 3 budget in dollars (rules_config.json -> multirace.pick3.budget)")
     ap.add_argument("--budget4", type=float, help="override the Pick 4 budget in dollars (rules_config.json -> multirace.pick4.budget)")
@@ -49,13 +48,9 @@ def main() -> int:
         return 0
     if not args.card:
         ap.error("card is required")
-    post_times = None
-    if args.post_times:
-        with open(args.post_times, encoding="utf-8") as fh:
-            post_times = json.load(fh)
     out = run_card(args.card, scratch=args.scratch, sheet=args.sheet, results=args.results, config_path=args.config,
                    track_profile=args.track_profile, multirace=not args.no_multi, budget3=args.budget3, budget4=args.budget4,
-                   race_no=args.race, post_times=post_times)
+                   race_no=args.race)
     for n in out["notes"]:
         print(n, file=sys.stderr)
     card, result = out["card"], out["result"]
@@ -70,7 +65,7 @@ def main() -> int:
             json.dump(result, fh, indent=1, ensure_ascii=False, default=str)
         with open(os.path.join(args.out, f"{base}.picks.md"), "w", encoding="utf-8") as fh:
             fh.write(format_report(result, detail=2))
-        snap = write_snapshot(args.out, base, result, result["run"]["kind"])
+        snap = write_snapshot(args.out, base, result, "post-results" if result["run"]["results_known"] else "pre-race")
         print(f"\nwrote {args.out}/{base}.card.json, {base}.picks.json, {base}.picks.md; snapshot {os.path.relpath(snap, args.out)}", file=sys.stderr)
     return 0
 

@@ -15,7 +15,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
 from handicapper.wagering import evaluate_card, format_evaluation, format_rollup, rollup   # noqa: E402
-from handicapper.snapshot import evaluation_basis
 from handicapper.engine import load_config   # noqa: E402
 
 
@@ -31,15 +30,11 @@ def main(argv: list[str]) -> int:
         res = load_results(r_path)
         bt = backtest(picks, res)
         ev = evaluate_card(picks, res, cfg["wagering"])
-        ev["basis"] = evaluation_basis(picks)
         evals.append(ev)
-        reports.append(f"## {os.path.basename(p_path)} — {ev['basis']}\n\n" + format_backtest(bt) + "\n\n" + format_evaluation(ev))
+        reports.append(f"## {os.path.basename(p_path)}\n\n" + format_backtest(bt) + "\n\n" + format_evaluation(ev))
     print("\n\n".join(reports))
     if evals:
-        for basis in ("verified-pre-race", "timing-unverified", "retrospective"):
-            group = [ev for ev in evals if ev["basis"] == basis]
-            if group:
-                print("\n\nEvaluation basis: " + basis + "\n\n" + format_rollup(rollup(group)))
+        print("\n\n" + format_rollup(rollup(evals)))
     return 0
 
 

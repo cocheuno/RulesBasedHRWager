@@ -405,7 +405,7 @@ def race_context(race: dict, feats: dict[str, dict]) -> dict:
     of every denominator and listed in ctx["alternates"].  The engine scores each alternate against a conditional
     context that includes it (as if it had drawn in) without touching the active horses' numbers."""
     alternates = sorted(pgm for pgm, f in feats.items() if f.get("entry_status"))
-    active = {pgm: f for pgm, f in feats.items() if not f.get("entry_status")}
+    active = {pgm: f for pgm, f in feats.items() if not f.get("entry_status")} or dict(feats)
     ctx: dict = {"race": race, "n": len(active), "alternates": alternates, "n_alternates": len(alternates)}
     feats = active
     pars = race.get("pars") or {}
