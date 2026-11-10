@@ -80,6 +80,24 @@ class TestDayBias(unittest.TestCase):
         self.assertFalse([h for s in res_plain["races"][4]["sheets"] for h in s["hits"] if h["rule"] == "P10"])
 
 
+class TestIdentity(unittest.TestCase):
+    def test_results_must_belong_to_the_card(self):
+        from handicapper.results import check_identity
+        from handicapper.wagering import evaluate_card
+        card = build_card(); picks = score_card(card, CFG)
+        good = {"track": card["track"], "date": card["date"], "races": [{"race_no": 2, "finish": ["1", "3", "5"], "win": 8.0}]}
+        self.assertEqual(check_identity(picks, good), "verified")
+        self.assertEqual(backtest(picks, good)["identity"], "verified")
+        self.assertEqual(check_identity(picks, {"races": good["races"]}), "unverified", "no track/date: cannot be checked")
+        self.assertEqual(check_identity(picks, {"track": "DMR", "date": card["date"], "races": []}), "verified", "track code matches the name")
+        wrong_day = dict(good, date="2001-01-01")
+        with self.assertRaises(ValueError): backtest(picks, wrong_day)
+        with self.assertRaises(ValueError): evaluate_card(picks, wrong_day, CFG["wagering"])
+        with self.assertRaises(ValueError): attach_day_bias(copy.deepcopy(card), dict(good, track="Wrong Track"))
+        chart_from_elsewhere = dict(good, races=[dict(good["races"][0], track="Belmont Park")])
+        with self.assertRaises(ValueError): backtest(picks, chart_from_elsewhere)
+
+
 class TestBacktest(unittest.TestCase):
     def test_join(self):
         picks = score_card(build_card(), CFG)

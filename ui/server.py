@@ -239,14 +239,19 @@ class Desk:
             picks["track_code"] = meta["track_code"]
         results = load_results(f["results"]) if f["results"] else None
         bt = ev = pre = None
+        results_error = None
         if picks and results:
             wcfg = load_config(self.config)["wagering"]
-            bt = backtest(picks, results)
-            ev = evaluate_card(picks, results, wcfg)
-            pre = self.pre_race(card, results, wcfg)
+            try:
+                bt = backtest(picks, results)
+                ev = evaluate_card(picks, results, wcfg)
+                pre = self.pre_race(card, results, wcfg)
+            except ValueError as e:          # results from another card: refuse to score, say why
+                results_error = str(e)
         snaps = [{k: v for k, v in s.items() if k != "path"} for s in list_snapshots(self.out, card)]
         return {"card": card, "meta": meta, "files": {k: (bool(v) if k not in ("pngs", "charts") else v) for k, v in f.items()},
                 "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev,
+                "results_error": results_error,
                 "latest_kind": (picks or {}).get("run", {}).get("kind") or ("as-run" if picks and "as-run" in str(st.get("activity", [])[-1:]) else None),
                 "pre_race": pre, "snapshots": snaps}
 
