@@ -30,7 +30,9 @@ app). A picks run made before the restart used the old rules and parser.
    Or drop them on the Load tab, which saves them to the same place.
 2. Pick the card in the selector at the top and press **Run picks**. The Desk shows each race's top three with rank,
    ML, score, win chance and A/B grade, the primary play, the other wagers, and the Pick 3 / Pick 4 tickets.
-3. When scratches are posted: tick the scratched horses in the table (or paste the list on the Load tab, as
+3. Save Equibase's "Today's Race Day Changes" page for the track (browser: Save as, "Webpage, HTML only") and drop
+   it on the Load tab. Its scratches join the list on the next run, and the morning track condition, rail setting
+   and jockey changes are recorded on the run. Then, when scratches are posted: tick the scratched horses in the table (or paste the list on the Load tab, as
    `race:program` pairs such as `2:10, 4:2, 4:11`) and press **Re-run with scratches**. Also-eligibles draw in by
    themselves, lowest program first; when the track says otherwise, type it: `4:+12` puts AE or MTO #12 in,
    `4:-12` keeps it out. An AE that is not in shows its rank in brackets and is in no bet. That run is the one to
