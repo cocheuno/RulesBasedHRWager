@@ -61,10 +61,22 @@ def load_card(source) -> tuple[dict, list[str]]:
 
 def run_card(source, *, scratch: str | None = None, sheet: str | None = None, results: str | dict | None = None,
              config_path: str = DEFAULT_CONFIG, track_profile: str | None = None, multirace: bool = True,
-             budget3: float | None = None, budget4: float | None = None, race_no: int | None = None) -> dict:
+             budget3: float | None = None, budget4: float | None = None, race_no: int | None = None,
+             changes: str | dict | None = None) -> dict:
     """Returns {"card": the card as scored (after scratches), "raw": the card before scratches, "result": picks,
-    "cfg": config used, "track_code", "notes": [...]}."""
+    "cfg": config used, "track_code", "notes": [...]}.  `changes`: a saved Equibase race-day-changes page (path)
+    or its parsed form; recorded on the run (conditions, rail, jockey changes, pools) and on each race, nothing more."""
     card, notes = load_card(source)
+    chg = None
+    if changes:
+        from brisnet_pp.changes import parse_changes, summary as changes_summary
+        chg = changes if isinstance(changes, dict) else parse_changes(open(changes, encoding="utf-8", errors="replace").read())
+        chg_sum = changes_summary(chg)
+        for r in card["races"]:
+            r["changes"] = chg_sum["races"].get(str(r["race_no"]))
+            r["track_condition_morning"] = (chg_sum["conditions"] or {}).get("turf" if r.get("surface") == "turf" else "dirt")
+        notes.append(f"changes: {chg_sum.get('track')} updated {chg_sum.get('updated')}; conditions {chg_sum.get('conditions')}"
+                     + (f"; first post {chg_sum.get('first_post')}" if chg_sum.get("first_post") else ""))
     raw = copy.deepcopy(card)
     if sheet:
         notes.extend("sheet: " + n for n in merge_sheet(card, parse_sheet(sheet)))
@@ -101,5 +113,6 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
         "sheet": os.path.basename(sheet) if sheet else None,
         "results_known": res_known,           # races whose results were on file when this run was made
         "odds_source": "morning line",        # the only market input today
+        "changes": (chg_sum if chg else None),  # Equibase race-day changes as read (data only; no rule reads it yet)
     }
     return {"card": card, "raw": raw, "result": result, "cfg": cfg, "track_code": code, "notes": notes}

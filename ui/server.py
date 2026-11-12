@@ -126,6 +126,7 @@ class Desk:
         pngs = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "r*.png")))
         charts = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "*.pdf")))
         return {"pp": pp if os.path.exists(pp) else None, "sheet": sheet,
+                "changes": self._opt(os.path.join(self.pps, f"{card}.changes.html")),
                 "card_json": self._opt(os.path.join(self.out, f"{card}.card.json")),
                 "picks_json": self._opt(os.path.join(self.out, f"{card}.picks.json")),
                 "results": self._opt(os.path.join(self.results, f"{card}.results.json")),
@@ -189,6 +190,15 @@ class Desk:
         st = self.state(card)
         if scratches is not None:
             st["scratches"] = scratches
+        changes = None
+        if f["changes"]:   # the Equibase changes page: its scratches join the list, its conditions go on the run
+            from brisnet_pp.changes import merge_scratch_specs, parse_changes, scratch_spec, summary as changes_summary
+            changes = parse_changes(open(f["changes"], encoding="utf-8", errors="replace").read())
+            merged = merge_scratch_specs(st.get("scratches"), scratch_spec(changes))
+            if merged != (st.get("scratches") or ""):
+                self.log(st, "Changes page", f"scratches added from Equibase: {scratch_spec(changes) or 'none'}")
+                st["scratches"] = merged
+            st["changes"] = changes_summary(changes)
         with self.lock:
             # parse once and cache the raw card so the roster (with scratched horses) is always available;
             # re-read the PDF when asked, when it is newer than the cache, or when the parser has changed since
@@ -199,7 +209,8 @@ class Desk:
                     json.dump(out["raw"], fh, indent=1, ensure_ascii=False)
                 self.log(st, "Re-read PPs", why or "asked for")
             cj = os.path.join(self.out, f"{card}.card.json")
-            out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config)
+            out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config,
+                           changes=changes)
             result = out["result"]
             kind = kind or ("post-results" if result["run"]["results_known"] else "pre-race")
             result["run"]["kind"] = kind
@@ -442,6 +453,8 @@ class Desk:
             path = os.path.join(self.pps, f"{card}.pdf")
         elif kind == "sheet":
             path = os.path.join(self.pps, f"{card[:-1]}q.pdf" if card.endswith("y") else f"{card}q.pdf")
+        elif kind == "changes":
+            path = os.path.join(self.pps, f"{card}.changes.html")
         elif kind in ("png", "chart"):
             if not race_no:
                 m = re.search(r"USA(\d{1,2})$", os.path.splitext(filename)[0], re.I) or re.search(r"r?(\d{1,2})", os.path.splitext(filename)[0])
@@ -451,9 +464,15 @@ class Desk:
             os.makedirs(os.path.join(self.pngs, card), exist_ok=True)
             path = os.path.join(self.pngs, card, f"r{race_no}.{'png' if kind == 'png' else 'pdf'}")
         else:
-            raise ValueError("kind must be pp, sheet, png or chart")
+            raise ValueError("kind must be pp, sheet, changes, png or chart")
         with open(path, "wb") as fh:
             fh.write(data)
+        if kind == "changes":
+            from brisnet_pp.changes import parse_changes, scratch_spec, summary as changes_summary
+            chg = parse_changes(data.decode("utf-8", errors="replace"))
+            st = self.state(card); st["changes"] = changes_summary(chg); self.save_state(st)
+            return {"saved": os.path.relpath(path, self.root), "scratches": scratch_spec(chg), "conditions": chg.get("conditions"),
+                    "updated": chg.get("updated"), "track": chg.get("track")}
         if kind == "pp":   # a new PP file invalidates the cached parse
             for p in (os.path.join(self.out, f"{card}.card.json"),):
                 if os.path.exists(p):

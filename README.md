@@ -235,6 +235,10 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   snapshot says so.
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
   Results and payoffs are public data and may be committed; PPs are not.
+* `--changes <saved Equibase race-day-changes page>.html` (`brisnet_pp/changes.py`) adds that page's scratches to
+  `--scratch` and records the morning track condition, scheduled first post, temporary rail, jockey changes,
+  gelding / equipment notes and pools the track is not offering, on the run block and on each race.  Data only:
+  no rule reads it yet.  The Desk takes the same file on the Load tab.
 * `--scratch "r:p, r:p"` removes scratched horses before scoring; one also-eligible draws in per scratch, in
   program order (MTO horses stay flagged).  `r:+p` states that an AE/MTO is officially in (also when the race
   comes off the turf), `r:-p` that it stays out although a scratch would normally bring it in.  Pace shape and

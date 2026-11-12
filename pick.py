@@ -36,6 +36,7 @@ def main() -> int:
     ap.add_argument("--race", type=int, help="only this race number")
     ap.add_argument("--scratch", help="scratched horses as race:program pairs, e.g. \"3:3, 4:6, 8:4, 8:9\" (also-eligibles draw in)")
     ap.add_argument("--results", help="results JSON for this card (results/<card>.results.json); earlier races feed the same-day bias rule P10")
+    ap.add_argument("--changes", help="Equibase 'Today's Race Day Changes' page for this track, saved as HTML: its scratches are added to --scratch and the conditions / rail / jockey changes are recorded on the run")
     ap.add_argument("--sheet", help="Brisnet Power Play quick sheet PDF (<card>q.pdf): key-race angles (F16) and Brisnet's picks for the back-test")
     ap.add_argument("--track-profile", help="force a track profile from rules_config.json -> tracks (default: the track code read from the PP)")
     ap.add_argument("--no-multi", action="store_true", help="skip the Pick 3 / Pick 4 construction section")
@@ -48,9 +49,15 @@ def main() -> int:
         return 0
     if not args.card:
         ap.error("card is required")
-    out = run_card(args.card, scratch=args.scratch, sheet=args.sheet, results=args.results, config_path=args.config,
+    scratch = args.scratch
+    if args.changes:
+        from brisnet_pp.changes import merge_scratch_specs, parse_changes, scratch_spec
+        chg = parse_changes(open(args.changes, encoding="utf-8", errors="replace").read())
+        scratch = merge_scratch_specs(args.scratch, scratch_spec(chg))
+        print(f"changes page: scratches {scratch_spec(chg) or 'none'}", file=sys.stderr)
+    out = run_card(args.card, scratch=scratch, sheet=args.sheet, results=args.results, config_path=args.config,
                    track_profile=args.track_profile, multirace=not args.no_multi, budget3=args.budget3, budget4=args.budget4,
-                   race_no=args.race)
+                   race_no=args.race, changes=args.changes)
     for n in out["notes"]:
         print(n, file=sys.stderr)
     card, result = out["card"], out["result"]
