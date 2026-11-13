@@ -88,6 +88,7 @@ python ui.py stop
 | Process results reads nothing | the charts are not in `data\results-png\<card>\` (folder must match the PP name) |
 | A control described here is not on the page | `git pull origin main`, `python ui.py stop`, `python ui.py start`, then Ctrl+F5 |
 | "Check this result" banner on a race | a screenshot was read with doubts; compare with the image and correct it in the form below it |
+| "refused: this PP is not <card>'s" when dropping PPs | The open card already has picks or results and the file is another day's or track's. Type the new card code in **New card code** first, then drop the file again |
 | `git push` rejected ("fetch first") | `git pull origin main`, then push again |
 | `results\` folder missing after a pull (OneDrive) | `git restore results`; consider keeping the clone outside OneDrive |
 | Something else errors in the app | the message is in the toast at the bottom right and in `data\ui.log`; paste it to Claude |

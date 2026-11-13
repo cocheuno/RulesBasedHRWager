@@ -446,11 +446,51 @@ class Desk:
                 "units": units, "units_text": format_units(units)}
 
     # ---------------------------------------------------------------- uploads
+    @staticmethod
+    def pp_identity(data: bytes) -> dict:
+        """Track name, track code and date read from a PP PDF (parsed in a temp file; the file is not kept)."""
+        import tempfile
+        from brisnet_pp.parser import parse_pdf
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as fh:
+            fh.write(data)
+            tmp = fh.name
+        try:
+            c = parse_pdf(tmp)
+            return {"track": c.get("track"), "track_code": c.get("track_code"), "date": c.get("date")}
+        finally:
+            os.remove(tmp)
+
+    def guard_pp(self, card: str, data: bytes) -> None:
+        """A card that already has picks, snapshots or results is a record: a PP for another track or day must
+        not replace its PPs (dropping the wrong file on the open card is an easy mistake).  Raises ValueError."""
+        f = self.files(card)
+        have = None
+        for p in (f["picks_json"], f["card_json"]):
+            if p:
+                with open(p, encoding="utf-8") as fh:
+                    d = json.load(fh)
+                have = {"track": d.get("track"), "track_code": d.get("track_code"), "date": d.get("date")}
+                break
+        if have is None and f["results"]:
+            d = load_results(f["results"]); have = {"track": d.get("track"), "track_code": None, "date": d.get("date")}
+        if not have or not (have.get("date") or have.get("track")):
+            return
+        new = self.pp_identity(data)
+        problems = []
+        if have.get("date") and new.get("date") and str(have["date"]) != str(new["date"]):
+            problems.append(f"date {new['date']} vs this card's {have['date']}")
+        if have.get("track") and new.get("track") and have["track"].strip().lower() != new["track"].strip().lower():
+            problems.append(f"track {new['track']!r} vs this card's {have['track']!r}")
+        if problems:
+            raise ValueError(f"refused: this PP is not {card}'s ({'; '.join(problems)}). Type the new card code in "
+                             f"'New card code' first, then drop the file again.")
+
     def save_upload(self, card: str, kind: str, filename: str, data: bytes, race_no: int | None = None) -> dict:
         if not CARD_RE.match(card):
             raise ValueError("card code must be letters/digits, e.g. dmr1106y")
         if kind == "pp":
             path = os.path.join(self.pps, f"{card}.pdf")
+            self.guard_pp(card, data)        # never overwrite a card's PPs with another day's or track's
         elif kind == "sheet":
             path = os.path.join(self.pps, f"{card[:-1]}q.pdf" if card.endswith("y") else f"{card}q.pdf")
         elif kind == "changes":

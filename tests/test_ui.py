@@ -155,6 +155,28 @@ class TestDesk(Base):
         r5 = next(x for x in pl["results"]["races"] if x["race_no"] == 5)
         self.assertEqual(r5["source"], "manual"); self.assertNotIn("corrections", r5)
 
+    def test_pp_upload_refused_for_another_day_or_track(self):
+        """The Belmont 11/12 PP dropped on the Churchill 11/11 card (an actual mistake) must be refused."""
+        tmp = tempfile.mkdtemp(prefix="racedesk-guard-"); self.addCleanup(shutil.rmtree, tmp, True)
+        shutil.copy(os.path.join(ROOT, "rules_config.json"), os.path.join(tmp, "rules_config.json"))
+        os.makedirs(os.path.join(tmp, "data", "out"))
+        with open(os.path.join(tmp, "data", "out", "synth.card.json"), "w", encoding="utf-8") as fh:
+            json.dump(build_card(), fh)
+        d = Desk(tmp)
+        d.run("synth", "")                                          # the card now has picks: it is a record
+        d.pp_identity = lambda data: {"track": "Belmont Park", "track_code": "BEL", "date": "2026-11-12"}
+        with self.assertRaises(ValueError) as cm:
+            d.save_upload("synth", "pp", "bel1112y.pdf", b"%PDF")
+        self.assertIn("refused", str(cm.exception)); self.assertIn("2026-11-12", str(cm.exception))
+        self.assertFalse(os.path.exists(os.path.join(tmp, "data", "pps", "synth.pdf")), "nothing written")
+        self.assertTrue(os.path.exists(os.path.join(tmp, "data", "out", "synth.card.json")), "cache kept")
+        card = build_card()
+        d.pp_identity = lambda data: {"track": card["track"], "track_code": card["track_code"], "date": card["date"]}
+        out = d.save_upload("synth", "pp", "synth.pdf", b"%PDF")   # the same card's PPs again: fine
+        self.assertTrue(out["saved"].endswith("synth.pdf"))
+        out = d.save_upload("fresh01", "pp", "x.pdf", b"%PDF")     # a card with no record yet: no check needed
+        self.assertTrue(out["saved"].endswith("fresh01.pdf"))
+
     def test_reparse_reason(self):
         import time
         from brisnet_pp.parser import PARSER_VERSION
