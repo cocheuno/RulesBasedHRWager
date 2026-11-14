@@ -1,0 +1,3414 @@
+{
+ "track": "Belmont Park",
+ "date": "2026-11-13",
+ "_source": "OCR of payout-page screenshots",
+ "races": [
+  {
+   "race_no": 1,
+   "finish": [
+    "5",
+    "4",
+    "1",
+    "3"
+   ],
+   "win": 7.48,
+   "place": {
+    "5": 3.18,
+    "4": 2.5
+   },
+   "show": {},
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "5/4",
+     "payout": 9.97
+    }
+   ],
+   "track_condition": "SLOPPY (sealed)",
+   "surface": "DIRT",
+   "official": true,
+   "distance_text": "6\u00bd Furlongs",
+   "class_text": "Maiden Special Weight",
+   "purse": 100000,
+   "times": [
+    22.23,
+    44.95,
+    69.8,
+    76.64
+   ],
+   "off_at": "12:42",
+   "final_odds": {
+    "5": 2.74,
+    "4": 1.32,
+    "1": 1.48,
+    "3": 10.11
+   },
+   "runners": [
+    {
+     "pgm": "5",
+     "name": "Very Clever",
+     "last_raced": "07Oct26\u00a9Bel\u00ab",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "2\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 3.25,
+       "margin": null,
+       "raw": "2\u00aa\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 11.0,
+       "margin": null,
+       "raw": "2\u00a8\u00a8"
+      }
+     ],
+     "comment": "VERY CLEVER was sent hard from the gate then ridden along on the outside, went around the turn in the three path under a vigorous hand-ride, was put to a left-handed crop outside the quarter-pole, moved out while chasing the drifting leader in the stretch, gained into the final sixteenth and got up late to prevail.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 1,
+     "margin": 0.75,
+     "jockey": "Franco M",
+     "odds": 2.74,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "4",
+     "name": "Mysticious",
+     "last_raced": "25Sep26\u00a8Bel\u00a9",
+     "equipment": "b",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "1\u00a9"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "1\u00a9\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "1\u00a9\u0081"
+      }
+     ],
+     "comment": "MYSTICIOUS angled in while going to the front and cut in front of rivals, showed the way with a clear advantage, controlled the action in the two path on the turn, was asked coming to the quarter-pole, came under a right-handed crop while beginning to drift out in upper stretch, drifted out badly under a continued right-handed crop, led into the final sixteenth but was caught.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 2,
+     "margin": 21.75,
+     "jockey": "Zayas E J",
+     "odds": 1.32,
+     "beaten": 0.75
+    },
+    {
+     "pgm": "1",
+     "name": "Cornichiwa",
+     "last_raced": "11Oct26\u00acBel\u00ab",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "3\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 10.0,
+       "margin": null,
+       "raw": "3\u00a8\u00a7"
+      }
+     ],
+     "comment": "CORNICHIWA dropped off the pace under urging, moved out near the eleven-sixteenths pole then bumped with CLASSY RUNNER, chased inside on the turn, came off the rail late on that bend, swung out into upper stretch then drifted well out and faltered then was placed under a protective hold late.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 3,
+     "margin": 18.25,
+     "jockey": "Prat F",
+     "odds": 1.48,
+     "beaten": 22.5
+    },
+    {
+     "pgm": "3",
+     "name": "Classy Runner",
+     "last_raced": "18Sep26\u00aaBel\u00a8\u00a8",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "4"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "4"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "4"
+      }
+     ],
+     "comment": "CLASSY RUNNER had her path taken by MYSTICIOUS near the three-quarter pole and paused, bumped with foes on both sides while between horses near the eleven-sixteenths pole, raced in hand off heels when VERY CLEVER dropped in front leaving the backstretch, was asked in the two then three path on the turn, spun into the stretch in the five path, dropped in inside the quarter-pole and faltered then was eased but walked off.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 4,
+     "margin": 0.0,
+     "jockey": "Fresu A",
+     "odds": 10.11,
+     "beaten": 40.75
+    }
+   ],
+   "scratched": [
+    "In Style",
+    "Lillianna (c) Copyright 2026 Bloodstock Research Information Services www.brisnet.com This product was created with data that were supplied by and are proprietary to Equibase Company LLC. All rights reserved. Reuse of this data is expressly prohibited."
+   ],
+   "claimed": [],
+   "source": "chart",
+   "track": "Belmont Park",
+   "ocr": {
+    "names": [
+     "Very Clever",
+     "Mysticious",
+     "Cornichiwa",
+     "Classy Runner"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  },
+  {
+   "race_no": 2,
+   "finish": [
+    "3",
+    "7",
+    "2",
+    "5",
+    "6",
+    "4"
+   ],
+   "win": 3.12,
+   "place": {
+    "3": 2.52,
+    "7": 4.54
+   },
+   "show": {
+    "3": 2.1,
+    "7": 3.28,
+    "2": 4.46
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "3/7",
+     "payout": 6.46
+    },
+    {
+     "type": "QUINELLA",
+     "base": 1.0,
+     "combo": "3/7",
+     "payout": 4.68
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "3/7/2/5",
+     "payout": 9.37
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "3/7/2",
+     "payout": 16.9
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "5/3",
+     "payout": 8.24
+    }
+   ],
+   "track_condition": "SLOPPY (sealed)",
+   "surface": "DIRT",
+   "official": true,
+   "distance_text": "1 Mile",
+   "class_text": "Claiming",
+   "purse": 40000,
+   "times": [
+    23.57,
+    46.97,
+    71.64,
+    84.45,
+    97.23
+   ],
+   "off_at": "1:12",
+   "final_odds": {
+    "3": 0.56,
+    "7": 4.97,
+    "2": 12.4,
+    "5": 7.01,
+    "6": 6.82,
+    "4": 16.01
+   },
+   "runners": [
+    {
+     "pgm": "3",
+     "name": "Royal Bobbie",
+     "last_raced": "06Nov26\u00a9Bel\u00ab",
+     "equipment": "L",
+     "age_sex": "4F",
+     "weight": 126,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "4\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "4\u00a9\u0081"
+      },
+      {
+       "call": "\u00be",
+       "pos": 4,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "4\u00a8\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      }
+     ],
+     "comment": "ROYAL BOBBIE chased two then three wide coming under encouragement with three furlongs to go, tipped to the five path with five-sixteenths remaining, then tipped six wide into upper stretch, rallied to issue a challenge a furlong out, seized command just outside the sixteenth pole and edged away to the finish kept to task.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 1,
+     "margin": 1.25,
+     "jockey": "Prat F 25000",
+     "odds": 0.56,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "7",
+     "name": "Bobby Jean",
+     "last_raced": "30Aug26\u00aeSar\u00ab",
+     "equipment": "L",
+     "age_sex": "5M",
+     "weight": 126,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "3\u00a9\u0081"
+      },
+      {
+       "call": "\u00be",
+       "pos": 2,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "2\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "1\u0081"
+      }
+     ],
+     "comment": "BOBBY JEAN brushed the off side stall at the start, chased five then four wide coming under coaxing near the quarter pole, swung three to four wide for home, rallied to take command a furlong out, got directed out three paths to look the top one in the eyes and was collared just outside the sixteenth marker, ran on clear for the place honors.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 2,
+     "margin": 2.25,
+     "jockey": "Marin S 20000",
+     "odds": 4.97,
+     "beaten": 1.25
+    },
+    {
+     "pgm": "2",
+     "name": "Y'allreadyforthis",
+     "last_raced": "11Oct26\u00abBel\u00ab",
+     "equipment": "L",
+     "age_sex": "3F",
+     "weight": 123,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "5\u00b2"
+      },
+      {
+       "call": "\u00be",
+       "pos": 5,
+       "lengths": 3.25,
+       "margin": null,
+       "raw": "5\u00aa\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "4\u00a9"
+      }
+     ],
+     "comment": "Y'ALLREADYFORTHIS slow into stride at the start without incident, chased two to three wide under urging from three furlongs out, angled five wide into upper stretch, offered up a bid a furlong out, improved position to secure the show honors.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 3,
+     "margin": 4.25,
+     "jockey": "Lezcano J 20000",
+     "odds": 12.4,
+     "beaten": 3.5
+    },
+    {
+     "pgm": "5",
+     "name": "Timia",
+     "last_raced": "03Sep26\u00aeDel\u00ac",
+     "equipment": "L bf",
+     "age_sex": "4F",
+     "weight": 121,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 3.0,
+       "margin": null,
+       "raw": "1\u00aa"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 3.25,
+       "margin": null,
+       "raw": "1\u00aa\u0081"
+      },
+      {
+       "call": "\u00be",
+       "pos": 1,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "1\u00a9\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "2\u00b2"
+      }
+     ],
+     "comment": "TIMIA coaxed from the gate, showed the way briefly just off the inside before heading three paths off the rail down the backstretch, drifted four paths off the inside near the five furlong marker before tucking three wide into the turn, steadily drifted to be four wide nearing the five-sixteenths pole, swung five wide into upper stretch set down for the drive, dug in under threat drifting out slightly when collared a furlong out, then weakened through the final furlong.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 4,
+     "margin": 4.0,
+     "jockey": "Pena P 25000",
+     "odds": 7.01,
+     "beaten": 7.75
+    },
+    {
+     "pgm": "6",
+     "name": "Vino Frizzante",
+     "last_raced": "28Oct26\u00adBel\u00aa",
+     "equipment": "L b",
+     "age_sex": "5M",
+     "weight": 126,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 4.25,
+       "margin": null,
+       "raw": "5\u00ab\u0081"
+      }
+     ],
+     "comment": "VINO FRIZZANTE coaxed from the gate, chased four paths off the inside down the backstretch before tucking three then two wide through the turn coming under urging near the quarter pole, continued just off the inside into upper stretch and tired.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 5,
+     "margin": 2.25,
+     "jockey": "Franco M 20000",
+     "odds": 6.82,
+     "beaten": 11.75
+    },
+    {
+     "pgm": "4",
+     "name": "Blenheim Baby",
+     "last_raced": "15Aug26\u00a8\u00a7Prx\u00ac",
+     "equipment": "L",
+     "age_sex": "5M",
+     "weight": 126,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "5\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      },
+      {
+       "call": "\u00be",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      }
+     ],
+     "comment": "BLENHEIM BABY chased five to six paths off the inside down the backstretch and then four wide through the turn ridden along from three furlongs out, angled five to six wide into upper stretch and tired.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 6,
+     "margin": 0.0,
+     "jockey": "Zayas E J 20000",
+     "odds": 16.01,
+     "beaten": 14.0
+    }
+   ],
+   "scratched": [
+    "Calling an Audible(28Oct26\u00adBel\u00ab)"
+   ],
+   "claimed": [],
+   "source": "chart",
+   "ocr": {
+    "names": [
+     "Royal Bobbie",
+     "Bobby Jean",
+     "Y'allreadyforthis",
+     "Timia",
+     "Vino Frizzante",
+     "Blenheim Baby"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  },
+  {
+   "race_no": 3,
+   "finish": [
+    "1",
+    "5",
+    "4",
+    "7",
+    "2",
+    "3"
+   ],
+   "win": 4.24,
+   "place": {
+    "1": 2.36,
+    "5": 2.6
+   },
+   "show": {
+    "1": 2.1,
+    "5": 2.12,
+    "4": 3.1
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "1/5",
+     "payout": 4.47
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "1/5/4/7",
+     "payout": 4.91
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "1/5/4",
+     "payout": 6.69
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "3/1",
+     "payout": 2.87
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "5/3/1",
+     "payout": 20.49
+    }
+   ],
+   "track_condition": "FAST",
+   "surface": "DIRT",
+   "official": true,
+   "distance_text": "1 Mile",
+   "class_text": "(1:31\u00a8) Maiden Special Weight",
+   "purse": 100000,
+   "weather": "Cloudy 40",
+   "times": [
+    25.66,
+    49.82,
+    74.25,
+    86.16,
+    98.27
+   ],
+   "off_at": "1:42",
+   "final_odds": {
+    "1": 1.12,
+    "5": 1.76,
+    "4": 7.59,
+    "7": 16.74,
+    "2": 6.97,
+    "3": 15.35
+   },
+   "runners": [
+    {
+     "pgm": "1",
+     "name": "Belmont Street",
+     "last_raced": "31Oct26\u00a8\u00a7Bel\u00a9",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "5\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 4.0,
+       "margin": null,
+       "raw": "5\u00ab"
+      },
+      {
+       "call": "\u00be",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "1\u00a9\u0081"
+      }
+     ],
+     "comment": "BELMONT STREET was taken under a tight hold when the pacesetter crossed in front nearing the first turn, settled on the inside, moved out on the far turn, was asked in the four path at the five-sixteenths pole, rallied outside to get the lead in upper stretch, kicked clear outside the furlong marker and drew away under a solid hand-ride to prove much the best.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 1,
+     "margin": 6.0,
+     "jockey": "Velazquez J R",
+     "odds": 1.12,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "5",
+     "name": "Naughty Nancy",
+     "last_raced": "16Oct26\u00b0Bel\u00a9",
+     "equipment": "b",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      },
+      {
+       "call": "\u00be",
+       "pos": 1,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "1\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 3.25,
+       "margin": null,
+       "raw": "2\u00aa\u0081"
+      }
+     ],
+     "comment": "NAUGHTY NANCY was rated in the three path on the first turn, pulled her way forward with six furlongs to run, attended the pace on the outside, vied in the three path on the far turn, passed the five-sixteenths pole under extra left-rein pressure, was given her cue while guided to the two path at the quarter-pole, lost the advantage to the winner while under a drive in upper stretch and proved no match but safely secured the place.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 2,
+     "margin": 4.0,
+     "jockey": "Franco M",
+     "odds": 1.76,
+     "beaten": 6.0
+    },
+    {
+     "pgm": "4",
+     "name": "Judysdancin Tonite",
+     "last_raced": "16Oct26\u00abBel\u00aa",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "2\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "4\u00a8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 4,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "4\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      }
+     ],
+     "comment": "JUDYSDANCIN TONITE raced up close in the two path, was asked near the five-sixteenths pole, dropped back under a drive in upper stretch, came in around the sixteenth-pole and weakened but earned the show.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 3,
+     "margin": 0.75,
+     "jockey": "Prat F",
+     "odds": 7.59,
+     "beaten": 10.0
+    },
+    {
+     "pgm": "7",
+     "name": "Baby Dancer",
+     "last_raced": "16Oct26\u00b0Bel\u00ab",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "4\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "3\u00b2"
+      },
+      {
+       "call": "\u00be",
+       "pos": 5,
+       "lengths": 9.0,
+       "margin": null,
+       "raw": "5\u00b0"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "4\u00b2"
+      }
+     ],
+     "comment": "BABY DANCER broke out at the start, went around the first turn in the four path, settled on the outside, tucked in behind cover with five furlongs to run, chased in the three path on the far turn and tired.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 4,
+     "margin": 5.25,
+     "jockey": "Davis K",
+     "odds": 16.74,
+     "beaten": 10.75
+    },
+    {
+     "pgm": "2",
+     "name": "Secret Connection",
+     "last_raced": "24Sep26\u00a8Bel\u00aa",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "1\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "2\u00a8\u0081"
+      },
+      {
+       "call": "\u00be",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 12.0,
+       "margin": null,
+       "raw": "5\u00a8\u00a9"
+      }
+     ],
+     "comment": "SECRET CONNECTION moved in while going to the front, showed the way on the inside, was asked with three furlongs to run, vied inside under urging on the far turn and gave way.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 5,
+     "margin": 9.25,
+     "jockey": "Davis D",
+     "odds": 6.97,
+     "beaten": 16.0
+    },
+    {
+     "pgm": "3",
+     "name": "Bikri",
+     "last_raced": null,
+     "equipment": "b",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      },
+      {
+       "call": "\u00be",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "6"
+      }
+     ],
+     "comment": "BIKRI dropped back early, raced in the two path on the first turn, was urged along at the rear, saved ground on the far turn and showed little.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 6,
+     "margin": 0.0,
+     "jockey": "Elliott C",
+     "odds": 15.35,
+     "beaten": 25.25
+    }
+   ],
+   "scratched": [
+    "Together Time"
+   ],
+   "claimed": [],
+   "source": "chart",
+   "track": "Belmont Park",
+   "ocr": {
+    "names": [
+     "Belmont Street",
+     "Naughty Nancy",
+     "Judysdancin Tonite",
+     "Baby Dancer",
+     "Secret Connection",
+     "Bikri"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  },
+  {
+   "race_no": 4,
+   "finish": [
+    "7",
+    "1",
+    "5",
+    "2",
+    "6",
+    "3",
+    "8"
+   ],
+   "win": 23.66,
+   "place": {
+    "7": 9.68,
+    "1": 5.66
+   },
+   "show": {
+    "7": 4.9,
+    "1": 3.18,
+    "5": 4.2
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "7/1",
+     "payout": 58.51
+    },
+    {
+     "type": "QUINELLA",
+     "base": 1.0,
+     "combo": "1/7",
+     "payout": 23.29
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "7/1/5/2",
+     "payout": 84.17
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "7/1/5",
+     "payout": 109.43
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "1/7",
+     "payout": 28.55
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "3/1/7",
+     "payout": 65.98
+    }
+   ],
+   "track_condition": "SLOPPY (sealed)",
+   "surface": "DIRT",
+   "official": true,
+   "distance_text": "6\u00bd Furlongs",
+   "class_text": "Claiming",
+   "purse": 37000,
+   "weather": "Showery 40",
+   "times": [
+    23.27,
+    46.1,
+    70.96,
+    77.71
+   ],
+   "off_at": "2:12",
+   "final_odds": {
+    "7": 10.83,
+    "1": 3.22,
+    "5": 6.14,
+    "2": 4.19,
+    "6": 1.55,
+    "3": 39.61,
+    "8": 7.25
+   },
+   "runners": [
+    {
+     "pgm": "7",
+     "name": "Admiral Sol",
+     "last_raced": "29Sep26\u00aaFL\u00ad",
+     "equipment": "L",
+     "age_sex": "3F",
+     "weight": 124,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 7,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "7"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 3.0,
+       "margin": null,
+       "raw": "6\u00aa"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      }
+     ],
+     "comment": "ADMIRAL SOL got bumped at the start by BABCIE, chased three then two wide coming under urging three furlongs out, swung four wide into upper stretch, angled out a path at the three-sixteenths and then an additional path just inside the three-sixteenths and rallied through a seam to issue a challenge inside the final furlong, seized command seventy yards from the finish and inched away in the last strides to prevail.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 1,
+     "margin": 0.75,
+     "jockey": "Davis K 25000",
+     "odds": 10.83,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "1",
+     "name": "Ishkabibble",
+     "last_raced": "11Oct26\u00aeBel\u00ad",
+     "equipment": "L b",
+     "age_sex": "3F",
+     "weight": 119,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "4\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      }
+     ],
+     "comment": "ISHKABIBBLE coaxed from the gate, chased along the inside coming under a ride with five-sixteenths to go, spun two to three wide into upper stretch, rallied to take narrow command a furlong out dueled with MISS BOURBON and shook that rival off confronted by the top one, got caught seventy yards from the finish and fought on to the wire.",
+     "start": {
+      "pos": 7,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "7"
+     },
+     "finish": 2,
+     "margin": 1.75,
+     "jockey": "Pena P 25000",
+     "odds": 3.22,
+     "beaten": 0.75
+    },
+    {
+     "pgm": "5",
+     "name": "Amelia's Echo",
+     "last_raced": "22Oct26\u00abBel\u00aa",
+     "equipment": "L b",
+     "age_sex": "4F",
+     "weight": 126,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "5\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "5\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 9.0,
+       "margin": null,
+       "raw": "6\u00b0"
+      }
+     ],
+     "comment": "AMELIA'S ECHO got brushed at the break by DAT DARES RIGHT, chased five paths off the inside down the backstretch and then three wide through the turn, swung five wide into upper stretch, shied out when ADMIRAL SOL tipped out to her inside three-sixteenths from home and was paused briefly in behind BABCIE when beaten to the open the lane, altered in around that backing away rival once clear and offered up a mild kick to get up for the show honors in the final jumps.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 3,
+     "margin": 0.1,
+     "jockey": "Gonzalez S 20000",
+     "odds": 6.14,
+     "beaten": 2.5
+    },
+    {
+     "pgm": "2",
+     "name": "Miss Bourbon",
+     "last_raced": "26Sep26\u00a8CD\u00ad",
+     "equipment": "L bf",
+     "age_sex": "5M",
+     "weight": 126,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "2\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "2\u00a8\u0081"
+      }
+     ],
+     "comment": "MISS BOURBON coaxed from the gate, dueled four then three wide with DAT DARES RIGHT to her inside, came under coaxing three furlongs out, angled six wide into upper stretch, dug in knocking heads once more, now with ISHKABIBBLE and was narrowly headed a furlong out, dug in and weakened in the late stages and was caught on the wire by AMELIA'S ECHO for the show honors.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 4,
+     "margin": 3.0,
+     "jockey": "Bowen R 25000",
+     "odds": 4.19,
+     "beaten": 2.6
+    },
+    {
+     "pgm": "6",
+     "name": "Babcie",
+     "last_raced": "11Oct26\u00aeBel\u00ac",
+     "equipment": "L bf",
+     "age_sex": "3F",
+     "weight": 124,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "3\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "4\u00a8\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "4\u00b2"
+      }
+     ],
+     "comment": "BABCIE broke out at the start bumping ADMIRAL SOL, chased five then four wide under a ride from the three-eighths pole, went seven wide into upper stretch, weakened.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 5,
+     "margin": 1.75,
+     "jockey": "Davis D 25000",
+     "odds": 1.55,
+     "beaten": 5.6
+    },
+    {
+     "pgm": "3",
+     "name": "Dat Dares Right",
+     "last_raced": "02Sep26\u00acSar\u00b0",
+     "equipment": "L bf",
+     "age_sex": "6M",
+     "weight": 126,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "5\u00a8\u0081"
+      }
+     ],
+     "comment": "DAT DARES RIGHT broke out at the start brushing AMELIA'S ECHO, dueled three then two wide with MISS BOURBON to her outside, came under coaxing near the quarter pole and tipped four wide into upper stretch, weakened.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 6,
+     "margin": 13.5,
+     "jockey": "Kocakaya G 20000",
+     "odds": 39.61,
+     "beaten": 7.35
+    },
+    {
+     "pgm": "8",
+     "name": "Will of a Womanne",
+     "last_raced": "21Jun26\u00aeBaq\u00ab",
+     "equipment": "L",
+     "age_sex": "4F",
+     "weight": 126,
+     "post": 7,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 3.0,
+       "margin": null,
+       "raw": "6\u00aa"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 7,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "7"
+      },
+      {
+       "call": "Str",
+       "pos": 7,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "7"
+      }
+     ],
+     "comment": "WILL OF A WOMANNE chased six paths off the inside down the backstretch and then four wide through the turn under urging from the three-eighths marker, angled five to six wide into upper stretch and tired. There was a Jockey's Objection by the rider of AMELIA'S ECHO alleging interference against ADMIRAL SOL coming to the eighth pole. After review, the objection was dismissed and the result was declared official.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 7,
+     "margin": 0.0,
+     "jockey": "Zayas E J 25000",
+     "odds": 7.25,
+     "beaten": 20.85
+    }
+   ],
+   "scratched": [
+    "Call Me Jal(22Aug26\u00abSar\u00af)"
+   ],
+   "claimed": [],
+   "source": "chart",
+   "ocr": {
+    "names": [
+     "Admiral Sol",
+     "Ishkabibble",
+     "Amelia's Echo",
+     "Miss Bourbon",
+     "Babcie",
+     "Dat Dares Right",
+     "Will of a Womanne"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  },
+  {
+   "race_no": 5,
+   "finish": [
+    "7",
+    "6",
+    "8",
+    "5",
+    "1",
+    "3",
+    "4"
+   ],
+   "win": 11.96,
+   "place": {
+    "7": 7.78,
+    "6": 9.52
+   },
+   "show": {
+    "7": 5.62,
+    "6": 6.26,
+    "8": 12.28
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "7/6",
+     "payout": 58.97
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "7/6/8/5",
+     "payout": 206.65
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "7/6/8",
+     "payout": 301.55
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "7/7",
+     "payout": 46.02
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "1/7/7",
+     "payout": 156.01
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "1/3/1/6/7/7",
+     "payout": 165.38
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "5/1/3/1/6/7/7",
+     "payout": 848.92
+    }
+   ],
+   "track_condition": "SLOPPY (sealed)",
+   "surface": "DIRT",
+   "official": true,
+   "distance_text": "6 Furlongs",
+   "class_text": "Maiden Special Weight",
+   "purse": 100000,
+   "times": [
+    22.75,
+    46.41,
+    58.5,
+    71.12
+   ],
+   "off_at": "2:43",
+   "final_odds": {
+    "7": 4.98,
+    "6": 10.99,
+    "8": 41.12,
+    "5": 5.18,
+    "1": 3.21,
+    "3": 3.81,
+    "4": 2.22
+   },
+   "runners": [
+    {
+     "pgm": "7",
+     "name": "Centrado",
+     "last_raced": null,
+     "equipment": "",
+     "age_sex": "2C",
+     "weight": 123,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "4\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "6\u00a9"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "4\u0081"
+      }
+     ],
+     "comment": "CENTRADO was restless in the gate, chased the pace on the outside, dropped back in the five path leaving the backstretch then moved to the three path, gained with three furlongs to run, was roused in the four path in upper stretch, rallied to make a bid outside the sixteenth-pole and got up inside of the runner-up to prevail.",
+     "start": {
+      "pos": 7,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "7"
+     },
+     "finish": 1,
+     "margin": 0.25,
+     "jockey": "Franco M",
+     "odds": 4.98,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "6",
+     "name": "God of Fire",
+     "last_raced": "31Oct26\u00adBel\u00ac",
+     "equipment": "b",
+     "age_sex": "2C",
+     "weight": 123,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "5\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "1\u00a8"
+      }
+     ],
+     "comment": "GOD OF FIRE brushed with a rival at the start, was taken in hand in traffic early then urged along off the pace, gained in the four path on the turn, made a bid coming to the five-sixteenths pole, took the lead at the quarter-pole, drifted out under a left-handed crop while remaining on his inside lead into the final furlong, led while continuing on his inside lead into the final sixteenth but was caught while clear for the place.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 2,
+     "margin": 3.5,
+     "jockey": "Zayas E J",
+     "odds": 10.99,
+     "beaten": 0.25
+    },
+    {
+     "pgm": "8",
+     "name": "Sutter's Mill",
+     "last_raced": null,
+     "equipment": "",
+     "age_sex": "2C",
+     "weight": 123,
+     "post": 7,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "6\u00a9"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "4\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "3\u00b2"
+      }
+     ],
+     "comment": "SUTTER'S MILL was urged along on the outside, moved closer in the six then five path on the turn, chased outside while remaining on his inside lead in the stretch, drifted in inside the sixteenth-pole and lacked the needed kick while able to get the show.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 3,
+     "margin": 1.0,
+     "jockey": "Maragh R",
+     "odds": 41.12,
+     "beaten": 3.75
+    },
+    {
+     "pgm": "5",
+     "name": "George's Pal Vinny",
+     "last_raced": "10Oct26\u00acBel\u00ad",
+     "equipment": "",
+     "age_sex": "2C",
+     "weight": 123,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 7,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "7"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 7,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "7"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 3.25,
+       "margin": null,
+       "raw": "6\u00aa\u0081"
+      }
+     ],
+     "comment": "GEORGE'S PAL VINNY bumped with SOUTHERN SAMURAI at the start, was taken up in tight quarters early, angled in at the rear, moved from the inside to the four path while getting closer late on the turn, was driven into the stretch in the six path and flattened out.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 4,
+     "margin": 0.2,
+     "jockey": "Prat F",
+     "odds": 5.18,
+     "beaten": 4.75
+    },
+    {
+     "pgm": "1",
+     "name": "Mitofury",
+     "last_raced": "06Nov26\u00aaBel\u00a9",
+     "equipment": "",
+     "age_sex": "2C",
+     "weight": 123,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "2\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "2\u0081"
+      }
+     ],
+     "comment": "MITOFURY broke out and brushed with a rival, went to the front then showed the way on the inside of an opponent, vied in the two path on the turn, dropped back in upper stretch, drifted out around the furlong marker and weakened.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 5,
+     "margin": 2.75,
+     "jockey": "Castellano J",
+     "odds": 3.21,
+     "beaten": 4.95
+    },
+    {
+     "pgm": "3",
+     "name": "Threejoesinarow",
+     "last_raced": null,
+     "equipment": "",
+     "age_sex": "2C",
+     "weight": 123,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "2\u00a9\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "5\u00a8\u0081"
+      }
+     ],
+     "comment": "THREEJOESINAROW had a shoe repaired on the paddock, brushed with a rival at the start, pressed the pace on the outside, vied in the four then three path on the turn and tired.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 6,
+     "margin": 9.5,
+     "jockey": "Velazquez J R",
+     "odds": 3.81,
+     "beaten": 7.7
+    },
+    {
+     "pgm": "4",
+     "name": "Southside Samurai",
+     "last_raced": "10Oct26\u00acBel\u00a9",
+     "equipment": "b",
+     "age_sex": "2C",
+     "weight": 123,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "5\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 7,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "7"
+      }
+     ],
+     "comment": "SOUTHSIDE SAMURAI broke out and bumped with GEORGE'S PAL VINNY, was well placed down the backstretch, moved in behind horses with five furlongs to run, dropped from the three path to the two path very early on the turn, raced off heels while getting closer with three furlongs to run, chased into upper stretch and came up empty.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 7,
+     "margin": 0.0,
+     "jockey": "Marin S",
+     "odds": 2.22,
+     "beaten": 17.2
+    }
+   ],
+   "scratched": [
+    "J Buck(06Sep26\u00acSar\u00ab)"
+   ],
+   "claimed": [],
+   "source": "chart",
+   "track": "Belmont Park",
+   "ocr": {
+    "names": [
+     "Centrado",
+     "God of Fire",
+     "Sutter's Mill",
+     "George's Pal Vinny",
+     "Mitofury",
+     "Threejoesinarow",
+     "Southside Samurai"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  },
+  {
+   "race_no": 6,
+   "finish": [
+    "1",
+    "8",
+    "5",
+    "4",
+    "7",
+    "3",
+    "6",
+    "2"
+   ],
+   "win": 24.78,
+   "place": {
+    "1": 9.82,
+    "8": 5.36
+   },
+   "show": {
+    "1": 6.62,
+    "8": 3.74,
+    "5": 3.5
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "1/8",
+     "payout": 81.03
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "1/8/5/4",
+     "payout": 331.5
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "1/8/5",
+     "payout": 208.68
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "7/1",
+     "payout": 99.7
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "7/7/1",
+     "payout": 741.14
+    }
+   ],
+   "track_condition": "SLOPPY (sealed)",
+   "surface": "DIRT",
+   "official": true,
+   "distance_text": "6\u00bd Furlongs",
+   "class_text": "Starter Allowance",
+   "purse": 75000,
+   "times": [
+    22.38,
+    45.08,
+    69.56,
+    75.97
+   ],
+   "off_at": "3:15",
+   "final_odds": {
+    "1": 11.39,
+    "8": 4.69,
+    "5": 4.48,
+    "4": 7.98,
+    "7": 2.92,
+    "3": 6.52,
+    "6": 3.13,
+    "2": 88.74
+   },
+   "runners": [
+    {
+     "pgm": "1",
+     "name": "First Blessing",
+     "last_raced": "30Oct26\u00afBel\u00ab",
+     "equipment": "L b",
+     "age_sex": "3C",
+     "weight": 124,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 3.0,
+       "margin": null,
+       "raw": "4\u00aa"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "4\u00a8\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "3\u00a8\u0081"
+      }
+     ],
+     "comment": "FIRST BLESSING chased along the inside briefly before tipping to the two path near the five furlong marker and tossed his head when facing kickback, tipped out three to four wide through the turn and came under coaxing with five-sixteenths to run, angled out seven to eight wide into upper stretch, dug in under a drive rallying into contention a furlong out before taking over command outside the sixteenth marker, then edged clear to the finish to prevail.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 1,
+     "margin": 3.75,
+     "jockey": "Castellano J",
+     "odds": 11.39,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "8",
+     "name": "Holster",
+     "last_raced": "17May25\u00acCD\u00a8",
+     "equipment": "L b",
+     "age_sex": "5G",
+     "weight": 124,
+     "post": 8,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "3\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "2\u00a9"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "1\u0081"
+      }
+     ],
+     "comment": "HOLSTER bobbled at the start, chased three wide just off the top pair coming under urging near the quarter pole, tipped three to four wide into upper stretch, seized command straightened away, dug in under threat to the outside and was caught nearing the sixteenth pole, kept on to preserve the place honors over a trio on the wire.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 2,
+     "margin": 0.2,
+     "jockey": "Lezcano J",
+     "odds": 4.69,
+     "beaten": 3.75
+    },
+    {
+     "pgm": "5",
+     "name": "Come Full Circle",
+     "last_raced": "07Oct26\u00aeBel\u00a8",
+     "equipment": "L",
+     "age_sex": "4G",
+     "weight": 126,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "5\u00a8\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 3.0,
+       "margin": null,
+       "raw": "5\u00aa"
+      }
+     ],
+     "comment": "COME FULL CIRCLE coaxed from the gate, chased three then two wide coming under encouragement with five-sixteenths to run, swung three to four wide for home, kicked on belatedly to the finish splitting rivals on the line.",
+     "start": {
+      "pos": 8,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "8"
+     },
+     "finish": 3,
+     "margin": 0.1,
+     "jockey": "Carmouche K",
+     "odds": 4.48,
+     "beaten": 3.95
+    },
+    {
+     "pgm": "4",
+     "name": "Vanderbilt",
+     "last_raced": "20Aug26\u00abCnl\u00af",
+     "equipment": "L",
+     "age_sex": "4G",
+     "weight": 126,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "2\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "2\u00b2"
+      }
+     ],
+     "comment": "VANDERBILT coaxed from the gate, knocked heads briefly inside of MATH TUTOR down the backstretch before easing off inside five furlongs to go, tipped to the two path near the nine-sixteenths and was off the heels of that rival briefly, came under coaxing at the seven-sixteenths pole, angled out six wide into upper stretch, offered up a bid a furlong out and kept on to the finish.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 4,
+     "margin": 0.25,
+     "jockey": "Prat F",
+     "odds": 7.98,
+     "beaten": 4.05
+    },
+    {
+     "pgm": "7",
+     "name": "Sea Vista",
+     "last_raced": "15Oct26\u00abBel\u00a9",
+     "equipment": "L",
+     "age_sex": "4G",
+     "weight": 126,
+     "post": 7,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 7,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "7\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "6\u00a8\u0081"
+      }
+     ],
+     "comment": "SEA VISTA coaxed from the start, chased three wide under prolonged encouragement from the half mile pole, went eight wide at the top of the stretch and passed tired rivals to the end.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 5,
+     "margin": 7.0,
+     "jockey": "Fresu A",
+     "odds": 2.92,
+     "beaten": 4.3
+    },
+    {
+     "pgm": "3",
+     "name": "Conniving",
+     "last_raced": "17Oct26\u00a8Bel\u00ab",
+     "equipment": "L bf",
+     "age_sex": "5G",
+     "weight": 124,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "6\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "6\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 7,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "7\u00a8\u0081"
+      }
+     ],
+     "comment": "CONNIVING chased four wide under urging from three furlongs out, angled seven wide into upper stretch, tired.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 6,
+     "margin": 0.1,
+     "jockey": "Davis K",
+     "odds": 6.52,
+     "beaten": 11.3
+    },
+    {
+     "pgm": "6",
+     "name": "Math Tutor",
+     "last_raced": "15Oct26\u00abBel\u00ab",
+     "equipment": "L b",
+     "age_sex": "4G",
+     "weight": 126,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "1\u00a9"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "1\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "4\u00b2"
+      }
+     ],
+     "comment": "MATH TUTOR hustled from the gate, knocked heads briefly with VANDERBILT before clearing that rival to cut a sole pace from the two path into the turn, came under coaxing near the quarter pole and continued just off the inside into upper stretch under threat to the outside, yielded command straightened away and tired.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 7,
+     "margin": 0.25,
+     "jockey": "Franco M",
+     "odds": 3.13,
+     "beaten": 11.4
+    },
+    {
+     "pgm": "2",
+     "name": "Lexington Pike",
+     "last_raced": "06Nov26\u00acBel\u00b0",
+     "equipment": "L b",
+     "age_sex": "3C",
+     "weight": 114,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "5\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 7,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "7\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      }
+     ],
+     "comment": "LEXINGTON PIKE chased two then three wide under a ride from the seven-sixteenths pole, angled five wide for home, tired in the stretch.",
+     "start": {
+      "pos": 7,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "7"
+     },
+     "finish": 8,
+     "margin": 0.0,
+     "jockey": "Chandra P",
+     "odds": 88.74,
+     "beaten": 11.65
+    }
+   ],
+   "scratched": [],
+   "claimed": [],
+   "source": "chart",
+   "track": "Belmont Park",
+   "ocr": {
+    "names": [
+     "First Blessing",
+     "Holster",
+     "Come Full Circle",
+     "Vanderbilt",
+     "Sea Vista",
+     "Conniving",
+     "Math Tutor",
+     "Lexington Pike"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  },
+  {
+   "race_no": 7,
+   "finish": [
+    "3",
+    "6",
+    "7",
+    "1",
+    "2",
+    "5",
+    "8",
+    "4"
+   ],
+   "win": 5.42,
+   "place": {
+    "3": 2.94,
+    "6": 3.16
+   },
+   "show": {
+    "3": 2.74,
+    "6": 2.8,
+    "7": 4.54
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "3/6",
+     "payout": 8.21
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "3/6/7/1",
+     "payout": 20.56
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "3/6/7",
+     "payout": 22.88
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "1/3",
+     "payout": 51.58
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "7/1/3",
+     "payout": 221.73
+    },
+    {
+     "type": "GRANDSLAM",
+     "base": 1.0,
+     "combo": "1/5/7/6/7/8/1/5/8/3",
+     "payout": 294.37
+    }
+   ],
+   "track_condition": "FAST",
+   "surface": "DIRT",
+   "official": true,
+   "times": [
+    23.97,
+    49.72,
+    73.7,
+    97.03,
+    102.87
+   ],
+   "off_at": "3:46",
+   "final_odds": {
+    "3": 1.71,
+    "6": 2.72,
+    "7": 9.54,
+    "1": 9.0,
+    "2": 13.27,
+    "5": 23.1,
+    "8": 5.06,
+    "4": 11.08
+   },
+   "runners": [
+    {
+     "pgm": "3",
+     "name": "A Little At First",
+     "last_raced": "14Oct26\u00aeBel\u00aa",
+     "equipment": "L b",
+     "age_sex": "3G",
+     "weight": 123,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "3\u00a9"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 2,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "2\u00a8\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "1\u00a9\u0081"
+      }
+     ],
+     "comment": "A LITTLE AT FIRST was rated in the two path, moved up to make a bid outside the nine-sixteenths pole, vied in the two path on the far turn, took the lead at the quarter-pole then spun into the stretch in the three path, shook clear near the three-sixteenths pole, responded well under a strong hand-ride into the final furlong, was given one pop of a right-handed crop outside the sixteenth-pole then was placed back under a strong hand-ride to the finish while much the best.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 1,
+     "margin": 3.0,
+     "jockey": "Castellano J",
+     "odds": 1.71,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "6",
+     "name": "Coach Ryan",
+     "last_raced": "08Oct26\u00adBel\u00a8",
+     "equipment": "L",
+     "age_sex": "3G",
+     "weight": 123,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 7,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "7\u00a9\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 7,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "7\u00a8\u0081"
+      },
+      {
+       "call": "\u00be",
+       "pos": 4,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "4\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "3\u00b2"
+      }
+     ],
+     "comment": "COACH RYAN moved in early, settled on the inside, advanced closer coming to the nine-sixteenths pole, saved ground on the far turn, was roused in the two path at the quarter-pole, pursued the winner in the stretch and finished willingly while second best.",
+     "start": {
+      "pos": 7,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "7"
+     },
+     "finish": 2,
+     "margin": 1.75,
+     "jockey": "Franco M",
+     "odds": 2.72,
+     "beaten": 3.0
+    },
+    {
+     "pgm": "7",
+     "name": "Jaxer",
+     "last_raced": "18Sep26\u00adBel\u00a8\u00a8",
+     "equipment": "L b",
+     "age_sex": "3G",
+     "weight": 121,
+     "post": 7,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 6,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "6\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "4\u00a8\u0081"
+      }
+     ],
+     "comment": "JAXER had his saddle adjusted behind the gate, broke a half-step slow then dropped back in tight quarters, settled while two path to the inside, was asked for his best in upper stretch and improved position to get the show.",
+     "start": {
+      "pos": 8,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "8"
+     },
+     "finish": 3,
+     "margin": 0.1,
+     "jockey": "Fresu A",
+     "odds": 9.54,
+     "beaten": 4.75
+    },
+    {
+     "pgm": "1",
+     "name": "Rabaja",
+     "last_raced": "14Oct26\u00aeBel\u00a8\u00a7",
+     "equipment": "L b",
+     "age_sex": "5G",
+     "weight": 124,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "5\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "5\u00b2"
+      },
+      {
+       "call": "\u00be",
+       "pos": 7,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "7\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "5\u0081"
+      }
+     ],
+     "comment": "RABAJA saved ground on the first turn, was reserved off the pace, moved closer near the nine-sixteenths pole, went around the far turn in the path, came into upper stretch in the three path, dropped in around the furlong marker and lacked the needed kick then just missed the show.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 4,
+     "margin": 1.0,
+     "jockey": "Zayas E J",
+     "odds": 9.0,
+     "beaten": 4.85
+    },
+    {
+     "pgm": "2",
+     "name": "Cable Ready",
+     "last_raced": "14Oct26\u00aeBel\u00af",
+     "equipment": "L b",
+     "age_sex": "5G",
+     "weight": 124,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "4\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "\u00be",
+       "pos": 5,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "5\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "6\u00a8\u0081"
+      }
+     ],
+     "comment": "CABLE READY moved out early, raced in the three path on the first turn, settled outside without cover, bumped lightly with A LITTLE AT FIRST near the five-eighths pole, chased in the three path on the turn, came out to the six path into upper stretch and weakened.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 5,
+     "margin": 1.25,
+     "jockey": "Bowen R",
+     "odds": 13.27,
+     "beaten": 5.85
+    },
+    {
+     "pgm": "5",
+     "name": "Terminal Velocity",
+     "last_raced": "14Oct26\u00aeBel\u00ab",
+     "equipment": "b",
+     "age_sex": "4G",
+     "weight": 124,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "2\u00a9\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "4\u00a8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 3,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "3\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "2\u00b2"
+      }
+     ],
+     "comment": "TERMINAL VELOCITY established a forward position early, went around the first turn in the three path, tracked the pace on the outside, was asked in the two path on the far turn, made a bid in the four path into the stretch, lost touch with the winner outside the furlong marker and came up empty.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 6,
+     "margin": 0.25,
+     "jockey": "Davis D",
+     "odds": 23.1,
+     "beaten": 7.1
+    },
+    {
+     "pgm": "8",
+     "name": "Clear Conscience",
+     "last_raced": "05Nov26\u00aeBel\u00a9",
+     "equipment": "L b",
+     "age_sex": "6G",
+     "weight": 124,
+     "post": 8,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "6\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "6\u00b2"
+      },
+      {
+       "call": "\u00be",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "Str",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      }
+     ],
+     "comment": "CLEAR CONSCIENCE tucked from the four path to the three path early on the first turn, was reserved outside but with cover, advanced closer near the nine-sixteenths pole, raced in the three then four path under urging on the far turn, turned into upper stretch in the seven path and failed to threaten.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 7,
+     "margin": 7.0,
+     "jockey": "Prat F 45000",
+     "odds": 5.06,
+     "beaten": 7.35
+    },
+    {
+     "pgm": "4",
+     "name": "English Castle",
+     "last_raced": "09Aug26\u00a8\u00a7Sar\u00ad",
+     "equipment": "L",
+     "age_sex": "5G",
+     "weight": 126,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "1\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      },
+      {
+       "call": "\u00be",
+       "pos": 1,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "1\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 7,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "7\u0081"
+      }
+     ],
+     "comment": "ENGLISH CASTLE went to the front, showed the way on the inside, was challenged near the nine-sixteenths pole, vied along the rail on the far turn, dropped back in upper stretch and gave way.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 8,
+     "margin": 0.0,
+     "jockey": "Marin S",
+     "odds": 11.08,
+     "beaten": 14.35
+    }
+   ],
+   "scratched": [],
+   "claimed": [],
+   "source": "chart",
+   "track": "Belmont Park",
+   "ocr": {
+    "names": [
+     "A Little At First",
+     "Coach Ryan",
+     "Jaxer",
+     "Rabaja",
+     "Cable Ready",
+     "Terminal Velocity",
+     "Clear Conscience",
+     "English Castle"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  },
+  {
+   "race_no": 8,
+   "finish": [
+    "9",
+    "1",
+    "10",
+    "11",
+    "8",
+    "6",
+    "7",
+    "2",
+    "3",
+    "4"
+   ],
+   "win": 5.96,
+   "place": {
+    "9": 3.36,
+    "1": 6.78
+   },
+   "show": {
+    "9": 2.66,
+    "1": 5.12,
+    "10": 9.02
+   },
+   "exotics": [
+    {
+     "type": "EXACTA",
+     "base": 1.0,
+     "combo": "9/1",
+     "payout": 26.97
+    },
+    {
+     "type": "SUPERFECTA",
+     "base": 0.1,
+     "combo": "9/1/10/11",
+     "payout": 138.25
+    },
+    {
+     "type": "TRIFECTA",
+     "base": 0.5,
+     "combo": "9/1/10",
+     "payout": 138.98
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "3/12",
+     "payout": 3.05
+    },
+    {
+     "type": "DOUBLE",
+     "base": 1.0,
+     "combo": "3/9",
+     "payout": 9.36
+    },
+    {
+     "type": "PICK3",
+     "base": 1.0,
+     "combo": "1/3/9",
+     "payout": 134.82
+    },
+    {
+     "type": "CONSOLATIONPICK3",
+     "base": 1.0,
+     "combo": "1/3/12",
+     "payout": 35.05
+    },
+    {
+     "type": "PICK4",
+     "base": 0.5,
+     "combo": "7/1/3/5/9/12/13",
+     "payout": 360.43
+    },
+    {
+     "type": "PICK5",
+     "base": 0.5,
+     "combo": "7/7/1/3/5/9/12/13",
+     "payout": 4462.4
+    }
+   ],
+   "track_condition": "FAST",
+   "surface": "DIRT",
+   "official": true,
+   "distance_text": "6 Furlongs",
+   "class_text": "(1:06\u00aa) Maiden Special Weight",
+   "purse": 100000,
+   "times": [
+    22.3,
+    45.84,
+    58.37,
+    70.83
+   ],
+   "off_at": "4:24",
+   "final_odds": {
+    "9": 1.98,
+    "1": 8.2,
+    "10": 14.31,
+    "11": 5.12,
+    "8": 3.66,
+    "6": 20.6,
+    "7": 12.27,
+    "2": 7.72,
+    "3": 77.51,
+    "4": 17.31
+   },
+   "runners": [
+    {
+     "pgm": "9",
+     "name": "Plum Island",
+     "last_raced": "03Oct26\u00aaBel\u00aa",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 8,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 10,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "10"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 7,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "7\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "2\u0081"
+      }
+     ],
+     "comment": "PLUM ISLAND broke a half a beat slow and was bumped at the start by LADY JUSTICE, chased four to five paths off the inside down the backstretch before tucking to the two path into the turn, came under coaxing with five-sixteenths to go, went nine wide into upper stretch, rallied outside rivals to seize command a sixteenth from home and edged clear to the finish to score.",
+     "start": {
+      "pos": 10,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "10"
+     },
+     "finish": 1,
+     "margin": 2.0,
+     "jockey": "Franco M",
+     "odds": 1.98,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "1",
+     "name": "Gold Control",
+     "last_raced": "31Oct26\u00a9Bel\u00ad",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "5\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "1\u00a8\u0081"
+      }
+     ],
+     "comment": "GOLD CONTROL chased along the inside coming under a ride near the quarter pole, swung five wide into upper stretch, took over the front at the three-sixteenths marker, dug in under threat to the outside and was collared a sixteenth from home, ran on clear for the place honors.",
+     "start": {
+      "pos": 8,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "8"
+     },
+     "finish": 2,
+     "margin": 3.0,
+     "jockey": "Elliott C",
+     "odds": 8.2,
+     "beaten": 2.0
+    },
+    {
+     "pgm": "10",
+     "name": "Magic Mira",
+     "last_raced": null,
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 9,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 8,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "8\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 9,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "9\u00a9"
+      },
+      {
+       "call": "Str",
+       "pos": 8,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "8\u0081"
+      }
+     ],
+     "comment": "MAGIC MIRA four wide in pursuit, came under coaxing at the five-sixteenths, angled five wide into upper stretch, kept on to secure the show honors.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 3,
+     "margin": 2.0,
+     "jockey": "Fresu A",
+     "odds": 14.31,
+     "beaten": 5.0
+    },
+    {
+     "pgm": "11",
+     "name": "Spoiled Not Rotten",
+     "last_raced": null,
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 10,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "6\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "6\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "6\u00a8"
+      }
+     ],
+     "comment": "SPOILED NOT ROTTEN chased four wide under urging from three furlongs out, angled seven to eight wide into upper stretch, improved position to the finish.",
+     "start": {
+      "pos": 7,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "7"
+     },
+     "finish": 4,
+     "margin": 0.3,
+     "jockey": "Marin S",
+     "odds": 5.12,
+     "beaten": 7.0
+    },
+    {
+     "pgm": "8",
+     "name": "Lady Justice",
+     "last_raced": null,
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 7,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "4\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "5\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 7,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "7\u0081"
+      }
+     ],
+     "comment": "LADY JUSTICE broke out at the start bumping PLUM ISLAND, chased three wide under encouragement from the five-sixteenths pole, continued three wide into upper stretch and failed to quicken with rivals losing ground to the eighth pole, then passed tired rivals to the finish.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 5,
+     "margin": 1.0,
+     "jockey": "Prat F",
+     "odds": 3.66,
+     "beaten": 7.3
+    },
+    {
+     "pgm": "6",
+     "name": "As Pretty She Is",
+     "last_raced": "16Oct26\u00abBel\u00ac",
+     "equipment": "bf",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "2\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "5\u0081"
+      }
+     ],
+     "comment": "AS PRETTY SHE IS prompted the pace of the leader from the outside three to four wide, got ridden along with five-sixteenths to run, angled six wide into upper stretch, weakened.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 6,
+     "margin": 0.25,
+     "jockey": "Bowen R",
+     "odds": 20.6,
+     "beaten": 8.3
+    },
+    {
+     "pgm": "7",
+     "name": "Tappin Magic",
+     "last_raced": "18Oct26\u00adBel\u00ac",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 9,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "9\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 8,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "8\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 9,
+       "lengths": 3.0,
+       "margin": null,
+       "raw": "9\u00aa"
+      }
+     ],
+     "comment": "TAPPIN MAGIC chased three paths off the inside down the backstretch, tucked inside with seven-sixteenths to go, came under urging at the five-sixteenths pole, swung four wide for home and weakened.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 7,
+     "margin": 1.5,
+     "jockey": "Davis D",
+     "odds": 12.27,
+     "beaten": 8.55
+    },
+    {
+     "pgm": "2",
+     "name": "River Street Lass",
+     "last_raced": "10Oct26\u00a8Lrl\u00aa",
+     "equipment": "b",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 7,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "7\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 10,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "10"
+      },
+      {
+       "call": "Str",
+       "pos": 10,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "10"
+      }
+     ],
+     "comment": "RIVER STREET LASS chased two then three wide, had PLUM ISLAND split foes to her inside and got out four then five wide nearing the five-sixteenths pole, continued outwards losing ground and swung eight wide into upper stretch and weakened through to the finish.",
+     "start": {
+      "pos": 9,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "9"
+     },
+     "finish": 8,
+     "margin": 2.5,
+     "jockey": "Carmouche K",
+     "odds": 7.72,
+     "beaten": 10.05
+    },
+    {
+     "pgm": "3",
+     "name": "Watergate",
+     "last_raced": "10Oct26\u00a8Med\u00ac",
+     "equipment": "",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "3\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "4\u00a8\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "4\u00b2"
+      }
+     ],
+     "comment": "WATERGATE chased along the inside down the backstretch before tipping two then three wide through the turn, came under coaxing near the quarter pole and went seven wide into upper stretch, tired.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 9,
+     "margin": 4.25,
+     "jockey": "Maragh R",
+     "odds": 77.51,
+     "beaten": 12.55
+    },
+    {
+     "pgm": "4",
+     "name": "Cyber Cloud",
+     "last_raced": "03Oct26\u00acBel\u00b0",
+     "equipment": "b",
+     "age_sex": "2F",
+     "weight": 123,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "1\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "1\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      }
+     ],
+     "comment": "CYBER CLOUD established the front after the start and showed the way in hand just off the inside under pressure from the outside, came under coaxing near the quarter pole and spun three wide into upper stretch, yielded the front with three-sixteenths remaining and tired through to the finish.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 10,
+     "margin": 0.0,
+     "jockey": "Lezcano J",
+     "odds": 17.31,
+     "beaten": 16.8
+    }
+   ],
+   "scratched": [
+    "Cara's Chrome(05Nov26\u00a8Bel\u00ad)",
+    "Stellabration(30Aug26\u00acSar\u00b0)",
+    "Frostburg(18Oct26\u00adBel\u00aa)"
+   ],
+   "claimed": [],
+   "source": "chart",
+   "track": "Belmont Park",
+   "ocr": {
+    "names": [
+     "Plum Island",
+     "Gold Control",
+     "Magic Mira",
+     "Spoiled Not Rotten",
+     "Lady Justice",
+     "As Pretty She Is",
+     "Tappin Magic",
+     "River Street Lass",
+     "Watergate",
+     "Cyber Cloud"
+    ],
+    "confidence": 1.0,
+    "warnings": [],
+    "source": "chart"
+   }
+  }
+ ]
+}
