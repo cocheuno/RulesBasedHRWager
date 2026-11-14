@@ -1,4 +1,6 @@
-# Carovex Racing Engine V2 — implementation prompt (revised 2026-11-14, owner additions included)
+# Carovex Racing Engine V2 — implementation prompt
+
+For use after the rule freeze ends. Fill in the section "Decisions from the week's review" before running it.
 
 ## Your role
 
@@ -13,8 +15,9 @@ at all times, how far it is from having enough.
 
 ## Ground rules
 
-1. **Nothing starts until the rule freeze ends.** The engine on `main` is frozen until the owner's review of the
-   week ending 2026-11-15 is complete and they say so. Until then you may read, audit and write documents only.
+1. **Start with Phase 0, and only when the owner has said the freeze is over.** The section "Decisions from
+   the week's review" below records what the owner decided at the end of the frozen week; implement those
+   decisions in the phase that owns them and nothing beyond them.
 2. **One phase is one pull request against `main`, merged before the next phase starts.** Never stack PRs.
    Never merge into a feature branch. Each PR body carries: the feedback item it answers, the files changed,
    the verification commands with their output, the judgement calls, and what changed in prediction or wager
@@ -42,6 +45,25 @@ at all times, how far it is from having enough.
     needs a one-line justification in the PR and must be optional for the live path.
 11. **Tests:** `python -m unittest discover -s tests -v` must pass at every commit. Every phase adds offline,
     deterministic tests. Report pre-existing failures separately from anything you introduce.
+
+## Decisions from the week's review (owner fills in before this prompt runs)
+
+The frozen week of 2026-11-06 to 2026-11-15 produced findings that the owner reviews on 11/15. For each line,
+the owner writes keep / change / drop and, for a change, what to. The implementer applies these in the phase
+named and makes no other change to scoring or wagering.
+
+| Finding (as of 11/13) | Owner decision | Phase |
+|---|---|---|
+| Four-horse trifecta box in medium and contentious races: 4 of 23 for the week, the drag on every card | | D |
+| Lone-speed call (rule P1): 4 of 20, wins almost only on odds-on favourites | | B/D |
+| Turf and all-weather top picks: 9 of 48 | | B/D |
+| Off-track dirt: 3 of 20; no track-condition input exists | | B |
+| Speed-figure rules stacking (S1, S2, S3, S4, S7, S9 on one figure); a cap on the family's total | | D |
+| Hot-pace trigger fires too easily; speed held in 8 of 15 "hot" races on 11/07 | | D |
+| Pools not offered by the track (from the Equibase page): suppress the suggestion | | D |
+| Best bets of the day: top two races per card by win probability where the win price clears, +34% on 17 picks | | F |
+| Pick 3 / Pick 4: 2 of 30 tracked; keep tracked, or stop building them | | D |
+| Doubles: the best pool of the week; worth a structured place in the recommendations | | D |
 
 ## Already in place (verify, then build on; do not rebuild)
 
@@ -86,6 +108,9 @@ Goal: a prediction is "pre-race" per race, by the clock, not per card by the abs
   `race`, `betting_interest`, `source_observation`, `forecast`, `decision`, `execution`, `settlement`. Legacy
   JSON stays the source of truth for picks and results; the ledger indexes them and holds what JSON cannot
   (tote observations, decision histories). Provide import of existing snapshots and results, idempotent.
+- **Time travel.** A query with a cutoff time returns exactly what was known at that time: the snapshot,
+  the scratches, the results of earlier races only if their charts had been read by then, the tote board as of
+  then. The back-test and the evaluation are built on this query, so there is one definition of "known".
 - **Tests.** (i) two races on one card have different cutoffs; (ii) a result entered after a decision cannot
   change it; (iii) final odds cannot turn an `accepted` decision into a pass; (iv) a snapshot after post is
   excluded for that race even with no result file; (v) reruns never overwrite prior decisions; (vi) legacy
@@ -101,7 +126,9 @@ awarded points because several vendors repeat the same signal.
   own dates, and a feature vector as of time T contains no line or work dated after T. Add missingness flags.
 - **Power Play sheet.** Keep every angle and rank the sheet prints as a typed feature with its original label,
   not only the key-race angles the rules use today. No new points; the back-test reports each angle's
-  prospective hit rate so the owner can decide later.
+  prospective hit rate so the owner can decide later. If the owner later buys Brisnet Insider Picks, it is a
+  separate source with its own adapter and benchmark, not a change to this one; do not build it before a sample
+  file exists in the owner's local tree.
 - **TimeformUS.** `timeform_pp/reader.py` from the prototype, with a fixture built from a trimmed, anonymised
   sample and tests for: three-digit figures, first-time starters with no figure, race splitting, program
   letters (1A). Fields: pace-adjusted speed figure (top and per line), early and late pace figures, running
