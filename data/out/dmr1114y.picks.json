@@ -10302,7 +10302,7 @@
    "class_text": "Mdn 65k",
    "distance_text": "1 Mile",
    "surface": "turf",
-   "field_size": 9,
+   "field_size": 8,
    "alternates": [],
    "pars": {
     "e1": 83,
@@ -10316,7 +10316,7 @@
    "picks": [
     "2"
    ],
-   "bet_structure": "WIN (take 1.7-1 or better)",
+   "bet_structure": "WIN (take 1.6-1 or better)",
    "confidence": "high",
    "selection_note": "#2 is 13.5 points clear",
    "brisnet": {
@@ -10506,7 +10506,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "overlay: ML 3/1 vs fair 1.5-1 (value, not in the ability score)"
+       "note": "overlay: ML 3/1 vs fair 1.4-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -10709,19 +10709,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 3
      },
-     "model_prob": 0.3957,
-     "market_prob": 0.2006,
-     "win_prob": 0.3274,
-     "implied_prob": 0.3957,
-     "fair_odds": 1.5,
+     "model_prob": 0.415,
+     "market_prob": 0.2202,
+     "win_prob": 0.3469,
+     "implied_prob": 0.415,
+     "fair_odds": 1.4,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 1.0
+      "edge": 1.14
      },
      "rank": 1,
      "conditional_rank": null,
-     "min_win_odds": 1.7
+     "min_win_odds": 1.6
     },
     {
      "pgm": "5",
@@ -11009,19 +11009,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.1869,
-     "market_prob": 0.1337,
-     "win_prob": 0.1683,
-     "implied_prob": 0.1869,
-     "fair_odds": 4.4,
+     "model_prob": 0.1961,
+     "market_prob": 0.1468,
+     "win_prob": 0.1788,
+     "implied_prob": 0.1961,
+     "fair_odds": 4.1,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": 0.14
+      "edge": 0.22
      },
      "rank": 2,
      "conditional_rank": null,
-     "min_win_odds": 5.1
+     "min_win_odds": 4.7
     },
     {
      "pgm": "6",
@@ -11142,7 +11142,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 4/1 vs fair 9.1-1 (value, not in the ability score)"
+       "note": "underlay: ML 4/1 vs fair 8.6-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -11341,19 +11341,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 3
      },
-     "model_prob": 0.0995,
-     "market_prob": 0.1605,
-     "win_prob": 0.1208,
-     "implied_prob": 0.0995,
-     "fair_odds": 9.1,
+     "model_prob": 0.1044,
+     "market_prob": 0.1762,
+     "win_prob": 0.1295,
+     "implied_prob": 0.1044,
+     "fair_odds": 8.6,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.56
+      "edge": -0.53
      },
      "rank": 3,
      "conditional_rank": null,
-     "min_win_odds": 10.5
+     "min_win_odds": 9.9
     },
     {
      "pgm": "8",
@@ -11651,19 +11651,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 4
      },
-     "model_prob": 0.0944,
-     "market_prob": 0.0892,
-     "win_prob": 0.0926,
-     "implied_prob": 0.0944,
-     "fair_odds": 9.6,
+     "model_prob": 0.099,
+     "market_prob": 0.0979,
+     "win_prob": 0.0986,
+     "implied_prob": 0.099,
+     "fair_odds": 9.1,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.17
+      "edge": -0.12
      },
      "rank": 4,
      "conditional_rank": null,
-     "min_win_odds": 11.0
+     "min_win_odds": 10.5
     },
     {
      "pgm": "4",
@@ -11724,7 +11724,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 6/1 vs fair 11.8-1 (value, not in the ability score)"
+       "note": "underlay: ML 6/1 vs fair 11.2-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -11903,301 +11903,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 0
      },
-     "model_prob": 0.0781,
-     "market_prob": 0.1146,
-     "win_prob": 0.0909,
-     "implied_prob": 0.0781,
-     "fair_odds": 11.8,
+     "model_prob": 0.082,
+     "market_prob": 0.1258,
+     "win_prob": 0.0973,
+     "implied_prob": 0.082,
+     "fair_odds": 11.2,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.49
+      "edge": -0.46
      },
      "rank": 5,
      "conditional_rank": null,
-     "min_win_odds": 13.6
-    },
-    {
-     "pgm": "3",
-     "name": "Big Caslon",
-     "ml_odds": "8/1",
-     "ml_decimal": 8.0,
-     "run_style": "NA",
-     "speed_pts": 4,
-     "prime_power": 84.4,
-     "score": 4.1,
-     "eliminated": false,
-     "flags": [],
-     "hits": [
-      {
-       "rule": "S3",
-       "name": "Average speed vs. class par",
-       "points": -5.0,
-       "note": "avg last-3 48 is -33 vs par 81"
-      },
-      {
-       "rule": "C1",
-       "name": "Class drop",
-       "points": 1.5,
-       "note": "drops 0.6 class levels (badly beaten last)"
-      },
-      {
-       "rule": "P6",
-       "name": "Post position vs. bias",
-       "points": 2.0,
-       "note": "post 3 (1-3) IV 1.42"
-      },
-      {
-       "rule": "F4",
-       "name": "Closed ground late last out",
-       "points": 1.0,
-       "note": "passed horses in the stretch"
-      },
-      {
-       "rule": "F6",
-       "name": "Layoff handling",
-       "points": 1.5,
-       "note": "46 days, trainer layoff stat 15%"
-      },
-      {
-       "rule": "K1",
-       "name": "Trainer win percentage (year)",
-       "points": 0.6,
-       "note": "trainer 14%"
-      },
-      {
-       "rule": "K3",
-       "name": "Jockey win percentage",
-       "points": 1.0,
-       "note": "jockey 17%"
-      },
-      {
-       "rule": "K4",
-       "name": "Jockey/trainer combination",
-       "points": 2.0,
-       "note": "jky/trn combo 29% of 7"
-      },
-      {
-       "rule": "K6",
-       "name": "Rider upgrade",
-       "points": 1.5,
-       "note": "switches to 17% rider"
-      },
-      {
-       "rule": "Q1",
-       "name": "QuickPlay positive comments",
-       "points": 0.4,
-       "note": "May improve at the longer distance"
-      },
-      {
-       "rule": "Q2",
-       "name": "QuickPlay negative comments",
-       "points": -2.4,
-       "note": "Always far back vs weaker in only start; Has not raced in 46 days; Poor Speed Figure in only start; Has never raced at a route distance"
-      },
-      {
-       "rule": "V1",
-       "name": "Morning-line value",
-       "points": -2.4,
-       "value": true,
-       "note": "underlay: ML 8/1 vs fair 20.5-1 (value, not in the ability score)"
-      }
-     ],
-     "features": {
-      "starts": 1,
-      "wins": 0,
-      "places": 0,
-      "shows": 0,
-      "itm_pct": 0.0,
-      "win_pct": 0.0,
-      "first_time_starter": false,
-      "is_maiden": true,
-      "last_off_surface": false,
-      "surface_form_lines": 1,
-      "use_surface_figs": false,
-      "off_surface_speed": null,
-      "last_speed": 48,
-      "speed_last3": [
-       48
-      ],
-      "best_last3": 48,
-      "avg_last3": 48,
-      "best_speed_10": 48,
-      "prev_best": null,
-      "career_top_last": false,
-      "improving": false,
-      "declining": false,
-      "best_surface_speed": 48,
-      "surface_starts": 1,
-      "surface_wins": 0,
-      "surface_itm": 0,
-      "dist_starts": 0,
-      "dist_wins": 0,
-      "dist_itm": 0,
-      "dist_best_speed": null,
-      "track_starts": 0,
-      "track_wins": 0,
-      "track_itm": 0,
-      "match_speeds": [],
-      "best_match_speed": null,
-      "avg_match_speed": null,
-      "e1_last3": [],
-      "e2_last3": [
-       78
-      ],
-      "lp_last3": [
-       61
-      ],
-      "best_e1": null,
-      "best_e2": 78,
-      "best_lp": 61,
-      "avg_e1": null,
-      "avg_e2": 78,
-      "avg_lp": 61,
-      "run_style": "NA",
-      "speed_pts": 4,
-      "early_type": false,
-      "closer_type": false,
-      "today_level": 20.0,
-      "last_level": 20.64,
-      "class_move": -0.6400000000000006,
-      "class_rating_last3": [
-       105
-      ],
-      "avg_class_rating": 105,
-      "best_class_rating": 105,
-      "race_rating_last": 106,
-      "avg_race_rating": 106,
-      "acl": null,
-      "prime_power": 84.4,
-      "prime_power_rank": 8,
-      "days_since": 46,
-      "last_finish": 6,
-      "last_beaten": 11.0,
-      "last_won": false,
-      "last_itm": false,
-      "last_field": 9,
-      "last_odds": 8.3,
-      "last_comment": "Inside trip",
-      "last_trouble": false,
-      "last_strong_win": false,
-      "last_good_effort": false,
-      "last_bad_effort": false,
-      "last_same_surface": true,
-      "last_same_category": false,
-      "last_wide": false,
-      "last_gained_late": true,
-      "last_closed_lengths": -1.25,
-      "last_led_early": false,
-      "itm_streak": 0,
-      "races_since_layoff": 0,
-      "num_works": 12,
-      "bullet_works": 0,
-      "recent_fast_works": 0,
-      "works_since_last": 8,
-      "has_work_5f_or_more": true,
-      "trainer_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 482,
-       "win_pct": 14,
-       "itm_pct": 41,
-       "roi": -0.66
-      },
-      "jockey_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 672,
-       "win_pct": 17,
-       "itm_pct": 43,
-       "roi": -0.03
-      },
-      "jt_combo": {
-       "category": "JKYw/ Trn L60",
-       "flag": true,
-       "starts": 7,
-       "win_pct": 29,
-       "itm_pct": 57,
-       "roi": 5.8
-      },
-      "trainer_meet": {
-       "starts": 4,
-       "win": 0,
-       "place": 0,
-       "show": 1,
-       "win_pct": 0
-      },
-      "jockey_meet": {
-       "starts": 14,
-       "win": 1,
-       "place": 1,
-       "show": 2,
-       "win_pct": 7
-      },
-      "jockey_switch": true,
-      "blinkers_on": false,
-      "blinkers_off": false,
-      "first_lasix": false,
-      "ped_surface_rating": 105,
-      "ped_dist_rating": 105,
-      "ped_off_rating": 105,
-      "sire_awd": null,
-      "damsire_awd": null,
-      "sire_first_pct": null,
-      "sire_mud_pct": null,
-      "dam_dpi": null,
-      "sire_spi": null,
-      "trouble_last3": 0,
-      "last_dueled": false,
-      "last_favorite": false,
-      "last_beaten_favorite": false,
-      "last_claimed": false,
-      "last_claim_price": null,
-      "today_claiming_price": null,
-      "prior_claiming_starts": 0,
-      "first_time_for_tag": false,
-      "last_maiden_win": false,
-      "last_maiden_win_claiming": false,
-      "today_n1x": false,
-      "today_n2l": false,
-      "last_speed_vs_par": -33,
-      "paired_figs": false,
-      "best_two_recent": 48,
-      "best_competitive_level": null,
-      "back_class": false,
-      "freshened": false,
-      "last_lost_fast": false,
-      "debut_speed": 48,
-      "sheet_angles": [],
-      "key_race": false,
-      "possible_key_race": false,
-      "ml_decimal": 8.0,
-      "post": 3,
-      "entry_status": null,
-      "age": 2,
-      "sex": "c",
-      "weight": 122,
-      "name": "Big Caslon",
-      "pgm": "3",
-      "turf_to_dirt": false,
-      "dirt_to_turf": false,
-      "sprint_to_route": true,
-      "route_to_sprint": false,
-      "num_clean_pp": 1
-     },
-     "model_prob": 0.0466,
-     "market_prob": 0.0892,
-     "win_prob": 0.0615,
-     "implied_prob": 0.0466,
-     "fair_odds": 20.5,
-     "value": {
-      "label": "underlay",
-      "points": -2.4,
-      "edge": -0.61
-     },
-     "rank": 6,
-     "conditional_rank": null,
-     "min_win_odds": 23.6
+     "min_win_odds": 12.9
     },
     {
      "pgm": "7",
@@ -12264,13 +11982,6 @@
        "name": "QuickPlay negative comments",
        "points": -2.2,
        "note": "Never close in only career start; Has not raced for more than 2 months; Poor Speed Figure in only start; Poor '1st at route' trainer record: 6% wins 44 sts; Has never raced at a route distance"
-      },
-      {
-       "rule": "V1",
-       "name": "Morning-line value",
-       "points": -2.4,
-       "value": true,
-       "note": "underlay: ML 15/1 vs fair 25.5-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -12455,19 +12166,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 1
      },
-     "model_prob": 0.0377,
-     "market_prob": 0.0501,
-     "win_prob": 0.0421,
-     "implied_prob": 0.0377,
-     "fair_odds": 25.5,
+     "model_prob": 0.0396,
+     "market_prob": 0.0551,
+     "win_prob": 0.045,
+     "implied_prob": 0.0396,
+     "fair_odds": 24.3,
      "value": {
-      "label": "underlay",
-      "points": -2.4,
-      "edge": -0.41
+      "label": "fair",
+      "points": 0.0,
+      "edge": -0.38
      },
-     "rank": 7,
+     "rank": 6,
      "conditional_rank": null,
-     "min_win_odds": 29.3
+     "min_win_odds": 27.9
     },
     {
      "pgm": "1",
@@ -12564,7 +12275,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 8/1 vs fair 26.2-1 (value, not in the ability score)"
+       "note": "underlay: ML 8/1 vs fair 25.0-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -12756,19 +12467,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.0367,
-     "market_prob": 0.0892,
-     "win_prob": 0.0551,
-     "implied_prob": 0.0367,
-     "fair_odds": 26.2,
+     "model_prob": 0.0385,
+     "market_prob": 0.0979,
+     "win_prob": 0.0593,
+     "implied_prob": 0.0385,
+     "fair_odds": 25.0,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.69
+      "edge": -0.68
      },
-     "rank": 8,
+     "rank": 7,
      "conditional_rank": null,
-     "min_win_odds": 30.1
+     "min_win_odds": 28.7
     },
     {
      "pgm": "9",
@@ -12841,7 +12552,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 10/1 vs fair 40.2-1 (value, not in the ability score)"
+       "note": "underlay: ML 10/1 vs fair 38.2-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -13035,19 +12746,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.0243,
-     "market_prob": 0.0729,
-     "win_prob": 0.0413,
-     "implied_prob": 0.0243,
-     "fair_odds": 40.2,
+     "model_prob": 0.0255,
+     "market_prob": 0.0801,
+     "win_prob": 0.0446,
+     "implied_prob": 0.0255,
+     "fair_odds": 38.2,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.75
+      "edge": -0.74
      },
-     "rank": 9,
+     "rank": 8,
      "conditional_rank": null,
-     "min_win_odds": 46.2
+     "min_win_odds": 43.9
     }
    ],
    "leg": {
@@ -13064,20 +12775,19 @@
     "favorite": "2",
     "price_leg": false,
     "probs": {
-     "2": 0.3274,
-     "5": 0.1683,
-     "6": 0.1208,
-     "8": 0.0926,
-     "4": 0.0909,
-     "3": 0.0615,
-     "7": 0.0421,
-     "1": 0.0551,
-     "9": 0.0413
+     "2": 0.3469,
+     "5": 0.1788,
+     "6": 0.1295,
+     "8": 0.0986,
+     "4": 0.0973,
+     "7": 0.045,
+     "1": 0.0593,
+     "9": 0.0446
     },
     "price_factor": 1.0,
     "audit": [
-     "H1 win probabilities (model 65% / ML 35%); top #2 33%",
-     "H4 A=['2', '5', '6'] (62%) B=['8', '4'] (80%) targets 55%/78%",
+     "H1 win probabilities (model 65% / ML 35%); top #2 35%",
+     "H4 A=['2', '5', '6'] (66%) B=['8', '4'] (85%) targets 55%/78%",
      "H5 favourite #2 (3/1) looks legitimate"
     ]
    },
@@ -13091,15 +12801,15 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #2 (take 1.7-1 or better)",
+     "label": "WIN #2 (take 1.6-1 or better)",
      "source": "primary",
      "race_no": 5,
      "races": [
       5
      ],
-     "min_odds": 1.7,
+     "min_odds": 1.6,
      "min_odds_by": {
-      "2": 1.7
+      "2": 1.6
      }
     },
     {
@@ -13186,15 +12896,15 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #2 (ML 3/1, take 1.7-1 or better; fair 1.5-1)",
+     "label": "WIN #2 (ML 3/1, take 1.6-1 or better; fair 1.4-1)",
      "source": "other",
      "race_no": 5,
      "races": [
       5
      ],
-     "min_odds": 1.7,
+     "min_odds": 1.6,
      "min_odds_by": {
-      "2": 1.7
+      "2": 1.6
      }
     },
     {
@@ -13258,7 +12968,7 @@
     "EXACTA key #2 over #5,#6,#8",
     "TRIFECTA key #2 / #5,#6,#8 / #5,#6,#8,#4",
     "TRIFECTA key second #5,#6,#8 / #2 / #5,#6,#8,#4 (a standout that runs second still pays)",
-    "WIN #2 (ML 3/1, take 1.7-1 or better; fair 1.5-1)",
+    "WIN #2 (ML 3/1, take 1.6-1 or better; fair 1.4-1)",
     "SUPERFECTA key #2 / #5,#6,#8 / #5,#6,#8 / #5,#6,#8,#4",
     "DAILY DOUBLE #2,#5,#6 with R6 #12,#6,#3 (9 x $1)"
    ]
@@ -13282,9 +12992,9 @@
    "picks": [
     "12"
    ],
-   "bet_structure": "WIN (take 2-1 or better)",
+   "bet_structure": "WIN (take 2.1-1 or better)",
    "confidence": "high",
-   "selection_note": "#12 is 17.3 points clear",
+   "selection_note": "#12 is 16.6 points clear",
    "brisnet": {
     "top_pick": "12",
     "top3": [
@@ -13319,7 +13029,7 @@
      "run_style": "NA",
      "speed_pts": 0,
      "prime_power": 108.6,
-     "score": 39.2,
+     "score": 38.45,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -13378,6 +13088,12 @@
        "note": "best late pace 81"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -0.75,
+       "note": "3 of 3 winners from posts 1-3"
+      },
+      {
        "rule": "F3",
        "name": "Troubled trip last out",
        "points": 1.2,
@@ -13430,7 +13146,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "overlay: ML 7/2 vs fair 1.7-1 (value, not in the ability score)"
+       "note": "overlay: ML 7/2 vs fair 1.8-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -13625,19 +13341,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.374,
+     "model_prob": 0.3629,
      "market_prob": 0.175,
-     "win_prob": 0.3043,
-     "implied_prob": 0.374,
-     "fair_odds": 1.7,
+     "win_prob": 0.2971,
+     "implied_prob": 0.3629,
+     "fair_odds": 1.8,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 1.06
+      "edge": 0.94
      },
      "rank": 1,
      "conditional_rank": null,
-     "min_win_odds": 2.0
+     "min_win_odds": 2.1
     },
     {
      "pgm": "6",
@@ -13936,19 +13652,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 1
      },
-     "model_prob": 0.143,
+     "model_prob": 0.1447,
      "market_prob": 0.1125,
-     "win_prob": 0.1323,
-     "implied_prob": 0.143,
-     "fair_odds": 6.0,
+     "win_prob": 0.1334,
+     "implied_prob": 0.1447,
+     "fair_odds": 5.9,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": 0.0
+      "edge": 0.02
      },
      "rank": 2,
      "conditional_rank": null,
-     "min_win_odds": 6.9
+     "min_win_odds": 6.8
     },
     {
      "pgm": "3",
@@ -13958,7 +13674,7 @@
      "run_style": "E",
      "speed_pts": 6,
      "prime_power": 108.1,
-     "score": 13.8,
+     "score": 14.55,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -14017,6 +13733,12 @@
        "note": "post 3 (1-3) IV 1.38"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 0.75,
+       "note": "3 of 3 winners from posts 1-3"
+      },
+      {
        "rule": "F5",
        "name": "Bad effort last out",
        "points": -3.0,
@@ -14057,7 +13779,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 9/2 vs fair 10.0-1 (value, not in the ability score)"
+       "note": "underlay: ML 9/2 vs fair 9.4-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -14244,19 +13966,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 1
      },
-     "model_prob": 0.0912,
+     "model_prob": 0.0962,
      "market_prob": 0.1431,
-     "win_prob": 0.1094,
-     "implied_prob": 0.0912,
-     "fair_odds": 10.0,
+     "win_prob": 0.1126,
+     "implied_prob": 0.0962,
+     "fair_odds": 9.4,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.55
+      "edge": -0.52
      },
      "rank": 3,
      "conditional_rank": null,
-     "min_win_odds": 11.5
+     "min_win_odds": 10.8
     },
     {
      "pgm": "7",
@@ -14481,19 +14203,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 0
      },
-     "model_prob": 0.0747,
+     "model_prob": 0.0755,
      "market_prob": 0.0875,
-     "win_prob": 0.0792,
-     "implied_prob": 0.0747,
-     "fair_odds": 12.4,
+     "win_prob": 0.0797,
+     "implied_prob": 0.0755,
+     "fair_odds": 12.2,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.35
+      "edge": -0.34
      },
      "rank": 4,
      "conditional_rank": null,
-     "min_win_odds": 14.3
+     "min_win_odds": 14.0
     },
     {
      "pgm": "5",
@@ -14602,7 +14324,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 5/1 vs fair 13.2-1 (value, not in the ability score)"
+       "note": "underlay: ML 5/1 vs fair 13.0-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -14803,11 +14525,11 @@
       "route_to_sprint": false,
       "num_clean_pp": 5
      },
-     "model_prob": 0.0706,
+     "model_prob": 0.0715,
      "market_prob": 0.1312,
-     "win_prob": 0.0918,
-     "implied_prob": 0.0706,
-     "fair_odds": 13.2,
+     "win_prob": 0.0924,
+     "implied_prob": 0.0715,
+     "fair_odds": 13.0,
      "value": {
       "label": "underlay",
       "points": -2.4,
@@ -14815,7 +14537,7 @@
      },
      "rank": 5,
      "conditional_rank": null,
-     "min_win_odds": 15.2
+     "min_win_odds": 14.9
     },
     {
      "pgm": "1",
@@ -14825,7 +14547,7 @@
      "run_style": "E",
      "speed_pts": 3,
      "prime_power": 107.0,
-     "score": 5.5,
+     "score": 6.25,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -14884,6 +14606,12 @@
        "note": "post 1 (RAIL) IV 1.61"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 0.75,
+       "note": "3 of 3 winners from posts 1-3"
+      },
+      {
        "rule": "F4",
        "name": "Closed ground late last out",
        "points": 1.0,
@@ -14930,7 +14658,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 5/1 vs fair 16.4-1 (value, not in the ability score)"
+       "note": "underlay: ML 5/1 vs fair 15.5-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -15127,19 +14855,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 3
      },
-     "model_prob": 0.0575,
+     "model_prob": 0.0607,
      "market_prob": 0.1312,
-     "win_prob": 0.0833,
-     "implied_prob": 0.0575,
-     "fair_odds": 16.4,
+     "win_prob": 0.0854,
+     "implied_prob": 0.0607,
+     "fair_odds": 15.5,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.7
+      "edge": -0.68
      },
      "rank": 6,
      "conditional_rank": null,
-     "min_win_odds": 18.9
+     "min_win_odds": 17.8
     },
     {
      "pgm": "9",
@@ -15149,7 +14877,7 @@
      "run_style": "E",
      "speed_pts": 3,
      "prime_power": 90.9,
-     "score": 4.8,
+     "score": 4.05,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -15188,6 +14916,12 @@
        "name": "Probable pace leader by E1 figure",
        "points": -1.5,
        "note": "E1 95: 2 E types matched on the lead (#9, #6)"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -0.75,
+       "note": "3 of 3 winners from posts 1-3"
       },
       {
        "rule": "K1",
@@ -15236,7 +14970,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 5/1 vs fair 17.1-1 (value, not in the ability score)"
+       "note": "underlay: ML 5/1 vs fair 17.6-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -15433,246 +15167,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 3
      },
-     "model_prob": 0.0553,
+     "model_prob": 0.0537,
      "market_prob": 0.1312,
-     "win_prob": 0.0819,
-     "implied_prob": 0.0553,
-     "fair_odds": 17.1,
+     "win_prob": 0.0808,
+     "implied_prob": 0.0537,
+     "fair_odds": 17.6,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.71
+      "edge": -0.72
      },
      "rank": 7,
      "conditional_rank": null,
-     "min_win_odds": 19.7
-    },
-    {
-     "pgm": "11",
-     "name": "Catalinamillertime",
-     "ml_odds": "30/1",
-     "ml_decimal": 30.0,
-     "run_style": "NA",
-     "speed_pts": 0,
-     "prime_power": null,
-     "score": 2.2,
-     "eliminated": false,
-     "flags": [],
-     "hits": [
-      {
-       "rule": "K1",
-       "name": "Trainer win percentage (year)",
-       "points": 1.8,
-       "note": "trainer 19%"
-      },
-      {
-       "rule": "Q1",
-       "name": "QuickPlay positive comments",
-       "points": 0.4,
-       "note": "Sharp 3F workout (Nov-11)"
-      },
-      {
-       "rule": "Q2",
-       "name": "QuickPlay negative comments",
-       "points": -0.4,
-       "note": "First time starter"
-      },
-      {
-       "rule": "M1",
-       "name": "First-time starter profile",
-       "points": 0.4,
-       "note": "first-timer: sharp works, debuts in maiden claimer"
-      },
-      {
-       "rule": "V1",
-       "name": "Morning-line value",
-       "points": 3.0,
-       "value": true,
-       "note": "overlay: ML 30/1 vs fair 19.9-1 (value, not in the ability score)"
-      }
-     ],
-     "features": {
-      "starts": 0,
-      "wins": 0,
-      "places": 0,
-      "shows": 0,
-      "itm_pct": null,
-      "win_pct": null,
-      "first_time_starter": true,
-      "is_maiden": true,
-      "last_off_surface": false,
-      "surface_form_lines": 0,
-      "use_surface_figs": false,
-      "off_surface_speed": null,
-      "last_speed": null,
-      "speed_last3": [],
-      "best_last3": null,
-      "avg_last3": null,
-      "best_speed_10": null,
-      "prev_best": null,
-      "career_top_last": false,
-      "improving": false,
-      "declining": false,
-      "best_surface_speed": null,
-      "surface_starts": 0,
-      "surface_wins": 0,
-      "surface_itm": 0,
-      "dist_starts": 0,
-      "dist_wins": 0,
-      "dist_itm": 0,
-      "dist_best_speed": null,
-      "track_starts": 0,
-      "track_wins": 0,
-      "track_itm": 0,
-      "match_speeds": [],
-      "best_match_speed": null,
-      "avg_match_speed": null,
-      "e1_last3": [],
-      "e2_last3": [],
-      "lp_last3": [],
-      "best_e1": null,
-      "best_e2": null,
-      "best_lp": null,
-      "avg_e1": null,
-      "avg_e2": null,
-      "avg_lp": null,
-      "run_style": "NA",
-      "speed_pts": 0,
-      "early_type": false,
-      "closer_type": false,
-      "today_level": 12.0,
-      "last_level": null,
-      "class_move": null,
-      "class_rating_last3": [],
-      "avg_class_rating": null,
-      "best_class_rating": null,
-      "race_rating_last": null,
-      "avg_race_rating": null,
-      "acl": null,
-      "prime_power": null,
-      "prime_power_rank": null,
-      "days_since": null,
-      "last_finish": null,
-      "last_beaten": null,
-      "last_won": false,
-      "last_itm": false,
-      "last_field": null,
-      "last_odds": null,
-      "last_comment": "",
-      "last_trouble": false,
-      "last_strong_win": false,
-      "last_good_effort": false,
-      "last_bad_effort": false,
-      "last_same_surface": false,
-      "last_same_category": false,
-      "last_wide": false,
-      "last_gained_late": false,
-      "last_closed_lengths": null,
-      "last_led_early": false,
-      "itm_streak": 0,
-      "races_since_layoff": null,
-      "num_works": 12,
-      "bullet_works": 0,
-      "recent_fast_works": 1,
-      "works_since_last": 12,
-      "has_work_5f_or_more": true,
-      "trainer_year": {
-       "category": "2026",
-       "flag": true,
-       "starts": 43,
-       "win_pct": 19,
-       "itm_pct": 40,
-       "roi": 1.28
-      },
-      "jockey_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 546,
-       "win_pct": 12,
-       "itm_pct": 40,
-       "roi": -0.69
-      },
-      "jt_combo": null,
-      "trainer_meet": {
-       "starts": 0,
-       "win": 0,
-       "place": 0,
-       "show": 0,
-       "win_pct": 0
-      },
-      "jockey_meet": {
-       "starts": 10,
-       "win": 1,
-       "place": 1,
-       "show": 0,
-       "win_pct": 10
-      },
-      "jockey_switch": false,
-      "blinkers_on": false,
-      "blinkers_off": false,
-      "first_lasix": false,
-      "ped_surface_rating": 103,
-      "ped_dist_rating": 106,
-      "ped_off_rating": 104,
-      "sire_awd": 6.6,
-      "damsire_awd": 5.7,
-      "sire_first_pct": 7,
-      "sire_mud_pct": 18,
-      "dam_dpi": null,
-      "sire_spi": 0.63,
-      "trouble_last3": 0,
-      "last_dueled": false,
-      "last_favorite": false,
-      "last_beaten_favorite": false,
-      "last_claimed": false,
-      "last_claim_price": null,
-      "today_claiming_price": 20000,
-      "prior_claiming_starts": 0,
-      "first_time_for_tag": false,
-      "last_maiden_win": false,
-      "last_maiden_win_claiming": false,
-      "today_n1x": false,
-      "today_n2l": false,
-      "last_speed_vs_par": null,
-      "paired_figs": false,
-      "best_two_recent": null,
-      "best_competitive_level": null,
-      "back_class": false,
-      "freshened": false,
-      "last_lost_fast": false,
-      "debut_speed": null,
-      "sheet_angles": [
-       "Clocker's-3f (SA)"
-      ],
-      "key_race": false,
-      "possible_key_race": false,
-      "ml_decimal": 30.0,
-      "post": 10,
-      "entry_status": null,
-      "age": 2,
-      "sex": "f",
-      "weight": 122,
-      "name": "Catalinamillertime",
-      "pgm": "11",
-      "turf_to_dirt": false,
-      "dirt_to_turf": false,
-      "sprint_to_route": false,
-      "route_to_sprint": false,
-      "num_clean_pp": 0
-     },
-     "model_prob": 0.0479,
-     "market_prob": 0.0254,
-     "win_prob": 0.04,
-     "implied_prob": 0.0479,
-     "fair_odds": 19.9,
-     "value": {
-      "label": "overlay",
-      "points": 3.0,
-      "edge": 0.51
-     },
-     "rank": 8,
-     "conditional_rank": null,
-     "min_win_odds": 22.9
+     "min_win_odds": 20.2
     },
     {
      "pgm": "4",
@@ -15903,19 +15410,252 @@
       "route_to_sprint": false,
       "num_clean_pp": 0
      },
-     "model_prob": 0.0468,
+     "model_prob": 0.0474,
      "market_prob": 0.0375,
-     "win_prob": 0.0436,
-     "implied_prob": 0.0468,
-     "fair_odds": 20.4,
+     "win_prob": 0.0439,
+     "implied_prob": 0.0474,
+     "fair_odds": 20.1,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.02
+      "edge": -0.0
+     },
+     "rank": 8,
+     "conditional_rank": null,
+     "min_win_odds": 23.1
+    },
+    {
+     "pgm": "11",
+     "name": "Catalinamillertime",
+     "ml_odds": "30/1",
+     "ml_decimal": 30.0,
+     "run_style": "NA",
+     "speed_pts": 0,
+     "prime_power": null,
+     "score": 1.45,
+     "eliminated": false,
+     "flags": [],
+     "hits": [
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -0.75,
+       "note": "3 of 3 winners from posts 1-3"
+      },
+      {
+       "rule": "K1",
+       "name": "Trainer win percentage (year)",
+       "points": 1.8,
+       "note": "trainer 19%"
+      },
+      {
+       "rule": "Q1",
+       "name": "QuickPlay positive comments",
+       "points": 0.4,
+       "note": "Sharp 3F workout (Nov-11)"
+      },
+      {
+       "rule": "Q2",
+       "name": "QuickPlay negative comments",
+       "points": -0.4,
+       "note": "First time starter"
+      },
+      {
+       "rule": "M1",
+       "name": "First-time starter profile",
+       "points": 0.4,
+       "note": "first-timer: sharp works, debuts in maiden claimer"
+      },
+      {
+       "rule": "V1",
+       "name": "Morning-line value",
+       "points": 3.0,
+       "value": true,
+       "note": "overlay: ML 30/1 vs fair 20.5-1 (value, not in the ability score)"
+      }
+     ],
+     "features": {
+      "starts": 0,
+      "wins": 0,
+      "places": 0,
+      "shows": 0,
+      "itm_pct": null,
+      "win_pct": null,
+      "first_time_starter": true,
+      "is_maiden": true,
+      "last_off_surface": false,
+      "surface_form_lines": 0,
+      "use_surface_figs": false,
+      "off_surface_speed": null,
+      "last_speed": null,
+      "speed_last3": [],
+      "best_last3": null,
+      "avg_last3": null,
+      "best_speed_10": null,
+      "prev_best": null,
+      "career_top_last": false,
+      "improving": false,
+      "declining": false,
+      "best_surface_speed": null,
+      "surface_starts": 0,
+      "surface_wins": 0,
+      "surface_itm": 0,
+      "dist_starts": 0,
+      "dist_wins": 0,
+      "dist_itm": 0,
+      "dist_best_speed": null,
+      "track_starts": 0,
+      "track_wins": 0,
+      "track_itm": 0,
+      "match_speeds": [],
+      "best_match_speed": null,
+      "avg_match_speed": null,
+      "e1_last3": [],
+      "e2_last3": [],
+      "lp_last3": [],
+      "best_e1": null,
+      "best_e2": null,
+      "best_lp": null,
+      "avg_e1": null,
+      "avg_e2": null,
+      "avg_lp": null,
+      "run_style": "NA",
+      "speed_pts": 0,
+      "early_type": false,
+      "closer_type": false,
+      "today_level": 12.0,
+      "last_level": null,
+      "class_move": null,
+      "class_rating_last3": [],
+      "avg_class_rating": null,
+      "best_class_rating": null,
+      "race_rating_last": null,
+      "avg_race_rating": null,
+      "acl": null,
+      "prime_power": null,
+      "prime_power_rank": null,
+      "days_since": null,
+      "last_finish": null,
+      "last_beaten": null,
+      "last_won": false,
+      "last_itm": false,
+      "last_field": null,
+      "last_odds": null,
+      "last_comment": "",
+      "last_trouble": false,
+      "last_strong_win": false,
+      "last_good_effort": false,
+      "last_bad_effort": false,
+      "last_same_surface": false,
+      "last_same_category": false,
+      "last_wide": false,
+      "last_gained_late": false,
+      "last_closed_lengths": null,
+      "last_led_early": false,
+      "itm_streak": 0,
+      "races_since_layoff": null,
+      "num_works": 12,
+      "bullet_works": 0,
+      "recent_fast_works": 1,
+      "works_since_last": 12,
+      "has_work_5f_or_more": true,
+      "trainer_year": {
+       "category": "2026",
+       "flag": true,
+       "starts": 43,
+       "win_pct": 19,
+       "itm_pct": 40,
+       "roi": 1.28
+      },
+      "jockey_year": {
+       "category": "2026",
+       "flag": false,
+       "starts": 546,
+       "win_pct": 12,
+       "itm_pct": 40,
+       "roi": -0.69
+      },
+      "jt_combo": null,
+      "trainer_meet": {
+       "starts": 0,
+       "win": 0,
+       "place": 0,
+       "show": 0,
+       "win_pct": 0
+      },
+      "jockey_meet": {
+       "starts": 10,
+       "win": 1,
+       "place": 1,
+       "show": 0,
+       "win_pct": 10
+      },
+      "jockey_switch": false,
+      "blinkers_on": false,
+      "blinkers_off": false,
+      "first_lasix": false,
+      "ped_surface_rating": 103,
+      "ped_dist_rating": 106,
+      "ped_off_rating": 104,
+      "sire_awd": 6.6,
+      "damsire_awd": 5.7,
+      "sire_first_pct": 7,
+      "sire_mud_pct": 18,
+      "dam_dpi": null,
+      "sire_spi": 0.63,
+      "trouble_last3": 0,
+      "last_dueled": false,
+      "last_favorite": false,
+      "last_beaten_favorite": false,
+      "last_claimed": false,
+      "last_claim_price": null,
+      "today_claiming_price": 20000,
+      "prior_claiming_starts": 0,
+      "first_time_for_tag": false,
+      "last_maiden_win": false,
+      "last_maiden_win_claiming": false,
+      "today_n1x": false,
+      "today_n2l": false,
+      "last_speed_vs_par": null,
+      "paired_figs": false,
+      "best_two_recent": null,
+      "best_competitive_level": null,
+      "back_class": false,
+      "freshened": false,
+      "last_lost_fast": false,
+      "debut_speed": null,
+      "sheet_angles": [
+       "Clocker's-3f (SA)"
+      ],
+      "key_race": false,
+      "possible_key_race": false,
+      "ml_decimal": 30.0,
+      "post": 10,
+      "entry_status": null,
+      "age": 2,
+      "sex": "f",
+      "weight": 122,
+      "name": "Catalinamillertime",
+      "pgm": "11",
+      "turf_to_dirt": false,
+      "dirt_to_turf": false,
+      "sprint_to_route": false,
+      "route_to_sprint": false,
+      "num_clean_pp": 0
+     },
+     "model_prob": 0.0465,
+     "market_prob": 0.0254,
+     "win_prob": 0.0391,
+     "implied_prob": 0.0465,
+     "fair_odds": 20.5,
+     "value": {
+      "label": "overlay",
+      "points": 3.0,
+      "edge": 0.46
      },
      "rank": 9,
      "conditional_rank": null,
-     "min_win_odds": 23.5
+     "min_win_odds": 23.6
     },
     {
      "pgm": "2",
@@ -15925,7 +15665,7 @@
      "run_style": "NA",
      "speed_pts": 1,
      "prime_power": 89.5,
-     "score": -1.5,
+     "score": -0.75,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -15946,6 +15686,12 @@
        "name": "Post position vs. bias",
        "points": 2.0,
        "note": "post 2 (1-3) IV 1.38"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 0.75,
+       "note": "3 of 3 winners from posts 1-3"
       },
       {
        "rule": "F3",
@@ -16180,19 +15926,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 1
      },
-     "model_prob": 0.039,
+     "model_prob": 0.0411,
      "market_prob": 0.0254,
-     "win_prob": 0.0342,
-     "implied_prob": 0.039,
-     "fair_odds": 24.6,
+     "win_prob": 0.0356,
+     "implied_prob": 0.0411,
+     "fair_odds": 23.3,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": 0.22
+      "edge": 0.29
      },
      "rank": 10,
      "conditional_rank": null,
-     "min_win_odds": 28.3
+     "min_win_odds": 26.8
     },
     {
      "pgm": "8",
@@ -16202,7 +15948,7 @@
      "run_style": "NA",
      "speed_pts": 2,
      "prime_power": 94.0,
-     "score": -9.0,
+     "score": -9.75,
      "eliminated": true,
      "flags": [],
      "hits": [
@@ -16217,6 +15963,12 @@
        "name": "Class drop",
        "points": 1.5,
        "note": "drops 1.2 class levels (badly beaten last)"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -0.75,
+       "note": "3 of 3 winners from posts 1-3"
       },
       {
        "rule": "F5",
@@ -16470,22 +16222,22 @@
     "favorite": "12",
     "price_leg": false,
     "probs": {
-     "12": 0.3043,
-     "6": 0.1323,
-     "3": 0.1094,
-     "7": 0.0792,
-     "5": 0.0918,
-     "1": 0.0833,
-     "9": 0.0819,
-     "11": 0.04,
-     "4": 0.0436,
-     "2": 0.0342
+     "12": 0.2971,
+     "6": 0.1334,
+     "3": 0.1126,
+     "7": 0.0797,
+     "5": 0.0924,
+     "1": 0.0854,
+     "9": 0.0808,
+     "4": 0.0439,
+     "11": 0.0391,
+     "2": 0.0356
     },
     "price_factor": 0.98,
     "audit": [
      "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
      "H1 win probabilities (model 65% / ML 35%); top #12 30%",
-     "H4 A=['12', '6', '3'] (55%) B=['5', '1', '9'] (80%) targets 55%/78%",
+     "H4 A=['12', '6', '3'] (54%) B=['5', '1', '9'] (80%) targets 55%/78%",
      "H5 favourite #12 (7/2) looks legitimate"
     ]
    },
@@ -16499,15 +16251,15 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #12 (take 2-1 or better)",
+     "label": "WIN #12 (take 2.1-1 or better)",
      "source": "primary",
      "race_no": 6,
      "races": [
       6
      ],
-     "min_odds": 2.0,
+     "min_odds": 2.1,
      "min_odds_by": {
-      "12": 2.0
+      "12": 2.1
      }
     },
     {
@@ -16594,15 +16346,15 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #12 (ML 7/2, take 2-1 or better; fair 1.7-1)",
+     "label": "WIN #12 (ML 7/2, take 2.1-1 or better; fair 1.8-1)",
      "source": "other",
      "race_no": 6,
      "races": [
       6
      ],
-     "min_odds": 2.0,
+     "min_odds": 2.1,
      "min_odds_by": {
-      "12": 2.0
+      "12": 2.1
      }
     },
     {
@@ -16664,7 +16416,7 @@
     "EXACTA key #12 over #6,#3,#7",
     "TRIFECTA key #12 / #6,#3,#7 / #6,#3,#7,#5",
     "TRIFECTA key second #6,#3,#7 / #12 / #6,#3,#7,#5 (a standout that runs second still pays)",
-    "WIN #12 (ML 7/2, take 2-1 or better; fair 1.7-1)",
+    "WIN #12 (ML 7/2, take 2.1-1 or better; fair 1.8-1)",
     "SUPERFECTA key #12 / #6,#3,#7 / #6,#3,#7 / #6,#3,#7,#5",
     "DAILY DOUBLE #12,#6,#3 with R7 #1 (3 x $1)"
    ]
@@ -19242,7 +18994,7 @@
    ],
    "bet_structure": "WIN (take 1.5-1 or better)",
    "confidence": "high",
-   "selection_note": "#1 is 22.2 points clear",
+   "selection_note": "#1 is 19.7 points clear",
    "brisnet": {
     "top_pick": "1",
     "top3": [
@@ -19277,7 +19029,7 @@
      "run_style": "P",
      "speed_pts": 1,
      "prime_power": 125.8,
-     "score": 46.3,
+     "score": 46.05,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -19342,6 +19094,12 @@
        "note": "post 1 (RAIL) IV 1.54"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -0.25,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
+      },
+      {
        "rule": "F2",
        "name": "In the money last race",
        "points": 1.0,
@@ -19400,7 +19158,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "overlay: ML 4/1 vs fair 1.1-1 (value, not in the ability score)"
+       "note": "overlay: ML 4/1 vs fair 1.2-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -19596,15 +19354,15 @@
       "route_to_sprint": true,
       "num_clean_pp": 8
      },
-     "model_prob": 0.4658,
+     "model_prob": 0.4445,
      "market_prob": 0.1627,
-     "win_prob": 0.3597,
-     "implied_prob": 0.4658,
-     "fair_odds": 1.1,
+     "win_prob": 0.3458,
+     "implied_prob": 0.4445,
+     "fair_odds": 1.2,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 2.64
+      "edge": 2.33
      },
      "rank": 1,
      "conditional_rank": null,
@@ -19618,7 +19376,7 @@
      "run_style": "E/P",
      "speed_pts": 6,
      "prime_power": 123.7,
-     "score": 24.05,
+     "score": 26.3,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -19695,6 +19453,12 @@
        "note": "E2 avg 90.3 vs par 98"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 2.25,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
+      },
+      {
        "rule": "F4",
        "name": "Closed ground late last out",
        "points": 1.0,
@@ -19753,7 +19517,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 2/1 vs fair 6.4-1 (value, not in the ability score)"
+       "note": "underlay: ML 2/1 vs fair 5.7-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -19956,19 +19720,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.1353,
+     "model_prob": 0.1484,
      "market_prob": 0.2712,
-     "win_prob": 0.1829,
-     "implied_prob": 0.1353,
-     "fair_odds": 6.4,
+     "win_prob": 0.1913,
+     "implied_prob": 0.1484,
+     "fair_odds": 5.7,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.69
+      "edge": -0.65
      },
      "rank": 2,
      "conditional_rank": null,
-     "min_win_odds": 7.4
+     "min_win_odds": 6.6
     },
     {
      "pgm": "7",
@@ -19978,7 +19742,7 @@
      "run_style": "E/P",
      "speed_pts": 7,
      "prime_power": 123.4,
-     "score": 22.6,
+     "score": 24.1,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -20037,6 +19801,12 @@
        "note": "7 speed points"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
+      },
+      {
        "rule": "F8",
        "name": "Consistency",
        "points": 1.5,
@@ -20083,7 +19853,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 7/2 vs fair 7.0-1 (value, not in the ability score)"
+       "note": "underlay: ML 7/2 vs fair 6.6-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -20284,19 +20054,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.1249,
+     "model_prob": 0.1313,
      "market_prob": 0.1808,
-     "win_prob": 0.1444,
-     "implied_prob": 0.1249,
-     "fair_odds": 7.0,
+     "win_prob": 0.1486,
+     "implied_prob": 0.1313,
+     "fair_odds": 6.6,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.5
+      "edge": -0.47
      },
      "rank": 3,
      "conditional_rank": null,
-     "min_win_odds": 8.0
+     "min_win_odds": 7.6
     },
     {
      "pgm": "5",
@@ -20306,7 +20076,7 @@
      "run_style": "E",
      "speed_pts": 3,
      "prime_power": 118.8,
-     "score": 18.5,
+     "score": 20.0,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -20345,6 +20115,12 @@
        "name": "Running style vs. track bias",
        "points": 4.0,
        "note": "meet E IV 1.9"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
       },
       {
        "rule": "F1",
@@ -20622,19 +20398,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0994,
+     "model_prob": 0.1045,
      "market_prob": 0.1162,
-     "win_prob": 0.1053,
-     "implied_prob": 0.0994,
-     "fair_odds": 9.1,
+     "win_prob": 0.1086,
+     "implied_prob": 0.1045,
+     "fair_odds": 8.6,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.34
+      "edge": -0.3
      },
      "rank": 4,
      "conditional_rank": null,
-     "min_win_odds": 10.5
+     "min_win_odds": 9.9
     },
     {
      "pgm": "8",
@@ -20644,7 +20420,7 @@
      "run_style": "E/P",
      "speed_pts": 5,
      "prime_power": 121.7,
-     "score": 11.15,
+     "score": 12.65,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -20695,6 +20471,12 @@
        "name": "Pace figures vs. par",
        "points": -1.5,
        "note": "E2 avg 86.3 vs par 98"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
       },
       {
        "rule": "F2",
@@ -20761,7 +20543,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 6/1 vs fair 14.1-1 (value, not in the ability score)"
+       "note": "underlay: ML 6/1 vs fair 13.4-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -20962,19 +20744,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0661,
+     "model_prob": 0.0695,
      "market_prob": 0.1162,
-     "win_prob": 0.0836,
-     "implied_prob": 0.0661,
-     "fair_odds": 14.1,
+     "win_prob": 0.0858,
+     "implied_prob": 0.0695,
+     "fair_odds": 13.4,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.57
+      "edge": -0.55
      },
      "rank": 5,
      "conditional_rank": null,
-     "min_win_odds": 16.2
+     "min_win_odds": 15.4
     },
     {
      "pgm": "3",
@@ -20984,7 +20766,7 @@
      "run_style": "P",
      "speed_pts": 2,
      "prime_power": 120.9,
-     "score": 10.8,
+     "score": 10.55,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -21031,6 +20813,12 @@
        "note": "post 3 (1-3) IV 0.64"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -0.25,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
+      },
+      {
        "rule": "F3",
        "name": "Troubled trip last out",
        "points": 1.2,
@@ -21071,7 +20859,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 8/1 vs fair 14.4-1 (value, not in the ability score)"
+       "note": "underlay: ML 8/1 vs fair 15.2-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -21265,19 +21053,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0648,
+     "model_prob": 0.0618,
      "market_prob": 0.0904,
-     "win_prob": 0.0738,
-     "implied_prob": 0.0648,
-     "fair_odds": 14.4,
+     "win_prob": 0.0718,
+     "implied_prob": 0.0618,
+     "fair_odds": 15.2,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.44
+      "edge": -0.47
      },
      "rank": 6,
      "conditional_rank": null,
-     "min_win_odds": 16.6
+     "min_win_odds": 17.5
     },
     {
      "pgm": "6",
@@ -21287,7 +21075,7 @@
      "run_style": "S",
      "speed_pts": 0,
      "prime_power": 114.2,
-     "score": 3.7,
+     "score": 2.7,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -21320,6 +21108,12 @@
        "name": "Running style vs. track bias",
        "points": -4.0,
        "note": "meet S IV 0.0"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
       },
       {
        "rule": "F3",
@@ -21362,7 +21156,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 12/1 vs fair 21.9-1 (value, not in the ability score)"
+       "note": "underlay: ML 12/1 vs fair 24.0-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -21563,19 +21357,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.0437,
+     "model_prob": 0.04,
      "market_prob": 0.0626,
-     "win_prob": 0.0503,
-     "implied_prob": 0.0437,
-     "fair_odds": 21.9,
+     "win_prob": 0.0479,
+     "implied_prob": 0.04,
+     "fair_odds": 24.0,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.45
+      "edge": -0.5
      },
      "rank": 7,
      "conditional_rank": null,
-     "min_win_odds": 25.2
+     "min_win_odds": 27.6
     },
     {
      "pgm": "9",
@@ -21585,7 +21379,7 @@
      "run_style": "E/P",
      "speed_pts": 5,
      "prime_power": 101.5,
-     "score": 0.55,
+     "score": 1.3,
      "eliminated": true,
      "flags": [],
      "hits": [
@@ -21618,6 +21412,12 @@
        "name": "Pace figures vs. par",
        "points": -1.5,
        "note": "E2 avg 75.7 vs par 98"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 0.75,
+       "note": "3 of 4 earlier dirt winners were early types; 3 of 4 winners from posts 1-3"
       },
       {
        "rule": "F3",
@@ -21879,20 +21679,20 @@
     "favorite": "2",
     "price_leg": true,
     "probs": {
-     "1": 0.3597,
-     "2": 0.1829,
-     "7": 0.1444,
-     "5": 0.1053,
-     "8": 0.0836,
-     "3": 0.0738,
-     "6": 0.0503
+     "1": 0.3458,
+     "2": 0.1913,
+     "7": 0.1486,
+     "5": 0.1086,
+     "8": 0.0858,
+     "3": 0.0718,
+     "6": 0.0479
     },
     "price_factor": 0.98,
     "audit": [
      "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
-     "H1 win probabilities (model 65% / ML 35%); top #1 36%",
+     "H1 win probabilities (model 65% / ML 35%); top #1 35%",
      "H4 A=['1', '2', '7'] (69%) B=['5'] (79%) targets 55%/78%",
-     "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 14% vs ML 27%; hits V1 -> demoted to B; price leg"
+     "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 15% vs ML 27%; hits V1 -> demoted to B; price leg"
     ]
    },
    "wagers": [
@@ -22000,7 +21800,7 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #1 (ML 4/1, take 1.5-1 or better; fair 1.1-1)",
+     "label": "WIN #1 (ML 4/1, take 1.5-1 or better; fair 1.2-1)",
      "source": "other",
      "race_no": 8,
      "races": [
@@ -22073,13 +21873,12 @@
       ],
       [
        "3",
-       "2",
-       "4"
+       "7"
       ]
      ],
      "box": false,
-     "combos": 6,
-     "label": "DAILY DOUBLE #1,#7 with R9 #3,#2,#4 (6 x $1)",
+     "combos": 4,
+     "label": "DAILY DOUBLE #1,#7 with R9 #3,#7 (4 x $1)",
      "source": "other",
      "race_no": 8,
      "races": [
@@ -22092,10 +21891,10 @@
     "EXACTA key #1 over #2,#7,#5",
     "TRIFECTA key #1 / #2,#7,#5 / #2,#7,#5,#8",
     "TRIFECTA key second #2,#7,#5 / #1 / #2,#7,#5,#8 (a standout that runs second still pays)",
-    "WIN #1 (ML 4/1, take 1.5-1 or better; fair 1.1-1)",
+    "WIN #1 (ML 4/1, take 1.5-1 or better; fair 1.2-1)",
     "SUPERFECTA key #1 / #2,#7,#5 / #2,#7,#5 / #2,#7,#5,#8",
     "favourite #2 looks beatable (H5): EXACTA #1 over #1,#2,#7 - chalk underneath only, never on top",
-    "DAILY DOUBLE #1,#7 with R9 #3,#2,#4 (6 x $1)"
+    "DAILY DOUBLE #1,#7 with R9 #3,#7 (4 x $1)"
    ]
   },
   {
@@ -22103,7 +21902,7 @@
    "class_text": "Mdn 65k",
    "distance_text": "1 Mile",
    "surface": "turf",
-   "field_size": 10,
+   "field_size": 7,
    "alternates": [],
    "pars": {
     "e1": 84,
@@ -22116,12 +21915,12 @@
    "num_early": 1,
    "picks": [
     "3",
-    "1",
-    "7"
+    "7",
+    "4"
    ],
-   "bet_structure": "TRIFECTA box 3-1-7; EXACTA box top two; WIN on #3 (take 4.8-1 or better)",
+   "bet_structure": "TRIFECTA box 3-7-4; EXACTA box top two; WIN on #3 (take 4.7-1 or better)",
    "confidence": "medium",
-   "selection_note": "gap to 2nd 5.1, to 3rd 5.4",
+   "selection_note": "gap to 2nd 0.4, to 3rd 3.8",
    "brisnet": {
     "top_pick": "3",
     "top3": [
@@ -22156,7 +21955,7 @@
      "run_style": "NA",
      "speed_pts": 4,
      "prime_power": 113.8,
-     "score": 27.0,
+     "score": 26.0,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -22195,6 +21994,12 @@
        "name": "Post position vs. bias",
        "points": 2.0,
        "note": "post 3 (1-3) IV 1.42"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 3 earlier turf winners were closers"
       },
       {
        "rule": "F3",
@@ -22453,358 +22258,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.1941,
-     "market_prob": 0.1314,
-     "win_prob": 0.1721,
-     "implied_prob": 0.1941,
-     "fair_odds": 4.2,
+     "model_prob": 0.1962,
+     "market_prob": 0.152,
+     "win_prob": 0.1807,
+     "implied_prob": 0.1962,
+     "fair_odds": 4.1,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": 0.19
+      "edge": 0.22
      },
      "rank": 1,
      "conditional_rank": null,
-     "min_win_odds": 4.8
-    },
-    {
-     "pgm": "1",
-     "name": "Royal Rumor",
-     "ml_odds": "7/2",
-     "ml_decimal": 3.5,
-     "run_style": "E",
-     "speed_pts": 4,
-     "prime_power": 106.9,
-     "score": 21.9,
-     "eliminated": false,
-     "flags": [],
-     "hits": [
-      {
-       "rule": "S3",
-       "name": "Average speed vs. class par",
-       "points": -5.0,
-       "note": "avg last-3 72 is -12 vs par 84"
-      },
-      {
-       "rule": "S4",
-       "name": "Best figure on today's surface & distance category",
-       "points": 2.5,
-       "note": "best matching-conditions figure 84 ranks 2nd"
-      },
-      {
-       "rule": "D7",
-       "name": "Best figure at the exact distance",
-       "points": 2.0,
-       "note": "best at distance 84"
-      },
-      {
-       "rule": "C1",
-       "name": "Class drop",
-       "points": 3.0,
-       "note": "drops 1.3 class levels"
-      },
-      {
-       "rule": "C4",
-       "name": "Proven at today's level",
-       "points": 3.0,
-       "note": "within 3L at Mdn65k on 2026-10-16"
-      },
-      {
-       "rule": "C5",
-       "name": "Last race rating beats the field",
-       "points": 3.0,
-       "note": "last race rating 110 ranks 1st"
-      },
-      {
-       "rule": "P2",
-       "name": "Speed duel penalty / closer bonus",
-       "points": 1.6,
-       "note": "soft pace vs E"
-      },
-      {
-       "rule": "P5",
-       "name": "Running style vs. track bias",
-       "points": -4.0,
-       "note": "meet E IV 0.55, week E IV 0.0"
-      },
-      {
-       "rule": "P6",
-       "name": "Post position vs. bias",
-       "points": 2.0,
-       "note": "post 1 (RAIL) IV 1.7"
-      },
-      {
-       "rule": "P8",
-       "name": "Pace figures vs. par",
-       "points": 2.5,
-       "note": "E2 avg 87.7 vs par 84 in a soft pace"
-      },
-      {
-       "rule": "P9",
-       "name": "Probable pace leader by E1 figure",
-       "points": 3.0,
-       "note": "E1 87 is 87 clear of the next early type"
-      },
-      {
-       "rule": "F2",
-       "name": "In the money last race",
-       "points": 2.0,
-       "note": "finished 2nd beaten 1.0L"
-      },
-      {
-       "rule": "F3",
-       "name": "Troubled trip last out",
-       "points": 3.0,
-       "note": "trouble: '2wd;led;brushed midstr'"
-      },
-      {
-       "rule": "F12",
-       "name": "Hard effort against pace pressure",
-       "points": 2.0,
-       "note": "dueled and finished 1.0L back"
-      },
-      {
-       "rule": "K1",
-       "name": "Trainer win percentage (year)",
-       "points": 0.6,
-       "note": "trainer 14%"
-      },
-      {
-       "rule": "D1",
-       "name": "Record at today's distance",
-       "points": 1.5,
-       "note": "ITM 2 of 3 at distance"
-      },
-      {
-       "rule": "Q1",
-       "name": "QuickPlay positive comments",
-       "points": 1.2,
-       "note": "Rail post is winning at 20% clip; Ran 2nd vs similar in last race; Best Turf speed is close to the Avg Winning Speed"
-      },
-      {
-       "rule": "Q2",
-       "name": "QuickPlay negative comments",
-       "points": -0.8,
-       "note": "Poor Speed Figures in last 2 starts"
-      },
-      {
-       "rule": "M3",
-       "name": "Chronic maiden",
-       "points": -1.2,
-       "note": "3 seconds"
-      }
-     ],
-     "features": {
-      "starts": 7,
-      "wins": 0,
-      "places": 3,
-      "shows": 0,
-      "itm_pct": 42.9,
-      "win_pct": 0.0,
-      "first_time_starter": false,
-      "is_maiden": true,
-      "last_off_surface": false,
-      "surface_form_lines": 7,
-      "use_surface_figs": false,
-      "off_surface_speed": null,
-      "last_speed": 71,
-      "speed_last3": [
-       71,
-       68,
-       77
-      ],
-      "best_last3": 77,
-      "avg_last3": 72,
-      "best_speed_10": 84,
-      "prev_best": 84,
-      "career_top_last": false,
-      "improving": false,
-      "declining": false,
-      "best_surface_speed": 84,
-      "surface_starts": 7,
-      "surface_wins": 0,
-      "surface_itm": 3,
-      "dist_starts": 3,
-      "dist_wins": 0,
-      "dist_itm": 2,
-      "dist_best_speed": 84,
-      "track_starts": 3,
-      "track_wins": 0,
-      "track_itm": 1,
-      "match_speeds": [
-       71,
-       68,
-       77
-      ],
-      "best_match_speed": 84,
-      "avg_match_speed": 72,
-      "e1_last3": [
-       75,
-       103,
-       83
-      ],
-      "e2_last3": [
-       75,
-       96,
-       92
-      ],
-      "lp_last3": [
-       75,
-       50,
-       65
-      ],
-      "best_e1": 3,
-      "best_e2": 96,
-      "best_lp": 81,
-      "avg_e1": 87,
-      "avg_e2": 87.7,
-      "avg_lp": 63.3,
-      "run_style": "E",
-      "speed_pts": 4,
-      "early_type": true,
-      "closer_type": false,
-      "today_level": 20.0,
-      "last_level": 21.3,
-      "class_move": -1.3000000000000007,
-      "class_rating_last3": [
-       111,
-       109,
-       108
-      ],
-      "avg_class_rating": 109.3,
-      "best_class_rating": 111,
-      "race_rating_last": 110,
-      "avg_race_rating": 110.3,
-      "acl": 110.5,
-      "prime_power": 106.9,
-      "prime_power_rank": 7,
-      "days_since": 29,
-      "last_finish": 2,
-      "last_beaten": 1.0,
-      "last_won": false,
-      "last_itm": true,
-      "last_field": 8,
-      "last_odds": 6.1,
-      "last_comment": "2wd;led;brushed midstr",
-      "last_trouble": true,
-      "last_strong_win": false,
-      "last_good_effort": false,
-      "last_bad_effort": false,
-      "last_same_surface": true,
-      "last_same_category": true,
-      "last_wide": false,
-      "last_gained_late": false,
-      "last_closed_lengths": -0.8,
-      "last_led_early": false,
-      "itm_streak": 1,
-      "races_since_layoff": 0,
-      "num_works": 12,
-      "bullet_works": 0,
-      "recent_fast_works": 1,
-      "works_since_last": 10,
-      "has_work_5f_or_more": true,
-      "trainer_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 116,
-       "win_pct": 14,
-       "itm_pct": 45,
-       "roi": -0.38
-      },
-      "jockey_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 309,
-       "win_pct": 11,
-       "itm_pct": 38,
-       "roi": -0.89
-      },
-      "jt_combo": {
-       "category": "JKYw/ Trn L60",
-       "flag": false,
-       "starts": 1,
-       "win_pct": 0,
-       "itm_pct": 100,
-       "roi": -2.0
-      },
-      "trainer_meet": {
-       "starts": 2,
-       "win": 0,
-       "place": 1,
-       "show": 0,
-       "win_pct": 0
-      },
-      "jockey_meet": {
-       "starts": 4,
-       "win": 0,
-       "place": 0,
-       "show": 0,
-       "win_pct": 0
-      },
-      "jockey_switch": true,
-      "blinkers_on": false,
-      "blinkers_off": false,
-      "first_lasix": false,
-      "ped_surface_rating": 102,
-      "ped_dist_rating": 99,
-      "ped_off_rating": 100,
-      "sire_awd": null,
-      "damsire_awd": null,
-      "sire_first_pct": null,
-      "sire_mud_pct": null,
-      "dam_dpi": null,
-      "sire_spi": null,
-      "trouble_last3": 1,
-      "last_dueled": true,
-      "last_favorite": false,
-      "last_beaten_favorite": false,
-      "last_claimed": false,
-      "last_claim_price": null,
-      "today_claiming_price": null,
-      "prior_claiming_starts": 0,
-      "first_time_for_tag": false,
-      "last_maiden_win": false,
-      "last_maiden_win_claiming": false,
-      "today_n1x": false,
-      "today_n2l": false,
-      "last_speed_vs_par": -13,
-      "paired_figs": false,
-      "best_two_recent": 71,
-      "best_competitive_level": 21.3,
-      "back_class": false,
-      "freshened": false,
-      "last_lost_fast": false,
-      "debut_speed": null,
-      "sheet_angles": [],
-      "key_race": false,
-      "possible_key_race": false,
-      "ml_decimal": 3.5,
-      "post": 1,
-      "entry_status": null,
-      "age": 4,
-      "sex": "g",
-      "weight": 125,
-      "name": "Royal Rumor",
-      "pgm": "1",
-      "turf_to_dirt": false,
-      "dirt_to_turf": false,
-      "sprint_to_route": false,
-      "route_to_sprint": false,
-      "num_clean_pp": 7
-     },
-     "model_prob": 0.1462,
-     "market_prob": 0.1752,
-     "win_prob": 0.1563,
-     "implied_prob": 0.1462,
-     "fair_odds": 5.8,
-     "value": {
-      "label": "fair",
-      "points": 0.0,
-      "edge": -0.4
-     },
-     "rank": 2,
-     "conditional_rank": null,
-     "min_win_odds": 6.7
+     "min_win_odds": 4.7
     },
     {
      "pgm": "7",
@@ -22814,7 +22280,7 @@
      "run_style": "S",
      "speed_pts": 0,
      "prime_power": 113.0,
-     "score": 21.55,
+     "score": 25.55,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -22897,6 +22363,12 @@
        "note": "meet S IV 1.06, week S IV 1.39"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 3 earlier turf winners were closers"
+      },
+      {
        "rule": "F2",
        "name": "In the money last race",
        "points": 2.0,
@@ -22951,6 +22423,12 @@
        "note": "ITM 3 times at track"
       },
       {
+       "rule": "D6",
+       "name": "Turf pedigree / proven turf speed (turf races only)",
+       "points": 2.5,
+       "note": "best turf figure 86"
+      },
+      {
        "rule": "A1",
        "name": "Weight / age concession",
        "points": 0.3,
@@ -22979,7 +22457,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "overlay: ML 8/1 vs fair 6.0-1 (value, not in the ability score)"
+       "note": "overlay: ML 8/1 vs fair 4.2-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -23180,19 +22658,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 10
      },
-     "model_prob": 0.1434,
-     "market_prob": 0.0876,
-     "win_prob": 0.1239,
-     "implied_prob": 0.1434,
-     "fair_odds": 6.0,
+     "model_prob": 0.1914,
+     "market_prob": 0.1013,
+     "win_prob": 0.1599,
+     "implied_prob": 0.1914,
+     "fair_odds": 4.2,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 0.33
+      "edge": 0.9
      },
-     "rank": 3,
+     "rank": 2,
      "conditional_rank": null,
-     "min_win_odds": 6.9
+     "min_win_odds": 4.8
     },
     {
      "pgm": "4",
@@ -23202,7 +22680,7 @@
      "run_style": "P",
      "speed_pts": 2,
      "prime_power": 113.8,
-     "score": 20.7,
+     "score": 22.2,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -23259,6 +22737,12 @@
        "name": "Running style vs. track bias",
        "points": 4.0,
        "note": "meet P IV 1.38, week P IV 1.97"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 3 earlier turf winners were closers"
       },
       {
        "rule": "F3",
@@ -23509,19 +22993,364 @@
       "route_to_sprint": false,
       "num_clean_pp": 4
      },
-     "model_prob": 0.1368,
-     "market_prob": 0.1126,
-     "win_prob": 0.1283,
-     "implied_prob": 0.1368,
-     "fair_odds": 6.3,
+     "model_prob": 0.1589,
+     "market_prob": 0.1302,
+     "win_prob": 0.1489,
+     "implied_prob": 0.1589,
+     "fair_odds": 5.3,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.05
+      "edge": 0.13
+     },
+     "rank": 3,
+     "conditional_rank": null,
+     "min_win_odds": 6.1
+    },
+    {
+     "pgm": "1",
+     "name": "Royal Rumor",
+     "ml_odds": "7/2",
+     "ml_decimal": 3.5,
+     "run_style": "E",
+     "speed_pts": 4,
+     "prime_power": 106.9,
+     "score": 20.9,
+     "eliminated": false,
+     "flags": [],
+     "hits": [
+      {
+       "rule": "S3",
+       "name": "Average speed vs. class par",
+       "points": -5.0,
+       "note": "avg last-3 72 is -12 vs par 84"
+      },
+      {
+       "rule": "S4",
+       "name": "Best figure on today's surface & distance category",
+       "points": 2.5,
+       "note": "best matching-conditions figure 84 ranks 2nd"
+      },
+      {
+       "rule": "D7",
+       "name": "Best figure at the exact distance",
+       "points": 2.0,
+       "note": "best at distance 84"
+      },
+      {
+       "rule": "C1",
+       "name": "Class drop",
+       "points": 3.0,
+       "note": "drops 1.3 class levels"
+      },
+      {
+       "rule": "C4",
+       "name": "Proven at today's level",
+       "points": 3.0,
+       "note": "within 3L at Mdn65k on 2026-10-16"
+      },
+      {
+       "rule": "C5",
+       "name": "Last race rating beats the field",
+       "points": 3.0,
+       "note": "last race rating 110 ranks 1st"
+      },
+      {
+       "rule": "P2",
+       "name": "Speed duel penalty / closer bonus",
+       "points": 1.6,
+       "note": "soft pace vs E"
+      },
+      {
+       "rule": "P5",
+       "name": "Running style vs. track bias",
+       "points": -4.0,
+       "note": "meet E IV 0.55, week E IV 0.0"
+      },
+      {
+       "rule": "P6",
+       "name": "Post position vs. bias",
+       "points": 2.0,
+       "note": "post 1 (RAIL) IV 1.7"
+      },
+      {
+       "rule": "P8",
+       "name": "Pace figures vs. par",
+       "points": 2.5,
+       "note": "E2 avg 87.7 vs par 84 in a soft pace"
+      },
+      {
+       "rule": "P9",
+       "name": "Probable pace leader by E1 figure",
+       "points": 3.0,
+       "note": "E1 87 is 87 clear of the next early type"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 3 earlier turf winners were closers"
+      },
+      {
+       "rule": "F2",
+       "name": "In the money last race",
+       "points": 2.0,
+       "note": "finished 2nd beaten 1.0L"
+      },
+      {
+       "rule": "F3",
+       "name": "Troubled trip last out",
+       "points": 3.0,
+       "note": "trouble: '2wd;led;brushed midstr'"
+      },
+      {
+       "rule": "F12",
+       "name": "Hard effort against pace pressure",
+       "points": 2.0,
+       "note": "dueled and finished 1.0L back"
+      },
+      {
+       "rule": "K1",
+       "name": "Trainer win percentage (year)",
+       "points": 0.6,
+       "note": "trainer 14%"
+      },
+      {
+       "rule": "D1",
+       "name": "Record at today's distance",
+       "points": 1.5,
+       "note": "ITM 2 of 3 at distance"
+      },
+      {
+       "rule": "Q1",
+       "name": "QuickPlay positive comments",
+       "points": 1.2,
+       "note": "Rail post is winning at 20% clip; Ran 2nd vs similar in last race; Best Turf speed is close to the Avg Winning Speed"
+      },
+      {
+       "rule": "Q2",
+       "name": "QuickPlay negative comments",
+       "points": -0.8,
+       "note": "Poor Speed Figures in last 2 starts"
+      },
+      {
+       "rule": "M3",
+       "name": "Chronic maiden",
+       "points": -1.2,
+       "note": "3 seconds"
+      }
+     ],
+     "features": {
+      "starts": 7,
+      "wins": 0,
+      "places": 3,
+      "shows": 0,
+      "itm_pct": 42.9,
+      "win_pct": 0.0,
+      "first_time_starter": false,
+      "is_maiden": true,
+      "last_off_surface": false,
+      "surface_form_lines": 7,
+      "use_surface_figs": false,
+      "off_surface_speed": null,
+      "last_speed": 71,
+      "speed_last3": [
+       71,
+       68,
+       77
+      ],
+      "best_last3": 77,
+      "avg_last3": 72,
+      "best_speed_10": 84,
+      "prev_best": 84,
+      "career_top_last": false,
+      "improving": false,
+      "declining": false,
+      "best_surface_speed": 84,
+      "surface_starts": 7,
+      "surface_wins": 0,
+      "surface_itm": 3,
+      "dist_starts": 3,
+      "dist_wins": 0,
+      "dist_itm": 2,
+      "dist_best_speed": 84,
+      "track_starts": 3,
+      "track_wins": 0,
+      "track_itm": 1,
+      "match_speeds": [
+       71,
+       68,
+       77
+      ],
+      "best_match_speed": 84,
+      "avg_match_speed": 72,
+      "e1_last3": [
+       75,
+       103,
+       83
+      ],
+      "e2_last3": [
+       75,
+       96,
+       92
+      ],
+      "lp_last3": [
+       75,
+       50,
+       65
+      ],
+      "best_e1": 3,
+      "best_e2": 96,
+      "best_lp": 81,
+      "avg_e1": 87,
+      "avg_e2": 87.7,
+      "avg_lp": 63.3,
+      "run_style": "E",
+      "speed_pts": 4,
+      "early_type": true,
+      "closer_type": false,
+      "today_level": 20.0,
+      "last_level": 21.3,
+      "class_move": -1.3000000000000007,
+      "class_rating_last3": [
+       111,
+       109,
+       108
+      ],
+      "avg_class_rating": 109.3,
+      "best_class_rating": 111,
+      "race_rating_last": 110,
+      "avg_race_rating": 110.3,
+      "acl": 110.5,
+      "prime_power": 106.9,
+      "prime_power_rank": 7,
+      "days_since": 29,
+      "last_finish": 2,
+      "last_beaten": 1.0,
+      "last_won": false,
+      "last_itm": true,
+      "last_field": 8,
+      "last_odds": 6.1,
+      "last_comment": "2wd;led;brushed midstr",
+      "last_trouble": true,
+      "last_strong_win": false,
+      "last_good_effort": false,
+      "last_bad_effort": false,
+      "last_same_surface": true,
+      "last_same_category": true,
+      "last_wide": false,
+      "last_gained_late": false,
+      "last_closed_lengths": -0.8,
+      "last_led_early": false,
+      "itm_streak": 1,
+      "races_since_layoff": 0,
+      "num_works": 12,
+      "bullet_works": 0,
+      "recent_fast_works": 1,
+      "works_since_last": 10,
+      "has_work_5f_or_more": true,
+      "trainer_year": {
+       "category": "2026",
+       "flag": false,
+       "starts": 116,
+       "win_pct": 14,
+       "itm_pct": 45,
+       "roi": -0.38
+      },
+      "jockey_year": {
+       "category": "2026",
+       "flag": false,
+       "starts": 309,
+       "win_pct": 11,
+       "itm_pct": 38,
+       "roi": -0.89
+      },
+      "jt_combo": {
+       "category": "JKYw/ Trn L60",
+       "flag": false,
+       "starts": 1,
+       "win_pct": 0,
+       "itm_pct": 100,
+       "roi": -2.0
+      },
+      "trainer_meet": {
+       "starts": 2,
+       "win": 0,
+       "place": 1,
+       "show": 0,
+       "win_pct": 0
+      },
+      "jockey_meet": {
+       "starts": 4,
+       "win": 0,
+       "place": 0,
+       "show": 0,
+       "win_pct": 0
+      },
+      "jockey_switch": true,
+      "blinkers_on": false,
+      "blinkers_off": false,
+      "first_lasix": false,
+      "ped_surface_rating": 102,
+      "ped_dist_rating": 99,
+      "ped_off_rating": 100,
+      "sire_awd": null,
+      "damsire_awd": null,
+      "sire_first_pct": null,
+      "sire_mud_pct": null,
+      "dam_dpi": null,
+      "sire_spi": null,
+      "trouble_last3": 1,
+      "last_dueled": true,
+      "last_favorite": false,
+      "last_beaten_favorite": false,
+      "last_claimed": false,
+      "last_claim_price": null,
+      "today_claiming_price": null,
+      "prior_claiming_starts": 0,
+      "first_time_for_tag": false,
+      "last_maiden_win": false,
+      "last_maiden_win_claiming": false,
+      "today_n1x": false,
+      "today_n2l": false,
+      "last_speed_vs_par": -13,
+      "paired_figs": false,
+      "best_two_recent": 71,
+      "best_competitive_level": 21.3,
+      "back_class": false,
+      "freshened": false,
+      "last_lost_fast": false,
+      "debut_speed": null,
+      "sheet_angles": [],
+      "key_race": false,
+      "possible_key_race": false,
+      "ml_decimal": 3.5,
+      "post": 1,
+      "entry_status": null,
+      "age": 4,
+      "sex": "g",
+      "weight": 125,
+      "name": "Royal Rumor",
+      "pgm": "1",
+      "turf_to_dirt": false,
+      "dirt_to_turf": false,
+      "sprint_to_route": false,
+      "route_to_sprint": false,
+      "num_clean_pp": 7
+     },
+     "model_prob": 0.1478,
+     "market_prob": 0.2026,
+     "win_prob": 0.167,
+     "implied_prob": 0.1478,
+     "fair_odds": 5.8,
+     "value": {
+      "label": "fair",
+      "points": 0.0,
+      "edge": -0.4
      },
      "rank": 4,
      "conditional_rank": null,
-     "min_win_odds": 7.2
+     "min_win_odds": 6.7
     },
     {
      "pgm": "2",
@@ -23531,7 +23360,7 @@
      "run_style": "S",
      "speed_pts": 0,
      "prime_power": 111.8,
-     "score": 18.9,
+     "score": 20.4,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -23576,6 +23405,12 @@
        "name": "Post position vs. bias",
        "points": 2.0,
        "note": "post 2 (1-3) IV 1.42"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 3 earlier turf winners were closers"
       },
       {
        "rule": "F2",
@@ -23624,13 +23459,6 @@
        "name": "QuickPlay positive comments",
        "points": 0.4,
        "note": "Finished 3rd vs similar in last race"
-      },
-      {
-       "rule": "V1",
-       "name": "Morning-line value",
-       "points": -2.4,
-       "value": true,
-       "note": "underlay: ML 4/1 vs fair 7.1-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -23827,19 +23655,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.1237,
-     "market_prob": 0.1577,
-     "win_prob": 0.1356,
-     "implied_prob": 0.1237,
-     "fair_odds": 7.1,
+     "model_prob": 0.1438,
+     "market_prob": 0.1823,
+     "win_prob": 0.1573,
+     "implied_prob": 0.1438,
+     "fair_odds": 6.0,
      "value": {
-      "label": "underlay",
-      "points": -2.4,
-      "edge": -0.44
+      "label": "fair",
+      "points": 0.0,
+      "edge": -0.33
      },
      "rank": 5,
      "conditional_rank": null,
-     "min_win_odds": 8.2
+     "min_win_odds": 6.9
     },
     {
      "pgm": "5",
@@ -23849,7 +23677,7 @@
      "run_style": "S",
      "speed_pts": 0,
      "prime_power": 108.6,
-     "score": 11.4,
+     "score": 12.9,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -23894,6 +23722,12 @@
        "name": "Running style vs. track bias",
        "points": 2.0,
        "note": "meet S IV 1.06, week S IV 1.39"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 3 earlier turf winners were closers"
       },
       {
        "rule": "F2",
@@ -24130,19 +23964,19 @@
       "route_to_sprint": false,
       "num_clean_pp": 1
      },
-     "model_prob": 0.0816,
-     "market_prob": 0.0876,
-     "win_prob": 0.0837,
-     "implied_prob": 0.0816,
-     "fair_odds": 11.3,
+     "model_prob": 0.0948,
+     "market_prob": 0.1013,
+     "win_prob": 0.0971,
+     "implied_prob": 0.0948,
+     "fair_odds": 9.5,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.29
+      "edge": -0.16
      },
      "rank": 6,
      "conditional_rank": null,
-     "min_win_odds": 13.0
+     "min_win_odds": 10.9
     },
     {
      "pgm": "10",
@@ -24152,7 +23986,7 @@
      "run_style": "S",
      "speed_pts": 2,
      "prime_power": 106.7,
-     "score": 5.2,
+     "score": 6.7,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -24191,6 +24025,12 @@
        "name": "Post position vs. bias",
        "points": -2.0,
        "note": "post 10 (8+) IV 0.45"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 3 earlier turf winners were closers"
       },
       {
        "rule": "K3",
@@ -24233,7 +24073,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "underlay: ML 6/1 vs fair 16.3-1 (value, not in the ability score)"
+       "note": "underlay: ML 6/1 vs fair 13.9-1 (value, not in the ability score)"
       }
      ],
      "features": {
@@ -24429,1000 +24269,48 @@
       "route_to_sprint": false,
       "num_clean_pp": 2
      },
-     "model_prob": 0.0578,
-     "market_prob": 0.1126,
-     "win_prob": 0.077,
-     "implied_prob": 0.0578,
-     "fair_odds": 16.3,
+     "model_prob": 0.0672,
+     "market_prob": 0.1302,
+     "win_prob": 0.0892,
+     "implied_prob": 0.0672,
+     "fair_odds": 13.9,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.63
+      "edge": -0.57
      },
      "rank": 7,
      "conditional_rank": null,
-     "min_win_odds": 18.7
-    },
-    {
-     "pgm": "9",
-     "name": "Still Bulletproof",
-     "ml_odds": "12/1",
-     "ml_decimal": 12.0,
-     "run_style": "S",
-     "speed_pts": 3,
-     "prime_power": 111.0,
-     "score": 3.8,
-     "eliminated": false,
-     "flags": [],
-     "hits": [
-      {
-       "rule": "S3",
-       "name": "Average speed vs. class par",
-       "points": -5.0,
-       "note": "avg last-3 72.3 is -12 vs par 84"
-      },
-      {
-       "rule": "S5",
-       "name": "Improving / declining figure pattern",
-       "points": 3.0,
-       "note": "figures rising [67, 74, 76]"
-      },
-      {
-       "rule": "C2",
-       "name": "Class rise",
-       "points": -4.0,
-       "note": "rises 5.0 class levels"
-      },
-      {
-       "rule": "P2",
-       "name": "Speed duel penalty / closer bonus",
-       "points": -1.6,
-       "note": "soft pace vs S"
-      },
-      {
-       "rule": "P5",
-       "name": "Running style vs. track bias",
-       "points": 2.0,
-       "note": "meet S IV 1.06, week S IV 1.39"
-      },
-      {
-       "rule": "P6",
-       "name": "Post position vs. bias",
-       "points": -2.0,
-       "note": "post 9 (8+) IV 0.45"
-      },
-      {
-       "rule": "F2",
-       "name": "In the money last race",
-       "points": 2.0,
-       "note": "finished 2nd beaten 0.75L"
-      },
-      {
-       "rule": "F4",
-       "name": "Closed ground late last out",
-       "points": 2.0,
-       "note": "closed 7.25L from 2nd call"
-      },
-      {
-       "rule": "F8",
-       "name": "Consistency",
-       "points": 1.5,
-       "note": "ITM 55.6%"
-      },
-      {
-       "rule": "F10",
-       "name": "Two straight in-the-money finishes",
-       "points": 1.5,
-       "note": "ITM last 2"
-      },
-      {
-       "rule": "K1",
-       "name": "Trainer win percentage (year)",
-       "points": 0.6,
-       "note": "trainer 13%"
-      },
-      {
-       "rule": "K2",
-       "name": "Trainer angle stats",
-       "points": 2.4,
-       "note": "1st time lasix 29% ROI +0.92"
-      },
-      {
-       "rule": "K3",
-       "name": "Jockey win percentage",
-       "points": 1.0,
-       "note": "jockey 14%"
-      },
-      {
-       "rule": "D6",
-       "name": "Turf pedigree / proven turf speed (turf races only)",
-       "points": 2.5,
-       "note": "best turf figure 87"
-      },
-      {
-       "rule": "A1",
-       "name": "Weight / age concession",
-       "points": 0.3,
-       "note": "3yo vs older"
-      },
-      {
-       "rule": "Q1",
-       "name": "QuickPlay positive comments",
-       "points": 1.6,
-       "note": "29% trainer: 1st time lasix; Best Turf Speed is fastest among today's starters; May improve with Lasix added"
-      },
-      {
-       "rule": "Q2",
-       "name": "QuickPlay negative comments",
-       "points": -1.6,
-       "note": "Beaten by weaker in last race; Outside posts have poor win%; Poor 'Sprnt-Sprnt-Rte' trainer record: 0% wins 20 sts"
-      },
-      {
-       "rule": "M3",
-       "name": "Chronic maiden",
-       "points": -2.4,
-       "note": "0 for 9"
-      }
-     ],
-     "features": {
-      "starts": 9,
-      "wins": 0,
-      "places": 2,
-      "shows": 3,
-      "itm_pct": 55.6,
-      "win_pct": 0.0,
-      "first_time_starter": false,
-      "is_maiden": true,
-      "last_off_surface": false,
-      "surface_form_lines": 5,
-      "use_surface_figs": false,
-      "off_surface_speed": null,
-      "last_speed": 76,
-      "speed_last3": [
-       76,
-       74,
-       67
-      ],
-      "best_last3": 76,
-      "avg_last3": 72.3,
-      "best_speed_10": 87,
-      "prev_best": 87,
-      "career_top_last": false,
-      "improving": true,
-      "declining": false,
-      "best_surface_speed": 87,
-      "surface_starts": 5,
-      "surface_wins": 0,
-      "surface_itm": 2,
-      "dist_starts": 1,
-      "dist_wins": 0,
-      "dist_itm": 0,
-      "dist_best_speed": 70,
-      "track_starts": 2,
-      "track_wins": 0,
-      "track_itm": 0,
-      "match_speeds": [
-       70
-      ],
-      "best_match_speed": 70,
-      "avg_match_speed": 70,
-      "e1_last3": [
-       79,
-       75,
-       76
-      ],
-      "e2_last3": [
-       85,
-       71,
-       78
-      ],
-      "lp_last3": [
-       83,
-       95,
-       79
-      ],
-      "best_e1": 79,
-      "best_e2": 85,
-      "best_lp": 83,
-      "avg_e1": 76.7,
-      "avg_e2": 78,
-      "avg_lp": 85.7,
-      "run_style": "S",
-      "speed_pts": 3,
-      "early_type": false,
-      "closer_type": true,
-      "today_level": 20.0,
-      "last_level": 15.0,
-      "class_move": 5.0,
-      "class_rating_last3": [
-       112,
-       108,
-       108
-      ],
-      "avg_class_rating": 109.3,
-      "best_class_rating": 112,
-      "race_rating_last": 109,
-      "avg_race_rating": 107.7,
-      "acl": 108.8,
-      "prime_power": 111.0,
-      "prime_power_rank": 5,
-      "days_since": 20,
-      "last_finish": 2,
-      "last_beaten": 0.75,
-      "last_won": false,
-      "last_itm": true,
-      "last_field": 11,
-      "last_odds": 13.5,
-      "last_comment": "Ins;weaved str;rally",
-      "last_trouble": false,
-      "last_strong_win": false,
-      "last_good_effort": true,
-      "last_bad_effort": false,
-      "last_same_surface": true,
-      "last_same_category": false,
-      "last_wide": false,
-      "last_gained_late": true,
-      "last_closed_lengths": 7.25,
-      "last_led_early": false,
-      "itm_streak": 2,
-      "races_since_layoff": 0,
-      "num_works": 4,
-      "bullet_works": 0,
-      "recent_fast_works": 0,
-      "works_since_last": 4,
-      "has_work_5f_or_more": true,
-      "trainer_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 129,
-       "win_pct": 13,
-       "itm_pct": 40,
-       "roi": -0.63
-      },
-      "jockey_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 404,
-       "win_pct": 14,
-       "itm_pct": 39,
-       "roi": -0.25
-      },
-      "jt_combo": {
-       "category": "JKYw/ Trn L60",
-       "flag": true,
-       "starts": 11,
-       "win_pct": 18,
-       "itm_pct": 55,
-       "roi": -1.04
-      },
-      "trainer_meet": {
-       "starts": 1,
-       "win": 0,
-       "place": 1,
-       "show": 0,
-       "win_pct": 0
-      },
-      "jockey_meet": {
-       "starts": 5,
-       "win": 2,
-       "place": 0,
-       "show": 0,
-       "win_pct": 40
-      },
-      "jockey_switch": false,
-      "blinkers_on": false,
-      "blinkers_off": false,
-      "first_lasix": false,
-      "ped_surface_rating": 108,
-      "ped_dist_rating": 98,
-      "ped_off_rating": 101,
-      "sire_awd": null,
-      "damsire_awd": null,
-      "sire_first_pct": null,
-      "sire_mud_pct": null,
-      "dam_dpi": null,
-      "sire_spi": null,
-      "trouble_last3": 0,
-      "last_dueled": false,
-      "last_favorite": false,
-      "last_beaten_favorite": false,
-      "last_claimed": false,
-      "last_claim_price": null,
-      "today_claiming_price": null,
-      "prior_claiming_starts": 5,
-      "first_time_for_tag": false,
-      "last_maiden_win": false,
-      "last_maiden_win_claiming": false,
-      "today_n1x": false,
-      "today_n2l": false,
-      "last_speed_vs_par": -8,
-      "paired_figs": true,
-      "best_two_recent": 76,
-      "best_competitive_level": 15.0,
-      "back_class": false,
-      "freshened": false,
-      "last_lost_fast": false,
-      "debut_speed": null,
-      "sheet_angles": [
-       "BlueChipTrainerPlay"
-      ],
-      "key_race": false,
-      "possible_key_race": false,
-      "ml_decimal": 12.0,
-      "post": 9,
-      "entry_status": null,
-      "age": 3,
-      "sex": "g",
-      "weight": 122,
-      "name": "Still Bulletproof",
-      "pgm": "9",
-      "turf_to_dirt": false,
-      "dirt_to_turf": false,
-      "sprint_to_route": true,
-      "route_to_sprint": false,
-      "num_clean_pp": 9
-     },
-     "model_prob": 0.0535,
-     "market_prob": 0.0606,
-     "win_prob": 0.056,
-     "implied_prob": 0.0535,
-     "fair_odds": 17.7,
-     "value": {
-      "label": "fair",
-      "points": 0.0,
-      "edge": -0.32
-     },
-     "rank": 8,
-     "conditional_rank": null,
-     "min_win_odds": 20.4
-    },
-    {
-     "pgm": "6",
-     "name": "Sir Dagonet",
-     "ml_odds": "30/1",
-     "ml_decimal": 30.0,
-     "run_style": "NA",
-     "speed_pts": 6,
-     "prime_power": 96.7,
-     "score": -0.85,
-     "eliminated": false,
-     "flags": [],
-     "hits": [
-      {
-       "rule": "S3",
-       "name": "Average speed vs. class par",
-       "points": -5.0,
-       "note": "avg last-3 67 is -17 vs par 84"
-      },
-      {
-       "rule": "C1",
-       "name": "Class drop",
-       "points": 1.5,
-       "note": "drops 1.3 class levels (badly beaten last)"
-      },
-      {
-       "rule": "P7",
-       "name": "Early speed points rank",
-       "points": 1.25,
-       "note": "6 speed points"
-      },
-      {
-       "rule": "F3",
-       "name": "Troubled trip last out",
-       "points": 1.2,
-       "note": "trouble: 'Off slow;bmpd/check3/8'"
-      },
-      {
-       "rule": "F9",
-       "name": "Recent workout pattern",
-       "points": 2.4,
-       "note": "bullet work, 2 sharp works"
-      },
-      {
-       "rule": "F16",
-       "name": "Exits a key race",
-       "points": 1.5,
-       "note": "exits a key race (but beaten 13.0L in it) per the Power Play sheet"
-      },
-      {
-       "rule": "K1",
-       "name": "Trainer win percentage (year)",
-       "points": -2.4,
-       "note": "trainer only 4%"
-      },
-      {
-       "rule": "A1",
-       "name": "Weight / age concession",
-       "points": 0.3,
-       "note": "3yo vs older"
-      },
-      {
-       "rule": "Q1",
-       "name": "QuickPlay positive comments",
-       "points": 0.8,
-       "note": "18% trainer: 2nd career race; Sharp 5F workout (Nov-07)"
-      },
-      {
-       "rule": "Q2",
-       "name": "QuickPlay negative comments",
-       "points": -2.4,
-       "note": "Finished far back in only start; Poor trainer win%; Poor Speed Figure in only start; Has never raced at a route distance"
-      }
-     ],
-     "features": {
-      "starts": 1,
-      "wins": 0,
-      "places": 0,
-      "shows": 0,
-      "itm_pct": 0.0,
-      "win_pct": 0.0,
-      "first_time_starter": false,
-      "is_maiden": true,
-      "last_off_surface": false,
-      "surface_form_lines": 1,
-      "use_surface_figs": false,
-      "off_surface_speed": null,
-      "last_speed": 67,
-      "speed_last3": [
-       67
-      ],
-      "best_last3": 67,
-      "avg_last3": 67,
-      "best_speed_10": 67,
-      "prev_best": null,
-      "career_top_last": false,
-      "improving": false,
-      "declining": false,
-      "best_surface_speed": 67,
-      "surface_starts": 1,
-      "surface_wins": 0,
-      "surface_itm": 0,
-      "dist_starts": 0,
-      "dist_wins": 0,
-      "dist_itm": 0,
-      "dist_best_speed": null,
-      "track_starts": 0,
-      "track_wins": 0,
-      "track_itm": 0,
-      "match_speeds": [],
-      "best_match_speed": null,
-      "avg_match_speed": null,
-      "e1_last3": [
-       96
-      ],
-      "e2_last3": [
-       93
-      ],
-      "lp_last3": [
-       64
-      ],
-      "best_e1": 96,
-      "best_e2": 93,
-      "best_lp": 64,
-      "avg_e1": 96,
-      "avg_e2": 93,
-      "avg_lp": 64,
-      "run_style": "NA",
-      "speed_pts": 6,
-      "early_type": false,
-      "closer_type": false,
-      "today_level": 20.0,
-      "last_level": 21.3,
-      "class_move": -1.3000000000000007,
-      "class_rating_last3": [
-       106
-      ],
-      "avg_class_rating": 106,
-      "best_class_rating": 106,
-      "race_rating_last": 109,
-      "avg_race_rating": 109,
-      "acl": null,
-      "prime_power": 96.7,
-      "prime_power_rank": 10,
-      "days_since": 35,
-      "last_finish": 9,
-      "last_beaten": 13.0,
-      "last_won": false,
-      "last_itm": false,
-      "last_field": 9,
-      "last_odds": 31.4,
-      "last_comment": "Off slow;bmpd/check3/8",
-      "last_trouble": true,
-      "last_strong_win": false,
-      "last_good_effort": false,
-      "last_bad_effort": false,
-      "last_same_surface": true,
-      "last_same_category": false,
-      "last_wide": false,
-      "last_gained_late": false,
-      "last_closed_lengths": -7.75,
-      "last_led_early": false,
-      "itm_streak": 0,
-      "races_since_layoff": 0,
-      "num_works": 12,
-      "bullet_works": 2,
-      "recent_fast_works": 2,
-      "works_since_last": 11,
-      "has_work_5f_or_more": true,
-      "trainer_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 56,
-       "win_pct": 4,
-       "itm_pct": 25,
-       "roi": -1.63
-      },
-      "jockey_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 379,
-       "win_pct": 10,
-       "itm_pct": 30,
-       "roi": -0.52
-      },
-      "jt_combo": {
-       "category": "JKYw/ Trn L60",
-       "flag": false,
-       "starts": 1,
-       "win_pct": 0,
-       "itm_pct": 0,
-       "roi": -2.0
-      },
-      "trainer_meet": {
-       "starts": 1,
-       "win": 0,
-       "place": 0,
-       "show": 0,
-       "win_pct": 0
-      },
-      "jockey_meet": {
-       "starts": 9,
-       "win": 0,
-       "place": 0,
-       "show": 3,
-       "win_pct": 0
-      },
-      "jockey_switch": true,
-      "blinkers_on": false,
-      "blinkers_off": false,
-      "first_lasix": false,
-      "ped_surface_rating": 103,
-      "ped_dist_rating": 101,
-      "ped_off_rating": 99,
-      "sire_awd": null,
-      "damsire_awd": null,
-      "sire_first_pct": null,
-      "sire_mud_pct": null,
-      "dam_dpi": null,
-      "sire_spi": null,
-      "trouble_last3": 0,
-      "last_dueled": false,
-      "last_favorite": false,
-      "last_beaten_favorite": false,
-      "last_claimed": false,
-      "last_claim_price": null,
-      "today_claiming_price": null,
-      "prior_claiming_starts": 0,
-      "first_time_for_tag": false,
-      "last_maiden_win": false,
-      "last_maiden_win_claiming": false,
-      "today_n1x": false,
-      "today_n2l": false,
-      "last_speed_vs_par": -17,
-      "paired_figs": false,
-      "best_two_recent": 67,
-      "best_competitive_level": null,
-      "back_class": false,
-      "freshened": false,
-      "last_lost_fast": false,
-      "debut_speed": 67,
-      "sheet_angles": [
-       "Clocker's-5f (SLR)",
-       "ExitKeyRace"
-      ],
-      "key_race": true,
-      "possible_key_race": false,
-      "ml_decimal": 30.0,
-      "post": 6,
-      "entry_status": null,
-      "age": 3,
-      "sex": "g",
-      "weight": 122,
-      "name": "Sir Dagonet",
-      "pgm": "6",
-      "turf_to_dirt": false,
-      "dirt_to_turf": false,
-      "sprint_to_route": true,
-      "route_to_sprint": false,
-      "num_clean_pp": 1
-     },
-     "model_prob": 0.0413,
-     "market_prob": 0.0254,
-     "win_prob": 0.0357,
-     "implied_prob": 0.0413,
-     "fair_odds": 23.2,
-     "value": {
-      "label": "fair",
-      "points": 0.0,
-      "edge": 0.29
-     },
-     "rank": 9,
-     "conditional_rank": null,
-     "min_win_odds": 26.7
-    },
-    {
-     "pgm": "8",
-     "name": "Omission",
-     "ml_odds": "15/1",
-     "ml_decimal": 15.0,
-     "run_style": "S",
-     "speed_pts": 5,
-     "prime_power": 101.8,
-     "score": -12.45,
-     "eliminated": false,
-     "flags": [],
-     "hits": [
-      {
-       "rule": "S3",
-       "name": "Average speed vs. class par",
-       "points": -5.0,
-       "note": "avg last-3 70.3 is -14 vs par 84"
-      },
-      {
-       "rule": "S5",
-       "name": "Improving / declining figure pattern",
-       "points": 3.0,
-       "note": "figures rising [64, 71, 76]"
-      },
-      {
-       "rule": "S6",
-       "name": "Bounce risk after a career-top figure",
-       "points": -5.2,
-       "note": "career top 76 vs prior best 71 (+5) on short rest"
-      },
-      {
-       "rule": "C2",
-       "name": "Class rise",
-       "points": -4.0,
-       "note": "rises 5.0 class levels"
-      },
-      {
-       "rule": "P2",
-       "name": "Speed duel penalty / closer bonus",
-       "points": -1.6,
-       "note": "soft pace vs S"
-      },
-      {
-       "rule": "P5",
-       "name": "Running style vs. track bias",
-       "points": 2.0,
-       "note": "meet S IV 1.06, week S IV 1.39"
-      },
-      {
-       "rule": "P6",
-       "name": "Post position vs. bias",
-       "points": -2.0,
-       "note": "post 8 (8+) IV 0.45"
-      },
-      {
-       "rule": "P7",
-       "name": "Early speed points rank",
-       "points": 1.25,
-       "note": "5 speed points"
-      },
-      {
-       "rule": "F2",
-       "name": "In the money last race",
-       "points": 2.0,
-       "note": "finished 3rd beaten 1.0L"
-      },
-      {
-       "rule": "F3",
-       "name": "Troubled trip last out",
-       "points": 3.0,
-       "note": "trouble: 'Bmpd/forced in st;ins'"
-      },
-      {
-       "rule": "F4",
-       "name": "Closed ground late last out",
-       "points": 2.0,
-       "note": "closed 2.25L from 2nd call"
-      },
-      {
-       "rule": "F7",
-       "name": "Second / third start off the layoff",
-       "points": 2.0,
-       "note": "2nd off the layoff"
-      },
-      {
-       "rule": "K1",
-       "name": "Trainer win percentage (year)",
-       "points": -2.4,
-       "note": "trainer only 7%"
-      },
-      {
-       "rule": "K2",
-       "name": "Trainer angle stats",
-       "points": -3.0,
-       "note": "MdnClm to Mdn only 0%; Turf starts only 4%"
-      },
-      {
-       "rule": "K3",
-       "name": "Jockey win percentage",
-       "points": -1.4,
-       "note": "jockey only 6%"
-      },
-      {
-       "rule": "K4",
-       "name": "Jockey/trainer combination",
-       "points": -1.0,
-       "note": "jky/trn combo 0 for 6"
-      },
-      {
-       "rule": "A1",
-       "name": "Weight / age concession",
-       "points": 0.3,
-       "note": "3yo vs older"
-      },
-      {
-       "rule": "Q2",
-       "name": "QuickPlay negative comments",
-       "points": -2.4,
-       "note": "Beaten by weaker in last race; Poor trainer win%; Poor jockey win%; Best Speed Rating is well below the Avg Winning Speed; Outside posts have poor win%"
-      },
-      {
-       "rule": "V1",
-       "name": "Morning-line value",
-       "points": -2.4,
-       "value": true,
-       "note": "underlay: ML 15/1 vs fair 45.1-1 (value, not in the ability score)"
-      }
-     ],
-     "features": {
-      "starts": 7,
-      "wins": 0,
-      "places": 0,
-      "shows": 1,
-      "itm_pct": 14.3,
-      "win_pct": 0.0,
-      "first_time_starter": false,
-      "is_maiden": true,
-      "last_off_surface": false,
-      "surface_form_lines": 4,
-      "use_surface_figs": false,
-      "off_surface_speed": null,
-      "last_speed": 76,
-      "speed_last3": [
-       76,
-       71,
-       64
-      ],
-      "best_last3": 76,
-      "avg_last3": 70.3,
-      "best_speed_10": 76,
-      "prev_best": 71,
-      "career_top_last": true,
-      "improving": true,
-      "declining": false,
-      "best_surface_speed": 76,
-      "surface_starts": 4,
-      "surface_wins": 0,
-      "surface_itm": 1,
-      "dist_starts": 2,
-      "dist_wins": 0,
-      "dist_itm": 0,
-      "dist_best_speed": 71,
-      "track_starts": 1,
-      "track_wins": 0,
-      "track_itm": 0,
-      "match_speeds": [
-       71,
-       62
-      ],
-      "best_match_speed": 71,
-      "avg_match_speed": 66.5,
-      "e1_last3": [
-       85,
-       92,
-       79
-      ],
-      "e2_last3": [
-       94,
-       84,
-       74
-      ],
-      "lp_last3": [
-       73,
-       65,
-       75
-      ],
-      "best_e1": 92,
-      "best_e2": 94,
-      "best_lp": 75,
-      "avg_e1": 85.3,
-      "avg_e2": 84,
-      "avg_lp": 71,
-      "run_style": "S",
-      "speed_pts": 5,
-      "early_type": false,
-      "closer_type": true,
-      "today_level": 20.0,
-      "last_level": 15.0,
-      "class_move": 5.0,
-      "class_rating_last3": [
-       112,
-       109,
-       108
-      ],
-      "avg_class_rating": 109.7,
-      "best_class_rating": 112,
-      "race_rating_last": 109,
-      "avg_race_rating": 109.7,
-      "acl": 108.8,
-      "prime_power": 101.8,
-      "prime_power_rank": 9,
-      "days_since": 20,
-      "last_finish": 3,
-      "last_beaten": 1.0,
-      "last_won": false,
-      "last_itm": true,
-      "last_field": 11,
-      "last_odds": 100.8,
-      "last_comment": "Bmpd/forced in st;ins",
-      "last_trouble": true,
-      "last_strong_win": false,
-      "last_good_effort": false,
-      "last_bad_effort": false,
-      "last_same_surface": true,
-      "last_same_category": false,
-      "last_wide": false,
-      "last_gained_late": false,
-      "last_closed_lengths": 2.25,
-      "last_led_early": false,
-      "itm_streak": 1,
-      "races_since_layoff": 1,
-      "num_works": 12,
-      "bullet_works": 0,
-      "recent_fast_works": 1,
-      "works_since_last": 10,
-      "has_work_5f_or_more": true,
-      "trainer_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 118,
-       "win_pct": 7,
-       "itm_pct": 33,
-       "roi": -0.74
-      },
-      "jockey_year": {
-       "category": "2026",
-       "flag": false,
-       "starts": 211,
-       "win_pct": 6,
-       "itm_pct": 25,
-       "roi": -0.25
-      },
-      "jt_combo": {
-       "category": "JKYw/ Trn L60",
-       "flag": false,
-       "starts": 6,
-       "win_pct": 0,
-       "itm_pct": 50,
-       "roi": -2.0
-      },
-      "trainer_meet": {
-       "starts": 2,
-       "win": 0,
-       "place": 2,
-       "show": 0,
-       "win_pct": 0
-      },
-      "jockey_meet": {
-       "starts": 4,
-       "win": 0,
-       "place": 0,
-       "show": 0,
-       "win_pct": 0
-      },
-      "jockey_switch": false,
-      "blinkers_on": false,
-      "blinkers_off": false,
-      "first_lasix": false,
-      "ped_surface_rating": 106,
-      "ped_dist_rating": 101,
-      "ped_off_rating": 104,
-      "sire_awd": null,
-      "damsire_awd": null,
-      "sire_first_pct": null,
-      "sire_mud_pct": null,
-      "dam_dpi": null,
-      "sire_spi": null,
-      "trouble_last3": 1,
-      "last_dueled": false,
-      "last_favorite": false,
-      "last_beaten_favorite": false,
-      "last_claimed": false,
-      "last_claim_price": null,
-      "today_claiming_price": null,
-      "prior_claiming_starts": 3,
-      "first_time_for_tag": false,
-      "last_maiden_win": false,
-      "last_maiden_win_claiming": false,
-      "today_n1x": false,
-      "today_n2l": false,
-      "last_speed_vs_par": -8,
-      "paired_figs": false,
-      "best_two_recent": 76,
-      "best_competitive_level": 15.0,
-      "back_class": false,
-      "freshened": false,
-      "last_lost_fast": false,
-      "debut_speed": null,
-      "sheet_angles": [],
-      "key_race": false,
-      "possible_key_race": false,
-      "ml_decimal": 15.0,
-      "post": 8,
-      "entry_status": null,
-      "age": 3,
-      "sex": "g",
-      "weight": 122,
-      "name": "Omission",
-      "pgm": "8",
-      "turf_to_dirt": false,
-      "dirt_to_turf": false,
-      "sprint_to_route": true,
-      "route_to_sprint": false,
-      "num_clean_pp": 7
-     },
-     "model_prob": 0.0217,
-     "market_prob": 0.0493,
-     "win_prob": 0.0313,
-     "implied_prob": 0.0217,
-     "fair_odds": 45.1,
-     "value": {
-      "label": "underlay",
-      "points": -2.4,
-      "edge": -0.67
-     },
-     "rank": 10,
-     "conditional_rank": null,
-     "min_win_odds": 51.9
+     "min_win_odds": 16.0
     }
    ],
    "leg": {
-    "kind": "chaos",
+    "kind": "standard",
     "A": [
      "3",
-     "2",
-     "4"
+     "7"
     ],
     "B": [
      "1",
-     "7",
-     "5",
-     "10"
+     "2",
+     "4"
     ],
     "favorite": "1",
     "price_leg": true,
     "probs": {
-     "3": 0.1721,
-     "1": 0.1563,
-     "7": 0.1239,
-     "4": 0.1283,
-     "2": 0.1356,
-     "5": 0.0837,
-     "10": 0.077,
-     "9": 0.056,
-     "6": 0.0357,
-     "8": 0.0313
+     "3": 0.1807,
+     "7": 0.1599,
+     "4": 0.1489,
+     "1": 0.167,
+     "2": 0.1573,
+     "5": 0.0971,
+     "10": 0.0892
     },
     "price_factor": 1.0,
     "audit": [
-     "H1 win probabilities (model 65% / ML 35%); top #3 17%",
-     "H3 chaos leg: 1 within 4.0 pts, 10 live, top prob 17%",
-     "H4 A=['3', '1', '2', '4'] (59%) B=['7', '5', '10'] (88%) targets 65%/85%",
-     "H5 vulnerable favourite #1 (7/2): ranks 2 by score -> demoted to B; price leg"
+     "H1 win probabilities (model 65% / ML 35%); top #3 18%",
+     "H4 A=['3', '1', '7'] (51%) B=['2', '4'] (81%) targets 55%/78%",
+     "H5 vulnerable favourite #1 (7/2): ranks 4 by score; model 15% vs ML 20% -> demoted to B; price leg"
     ]
    },
    "wagers": [
@@ -25431,23 +24319,23 @@
      "legs": [
       [
        "3",
-       "1",
-       "7"
+       "7",
+       "4"
       ],
       [
        "3",
-       "1",
-       "7"
+       "7",
+       "4"
       ],
       [
        "3",
-       "1",
-       "7"
+       "7",
+       "4"
       ]
      ],
      "box": true,
      "combos": 6,
-     "label": "TRIFECTA box #3-#1-#7",
+     "label": "TRIFECTA box #3-#7-#4",
      "source": "primary",
      "race_no": 9,
      "races": [
@@ -25459,16 +24347,16 @@
      "legs": [
       [
        "3",
-       "1"
+       "7"
       ],
       [
        "3",
-       "1"
+       "7"
       ]
      ],
      "box": true,
      "combos": 2,
-     "label": "EXACTA box #3-#1",
+     "label": "EXACTA box #3-#7",
      "source": "primary",
      "race_no": 9,
      "races": [
@@ -25484,15 +24372,15 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #3 (take 4.8-1 or better)",
+     "label": "WIN #3 (take 4.7-1 or better)",
      "source": "primary",
      "race_no": 9,
      "races": [
       9
      ],
-     "min_odds": 4.8,
+     "min_odds": 4.7,
      "min_odds_by": {
-      "3": 4.8
+      "3": 4.7
      }
     },
     {
@@ -25500,17 +24388,17 @@
      "legs": [
       [
        "3",
-       "1"
+       "7"
       ],
       [
        "3",
-       "1",
-       "7"
+       "7",
+       "4"
       ]
      ],
      "box": false,
      "combos": 4,
-     "label": "EXACTA box #3,#1; EXACTA part-wheel #3,#1 / #3,#1,#7",
+     "label": "EXACTA box #3,#7; EXACTA part-wheel #3,#7 / #3,#7,#4",
      "source": "other",
      "race_no": 9,
      "races": [
@@ -25522,26 +24410,26 @@
      "legs": [
       [
        "3",
-       "1",
        "7",
-       "4"
+       "4",
+       "1"
       ],
       [
        "3",
-       "1",
        "7",
-       "4"
+       "4",
+       "1"
       ],
       [
        "3",
-       "1",
        "7",
-       "4"
+       "4",
+       "1"
       ]
      ],
      "box": true,
      "combos": 24,
-     "label": "TRIFECTA box #3-#1-#7-#4",
+     "label": "TRIFECTA box #3-#7-#4-#1",
      "source": "other",
      "race_no": 9,
      "races": [
@@ -25557,32 +24445,34 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN on the overlay: #7 (ML 8/1 vs fair 6.0-1; take 6.9-1 or better)",
+     "label": "WIN on the overlay: #7 (ML 8/1 vs fair 4.2-1; take 4.8-1 or better)",
      "source": "other",
      "race_no": 9,
      "races": [
       9
      ],
      "min_odds_by": {
-      "7": 6.9
+      "7": 4.8
      },
-     "min_odds": 6.9
+     "min_odds": 4.8
     },
     {
      "type": "EXACTA",
      "legs": [
       [
-       "3"
+       "3",
+       "7"
       ],
       [
        "3",
-       "1",
-       "7"
+       "7",
+       "4",
+       "1"
       ]
      ],
      "box": false,
-     "combos": 2,
-     "label": "favourite #1 looks beatable (H5): EXACTA #3 over #3,#1,#7 - chalk underneath only, never on top",
+     "combos": 6,
+     "label": "favourite #1 looks beatable (H5): EXACTA #3,#7 over #3,#7,#4,#1 - chalk underneath only, never on top",
      "source": "other",
      "race_no": 9,
      "races": [
@@ -25591,10 +24481,10 @@
     }
    ],
    "other_wagers": [
-    "EXACTA box #3,#1; EXACTA part-wheel #3,#1 / #3,#1,#7",
-    "TRIFECTA box #3-#1-#7-#4",
-    "WIN on the overlay: #7 (ML 8/1 vs fair 6.0-1; take 6.9-1 or better)",
-    "favourite #1 looks beatable (H5): EXACTA #3 over #3,#1,#7 - chalk underneath only, never on top"
+    "EXACTA box #3,#7; EXACTA part-wheel #3,#7 / #3,#7,#4",
+    "TRIFECTA box #3-#7-#4-#1",
+    "WIN on the overlay: #7 (ML 8/1 vs fair 4.2-1; take 4.8-1 or better)",
+    "favourite #1 looks beatable (H5): EXACTA #3,#7 over #3,#7,#4,#1 - chalk underneath only, never on top"
    ]
   }
  ],
@@ -25778,6 +24668,174 @@
      ]
     },
     {
+     "name": "Pick 3 R3-R5",
+     "races": [
+      3,
+      4,
+      5
+     ],
+     "base": 1.0,
+     "budget": 60.0,
+     "cost": 16.0,
+     "cost_before_trim": 16.0,
+     "hit_prob": 0.2408,
+     "hit_prob_raw": 0.4816,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.4063,
+     "singles": 1,
+     "price_legs": 1,
+     "ml_parlay": 32.4,
+     "all_favorites_prob": 0.0439,
+     "notes": [
+      "H10 offered on the R3 menu (minimum $0.50); bet at $1.00"
+     ],
+     "tickets": [
+      {
+       "name": "main (all A)",
+       "legs": [
+        [
+         "1"
+        ],
+        [
+         "3",
+         "6"
+        ],
+        [
+         "2",
+         "5",
+         "6"
+        ]
+       ],
+       "combos": 6,
+       "cost": 6.0
+      },
+      {
+       "name": "backup: B in R4",
+       "legs": [
+        [
+         "1"
+        ],
+        [
+         "4",
+         "8"
+        ],
+        [
+         "2",
+         "5",
+         "6"
+        ]
+       ],
+       "combos": 6,
+       "cost": 6.0
+      },
+      {
+       "name": "backup: B in R5",
+       "legs": [
+        [
+         "1"
+        ],
+        [
+         "3",
+         "6"
+        ],
+        [
+         "8",
+         "4"
+        ]
+       ],
+       "combos": 4,
+       "cost": 4.0
+      }
+     ],
+     "legs": [
+      {
+       "race_no": 3,
+       "class_text": "DesiArnazL100K",
+       "kind": "single",
+       "A": [
+        "1"
+       ],
+       "B": [],
+       "favorite": "1",
+       "price_leg": false,
+       "probs": {
+        "1": 0.7559,
+        "2": 0.0421,
+        "3": 0.1307,
+        "5": 0.0538,
+        "4": 0.0174
+       },
+       "price_factor": 1.0,
+       "audit": [
+        "H1 win probabilities (model 65% / ML 35%); top #1 76%",
+        "H2 single #1: prob 76%, 60.5 pts clear (ML 4/5, short price but the saving buys coverage elsewhere)"
+       ]
+      },
+      {
+       "race_no": 4,
+       "class_text": "Clm 12500n2L",
+       "kind": "standard",
+       "A": [
+        "3",
+        "6"
+       ],
+       "B": [
+        "4",
+        "8"
+       ],
+       "favorite": "4",
+       "price_leg": true,
+       "probs": {
+        "3": 0.4034,
+        "6": 0.1742,
+        "8": 0.1167,
+        "4": 0.1674,
+        "9": 0.1009,
+        "7": 0.0373
+       },
+       "price_factor": 0.94,
+       "audit": [
+        "pricing keeps 2% for each of the 3 eliminated horse(s): live probabilities x 0.94 in the hit probability only",
+        "H1 win probabilities (model 65% / ML 35%); top #3 40%",
+        "H4 A=['3', '6'] (58%) B=['4', '8'] (86%) targets 55%/78%",
+        "H5 vulnerable favourite #4 (5/2): ranks 4 by score; model 10% vs ML 29%; hits P2,F5,V1 -> stays B; price leg"
+       ]
+      },
+      {
+       "race_no": 5,
+       "class_text": "Mdn 65k",
+       "kind": "standard",
+       "A": [
+        "2",
+        "5",
+        "6"
+       ],
+       "B": [
+        "8",
+        "4"
+       ],
+       "favorite": "2",
+       "price_leg": false,
+       "probs": {
+        "2": 0.3469,
+        "5": 0.1788,
+        "6": 0.1295,
+        "8": 0.0986,
+        "4": 0.0973,
+        "7": 0.045,
+        "1": 0.0593,
+        "9": 0.0446
+       },
+       "price_factor": 1.0,
+       "audit": [
+        "H1 win probabilities (model 65% / ML 35%); top #2 35%",
+        "H4 A=['2', '5', '6'] (66%) B=['8', '4'] (85%) targets 55%/78%",
+        "H5 favourite #2 (3/1) looks legitimate"
+       ]
+      }
+     ]
+    },
+    {
      "name": "Pick 3 R1-R3",
      "races": [
       1,
@@ -25945,175 +25003,6 @@
      ]
     },
     {
-     "name": "Pick 3 R3-R5",
-     "races": [
-      3,
-      4,
-      5
-     ],
-     "base": 1.0,
-     "budget": 60.0,
-     "cost": 16.0,
-     "cost_before_trim": 16.0,
-     "hit_prob": 0.2264,
-     "hit_prob_raw": 0.4528,
-     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.382,
-     "singles": 1,
-     "price_legs": 1,
-     "ml_parlay": 32.4,
-     "all_favorites_prob": 0.0414,
-     "notes": [
-      "H10 offered on the R3 menu (minimum $0.50); bet at $1.00"
-     ],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "1"
-        ],
-        [
-         "3",
-         "6"
-        ],
-        [
-         "2",
-         "5",
-         "6"
-        ]
-       ],
-       "combos": 6,
-       "cost": 6.0
-      },
-      {
-       "name": "backup: B in R4",
-       "legs": [
-        [
-         "1"
-        ],
-        [
-         "4",
-         "8"
-        ],
-        [
-         "2",
-         "5",
-         "6"
-        ]
-       ],
-       "combos": 6,
-       "cost": 6.0
-      },
-      {
-       "name": "backup: B in R5",
-       "legs": [
-        [
-         "1"
-        ],
-        [
-         "3",
-         "6"
-        ],
-        [
-         "8",
-         "4"
-        ]
-       ],
-       "combos": 4,
-       "cost": 4.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 3,
-       "class_text": "DesiArnazL100K",
-       "kind": "single",
-       "A": [
-        "1"
-       ],
-       "B": [],
-       "favorite": "1",
-       "price_leg": false,
-       "probs": {
-        "1": 0.7559,
-        "2": 0.0421,
-        "3": 0.1307,
-        "5": 0.0538,
-        "4": 0.0174
-       },
-       "price_factor": 1.0,
-       "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #1 76%",
-        "H2 single #1: prob 76%, 60.5 pts clear (ML 4/5, short price but the saving buys coverage elsewhere)"
-       ]
-      },
-      {
-       "race_no": 4,
-       "class_text": "Clm 12500n2L",
-       "kind": "standard",
-       "A": [
-        "3",
-        "6"
-       ],
-       "B": [
-        "4",
-        "8"
-       ],
-       "favorite": "4",
-       "price_leg": true,
-       "probs": {
-        "3": 0.4034,
-        "6": 0.1742,
-        "8": 0.1167,
-        "4": 0.1674,
-        "9": 0.1009,
-        "7": 0.0373
-       },
-       "price_factor": 0.94,
-       "audit": [
-        "pricing keeps 2% for each of the 3 eliminated horse(s): live probabilities x 0.94 in the hit probability only",
-        "H1 win probabilities (model 65% / ML 35%); top #3 40%",
-        "H4 A=['3', '6'] (58%) B=['4', '8'] (86%) targets 55%/78%",
-        "H5 vulnerable favourite #4 (5/2): ranks 4 by score; model 10% vs ML 29%; hits P2,F5,V1 -> stays B; price leg"
-       ]
-      },
-      {
-       "race_no": 5,
-       "class_text": "Mdn 65k",
-       "kind": "standard",
-       "A": [
-        "2",
-        "5",
-        "6"
-       ],
-       "B": [
-        "8",
-        "4"
-       ],
-       "favorite": "2",
-       "price_leg": false,
-       "probs": {
-        "2": 0.3274,
-        "5": 0.1683,
-        "6": 0.1208,
-        "8": 0.0926,
-        "4": 0.0909,
-        "3": 0.0615,
-        "7": 0.0421,
-        "1": 0.0551,
-        "9": 0.0413
-       },
-       "price_factor": 1.0,
-       "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #2 33%",
-        "H4 A=['2', '5', '6'] (62%) B=['8', '4'] (80%) targets 55%/78%",
-        "H5 favourite #2 (3/1) looks legitimate"
-       ]
-      }
-     ]
-    },
-    {
      "name": "Pick 3 R7-R9",
      "races": [
       7,
@@ -26122,16 +25011,16 @@
      ],
      "base": 3.0,
      "budget": 60.0,
-     "cost": 60.0,
-     "cost_before_trim": 60.0,
-     "hit_prob": 0.1435,
-     "hit_prob_raw": 0.287,
+     "cost": 42.0,
+     "cost_before_trim": 42.0,
+     "hit_prob": 0.1275,
+     "hit_prob_raw": 0.255,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.3049,
+     "score": 0.2709,
      "singles": 1,
      "price_legs": 2,
-     "ml_parlay": 270.0,
-     "all_favorites_prob": 0.0147,
+     "ml_parlay": 324.0,
+     "all_favorites_prob": 0.0165,
      "notes": [
       "H10 offered on the R7 menu (minimum $3.00); bet at $3.00"
      ],
@@ -26148,12 +25037,11 @@
         ],
         [
          "3",
-         "2",
-         "4"
+         "7"
         ]
        ],
-       "combos": 6,
-       "cost": 18.0
+       "combos": 4,
+       "cost": 12.0
       },
       {
        "name": "backup: B in R8",
@@ -26167,12 +25055,11 @@
         ],
         [
          "3",
-         "2",
-         "4"
+         "7"
         ]
        ],
-       "combos": 6,
-       "cost": 18.0
+       "combos": 4,
+       "cost": 12.0
       },
       {
        "name": "backup: B in R9",
@@ -26186,13 +25073,12 @@
         ],
         [
          "1",
-         "7",
-         "5",
-         "10"
+         "2",
+         "4"
         ]
        ],
-       "combos": 8,
-       "cost": 24.0
+       "combos": 6,
+       "cost": 18.0
       }
      ],
      "legs": [
@@ -26236,57 +25122,51 @@
        "favorite": "2",
        "price_leg": true,
        "probs": {
-        "1": 0.3597,
-        "2": 0.1829,
-        "7": 0.1444,
-        "5": 0.1053,
-        "8": 0.0836,
-        "3": 0.0738,
-        "6": 0.0503
+        "1": 0.3458,
+        "2": 0.1913,
+        "7": 0.1486,
+        "5": 0.1086,
+        "8": 0.0858,
+        "3": 0.0718,
+        "6": 0.0479
        },
        "price_factor": 0.98,
        "audit": [
         "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
-        "H1 win probabilities (model 65% / ML 35%); top #1 36%",
+        "H1 win probabilities (model 65% / ML 35%); top #1 35%",
         "H4 A=['1', '2', '7'] (69%) B=['5'] (79%) targets 55%/78%",
-        "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 14% vs ML 27%; hits V1 -> demoted to B; price leg"
+        "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 15% vs ML 27%; hits V1 -> demoted to B; price leg"
        ]
       },
       {
        "race_no": 9,
        "class_text": "Mdn 65k",
-       "kind": "chaos",
+       "kind": "standard",
        "A": [
         "3",
-        "2",
-        "4"
+        "7"
        ],
        "B": [
         "1",
-        "7",
-        "5",
-        "10"
+        "2",
+        "4"
        ],
        "favorite": "1",
        "price_leg": true,
        "probs": {
-        "3": 0.1721,
-        "1": 0.1563,
-        "7": 0.1239,
-        "4": 0.1283,
-        "2": 0.1356,
-        "5": 0.0837,
-        "10": 0.077,
-        "9": 0.056,
-        "6": 0.0357,
-        "8": 0.0313
+        "3": 0.1807,
+        "7": 0.1599,
+        "4": 0.1489,
+        "1": 0.167,
+        "2": 0.1573,
+        "5": 0.0971,
+        "10": 0.0892
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #3 17%",
-        "H3 chaos leg: 1 within 4.0 pts, 10 live, top prob 17%",
-        "H4 A=['3', '1', '2', '4'] (59%) B=['7', '5', '10'] (88%) targets 65%/85%",
-        "H5 vulnerable favourite #1 (7/2): ranks 2 by score -> demoted to B; price leg"
+        "H1 win probabilities (model 65% / ML 35%); top #3 18%",
+        "H4 A=['3', '1', '7'] (51%) B=['2', '4'] (81%) targets 55%/78%",
+        "H5 vulnerable favourite #1 (7/2): ranks 4 by score; model 15% vs ML 20% -> demoted to B; price leg"
        ]
       }
      ]
@@ -26302,14 +25182,14 @@
      "budget": 60.0,
      "cost": 60.0,
      "cost_before_trim": 66.0,
-     "hit_prob": 0.189,
-     "hit_prob_raw": 0.3779,
+     "hit_prob": 0.2005,
+     "hit_prob_raw": 0.4011,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.2551,
+     "score": 0.2707,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 81.0,
-     "all_favorites_prob": 0.0167,
+     "all_favorites_prob": 0.0173,
      "notes": [
       "H10 offered on the R4 menu (minimum $0.50); bet at $1.00",
       "H8 over budget $66.00 > $60.00: dropped B #9 from R6"
@@ -26445,20 +25325,19 @@
        "favorite": "2",
        "price_leg": false,
        "probs": {
-        "2": 0.3274,
-        "5": 0.1683,
-        "6": 0.1208,
-        "8": 0.0926,
-        "4": 0.0909,
-        "3": 0.0615,
-        "7": 0.0421,
-        "1": 0.0551,
-        "9": 0.0413
+        "2": 0.3469,
+        "5": 0.1788,
+        "6": 0.1295,
+        "8": 0.0986,
+        "4": 0.0973,
+        "7": 0.045,
+        "1": 0.0593,
+        "9": 0.0446
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #2 33%",
-        "H4 A=['2', '5', '6'] (62%) B=['8', '4'] (80%) targets 55%/78%",
+        "H1 win probabilities (model 65% / ML 35%); top #2 35%",
+        "H4 A=['2', '5', '6'] (66%) B=['8', '4'] (85%) targets 55%/78%",
         "H5 favourite #2 (3/1) looks legitimate"
        ]
       },
@@ -26478,22 +25357,22 @@
        "favorite": "12",
        "price_leg": false,
        "probs": {
-        "12": 0.3043,
-        "6": 0.1323,
-        "3": 0.1094,
-        "7": 0.0792,
-        "5": 0.0918,
-        "1": 0.0833,
-        "9": 0.0819,
-        "11": 0.04,
-        "4": 0.0436,
-        "2": 0.0342
+        "12": 0.2971,
+        "6": 0.1334,
+        "3": 0.1126,
+        "7": 0.0797,
+        "5": 0.0924,
+        "1": 0.0854,
+        "9": 0.0808,
+        "4": 0.0439,
+        "11": 0.0391,
+        "2": 0.0356
        },
        "price_factor": 0.98,
        "audit": [
         "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
         "H1 win probabilities (model 65% / ML 35%); top #12 30%",
-        "H4 A=['12', '6', '3'] (55%) B=['5', '1', '9'] (80%) targets 55%/78%",
+        "H4 A=['12', '6', '3'] (54%) B=['5', '1', '9'] (80%) targets 55%/78%",
         "H5 favourite #12 (7/2) looks legitimate"
        ]
       }
@@ -26510,14 +25389,14 @@
      "budget": 60.0,
      "cost": 18.0,
      "cost_before_trim": 18.0,
-     "hit_prob": 0.1392,
-     "hit_prob_raw": 0.2785,
+     "hit_prob": 0.1385,
+     "hit_prob_raw": 0.277,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.235,
+     "score": 0.2337,
      "singles": 1,
      "price_legs": 1,
      "ml_parlay": 81.0,
-     "all_favorites_prob": 0.0287,
+     "all_favorites_prob": 0.0293,
      "notes": [
       "H10 offered on the R6 menu (minimum $0.50); bet at $1.00"
      ],
@@ -26598,22 +25477,22 @@
        "favorite": "12",
        "price_leg": false,
        "probs": {
-        "12": 0.3043,
-        "6": 0.1323,
-        "3": 0.1094,
-        "7": 0.0792,
-        "5": 0.0918,
-        "1": 0.0833,
-        "9": 0.0819,
-        "11": 0.04,
-        "4": 0.0436,
-        "2": 0.0342
+        "12": 0.2971,
+        "6": 0.1334,
+        "3": 0.1126,
+        "7": 0.0797,
+        "5": 0.0924,
+        "1": 0.0854,
+        "9": 0.0808,
+        "4": 0.0439,
+        "11": 0.0391,
+        "2": 0.0356
        },
        "price_factor": 0.98,
        "audit": [
         "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
         "H1 win probabilities (model 65% / ML 35%); top #12 30%",
-        "H4 A=['12', '6', '3'] (55%) B=['5', '1', '9'] (80%) targets 55%/78%",
+        "H4 A=['12', '6', '3'] (54%) B=['5', '1', '9'] (80%) targets 55%/78%",
         "H5 favourite #12 (7/2) looks legitimate"
        ]
       },
@@ -26657,20 +25536,20 @@
        "favorite": "2",
        "price_leg": true,
        "probs": {
-        "1": 0.3597,
-        "2": 0.1829,
-        "7": 0.1444,
-        "5": 0.1053,
-        "8": 0.0836,
-        "3": 0.0738,
-        "6": 0.0503
+        "1": 0.3458,
+        "2": 0.1913,
+        "7": 0.1486,
+        "5": 0.1086,
+        "8": 0.0858,
+        "3": 0.0718,
+        "6": 0.0479
        },
        "price_factor": 0.98,
        "audit": [
         "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
-        "H1 win probabilities (model 65% / ML 35%); top #1 36%",
+        "H1 win probabilities (model 65% / ML 35%); top #1 35%",
         "H4 A=['1', '2', '7'] (69%) B=['5'] (79%) targets 55%/78%",
-        "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 14% vs ML 27%; hits V1 -> demoted to B; price leg"
+        "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 15% vs ML 27%; hits V1 -> demoted to B; price leg"
        ]
       }
      ]
@@ -26686,14 +25565,14 @@
      "budget": 60.0,
      "cost": 24.0,
      "cost_before_trim": 24.0,
-     "hit_prob": 0.1504,
-     "hit_prob_raw": 0.3009,
+     "hit_prob": 0.1596,
+     "hit_prob_raw": 0.3193,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.1881,
+     "score": 0.1996,
      "singles": 1,
      "price_legs": 0,
      "ml_parlay": 72.0,
-     "all_favorites_prob": 0.0514,
+     "all_favorites_prob": 0.0532,
      "notes": [
       "H10 offered on the R5 menu (minimum $0.50); bet at $1.00"
      ],
@@ -26775,20 +25654,19 @@
        "favorite": "2",
        "price_leg": false,
        "probs": {
-        "2": 0.3274,
-        "5": 0.1683,
-        "6": 0.1208,
-        "8": 0.0926,
-        "4": 0.0909,
-        "3": 0.0615,
-        "7": 0.0421,
-        "1": 0.0551,
-        "9": 0.0413
+        "2": 0.3469,
+        "5": 0.1788,
+        "6": 0.1295,
+        "8": 0.0986,
+        "4": 0.0973,
+        "7": 0.045,
+        "1": 0.0593,
+        "9": 0.0446
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #2 33%",
-        "H4 A=['2', '5', '6'] (62%) B=['8', '4'] (80%) targets 55%/78%",
+        "H1 win probabilities (model 65% / ML 35%); top #2 35%",
+        "H4 A=['2', '5', '6'] (66%) B=['8', '4'] (85%) targets 55%/78%",
         "H5 favourite #2 (3/1) looks legitimate"
        ]
       },
@@ -26809,22 +25687,22 @@
        "favorite": "12",
        "price_leg": false,
        "probs": {
-        "12": 0.3043,
-        "6": 0.1323,
-        "3": 0.1094,
-        "7": 0.0792,
-        "5": 0.0918,
-        "1": 0.0833,
-        "9": 0.0819,
-        "11": 0.04,
-        "4": 0.0436,
-        "2": 0.0342
+        "12": 0.2971,
+        "6": 0.1334,
+        "3": 0.1126,
+        "7": 0.0797,
+        "5": 0.0924,
+        "1": 0.0854,
+        "9": 0.0808,
+        "4": 0.0439,
+        "11": 0.0391,
+        "2": 0.0356
        },
        "price_factor": 0.98,
        "audit": [
         "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
         "H1 win probabilities (model 65% / ML 35%); top #12 30%",
-        "H4 A=['12', '6', '3'] (55%) B=['5', '1', '9'] (80%) targets 55%/78%",
+        "H4 A=['12', '6', '3'] (54%) B=['5', '1', '9'] (80%) targets 55%/78%",
         "H5 favourite #12 (7/2) looks legitimate"
        ]
       },
@@ -27042,14 +25920,14 @@
      "budget": 100.0,
      "cost": 25.0,
      "cost_before_trim": 25.0,
-     "hit_prob": 0.1546,
-     "hit_prob_raw": 0.3092,
+     "hit_prob": 0.1644,
+     "hit_prob_raw": 0.3288,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.3285,
+     "score": 0.3493,
      "singles": 1,
      "price_legs": 2,
      "ml_parlay": 64.8,
-     "all_favorites_prob": 0.0098,
+     "all_favorites_prob": 0.0104,
      "notes": [
       "H10 offered on the R2 menu (minimum $0.50); bet at $0.50"
      ],
@@ -27248,20 +26126,19 @@
        "favorite": "2",
        "price_leg": false,
        "probs": {
-        "2": 0.3274,
-        "5": 0.1683,
-        "6": 0.1208,
-        "8": 0.0926,
-        "4": 0.0909,
-        "3": 0.0615,
-        "7": 0.0421,
-        "1": 0.0551,
-        "9": 0.0413
+        "2": 0.3469,
+        "5": 0.1788,
+        "6": 0.1295,
+        "8": 0.0986,
+        "4": 0.0973,
+        "7": 0.045,
+        "1": 0.0593,
+        "9": 0.0446
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #2 33%",
-        "H4 A=['2', '5', '6'] (62%) B=['8', '4'] (80%) targets 55%/78%",
+        "H1 win probabilities (model 65% / ML 35%); top #2 35%",
+        "H4 A=['2', '5', '6'] (66%) B=['8', '4'] (85%) targets 55%/78%",
         "H5 favourite #2 (3/1) looks legitimate"
        ]
       }
@@ -27277,16 +26154,16 @@
      ],
      "base": 0.5,
      "budget": 100.0,
-     "cost": 39.0,
-     "cost_before_trim": 39.0,
-     "hit_prob": 0.0908,
-     "hit_prob_raw": 0.1815,
+     "cost": 27.0,
+     "cost_before_trim": 27.0,
+     "hit_prob": 0.0786,
+     "hit_prob_raw": 0.1573,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.1929,
+     "score": 0.1671,
      "singles": 1,
      "price_legs": 2,
-     "ml_parlay": 202.5,
-     "all_favorites_prob": 0.0045,
+     "ml_parlay": 243.0,
+     "all_favorites_prob": 0.0049,
      "notes": [
       "H10 offered on the R6 menu (minimum $0.50); bet at $0.50"
      ],
@@ -27308,12 +26185,11 @@
         ],
         [
          "3",
-         "2",
-         "4"
+         "7"
         ]
        ],
-       "combos": 18,
-       "cost": 9.0
+       "combos": 12,
+       "cost": 6.0
       },
       {
        "name": "backup: B in R6",
@@ -27332,12 +26208,11 @@
         ],
         [
          "3",
-         "2",
-         "4"
+         "7"
         ]
        ],
-       "combos": 18,
-       "cost": 9.0
+       "combos": 12,
+       "cost": 6.0
       },
       {
        "name": "backup: B in R8",
@@ -27356,12 +26231,11 @@
         ],
         [
          "3",
-         "2",
-         "4"
+         "7"
         ]
        ],
-       "combos": 18,
-       "cost": 9.0
+       "combos": 12,
+       "cost": 6.0
       },
       {
        "name": "backup: B in R9",
@@ -27380,13 +26254,12 @@
         ],
         [
          "1",
-         "7",
-         "5",
-         "10"
+         "2",
+         "4"
         ]
        ],
-       "combos": 24,
-       "cost": 12.0
+       "combos": 18,
+       "cost": 9.0
       }
      ],
      "legs": [
@@ -27407,22 +26280,22 @@
        "favorite": "12",
        "price_leg": false,
        "probs": {
-        "12": 0.3043,
-        "6": 0.1323,
-        "3": 0.1094,
-        "7": 0.0792,
-        "5": 0.0918,
-        "1": 0.0833,
-        "9": 0.0819,
-        "11": 0.04,
-        "4": 0.0436,
-        "2": 0.0342
+        "12": 0.2971,
+        "6": 0.1334,
+        "3": 0.1126,
+        "7": 0.0797,
+        "5": 0.0924,
+        "1": 0.0854,
+        "9": 0.0808,
+        "4": 0.0439,
+        "11": 0.0391,
+        "2": 0.0356
        },
        "price_factor": 0.98,
        "audit": [
         "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
         "H1 win probabilities (model 65% / ML 35%); top #12 30%",
-        "H4 A=['12', '6', '3'] (55%) B=['5', '1', '9'] (80%) targets 55%/78%",
+        "H4 A=['12', '6', '3'] (54%) B=['5', '1', '9'] (80%) targets 55%/78%",
         "H5 favourite #12 (7/2) looks legitimate"
        ]
       },
@@ -27466,57 +26339,51 @@
        "favorite": "2",
        "price_leg": true,
        "probs": {
-        "1": 0.3597,
-        "2": 0.1829,
-        "7": 0.1444,
-        "5": 0.1053,
-        "8": 0.0836,
-        "3": 0.0738,
-        "6": 0.0503
+        "1": 0.3458,
+        "2": 0.1913,
+        "7": 0.1486,
+        "5": 0.1086,
+        "8": 0.0858,
+        "3": 0.0718,
+        "6": 0.0479
        },
        "price_factor": 0.98,
        "audit": [
         "pricing keeps 2% for each of the 1 eliminated horse(s): live probabilities x 0.98 in the hit probability only",
-        "H1 win probabilities (model 65% / ML 35%); top #1 36%",
+        "H1 win probabilities (model 65% / ML 35%); top #1 35%",
         "H4 A=['1', '2', '7'] (69%) B=['5'] (79%) targets 55%/78%",
-        "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 14% vs ML 27%; hits V1 -> demoted to B; price leg"
+        "H5 vulnerable favourite #2 (2/1): ranks 2 by score; model 15% vs ML 27%; hits V1 -> demoted to B; price leg"
        ]
       },
       {
        "race_no": 9,
        "class_text": "Mdn 65k",
-       "kind": "chaos",
+       "kind": "standard",
        "A": [
         "3",
-        "2",
-        "4"
+        "7"
        ],
        "B": [
         "1",
-        "7",
-        "5",
-        "10"
+        "2",
+        "4"
        ],
        "favorite": "1",
        "price_leg": true,
        "probs": {
-        "3": 0.1721,
-        "1": 0.1563,
-        "7": 0.1239,
-        "4": 0.1283,
-        "2": 0.1356,
-        "5": 0.0837,
-        "10": 0.077,
-        "9": 0.056,
-        "6": 0.0357,
-        "8": 0.0313
+        "3": 0.1807,
+        "7": 0.1599,
+        "4": 0.1489,
+        "1": 0.167,
+        "2": 0.1573,
+        "5": 0.0971,
+        "10": 0.0892
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / ML 35%); top #3 17%",
-        "H3 chaos leg: 1 within 4.0 pts, 10 live, top prob 17%",
-        "H4 A=['3', '1', '2', '4'] (59%) B=['7', '5', '10'] (88%) targets 65%/85%",
-        "H5 vulnerable favourite #1 (7/2): ranks 2 by score -> demoted to B; price leg"
+        "H1 win probabilities (model 65% / ML 35%); top #3 18%",
+        "H4 A=['3', '1', '7'] (51%) B=['2', '4'] (81%) targets 55%/78%",
+        "H5 vulnerable favourite #1 (7/2): ranks 4 by score; model 15% vs ML 20% -> demoted to B; price leg"
        ]
       }
      ]
@@ -27534,14 +26401,14 @@
     "budget": 100.0,
     "cost": 25.0,
     "cost_before_trim": 25.0,
-    "hit_prob": 0.1546,
-    "hit_prob_raw": 0.3092,
+    "hit_prob": 0.1644,
+    "hit_prob_raw": 0.3288,
     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-    "score": 0.3285,
+    "score": 0.3493,
     "singles": 1,
     "price_legs": 2,
     "ml_parlay": 64.8,
-    "all_favorites_prob": 0.0098,
+    "all_favorites_prob": 0.0104,
     "notes": [
      "H10 offered on the R2 menu (minimum $0.50); bet at $0.50"
     ],
@@ -27740,20 +26607,19 @@
       "favorite": "2",
       "price_leg": false,
       "probs": {
-       "2": 0.3274,
-       "5": 0.1683,
-       "6": 0.1208,
-       "8": 0.0926,
-       "4": 0.0909,
-       "3": 0.0615,
-       "7": 0.0421,
-       "1": 0.0551,
-       "9": 0.0413
+       "2": 0.3469,
+       "5": 0.1788,
+       "6": 0.1295,
+       "8": 0.0986,
+       "4": 0.0973,
+       "7": 0.045,
+       "1": 0.0593,
+       "9": 0.0446
       },
       "price_factor": 1.0,
       "audit": [
-       "H1 win probabilities (model 65% / ML 35%); top #2 33%",
-       "H4 A=['2', '5', '6'] (62%) B=['8', '4'] (80%) targets 55%/78%",
+       "H1 win probabilities (model 65% / ML 35%); top #2 35%",
+       "H4 A=['2', '5', '6'] (66%) B=['8', '4'] (85%) targets 55%/78%",
        "H5 favourite #2 (3/1) looks legitimate"
       ]
      }
@@ -27761,24 +26627,38 @@
    }
   }
  },
- "scratches": "",
+ "scratches": "5:3, 9:6, 9:8, 9:9",
  "parser_version": "2026-11-07.2",
  "run_notes": [
+  "scratch: R5: scratched #3 Big Caslon",
+  "scratch: R9: scratched #6 Sir Dagonet",
+  "scratch: R9: scratched #8 Omission",
+  "scratch: R9: scratched #9 Still Bulletproof",
   "track: Del Mar (DMR); profile: DMR"
  ],
  "run": {
-  "at_utc": "2026-11-14T13:57:17Z",
-  "scratches": "",
+  "at_utc": "2026-11-15T01:27:30Z",
+  "scratches": "5:3, 9:6, 9:8, 9:9",
   "parser_version": "2026-11-07.2",
   "config_hash": "8e1ca72bcf67f78b",
   "track_profile": "DMR",
-  "code_version": "d6eeb43",
+  "code_version": "3118f5a",
   "source": "dmr1114y.card.json",
   "source_sha256": "c6568cd98e9d99cace4af78954a17e9494e76005b5a8afa124464e0aa852e329",
   "sheet": "dmr1114q.pdf",
-  "results_known": [],
+  "results_known": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
   "odds_source": "morning line",
   "changes": null,
-  "kind": "pre-race"
+  "kind": "as-run"
  }
 }
