@@ -22,6 +22,8 @@ naming the rules that shaped it.  Deterministic: no randomness.
 """
 from __future__ import annotations
 
+from .plain import plain
+
 import math
 import re
 from dataclasses import dataclass
@@ -393,8 +395,9 @@ def leg_summary(r: dict, cfg: dict) -> dict | None:
     leg = make_leg(r, cfg)
     if leg is None:
         return None
+    from .plain import plain
     return {"kind": leg.kind, "A": leg.A, "B": leg.B, "favorite": leg.favorite, "price_leg": leg.price_leg,
-            "probs": leg.probs, "price_factor": leg.price_factor, "audit": leg.audit}
+            "probs": leg.probs, "price_factor": leg.price_factor, "audit": [plain(x) for x in leg.audit]}
 
 
 def build_all(result: dict, cfg: dict) -> dict:
@@ -431,7 +434,7 @@ def _serialize(seq: dict) -> dict:
         "tickets": [{"name": t["name"], "legs": t["legs"], "combos": math.prod(len(x) for x in t["legs"]),
                      "cost": round(math.prod(len(x) for x in t["legs"]) * seq["base"], 2)} for t in seq["tickets"]],
         "legs": [{"race_no": l.race_no, "class_text": l.class_text, "kind": l.kind, "A": l.A, "B": l.B, "favorite": l.favorite,
-                  "price_leg": l.price_leg, "probs": l.probs, "price_factor": l.price_factor, "audit": l.audit} for l in seq["legs"]],
+                  "price_leg": l.price_leg, "probs": l.probs, "price_factor": l.price_factor, "audit": [plain(x) for x in l.audit]} for l in seq["legs"]],
     }
 
 

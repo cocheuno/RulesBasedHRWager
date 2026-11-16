@@ -99,13 +99,13 @@ def s3(f, ctx):
         return None
     d = f["avg_last3"] - par
     if d >= 3:
-        return 1.0, f"avg last-3 {f['avg_last3']} is {d:+.0f} vs par {par}"
+        return 1.0, f"average last-3 {f['avg_last3']} is {d:+.0f} against par {par}"
     if d >= 0:
-        return 0.5, f"avg last-3 {f['avg_last3']} is {d:+.0f} vs par {par}"
+        return 0.5, f"average last-3 {f['avg_last3']} is {d:+.0f} against par {par}"
     if d <= -8:
-        return -1.0, f"avg last-3 {f['avg_last3']} is {d:+.0f} vs par {par}"
+        return -1.0, f"average last-3 {f['avg_last3']} is {d:+.0f} against par {par}"
     if d <= -4:
-        return -0.6, f"avg last-3 {f['avg_last3']} is {d:+.0f} vs par {par}"
+        return -0.6, f"average last-3 {f['avg_last3']} is {d:+.0f} against par {par}"
     return None
 
 
@@ -148,7 +148,7 @@ def s6(f, ctx):
         fac = -1.3 if short else -1.0
         if jump >= 10:
             fac -= 0.3
-        return fac, f"career top {f['last_speed']} vs prior best {f['prev_best']} (+{jump})" + (" on short rest" if short else "")
+        return fac, f"career top {f['last_speed']} against prior best {f['prev_best']} (+{jump})" + (" on short rest" if short else "")
     return None
 
 
@@ -286,11 +286,11 @@ def c3(f, ctx):
     best company has the most "hidden class"."""
     r = ctx["rank_avg_class_rating"].get(f["pgm"])
     if r == 1:
-        return 1.0, f"avg class rating {f['avg_class_rating']} ranks 1st"
+        return 1.0, f"average class rating {f['avg_class_rating']} ranks 1st"
     if r == 2:
-        return 0.5, f"avg class rating {f['avg_class_rating']} ranks 2nd"
+        return 0.5, f"average class rating {f['avg_class_rating']} ranks 2nd"
     if r == 3:
-        return 0.25, f"avg class rating {f['avg_class_rating']} ranks 3rd"
+        return 0.25, f"average class rating {f['avg_class_rating']} ranks 3rd"
     return None
 
 
@@ -349,7 +349,7 @@ def c7(f, ctx):
         return None
     par = ctx["par_speed"]
     if par and f["best_last3"] is not None and f["best_last3"] >= par - 2:
-        return 1.0, f"first time in for a tag with figure {f['best_last3']} vs par {par}"
+        return 1.0, f"first time in for a tag with figure {f['best_last3']} against par {par}"
     return 0.4, "first time in for a tag"
 
 
@@ -363,7 +363,7 @@ def c8(f, ctx):
         return None
     tw = (f["trainer_year"] or {}).get("win_pct", 0)
     strong = (f["days_since"] is not None and f["days_since"] >= 45) or tw >= 15
-    return (0.7 if strong else 0.3), f"competitive at level {f['best_competitive_level']:.1f} vs today's {f['today_level']:.1f}"
+    return (0.7 if strong else 0.3), f"competitive at level {f['best_competitive_level']:.1f} against today's {f['today_level']:.1f}"
 
 
 @rule("C9", "Maiden graduate moving into winners' company", "class", 3)
@@ -382,7 +382,7 @@ def c9(f, ctx):
         return None
     par = ctx["par_speed"]
     if par and f["last_speed"] is not None and f["last_speed"] >= par:
-        return 0.0, f"maiden graduate but won with {f['last_speed']} vs par {par}"
+        return 0.0, f"maiden graduate but won with {f['last_speed']} against par {par}"
     if f["last_maiden_win_claiming"]:
         return -0.7, "maiden-claiming graduate facing winners"
     return -0.4, "maiden graduate facing winners"
@@ -414,7 +414,7 @@ def p1(f, ctx):
     Basis: Quirin - the first-call leader wins ~26% of all races and far more when unpressed; lone speed is the
     most powerful single pace angle, weaker on turf where closers fare better."""
     if ctx["lone_speed"] == f["pgm"]:
-        return (1.0 if ctx["race"]["surface"] == "dirt" else 0.7), f"lone speed ({f['run_style']} {f['speed_pts']} pts)"
+        return (1.0 if ctx["race"]["surface"] == "dirt" else 0.7), f"lone speed ({f['run_style']} {f['speed_pts']} points)"
     return None
 
 
@@ -426,9 +426,9 @@ def p2(f, ctx):
     shape = ctx["pace_shape"]
     rs = f["run_style"]
     if shape == "hot":
-        return {"E": -1.0, "E/P": -0.5, "P": 0.5, "S": 1.0}.get(rs, 0.0) or None, f"hot pace ({ctx['num_E']} E, {ctx['num_high_pts']} high-pts) vs {rs}"
+        return {"E": -1.0, "E/P": -0.5, "P": 0.5, "S": 1.0}.get(rs, 0.0) or None, f"hot pace ({ctx['num_E']} E, {ctx['num_high_pts']} high-points) against {rs}"
     if shape == "soft":
-        return {"E": 0.4, "E/P": 0.4, "S": -0.4}.get(rs, 0.0) or None, f"soft pace vs {rs}"
+        return {"E": 0.4, "E/P": 0.4, "S": -0.4}.get(rs, 0.0) or None, f"soft pace against {rs}"
     return None
 
 
@@ -441,10 +441,10 @@ def p3(f, ctx):
     sprint = not ctx["race"]["is_route"]
     if ctx["rank_best_e2"].get(f["pgm"]) == 1:
         pts += 1.0 if sprint else 0.6
-        notes.append(f"best E2 {f['best_e2']}")
+        notes.append(f"best second-call pace (E2) {f['best_e2']}")
     if sprint and ctx["rank_best_e1"].get(f["pgm"]) == 1:
         pts += 0.4
-        notes.append(f"best E1 {f['best_e1']}")
+        notes.append(f"best early pace (E1) {f['best_e1']}")
     return (pts, ", ".join(notes)) if pts else None
 
 
@@ -530,13 +530,13 @@ def p8(f, ctx):
         if f["avg_e2"] is None or ctx["par_e2"] is None:
             return None
         if ctx["pace_shape"] in ("soft", "lone") and f["avg_e2"] >= ctx["par_e2"] + 2:
-            return 1.0, f"E2 avg {f['avg_e2']} vs par {ctx['par_e2']} in a {ctx['pace_shape']} pace"
+            return 1.0, f"second-call pace (E2) average {f['avg_e2']} against par {ctx['par_e2']} in a {ctx['pace_shape']} pace"
         if f["avg_e2"] <= ctx["par_e2"] - 6:
-            return -0.6, f"E2 avg {f['avg_e2']} vs par {ctx['par_e2']}"
+            return -0.6, f"second-call pace (E2) average {f['avg_e2']} against par {ctx['par_e2']}"
         return None
     if f["closer_type"] and f["avg_lp"] is not None and ctx["par_late"] is not None:
         if ctx["pace_shape"] == "hot" and f["avg_lp"] >= ctx["par_late"] + 3:
-            return 1.0, f"LP avg {f['avg_lp']} vs par {ctx['par_late']} into a hot pace"
+            return 1.0, f"late pace (LP) average {f['avg_lp']} against par {ctx['par_late']} into a hot pace"
     return None
 
 
@@ -552,10 +552,10 @@ def p9(f, ctx):
         return None
     if lead[0]["pgm"] == f["pgm"]:
         if len(lead) == 1 or lead[0]["avg_e1"] - lead[1]["avg_e1"] >= 3:
-            return 1.0, f"E1 {f['avg_e1']} is {lead[0]['avg_e1'] - (lead[1]['avg_e1'] if len(lead) > 1 else 0):.0f} clear of the next early type"
+            return 1.0, f"early pace (E1) {f['avg_e1']} is {lead[0]['avg_e1'] - (lead[1]['avg_e1'] if len(lead) > 1 else 0):.0f} clear of the next early type"
     duel = [x for x in lead if x["run_style"] == "E" and lead[0]["avg_e1"] - x["avg_e1"] <= 1]
     if len(duel) >= 2 and f["run_style"] == "E" and any(x["pgm"] == f["pgm"] for x in duel):
-        return -0.5, f"E1 {f['avg_e1']}: {len(duel)} E types matched on the lead (#{', #'.join(x['pgm'] for x in duel)})"
+        return -0.5, f"early pace (E1) {f['avg_e1']}: {len(duel)} E types matched on the lead (#{', #'.join(x['pgm'] for x in duel)})"
     return None
 
 
@@ -703,11 +703,11 @@ def f8(f, ctx):
     if not f["starts"] or f["starts"] < 4:
         return None
     if f["itm_pct"] >= 60:
-        return 1.0, f"ITM {f['itm_pct']}% ({f['starts']} starts)"
+        return 1.0, f"in the money (ITM) {f['itm_pct']}% ({f['starts']} starts)"
     if f["itm_pct"] >= 45:
-        return 0.5, f"ITM {f['itm_pct']}%"
+        return 0.5, f"in the money (ITM) {f['itm_pct']}%"
     if f["starts"] >= 8 and f["itm_pct"] <= 20:
-        return -0.7, f"ITM only {f['itm_pct']}%"
+        return -0.7, f"in the money (ITM) only {f['itm_pct']}%"
     return None
 
 
@@ -800,7 +800,7 @@ def f15(f, ctx):
     simply faster): +0.6.  The finish position understates the horse against today's par.
     Basis: Beyer - judge the figure, not the finish; losing fast is better than winning slow."""
     if f["last_lost_fast"]:
-        return 0.6, f"beaten {f['last_beaten']}L but ran {f['last_speed']} vs par {ctx['par_speed']}"
+        return 0.6, f"beaten {f['last_beaten']}L but ran {f['last_speed']} against par {ctx['par_speed']}"
     return None
 
 
@@ -889,9 +889,9 @@ def k4(f, ctx):
     if not c or c["starts"] < 5:
         return None
     if c["win_pct"] >= 25:
-        return 1.0, f"jky/trn combo {c['win_pct']}% of {c['starts']}"
+        return 1.0, f"jockey and trainer combo {c['win_pct']}% of {c['starts']}"
     if c["win_pct"] == 0:
-        return -0.5, f"jky/trn combo 0 for {c['starts']}"
+        return -0.5, f"jockey and trainer combo 0 for {c['starts']}"
     return None
 
 
@@ -941,7 +941,7 @@ def d1(f, ctx):
     if f["dist_wins"] >= 1:
         return 1.0, f"{f['dist_wins']} win(s) at distance"
     if f["dist_itm"] >= 2:
-        return 0.5, f"ITM {f['dist_itm']} of {f['dist_starts']} at distance"
+        return 0.5, f"in the money (ITM) {f['dist_itm']} of {f['dist_starts']} at distance"
     if f["dist_starts"] >= 4 and f["dist_itm"] == 0:
         return -0.6, f"0 for {f['dist_starts']} at distance"
     return None
@@ -958,9 +958,9 @@ def d2(f, ctx):
     if f["surface_wins"] / n >= 0.25:
         return 1.0, f"{f['surface_wins']} of {n} on surface"
     if f["surface_itm"] / n >= 0.5:
-        return 0.5, f"ITM {f['surface_itm']} of {n} on surface"
+        return 0.5, f"in the money (ITM) {f['surface_itm']} of {n} on surface"
     if n >= 6 and f["surface_itm"] / n < 0.2:
-        return -0.7, f"ITM only {f['surface_itm']} of {n} on surface"
+        return -0.7, f"in the money (ITM) only {f['surface_itm']} of {n} on surface"
     return None
 
 
@@ -1001,13 +1001,13 @@ def d4(f, ctx):
         good = (f["avg_lp"] is not None and ctx["par_late"] and f["avg_lp"] >= ctx["par_late"]) and (f["sire_awd"] or 0) >= 7.0
         bad = (f["sire_awd"] or 9) < 6.5 and f["last_bad_effort"]
         if good:
-            return 0.6, f"stretches out: LP {f['avg_lp']} vs par {ctx['par_late']}, sire AWD {f['sire_awd']}"
+            return 0.6, f"stretches out: late pace (LP) {f['avg_lp']} against par {ctx['par_late']}, sire AWD {f['sire_awd']}"
         if bad:
             return -0.6, f"stretches out: sire AWD {f['sire_awd']}, faded last"
         return None
     if f["route_to_sprint"] and f["dist_starts"] == 0:
         if f["best_e2"] is not None and ctx["top_best_e2"] is not None and f["best_e2"] >= ctx["top_best_e2"] - 3:
-            return 0.5, f"cuts back with E2 {f['best_e2']}"
+            return 0.5, f"cuts back with second-call pace (E2) {f['best_e2']}"
         return -0.5, "cuts back without early pace"
     return None
 
@@ -1019,7 +1019,7 @@ def d5(f, ctx):
     if f["track_wins"] >= 1:
         return 1.0, f"{f['track_wins']} win(s) at track"
     if f["track_itm"] >= 2:
-        return 0.5, f"ITM {f['track_itm']} times at track"
+        return 0.5, f"in the money (ITM) {f['track_itm']} times at track"
     return None
 
 
@@ -1048,7 +1048,7 @@ def a1(f, ctx):
     w = f["weight"]
     if w is not None and ctx.get("max_weight") and ctx["max_weight"] - w >= 4:
         pts += 0.5
-        notes.append(f"carries {w} vs top weight {ctx['max_weight']}")
+        notes.append(f"carries {w} against top weight {ctx['max_weight']}")
     if f["age"] == 3 and ctx.get("has_older") and ctx["race"].get("date_month", 11) >= 9:
         pts += 0.3
         notes.append("3yo vs older")
@@ -1179,7 +1179,7 @@ def m2(f, ctx):
     par = ctx["par_speed"]
     if last["class_code"] in ("MSW", "MOC") or (last["class_code"] == "MCL" and (last.get("race_purse_or_price") or 0) >= 2 * (ctx["race"].get("claiming_price") or 1)):
         if par and f["best_last3"] is not None and f["best_last3"] >= par - 4:
-            return 1.0, f"drops from {last['race_type']} with figure {f['best_last3']} vs par {par}"
+            return 1.0, f"drops from {last['race_type']} with figure {f['best_last3']} against par {par}"
         return 0.4, f"drops from {last['race_type']}"
     return None
 
@@ -1223,7 +1223,7 @@ def m4(f, ctx):
         if f["last_beaten"] is not None and f["last_beaten"] <= 4:
             return 0.6, f"2nd start, debut beaten {f['last_beaten']}L"
         if par and f["debut_speed"] is not None and f["debut_speed"] >= par - 5:
-            return 0.6, f"2nd start, debut figure {f['debut_speed']} vs par {par}"
+            return 0.6, f"2nd start, debut figure {f['debut_speed']} against par {par}"
     return None
 
 
@@ -1276,7 +1276,7 @@ def x4(f, ctx):
     if top and f["avg_class_rating"] is not None and top - f["avg_class_rating"] >= 8:
         if f["class_move"] is not None and f["class_move"] < 0:
             return None
-        return -1.0, f"avg class rating {f['avg_class_rating']} vs field best {top}"
+        return -1.0, f"average class rating {f['avg_class_rating']} against field best {top}"
     return None
 
 

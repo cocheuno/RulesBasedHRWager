@@ -51,7 +51,7 @@ class TestCard(unittest.TestCase):
         for r in res["races"]:
             self.assertTrue(r["wagers"], f"R{r['race_no']} has no structured wagers")
             others = [w for w in r["wagers"] if w["source"] == "other"]
-            self.assertEqual(len(others), sum(1 for t in r["other_wagers"] if not t.startswith(("no WIN", "PASS", "POLICY", "place/show candidates"))))
+            self.assertEqual(len(others), sum(1 for t in r["other_wagers"] if not t.lower().startswith(("no win", "pass", "policy", "place/show candidates"))))
             for w in r["wagers"]:
                 self.assertGreater(w["combos"], 0)
         r5 = next(r for r in res["races"] if r["race_no"] == 5)       # 4/5 standout: no WIN bet, keys only
@@ -210,7 +210,7 @@ class TestCard(unittest.TestCase):
         for r in res["races"]:
             self.assertFalse([w for w in r["wagers"] if w["type"] in ("TRIFECTA", "SUPERFECTA")], f"R{r['race_no']} suggested an exotic the track would not offer")
             if len([s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]) >= 3:
-                self.assertTrue(any("no trifecta" in w for w in r["other_wagers"]), f"R{r['race_no']} should say why")
+                self.assertTrue(any("no trifecta" in w.lower() for w in r["other_wagers"]), f"R{r['race_no']} should say why")
 
     def test_unit_for_old_config(self):
         from handicapper.wagering import unit_for

@@ -6,6 +6,22 @@ results at the end of the day. All commands run from the `RulesBasedHRWager` fol
 `<card>` is the TwinSpires file code, e.g. `dmr1106y` (track + mmdd + y). The PP file, the results folder and the
 results file all use it.
 
+## 0. Set-up on Windows 11 (PowerShell), once
+
+```powershell
+cd $HOME\OneDrive\...\RulesBasedHRWager          # your clone
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt                   # pdfplumber; python-weather is optional
+Copy-Item .env.example .env                        # then open .env and paste the PuntersEdge key
+git config windows.appendAtomically false          # OneDrive: avoids "invalid write operation"
+python ui.py start                                 # the Desk opens in the browser
+```
+
+`.env` is ignored by git. The app reads it at start: `PUNTERSEDGE_API_KEY` (or the file
+`data\private\puntersedge.key`), `RACEDESK_WEATHER` and `RACEDESK_TOTE` (auto or off). If PowerShell refuses to run
+the activation script: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once.
+
 ## 1. Once a day, before anything else
 
 ```powershell
@@ -44,7 +60,17 @@ app). A picks run made before the restart used the old rules and parser.
 5. Lines that start with **POLICY** say which suggested wagers the decisions table removed and why (lone speed,
    turf, firm turf, medium confidence, pools the track does not sell). **PLACE** and **SHOW** lines name the
    race's place and show candidates with the $2 price each needs.
-6. If you are at the Desk near post time: press **Refresh tote** on the race. The Tote column shows the current
+6. The **Market** tab on a race shows what every source said and when: the morning line in its own column, the
+   tote odds, pool dollars and public share with the provider's read time and age, the rule rank, the heuristic
+   and market probabilities, break-even and minimum odds, the research gate and the frozen decision record, plus
+   the stored odds and pool history. Stale or unavailable is shown as such, never as current.
+7. **Weather**: below the bets, type the weather as the track or Equibase page prints it (any line order) and save
+   it; the parsed values show beside the fetched forecast so a disagreement is visible. Rules do not read it.
+8. **Best bets of the day** at the top of the Desk lists one or two win bets per card for the day, ranked by
+   heuristic expected value at the morning line. It is a labelled view: in the frozen week it went 12 of 45, -13%.
+9. Ticking a horse and unticking it leaves the Desk as it was: "re-run" appears only when the scratch set differs
+   from the set the last run was made with.
+10. If you are at the Desk near post time: press **Refresh tote** on the race. The Tote column shows the current
    win odds (to 1, as the track displays them) and each horse's share of the WIN pool; the wagers list shows the
    engine's minimum price beside the quote and how old the quote is. Mark a wager **Paper** if you intend it, or
    **Accepted (verified)** only if you actually placed it elsewhere. Each refresh costs 2 PuntersEdge credits; the

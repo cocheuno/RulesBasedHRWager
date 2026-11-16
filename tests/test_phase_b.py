@@ -345,7 +345,7 @@ class TestDeskTimeform(unittest.TestCase):
         self.assertEqual(d["picks"]["run"]["timeform"]["races"], 1)
         self.assertIsNone(d["picks"]["races"][1]["timeform"])                   # partial file: race 2 has no Timeform block
         md = open(os.path.join(self.tmp, "data", "out", "synth.picks.md"), encoding="utf-8").read()
-        self.assertIn("TF rk/fig", md)
+        self.assertIn("Timeform (TF) rank / Top Fig", md)
         self.assertIn("| 1/105 |", md)
         # the typed weather joins the record as a manual observation and reaches the race
         w = self.desk.save_weather("synth", "Light Rain / Wind NW at 13 mph Temperature 44°F / Humidity 82%")

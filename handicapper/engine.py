@@ -27,6 +27,7 @@ from . import rules as R
 from . import multirace as MR
 from . import research as RS
 from .policy import apply_policy
+from .plain import plain
 from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
 from .timing import DEFAULT_TIMING
 from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
@@ -188,16 +189,16 @@ def score_race(race: dict, cfg: dict) -> dict:
             if rl.hard:
                 if factor < 0:
                     eliminated = True
-                    hits.append({"rule": rl.id, "name": rl.name, "points": 0.0, "note": "ELIMINATED: " + note})
+                    hits.append({"rule": rl.id, "name": rl.name, "points": 0.0, "note": plain("ELIMINATED: " + note)})
                 else:
-                    flags.append(note)
-                    hits.append({"rule": rl.id, "name": rl.name, "points": 0.0, "note": "FLAG: " + note})
+                    flags.append(plain(note))
+                    hits.append({"rule": rl.id, "name": rl.name, "points": 0.0, "note": plain("FLAG: " + note)})
                 continue
             pts = round(factor * w, 2)
             if pts == 0:
                 continue
             total += pts
-            hits.append({"rule": rl.id, "name": rl.name, "points": pts, "note": note})
+            hits.append({"rule": rl.id, "name": rl.name, "points": pts, "note": plain(note)})
         sheets.append({
             "pgm": h["pgm"], "name": h["name"], "ml_odds": h["ml_odds"], "ml_decimal": h["ml_decimal"],
             "run_style": h["run_style"], "speed_pts": h["speed_pts"], "prime_power": h["prime_power"],
@@ -232,7 +233,7 @@ def score_race(race: dict, cfg: dict) -> dict:
             continue
         s["value"] = {"label": label, "points": pts, "edge": edge}
         s["hits"].append({"rule": "V1", "name": "Morning-line value", "points": pts, "value": True,
-                          "note": f"{label}: ML {s['ml_odds']} vs fair {fair}-1 (value, not in the ability score)"})
+                          "note": plain(f"{label}: ML {s['ml_odds']} vs fair {fair}-1 (value, not in the ability score)")})
     # ranks are among the horses that run; an alternate gets the rank it *would* hold if it drew in
     sheets.sort(key=lambda s: (bool(s["flags"]), s["eliminated"], -s["score"]))
     running = [s for s in sheets if not s["flags"]]
@@ -290,7 +291,7 @@ def select(sheets: list[dict], sel: dict):
     for s in ae:
         if (s.get("conditional_rank") or 99) <= 3:
             note += (f"; #{s['pgm']} {s['name']} ({s['flags'][0].split(' - ')[0]}) would rank {s['conditional_rank']} "
-                     f"if it draws in - not in any bet until it does")
+                     f"if it draws in. It is in no bet until it does")
     return picks, structure, confidence, note
 
 
@@ -353,6 +354,14 @@ def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
                 w["min_odds_by"] = {k: mins.get(k) for k in w["legs"][0]}
                 w.setdefault("min_odds", w["min_odds_by"].get(w["legs"][0][0]))
     apply_policy(out, cfg)                      # the owner's decisions table: suppress, record, never silently
+    for r in out["races"]:                      # Phase F: everything said about a horse in plain English
+        r["bet_structure"] = plain(r.get("bet_structure"))
+        r["selection_note"] = plain(r.get("selection_note"))
+        r["other_wagers"] = [plain(t) for t in r.get("other_wagers", [])]
+        for w in r.get("wagers", []):
+            w["label"] = plain(w.get("label"))
+        if r.get("policy"):
+            r["policy"]["notes"] = [plain(t) for t in r["policy"].get("notes", [])]
     out["multirace"] = MR.build_all(out, mr_cfg) if multirace else None
     return out
 
@@ -526,10 +535,10 @@ def format_summary(result: dict) -> str:
         names = {s["pgm"]: s for s in r["sheets"]}
         live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
         leg = r.get("leg") or {}
-        alts = f" (+{len(r['alternates'])} AE/MTO)" if r.get("alternates") else ""
+        alts = f" (+{len(r['alternates'])} also-eligible or main-track-only (AE/MTO))" if r.get("alternates") else ""
         L.append(f"### Race {r['race_no']}: {r['class_text']}  {r['distance_text']} ({r['surface']})  field {r['field_size']}{alts}  — confidence {r['confidence']}")
         L.append("")
-        L.append("| Rank | # | Horse | ML | Score | Win chance | Fair | Value | Grade |")
+        L.append("| Rank | # | Horse | Morning line (ML) | Score | Win chance | Break-even odds | Value | Grade |")
         L.append("|---|---|---|---|---|---|---|---|---|")
         for i, s in enumerate(live[:3], 1):
             grade = "A" if s["pgm"] in leg.get("A", []) else ("B" if s["pgm"] in leg.get("B", []) else "-")
@@ -565,7 +574,7 @@ def format_report(result: dict, detail: int = 1) -> str:
     L.append("## Race details")
     L.append("")
     for r in result["races"]:
-        alts = f" (+{len(r['alternates'])} AE/MTO: #{', #'.join(r['alternates'])})" if r.get("alternates") else ""
+        alts = f" (+{len(r['alternates'])} also-eligible or main-track-only (AE/MTO): #{', #'.join(r['alternates'])})" if r.get("alternates") else ""
         L.append(f"## Race {r['race_no']}: {r['class_text']}  {r['distance_text']} ({r['surface']})  field {r['field_size']}{alts}  pars {r['pars']}")
         L.append(f"Pace shape: {r['pace_shape']} (early types: {r['num_early']}" + (f", lone speed #{r['lone_speed']}" if r["lone_speed"] else "") + ")")
         names = {s["pgm"]: s for s in r["sheets"]}
@@ -578,8 +587,8 @@ def format_report(result: dict, detail: int = 1) -> str:
                      + f"; every single-horse wager is {'NO_BET' if rv['model_status'] != 'VALIDATED' else 'gated'} in the research layer")
         L.append("")
         tf_on = any(s.get("timeform") for s in r["sheets"])
-        tfcol = " TF rk/fig |" if tf_on else ""
-        L.append(f"| Rk | # | Horse | ML | Style/pts | PP | Score | Win % | Fair / min | Value |{tfcol} Top reasons |")
+        tfcol = " Timeform (TF) rank / Top Fig |" if tf_on else ""
+        L.append(f"| Rank | # | Horse | Morning line (ML) | Style / speed points | Prime Power (PP) | Score | Win % | Break-even / minimum odds | Value |{tfcol} Top reasons |")
         L.append("|---|---|---|---|---|---|---|---|---|---|" + ("---|" if tf_on else "") + "---|")
         if r.get("surface_switch"):
             L.insert(len(L) - 2, f"Off the turf: scored as {r['surface_switch']['to']} (Equibase changes page).")
@@ -587,7 +596,7 @@ def format_report(result: dict, detail: int = 1) -> str:
             L.insert(len(L) - 2, f"Pools not offered (Equibase): {', '.join(r['inputs']['pools_not_offered'])}.")
         for s in r["sheets"]:
             hits = sorted([h for h in s["hits"] if h["points"] and not h.get("value")], key=lambda h: -abs(h["points"]))
-            top = "; ".join(f"{h['rule']} {h['points']:+.1f} {h['note'][:60]}" for h in hits[:4 if detail else 2])
+            top = "; ".join(f"{h['note'][:90]} ({h['rule']}, {h['points']:+.1f})" for h in hits[:4 if detail else 2])
             elim = " **ELIM**" if s["eliminated"] else ""
             flag = (" [" + "; ".join(s["flags"]) + "]") if s["flags"] else ""
             rk = s['rank'] if s['rank'] is not None else f"({s['conditional_rank']})"
@@ -599,7 +608,7 @@ def format_report(result: dict, detail: int = 1) -> str:
             for s in r["sheets"]:
                 L.append(f"### #{s['pgm']} {s['name']} — {s['score']:.1f}")
                 for h in s["hits"]:
-                    L.append(f"- {h['rule']} {h['name']}: {h['points']:+.2f} — {h['note']}")
+                    L.append(f"- {h['note']} ({h['rule']} {h['name']}, {h['points']:+.2f})")
                 L.append("")
     if result.get("multirace"):
         L.append(MR.format_multirace(result["multirace"], result, detail))

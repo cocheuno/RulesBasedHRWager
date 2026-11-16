@@ -215,7 +215,7 @@ class TestMaidensAndEliminations(Base):
     def test_x_rules(self):
         self.assertTrue(self.sheet(1, "Rusty Gate")["eliminated"])          # X2 long layoff
         self.assertTrue(self.sheet(2, "Out Of Sorts")["eliminated"])        # X1 / X4
-        self.assertEqual(self.sheet(1, "Also Ran")["flags"], ["AE - needs a scratch to run"])
+        self.assertEqual(self.sheet(1, "Also Ran")["flags"], ["Also-eligible (AE) - needs a scratch to run"])   # plain English (Phase F)
         self.assertNotIn("7", self.by_race[1]["picks"])
 
 
@@ -380,7 +380,7 @@ class TestAbilityAndValue(Base):
         self.assertEqual(price_factor(40), 0.5, "floor never takes more than half")
         r = next(r for r in self.result["races"] if any(s["eliminated"] for s in r["sheets"]))
         self.assertLess(r["leg"]["price_factor"], 1.0)
-        self.assertTrue(any("pricing keeps" in a for a in r["leg"]["audit"]))
+        self.assertTrue(any("pricing keeps" in a.lower() for a in r["leg"]["audit"]))
         self.assertEqual([s["pgm"] for s in r["sheets"] if s["eliminated"] and s["win_prob"]], [], "selection untouched")
 
 

@@ -21,3 +21,5 @@ data/out/*
 
 # Carovex ledger and anything private to this machine
 data/private/
+
+.env

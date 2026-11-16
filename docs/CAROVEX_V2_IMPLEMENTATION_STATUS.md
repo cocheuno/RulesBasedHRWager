@@ -27,7 +27,7 @@ Updated at the end of every phase. Baseline audit: `main` d9216be, 2026-11-15, P
 | C Tote (PuntersEdge) | **done** (this PR) | `carovex/tote.py`: `ToteProvider` / `PuntersEdgeProvider` / `ReplayToteProvider`, normalised boards with public allocation and explicit odds convention, immutable capture with heartbeats, polling plan with a daily credit cap, Desk refresh / Tote column / last-minute check with `paper` and `accepted (verified)` marks, CLI `sample` / `poll` / `result` / `replay` / `usage` |
 | D Research probabilities, EV, place/show, wagering decisions | **done** (this PR) | `handicapper/research.py` (p_rule_heuristic / q_live_market / p_market_anchor, model status, EV, O_min, break-even, scenarios, NO_BET codes, Harville place/show), `handicapper/policy.py` (the decisions table applied to suggested wagers, every suppression recorded), PLACE / SHOW settlement and roll-up, O_min replaces fair x 1.15 |
 | E Evaluation and data watch | **done** (this PR) | `handicapper/evaluation.py` (log loss with floor, Brier, reliability, by field / track / surface / condition / pace / clock, gap to final odds, bootstrap and Wilson intervals, candidate blends on a chronological split, data watch), `handicapper/deferred.py` (model interfaces that refuse to fit until their gate is met), Analysis panel, `docs/DATA_WATCH.md`, `docs/EVALUATION.md` |
-| F Desk additions | not started | |
+| F Desk additions | **done** (this PR) | Market view, weather text box beside the forecast, scratch-toggle comparison with the last run, best bets of the day as a labelled view, plain English on every horse-facing string with `docs/GLOSSARY.md` and a test, `.env.example` and the Windows / PowerShell set-up |
 
 ## Deliberately deferred (gated on prospective data, see Phase E)
 
