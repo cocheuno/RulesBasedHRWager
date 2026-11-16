@@ -49,7 +49,10 @@ app). A picks run made before the restart used the old rules and parser.
    Or drop them on the Load tab, which saves them to the same place.
 2. Pick the card in the selector at the top and press **Run picks**. The Desk shows each race's top three with rank,
    ML, score, win chance and A/B grade, the primary play, the other wagers, and the Pick 3 / Pick 4 tickets.
-3. Save Equibase's "Today's Race Day Changes" page for the track (browser: Save as, "Webpage, HTML only") and drop
+3. Download Equibase's **late-changes XML** for the day (one file, every track racing) and drop it once in the Load
+   tab's changes box: it is saved as `data\pps\latechanges_<date>.xml` and applied to every loaded card of that
+   date (the toast names each card and its scratches). The per-track page still works: save Equibase's "Today's
+   Race Day Changes" page for the track (browser: Save as, "Webpage, HTML only") and drop
    it on the Load tab. Its scratches join the list on the next run, and the morning track condition, rail setting
    and jockey changes are recorded on the run. Then, when scratches are posted: tick the scratched horses in the table (or paste the list on the Load tab, as
    `race:program` pairs such as `2:10, 4:2, 4:11`) and press **Re-run with scratches**. Also-eligibles draw in by

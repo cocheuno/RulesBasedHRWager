@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<late_changes>
+  <race_date>2026-11-06</race_date>
+  <track track_name="DEL MAR" id="DMR" country="USA">
+    <race race_number="1">
+      <start_changes>
+        <horse horse_name="Rusty Gate" program_number="4">
+          <change><change_description>Scratch</change_description><old_value></old_value><new_value>Vet</new_value><date_changed>2026-11-06 10:20:00</date_changed></change>
+        </horse>
+        <horse horse_name="Slow Poke" program_number="5">
+          <change><change_description>Jockey Change</change_description><old_value>J. Rider</old_value><new_value>K. Kidd</new_value><date_changed>2026-11-06 10:25:00</date_changed></change>
+        </horse>
+      </start_changes>
+    </race>
+    <race race_number="3">
+      <race_changes>
+        <change><change_description>Race Surface</change_description><old_value>Turf</old_value><new_value>Dirt</new_value><date_changed>2026-11-06 09:50:00</date_changed></change>
+        <change><change_description>Track Condition</change_description><old_value>Fast</old_value><new_value>Good</new_value><date_changed>2026-11-06 09:55:00</date_changed></change>
+      </race_changes>
+      <start_changes>
+        <horse horse_name="Turf Returner" program_number="9">
+          <change><change_description>Scratch</change_description><old_value></old_value><new_value>Off Turf</new_value><date_changed>2026-11-06 09:51:00</date_changed></change>
+        </horse>
+      </start_changes>
+      <wager_cancellations>
+        <wager type="Superfecta"><old_value>Offered</old_value><new_value>Cancelled</new_value><date_changed>2026-11-06 09:52:00</date_changed></wager>
+      </wager_cancellations>
+    </race>
+  </track>
+  <track track_name="CHURCHILL DOWNS" id="CD" country="USA">
+    <race race_number="2">
+      <race_changes>
+        <change><change_description>Temporary Rail</change_description><old_value>0</old_value><new_value>18 ft</new_value><date_changed>2026-11-06 08:00:00</date_changed></change>
+      </race_changes>
+      <start_changes>
+        <horse horse_name="Some Horse" program_number="1A">
+          <change><change_description>Scratch</change_description><old_value></old_value><new_value>Trainer</new_value><date_changed>2026-11-06 08:10:00</date_changed></change>
+        </horse>
+      </start_changes>
+    </race>
+  </track>
+</late_changes>

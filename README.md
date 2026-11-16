@@ -346,7 +346,12 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
   snapshot says so.
 * `results/<card>.results.json` holds hand-transcribed payouts / finish order (format in `handicapper/results.py`).
   Results and payoffs are public data and may be committed; PPs are not.
-* `--changes <saved Equibase race-day-changes page>.html` (`brisnet_pp/changes.py`) adds that page's scratches to
+* `--changes <file>`: Equibase's late-changes XML for the day (every track; `brisnet_pp/changes.py` →
+  `parse_late_changes_xml`, this card's track picked out by Equibase id or name) or the saved per-track HTML page.
+  Horse changes become "Scratched - reason" / "Jockey - A changed to B" lines, a surface change from turf adds an
+  "Off Turf" note, a condition change fills the morning condition, a rail change the rail, a wager cancellation the
+  pools not offered; every change is kept verbatim under `raw`. The Desk saves the XML once per date and applies it
+  to every card of that date. The older form, a saved page (`.html`), adds that page's scratches to
   `--scratch` and records the morning track condition, scheduled first post, temporary rail, jockey changes,
   gelding / equipment notes and pools the track is not offering, on the run block and on each race.  Data only:
   no rule reads it yet.  The Desk takes the same file on the Load tab.  Each race carries the page's `inputs`

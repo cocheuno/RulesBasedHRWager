@@ -150,7 +150,7 @@ class Desk:
         pngs = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "r*.png")))
         charts = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "*.pdf")))
         return {"pp": pp if os.path.exists(pp) else None, "sheet": sheet,
-                "changes": self._opt(os.path.join(self.pps, f"{card}.changes.html")),
+                "changes": self._opt(os.path.join(self.pps, f"{card}.changes.html")) or self.day_changes_file(card),
                 "timeform": self._opt(os.path.join(self.pps, f"{card}.tfus.pdf")) or self._opt(os.path.join(self.pps, f"{card}.tfus.txt")),
                 "card_json": self._opt(os.path.join(self.out, f"{card}.card.json")),
                 "picks_json": self._opt(os.path.join(self.out, f"{card}.picks.json")),
@@ -205,6 +205,24 @@ class Desk:
         st["activity"] = st["activity"][-50:]
 
     # ---------------------------------------------------------------- engine
+    def day_changes_file(self, card: str) -> str | None:
+        """data/pps/latechanges_<date>.xml for this card's date (the day's Equibase file for every track), if any."""
+        cj = os.path.join(self.out, f"{card}.card.json")      # read directly: files() calls this, payload_meta() calls files()
+        if not os.path.exists(cj):
+            return None
+        try:
+            with open(cj, encoding="utf-8") as fh:
+                date = json.load(fh).get("date")
+        except (OSError, ValueError):
+            return None
+        return self._opt(os.path.join(self.pps, f"latechanges_{date}.xml")) if date else None
+
+    def load_changes(self, card: str, path: str) -> dict | None:
+        """The changes for this card from a saved HTML page or the day's XML (matched by track code or name)."""
+        from brisnet_pp.changes import load_changes_file
+        meta = self.payload_meta(card)
+        return load_changes_file(path, meta.get("track_code"), meta.get("track"), load_config(self.config))
+
     def run(self, card: str, scratches: str | None = None, reparse: bool = False, kind: str | None = None) -> dict:
         """kind: None = decide from the results on file (pre-race / post-results); "as-run" for the retrospective
         re-score.  Every run is also frozen as an append-only snapshot (handicapper/snapshot.py)."""
@@ -216,9 +234,10 @@ class Desk:
         if scratches is not None:
             st["scratches"] = scratches
         changes = None
-        if f["changes"]:   # the Equibase changes page: its scratches join the list, its conditions go on the run
-            from brisnet_pp.changes import merge_scratch_specs, parse_changes, scratch_spec, summary as changes_summary
-            changes = parse_changes(open(f["changes"], encoding="utf-8", errors="replace").read())
+        if f["changes"]:   # the Equibase changes page or the day's XML: its scratches join the list, its conditions go on the run
+            from brisnet_pp.changes import merge_scratch_specs, scratch_spec, summary as changes_summary
+            changes = self.load_changes(card, f["changes"])
+        if changes:
             merged = merge_scratch_specs(st.get("scratches"), scratch_spec(changes))
             if merged != (st.get("scratches") or ""):
                 self.log(st, "Changes page", f"scratches added from Equibase: {scratch_spec(changes) or 'none'}")
@@ -773,6 +792,26 @@ class Desk:
         elif kind == "sheet":
             path = os.path.join(self.pps, f"{card[:-1]}q.pdf" if card.endswith("y") else f"{card}q.pdf")
         elif kind == "changes":
+            from brisnet_pp.changes import is_late_changes_xml, parse_late_changes_xml
+            if is_late_changes_xml(data):      # the day's file for every track: saved once, applied to every card of that date
+                doc = parse_late_changes_xml(data)
+                date = doc.get("race_date") or datetime.now().strftime("%Y-%m-%d")
+                path = os.path.join(self.pps, f"latechanges_{date}.xml")
+                with open(path, "wb") as fh:
+                    fh.write(data)
+                applied = []
+                for c in self.cards():
+                    meta = self.payload_meta(c["card"])
+                    if str(meta.get("date")) != str(date):
+                        continue
+                    chg = self.load_changes(c["card"], path)
+                    if not chg:
+                        continue
+                    from brisnet_pp.changes import scratch_spec, summary as changes_summary
+                    st = self.state(c["card"]); st["changes"] = changes_summary(chg)
+                    self.log(st, "Load changes", f"{os.path.basename(path)} ({chg.get('track')}): scratches {scratch_spec(chg) or 'none'}")
+                    self.save_state(st); applied.append({"card": c["card"], "track": chg.get("track"), "scratches": scratch_spec(chg)})
+                return {"saved": os.path.relpath(path, self.root), "race_date": date, "tracks": [t["track_name"] for t in doc["tracks"]], "applied": applied}
             path = os.path.join(self.pps, f"{card}.changes.html")
         elif kind == "timeform":
             path = os.path.join(self.pps, f"{card}.tfus.{'pdf' if data.startswith(b'%PDF') else 'txt'}")
@@ -907,7 +946,8 @@ class Handler(SimpleHTTPRequestHandler):
                     rn = fields.get("race_no")
                     out.append(self.desk.save_upload(fields.get("card", ""), fields.get("kind", ""), f["filename"], f["data"],
                                                      int(rn) if rn else None))
-                return self._json({"saved": [o["saved"] for o in out]})
+                extra = [o for o in out if o.get("applied") is not None]
+                return self._json({"saved": [o["saved"] for o in out], "applied": [a for o in extra for a in o["applied"]], "tracks": [t for o in extra for t in o.get("tracks", [])]})
             body = self._body()
             payload = json.loads(body) if body else {}
             if u.path == "/api/shutdown":
