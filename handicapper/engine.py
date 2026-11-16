@@ -95,6 +95,7 @@ def load_config(path: str | None, track_code: str | None = None) -> dict:
         _apply_layer(cfg, user)
         cfg["tracks"] = user.get("tracks", {})
         cfg["circuits"] = user.get("circuits", {})
+        cfg["data_watch"] = user.get("data_watch", {})       # thresholds and gate wording are the owner's (evaluation.py)
         cfg["track_aliases"] = user.get("track_aliases", {})
     cfg["track_profile"] = "default"
     code = (track_code or "").upper()

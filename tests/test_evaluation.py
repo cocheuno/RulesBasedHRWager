@@ -152,6 +152,8 @@ class TestRecords(unittest.TestCase):
             self.assertIn("# Prospective evaluation: 2 races", txt); self.assertIn("Data watch", txt); self.assertIn("hindsight", txt)
             self.assertIn("## By distance", txt); self.assertIn("## By circuit", txt); self.assertIn("Circuit gate: SoCal 2 (DMR 2)", txt)
             self.assertEqual(load_config(CFG_PATH)["circuits"]["NYRA"], ["BEL", "SAR", "AQU"])
+            self.assertEqual(load_config(CFG_PATH)["data_watch"]["gates"]["track_specific"]["group"], "circuit")   # the file's gates reach the evaluation
+            self.assertIn("circuit", ev["data_watch"]["gates"]["track_specific"]["unit"])
             empty = EV.evaluate(tempfile.mkdtemp(), load_config(CFG_PATH))
             self.assertEqual(empty["races"], 0); self.assertIsNone(empty["compare"]["model"])
             self.assertIn("0 of 300", str(DeferredNotEnoughProspectiveData("global_calibration", 0, 300, "x")))

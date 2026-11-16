@@ -36,8 +36,8 @@ DEFAULT_DATA_WATCH = {
     "gates": {
         "global_calibration": {"threshold": 300, "unit": "races with a pre-race prediction and a chart result",
                                "capability": "calibration pass of the softmax scale and the morning-line blend (global)"},
-        "track_specific": {"threshold": 400, "unit": "races at one track with a pre-race prediction and a result",
-                           "capability": "anything track-specific (weights, scale, blend per track)"},
+        "track_specific": {"threshold": 400, "unit": "races on one circuit (rules_config.json -> circuits) with a pre-race prediction and a result",
+                           "capability": "anything circuit- or track-specific (weights, scale, blend) as shrunken effects under the global model", "group": "circuit"},
         "odds_drift": {"threshold": 150, "unit": "races with a complete tote history (final board with history stored)",
                        "capability": "late-odds drift forecast"},
         "timeform_value": {"threshold": 200, "unit": "races with both Brisnet and Timeform figures and a result",
