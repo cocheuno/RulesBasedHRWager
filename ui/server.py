@@ -53,6 +53,23 @@ from handicapper.engine import format_report, load_config   # noqa: E402
 from handicapper.pipeline import run_card                     # noqa: E402
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
 from handicapper.snapshot import latest_snapshot, list_snapshots, pre_race_by_race, write_snapshot   # noqa: E402
+
+
+def load_env_file(path: str) -> dict:
+    """KEY=VALUE lines from a .env file into os.environ (existing variables win).  Returns what was set."""
+    out = {}
+    if not os.path.exists(path):
+        return out
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            k, v = k.strip(), v.strip().strip('"').strip("'")
+            if k and k not in os.environ and v:
+                os.environ[k] = v; out[k] = v
+    return out
 from handicapper.wagering import evaluate_card, format_evaluation, format_units, rollup, units_table  # noqa: E402
 from ocr_results import ocr_folder   # noqa: E402
 
@@ -106,6 +123,7 @@ class Desk:
     """All file-system and engine work, independent of HTTP so it can be tested directly."""
 
     def __init__(self, root: str = ROOT, weather: str | None = None, tote_provider=None):
+        load_env_file(os.path.join(root, ".env"))
         # weather fetch: "auto" tries python-weather for tracks with a configured location; "off" records nothing
         self.weather = weather or os.environ.get("RACEDESK_WEATHER", "auto")
         # tote: an injected provider (tests: replay), else PuntersEdge unless RACEDESK_TOTE=off
@@ -289,7 +307,8 @@ class Desk:
                 "latest_kind": (picks or {}).get("run", {}).get("kind") or ("as-run" if picks and "as-run" in str(st.get("activity", [])[-1:]) else None),
                 "pre_race": pre, "snapshots": snaps,
                 "tote": self.tote_latest(card, meta) if meta.get("track_code") else {"status": None, "races": {}},
-                "decisions": st.get("decisions", {})}
+                "decisions": st.get("decisions", {}),
+                "last_run_scratches": (st.get("runs") or [{}])[-1].get("scratches", "") if st.get("runs") else None}
 
     def pre_race(self, card: str, results: dict, wcfg: dict) -> dict | None:
         """Back-test and wager evaluation of the newest pre-race snapshot: what the engine said before any result
@@ -581,6 +600,13 @@ class Desk:
         if not meta.get("track_code") or not meta.get("date"):
             return {"status": {"feed": "error", "reason": "the card has no track code or date yet (run picks first)", "decisions_enabled": False}, "races": {}, "next_in": None}
         res = poller.poll(meta["track_code"], str(meta["date"]), races=[race_no] if race_no else None)
+        if res["ok"]:
+            from carovex.ledger import race_id
+            for rn, b in list(res["races"].items()):
+                if b.get("final") and (poller.capture.latest(race_id(meta["track_code"], str(meta["date"]), int(rn))) or {}).get("kind") != "final":
+                    fin = poller.final(meta["track_code"], str(meta["date"]), int(rn), b.get("source_race_id"))
+                    if fin["ok"] and int(rn) in fin["races"]:
+                        res["races"][rn] = fin["races"][int(rn)]
         st = self.state(card)
         st["tote"] = {"status": res["status"], "last_refresh": datetime.now().isoformat(timespec="seconds"),
                       "races": {str(rn): {"observation_id": b.get("observation_id"), "status": b.get("status"), "read_at": b.get("provider_read_at_utc")}
@@ -608,6 +634,58 @@ class Desk:
                 b.pop("history", None); b.pop("exotics", None)
                 out["races"][str(rn)] = b
         return out
+
+    def tote_history(self, card: str, race_no: int) -> dict:
+        """Every stored board for one race, oldest first, reduced to what the Market view plots."""
+        meta = self.payload_meta(card)
+        if not meta.get("track_code") or not os.path.exists(os.path.join(self.root, "data", "private", "carovex.db")):
+            return {"race_no": race_no, "reads": []}
+        from carovex.ledger import connect, race_id
+        from carovex.tote import Capture
+        hist = Capture(self.root, con=connect(self.root)).history(race_id(meta["track_code"], str(meta["date"]), race_no))
+        reads = [{"observation_id": b.get("observation_id"), "kind": b.get("kind"), "read_at": b.get("provider_read_at_utc"), "received_at": b.get("received_at_utc"),
+                  "status": b.get("status"), "final": b.get("final"), "win_pool_total": b.get("win_pool_total"),
+                  "odds": {k: v.get("odds_to_1") for k, v in (b.get("interests") or {}).items()},
+                  "allocation": b.get("allocation"), "scratched": b.get("scratched"), "flags": b.get("flags")} for b in hist]
+        return {"race_no": race_no, "reads": reads}
+
+    def best_bets(self, date: str | None = None) -> dict:
+        """A labelled view, not a validated edge: for every card on the date, the one or two win bets the engine
+        suggests with the best heuristic expected value at the morning line.  Frozen week: 12 of 45, -13%."""
+        from handicapper.research import ev as research_ev
+        rows = []
+        for c in self.cards():
+            f = self.files(c["card"])
+            if not f["picks_json"]:
+                continue
+            picks = json.load(open(f["picks_json"], encoding="utf-8"))
+            if date and str(picks.get("date")) != str(date):
+                continue
+            cands = []
+            for r in picks.get("races", []):
+                names = {s["pgm"]: s for s in r["sheets"]}
+                for w in r.get("wagers", []):
+                    if w["type"] != "WIN":
+                        continue
+                    for pgm in w["legs"][0]:
+                        s = names.get(pgm)
+                        if not s or s.get("ml_decimal") is None or not s.get("model_prob"):
+                            continue
+                        e = research_ev(s["model_prob"], s["ml_decimal"])
+                        cands.append({"card": c["card"], "track": picks.get("track_code"), "date": picks.get("date"), "race_no": r["race_no"], "pgm": pgm,
+                                      "name": s.get("name"), "ml_odds": s.get("ml_odds"), "min_odds": (w.get("min_odds_by") or {}).get(pgm, w.get("min_odds")),
+                                      "win_prob": s.get("win_prob"), "model_prob": s.get("model_prob"), "ev_at_ml": e, "confidence": r.get("confidence"),
+                                      "post_time": r.get("post_time"), "label": w.get("label"), "decision_id": (w.get("decision") or {}).get("id")})
+            seen = set(); top = []
+            for x in sorted(cands, key=lambda z: -(z["ev_at_ml"] or -9)):
+                if (x["race_no"], x["pgm"]) in seen:
+                    continue
+                seen.add((x["race_no"], x["pgm"])); top.append(x)
+                if len(top) == 2:
+                    break
+            rows.extend(top)
+        return {"date": date, "label": "Best bets of the day: a labelled view of the engine's win bets ranked by heuristic expected value at the morning line. "
+                                       "Not a validated edge: in the frozen week this view went 12 of 45 for -13%.", "bets": rows, "per_card": 2}
 
     def mark_decision(self, card: str, decision_id: str, status: str, note: str = "") -> dict:
         """The owner's word on one suggested wager: paper (intends) or accepted (placed elsewhere and says so), with
@@ -790,6 +868,13 @@ class Handler(SimpleHTTPRequestHandler):
                 return self._json(self.desk.payload(unquote(m.group(1))))
             if u.path == "/api/analysis":
                 return self._json(self.desk.analysis())
+            if u.path == "/api/best-bets":
+                q = dict(x.split("=", 1) for x in u.query.split("&") if "=" in x)
+                return self._json(self.desk.best_bets(unquote(q.get("date", "")) or None))
+            m = re.fullmatch(r"/api/cards/([^/]+)/tote/history", u.path)
+            if m:
+                q = dict(x.split("=", 1) for x in u.query.split("&") if "=" in x)
+                return self._json(self.desk.tote_history(unquote(m.group(1)), int(q.get("race_no", "0") or 0)))
             m = re.fullmatch(r"/png/([^/]+)/(r\d{1,2}\.png)", u.path)
             if m:
                 p = os.path.join(self.desk.pngs, unquote(m.group(1)), m.group(2))

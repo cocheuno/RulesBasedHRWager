@@ -156,7 +156,7 @@ class TestTickets(Base):
             self.assertFalse(any(w["type"] in ("EXACTA", "TRIFECTA") for w in r5["wagers"]))
         else:
             self.assertTrue(any(w.startswith("EXACTA key #1") for w in r5["other_wagers"]))
-        self.assertTrue(any("no WIN bet" in w and "single" in w for w in r5["other_wagers"]))
+        self.assertTrue(any("no win bet" in w.lower() and "single" in w for w in r5["other_wagers"]))
         r6 = self.by_race[6]                      # beatable 8/5 favourite: chalk underneath only
         if r6["surface"] == "turf":               # Phase D policy: turf is win bets only, the H5 exacta is suppressed and said so
             self.assertTrue(any("favourite #1 looks beatable" in g["label"] for g in r6["policy"]["suppressed"]))

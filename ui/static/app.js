@@ -1,7 +1,7 @@
 /* Race Day Desk front end: plain JS over the JSON API in ui/server.py. */
 'use strict';
 
-const S = { cards: [], card: null, data: null, race: null, tab: 'before', horse: null, screen: 'desk', scratches: {}, dirty: false, analysis: null, filters: {} };
+const S = { cards: [], card: null, data: null, race: null, tab: 'before', horse: null, screen: 'desk', scratches: {}, dirty: false, analysis: null, market: null, bestBets: null, filters: {} };
 const $ = (sel, el = document) => el.querySelector(sel);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const money = v => (v == null ? '' : '$' + Number(v).toFixed(2));
@@ -49,13 +49,23 @@ async function loadCards() {
   sel.value = S.card || '';
 }
 async function loadCard(card) {
-  S.card = card; S.data = null; S.dirty = false; S.horse = null;
+  S.card = card; S.data = null; S.dirty = false; S.horse = null; S.market = null;
   if (!card) return render();
   S.data = await api('/api/cards/' + encodeURIComponent(card));
   S.scratches = parseScratches(S.data.state.scratches);
+  S.dirty = scratchesDiffer();
+  loadBestBets();
   const races = S.data.roster.length ? S.data.roster : (S.data.picks ? S.data.picks.races : []);
   if (!S.race || !races.some(r => r.race_no === S.race)) S.race = races.length ? races[0].race_no : null;
   render();
+}
+function normScratches(txt) { return (txt || '').split(',').map(t => t.trim().toUpperCase()).filter(Boolean).sort().join(','); }
+// re-run is needed only when the scratch set differs from the set the last run was made with; a tick followed by an untick is no change
+function scratchesDiffer() { if (!S.data || S.data.last_run_scratches == null) return Object.keys(S.scratches).length > 0 && !(S.data && S.data.picks); return normScratches(scratchText()) !== normScratches(S.data.last_run_scratches); }
+async function loadBestBets() {
+  const d = S.data && S.data.meta && S.data.meta.date; if (!d) { S.bestBets = null; return; }
+  try { S.bestBets = await api('/api/best-bets?date=' + encodeURIComponent(d)); } catch (e) { S.bestBets = null; }
+  if (S.screen === 'desk') render();
 }
 async function runPicks() {
   if (!S.card) return toast('Load a card first');
@@ -116,10 +126,13 @@ function renderDesk(m) {
       <div class="row sub"><span>${esc(r.distance_text || '')}${r.surface ? ' (' + r.surface + ')' : ''}</span>${chip}</div></button>`;
   }).join('');
   const r = roster.find(x => x.race_no === S.race), p = byNo[S.race], res = resBy[S.race];
-  m.innerHTML = `<div class="layout"><nav class="racelist" aria-label="Races"><div class="small muted" style="padding:4px 8px">RACES</div>${list}</nav><section class="panel">${r ? racePanel(r, p, res) : '<div class="card muted">Run picks to see the races.</div>'}</section></div>`;
-  m.querySelectorAll('.racebtn').forEach(b => b.onclick = () => { S.race = +b.dataset.race; S.horse = null; render(); });
+  m.innerHTML = bestBetsStrip() + `<div class="layout"><nav class="racelist" aria-label="Races"><div class="small muted" style="padding:4px 8px">RACES</div>${list}</nav><section class="panel">${r ? racePanel(r, p, res) : '<div class="card muted">Run picks to see the races.</div>'}</section></div>`;
+  m.querySelectorAll('.racebtn').forEach(b => b.onclick = () => { S.race = +b.dataset.race; S.horse = null; S.market = null; render(); });
+  m.querySelectorAll('a[data-card]').forEach(a => a.onclick = async e => { e.preventDefault(); if (a.dataset.card !== S.card) { $('#cardSelect').value = a.dataset.card; await loadCard(a.dataset.card); } });
   m.querySelectorAll('.segtabs button').forEach(b => b.onclick = () => { S.tab = b.dataset.tab; render(); });
-  m.querySelectorAll('input[data-scr]').forEach(cb => cb.onchange = () => { const [rn, pg] = cb.dataset.scr.split(':'); const set = S.scratches[rn] = S.scratches[rn] || new Set(); cb.checked ? set.add(pg) : set.delete(pg); if (!set.size) delete S.scratches[rn]; S.dirty = true; api('/api/cards/' + encodeURIComponent(S.card) + '/scratches', { method: 'PUT', body: JSON.stringify({ scratches: scratchText() }) }).catch(e => toast(e.message)); render(); });
+  m.querySelectorAll('input[data-scr]').forEach(cb => cb.onchange = () => { const [rn, pg] = cb.dataset.scr.split(':'); const set = S.scratches[rn] = S.scratches[rn] || new Set(); cb.checked ? set.add(pg) : set.delete(pg); if (!set.size) delete S.scratches[rn]; S.dirty = scratchesDiffer(); const txt = scratchText(); if (normScratches(txt) !== normScratches(S.data.state.scratches)) { api('/api/cards/' + encodeURIComponent(S.card) + '/scratches', { method: 'PUT', body: JSON.stringify({ scratches: txt }) }).then(j => { S.data.state.scratches = j.scratches; }).catch(e => toast(e.message)); } render(); });
+  m.querySelectorAll('button[data-mkt]').forEach(b => b.onclick = async () => { b.disabled = true; try { S.market = await api('/api/cards/' + encodeURIComponent(S.card) + '/tote/history?race_no=' + b.dataset.mkt); } catch (e) { toast(e.message); } render(); });
+  const wf = $('#weatherForm', m); if (wf) wf.onsubmit = async e => { e.preventDefault(); const t = $('#weatherText', m).value.trim(); if (!t) return; try { await api('/api/cards/' + encodeURIComponent(S.card) + '/weather', { method: 'POST', body: JSON.stringify({ text: t }) }); toast('Weather saved as a manual observation'); await loadCard(S.card); } catch (err) { toast('Could not save: ' + err.message, 7000); } };
   m.querySelectorAll('tr[data-horse]').forEach(tr => tr.onclick = ev => { if (ev.target.tagName === 'INPUT') return; S.horse = tr.dataset.horse; render(); });
   const form = $('#resultForm', m); if (form) form.onsubmit = submitResult;
   m.querySelectorAll('button[data-ocr]').forEach(b => b.onclick = () => ocrRace(+b.dataset.ocr, b.dataset.force === '1'));
@@ -184,29 +197,79 @@ function wagerRows(r, p) {
   }).join('');
   return `<div class="small muted" style="margin-top:10px;font-weight:600">LAST-MINUTE CHECK · minimum price beside the current quote</div><div class="scroll"><table><thead><tr><th>Wager</th><th>Min price</th><th>Quote now</th><th>Research</th><th>Decision</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><div class="small muted">Paper = you intend it. Accepted (verified) = you placed it elsewhere and say so; that alone records an observed price. Both freeze the quote snapshot id.</div>`;
 }
+function weatherCard(r, p) {
+  // the fetched forecast and the owner's typed weather side by side, so a disagreement is visible
+  const wx = (S.data.state && S.data.state.weather) || [];
+  const fetched = wx.filter(o => o.provenance === 'fetched' && (o.race_no == null || o.race_no === r.race_no)).at(-1);
+  const manual = wx.filter(o => o.provenance === 'manual').at(-1);
+  const show = o => o ? [o.condition, o.wind_mph != null || o.wind_direction ? 'wind ' + (o.wind_direction || '') + (o.wind_mph != null ? ' ' + Math.round(o.wind_mph) + ' mph' : '') : '', o.temperature_f != null ? Math.round(o.temperature_f) + '°F' : '', o.humidity_pct != null ? 'humidity ' + o.humidity_pct + '%' : ''].filter(Boolean).join(' · ') + ` <span class="muted">(${esc(o.provenance)}, ${esc((o.observed_at_utc || '').replace('T', ' ').replace('Z', ' UTC'))})</span>` : '<span class="muted">none</span>';
+  const used = p && p.weather ? `${esc(p.weather.provenance)} observation at the run` : 'none at the run';
+  return `<div class="card" style="margin-top:14px"><h2>Weather</h2><div class="small" style="margin-top:6px"><b>Fetched forecast:</b> ${show(fetched)}</div><div class="small" style="margin-top:4px"><b>Typed by you:</b> ${show(manual)}</div><div class="small muted" style="margin-top:4px">The run used: ${used}. Rules do not read weather.</div>
+    <form id="weatherForm" style="margin-top:8px"><label class="small muted" for="weatherText">Type the weather as the track or Equibase page prints it (any line order, tabs or spaces):</label><textarea id="weatherText" rows="3" style="width:100%;margin-top:4px" placeholder="Light Rain&#10;Wind NW at 13 mph&#9;Temperature 44°F&#10;Humidity 82%"></textarea><button class="btn small" type="submit" style="margin-top:6px">Save as a manual observation</button></form></div>`;
+}
+function marketPanel(r, p) {
+  const b = toteBoard(r.race_no), f = S.data.files || {}, st = S.data.tote && S.data.tote.status, decs = S.data.decisions || {};
+  const rv = p && p.research, sheets = p ? p.sheets : [], sb = {}; sheets.forEach(s => sb[s.pgm] = s);
+  const fr = b && b.freshness || {};
+  const cover = [['Brisnet PPs', f.pp || f.card_json], ['Power Play sheet', f.sheet], ['TimeformUS', f.timeform], ['Equibase changes', f.changes], ['Results', f.results]].map(([n, on]) => `<span class="chip ${on ? 'good' : ''}">${n}: ${on ? 'loaded' : 'not loaded'}</span>`).join('');
+  const toteLine = b ? `tote ${esc(b.final ? 'official (final)' : b.status)}${b.pools_open ? '' : ' · pools not open'} · WIN pool ${b.win_pool_total != null ? money(b.win_pool_total) : '–'} · provider read ${esc(b.provider_read_at_utc || '')} · ${fr.age_seconds != null ? fr.age_seconds + 's old' : 'age unknown'}${fr.stale && !b.final ? ' · <b class="neg">STALE</b>' : ''}${(b.flags || []).length ? ' · flags: ' + esc(b.flags.join('; ')) : ''}` : `<span class="muted">no tote board stored for this race</span>${st && st.feed && st.feed !== 'ok' ? ' · feed ' + esc(st.feed) + (st.reason ? ': ' + esc(st.reason) : '') : ''}`;
+  const q = key => rv && rv.q_live_market ? rv.q_live_market[key] : null, pa = key => rv && rv.p_market_anchor ? rv.p_market_anchor[key] : null;
+  const winWagers = ((p && p.wagers) || []).filter(w => w.type === 'WIN');
+  const rows = r.horses.map(h => {
+    const s = sb[h.pgm], key = String(h.pgm).replace(/[A-Za-z]/g, ''), it = b ? (b.interests || {})[key] : null;
+    const rs = s && s.research || {};
+    const ww = winWagers.find(w => w.legs[0].includes(h.pgm)), g = ww && ww.research;
+    const nobet = g ? (g.decision === 'BET' ? 'paper BET' : (g.codes || []).map(c => c.toLowerCase().replace(/_/g, ' ')).join(', ')) : '<span class="muted">no win wager suggested</span>';
+    const rec = ww && ww.decision ? decs[ww.decision.id] : null;
+    const diag = g && g.diagnostics;
+    const coupled = it && it.pgms && it.pgms.length > 1 ? ` <span class="chip">coupled ${esc(it.pgms.join('/'))}</span>` : '';
+    const scr = it && it.scratched ? ' <span class="chip warn">scratched on the board</span>' : '';
+    return `<tr class="${S.horse === String(h.pgm) ? 'sel' : ''}" data-horse="${esc(h.pgm)}"><td><b>${esc(h.pgm)}</b></td><td>${esc(h.name)}${h.entry_status ? ' <span class="chip warn">' + esc(h.entry_status === 'AE' ? 'also-eligible (AE)' : h.entry_status === 'MTO' ? 'main-track-only (MTO)' : h.entry_status) + '</span>' : ''}${coupled}${scr}</td>
+      <td>${esc(h.ml_odds ?? '')}</td><td>${it && b.pools_open && it.odds_to_1 != null ? '<b>' + esc(it.odds_text) + '</b>' : '<span class="muted">–</span>'}</td><td>${it && it.win_pool != null ? money(it.win_pool) : ''}</td><td>${b && b.allocation && b.allocation[key] != null ? Math.round(b.allocation[key] * 100) + '%' : ''}</td>
+      <td>${s ? (s.rank != null ? s.rank : '(' + s.conditional_rank + ')') : ''}</td><td>${rs.p_rule_heuristic != null ? Math.round(rs.p_rule_heuristic * 100) + '%' : ''}</td><td>${q(key) != null ? Math.round(q(key) * 100) + '%' : (pa(key) != null ? Math.round(pa(key) * 100) + '% <span class="muted">(' + esc(rv.anchor_source) + ')</span>' : '')}</td><td class="muted">none</td>
+      <td>${rs.break_even_odds != null ? rs.break_even_odds + '-1 / ' + (rs.o_min != null ? rs.o_min + '-1' : '–') : ''}${diag && diag.ev_at_quote != null ? `<div class="small muted">EV at quote ${(diag.ev_at_quote * 100).toFixed(0)}%, after drift ${(diag.ev_after_drift * 100).toFixed(0)}%</div>` : ''}</td>
+      <td class="small">${nobet}</td><td class="small">${rec ? esc(rec.status === 'accepted' ? 'accepted (verified)' : rec.status) + (rec.quote && rec.quote.odds_text ? ' @ ' + esc(rec.quote.odds_text) : '') + ' <span class="muted">' + esc((rec.at_utc || '').slice(0, 16)) + '</span>' : (ww ? 'suggested' : '')}</td></tr>`;
+  }).join('');
+  const hist = S.market && S.market.race_no === r.race_no ? S.market.reads : null;
+  const keys = hist && hist.length ? Object.keys(hist[hist.length - 1].odds || {}).sort((a, b) => (+a) - (+b)) : [];
+  const series = hist ? (hist.length ? `<div class="scroll"><table><thead><tr><th>Read (UTC)</th><th>Status</th><th>WIN pool</th>${keys.map(k => `<th>#${esc(k)}</th>`).join('')}</tr></thead><tbody>${hist.slice(-25).map(x => `<tr><td class="small">${esc((x.read_at || '').replace('T', ' ').slice(0, 19))} <span class="muted">${esc(x.kind || '')}</span></td><td>${esc(x.status || '')}${x.final ? ' final' : ''}</td><td>${x.win_pool_total != null ? money(x.win_pool_total) : ''}</td>${keys.map(k => `<td>${x.odds && x.odds[k] != null ? x.odds[k] : (x.scratched && x.scratched.includes(k) ? 'SCR' : '–')}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="small muted">${hist.length} stored reads; odds to 1 per betting interest; a read is stored when the board changed (heartbeats every 5 minutes).</div>` : '<p class="muted">No stored reads for this race.</p>') : `<button class="btn small" type="button" data-mkt="${r.race_no}">Load the odds and pool history</button>`;
+  return `<div class="card tight"><div class="head"><h2>Market · research view</h2><span class="small muted">heuristic probabilities, not a validated edge · model ${esc(rv ? rv.model_status : 'UNTRAINED')}${rv && rv.q_reason ? ' · live market: ' + esc(rv.q_reason) : ''}</span></div>
+    <div class="small" style="margin:6px 0;display:flex;gap:6px;flex-wrap:wrap">${cover}</div><div class="small" style="margin-bottom:8px">${toteLine}</div>
+    <div class="scroll"><table><thead><tr><th>#</th><th>Horse</th><th>Morning line (ML)</th><th>Tote odds</th><th>WIN pool $</th><th>Public share</th><th>Rule rank</th><th>Heuristic p</th><th>Market p</th><th>Model p</th><th>Break-even / minimum odds</th><th>Research gate</th><th>Decision record</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="small muted" style="margin-top:6px">Stale and unavailable are shown as such, never as current. Click a horse for its rule-by-rule audit.</div></div>
+    <div class="card" style="margin-top:14px"><h2>Odds and pool over time</h2>${series}</div>`;
+}
+function bestBetsStrip() {
+  const bb = S.bestBets; if (!bb || !bb.bets || !bb.bets.length) return '';
+  const rows = bb.bets.map(x => `<tr><td><a href="#desk" data-card="${esc(x.card)}"><b>${esc(x.track || x.card)}</b></a> R${x.race_no}</td><td>#${esc(x.pgm)} ${esc(x.name || '')}</td><td>${esc(x.ml_odds || '')}</td><td>${x.min_odds != null ? x.min_odds + '-1' : ''}</td><td>${x.win_prob != null ? Math.round(x.win_prob * 100) + '%' : ''}</td><td class="${x.ev_at_ml > 0 ? 'pos' : 'neg'}">${x.ev_at_ml != null ? (x.ev_at_ml > 0 ? '+' : '') + Math.round(x.ev_at_ml * 100) + '%' : ''}</td><td class="small muted">${esc(x.confidence || '')}${x.post_time ? ' · post ' + esc(x.post_time) : ''}</td></tr>`).join('');
+  return `<details class="card" style="margin-bottom:12px"><summary><b>Best bets of the day</b> <span class="small muted">· labelled view, not a validated edge · ${bb.bets.length} win bets across the cards dated ${esc(bb.date || '')}</span></summary><div class="small muted" style="margin:6px 0">${esc(bb.label)}</div><div class="scroll"><table><thead><tr><th>Card · race</th><th>Horse</th><th>Morning line (ML)</th><th>Minimum odds</th><th>Win chance</th><th>Heuristic EV at ML</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+}
 function racePanel(r, p, res) {
   const sheets = p ? p.sheets : [], sb = {}; sheets.forEach(s => sb[s.pgm] = s);
   const tb = toteBoard(r.race_no);
   const leg = (p && p.leg) || {}, scr = S.scratches[r.race_no] || new Set();
   const tfOn = sheets.some(s => s.timeform) || !!(r.timeform && r.timeform.rank);
   const head = `<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px"><div><h1>Race ${r.race_no} · ${esc(r.class_text || '')}</h1><div class="muted">${esc(r.distance_text || '')}${r.surface ? ' (' + r.surface + ')' : ''} · field ${r.horses.length - scr.size}${p ? ' · pace ' + p.pace_shape + ' · confidence ' + p.confidence : ''}${r.post_time ? ' · post ' + esc(r.post_time) : ''}</div>${inputsLine(r, p)}${S.tab === 'before' ? toteChip(r) : ''}</div>
-    <div class="segtabs"><button type="button" data-tab="before" class="${S.tab === 'before' ? 'on' : ''}">Before the race</button><button type="button" data-tab="after" class="${S.tab === 'after' ? 'on' : ''}">After the race</button></div></div>`;
+    <div class="segtabs"><button type="button" data-tab="before" class="${S.tab === 'before' ? 'on' : ''}">Before the race</button><button type="button" data-tab="after" class="${S.tab === 'after' ? 'on' : ''}">After the race</button><button type="button" data-tab="market" class="${S.tab === 'market' ? 'on' : ''}">Market</button></div></div>`;
   const rows = r.horses.map(h => {
     const s = sb[h.pgm], st = statusOf(scr, h.pgm), isScr = st === 'scr';
     const grade = s ? (s.eliminated ? 'ELIM' : s.flags && s.flags.length ? 'AE' : (leg.A || []).includes(s.pgm) ? 'A' : (leg.B || []).includes(s.pgm) ? 'B' : '–') : '';
-    const why = s ? s.hits.filter(x => x.points && !x.value).sort((a, b) => Math.abs(b.points) - Math.abs(a.points)).slice(0, 3).map(x => `${x.rule} ${x.points > 0 ? '+' : ''}${x.points.toFixed(1)} ${x.note}`).join('; ') : '';
+    const why = s ? s.hits.filter(x => x.points && !x.value).sort((a, b) => Math.abs(b.points) - Math.abs(a.points)).slice(0, 3).map(x => `${x.note} (${x.rule}, ${x.points > 0 ? '+' : ''}${x.points.toFixed(1)})`).join('; ') : '';
     const prob = s ? (s.win_prob != null ? s.win_prob : (leg.probs && leg.probs[s.pgm] != null ? leg.probs[s.pgm] : s.implied_prob)) : null;
     const val = s && s.value ? (s.value.label === 'fair' || s.value.edge == null ? s.value.label : `${s.value.label} ${s.value.edge > 0 ? '+' : ''}${Math.round(s.value.edge * 100)}%`) : '';
-    return `<tr data-horse="${esc(h.pgm)}" class="clickable ${isScr ? 'scr' : ''} ${S.horse === String(h.pgm) ? 'sel' : ''}"><td><input type="checkbox" data-scr="${r.race_no}:${esc(String(h.pgm).toUpperCase())}" ${isScr ? 'checked' : ''} aria-label="Scratch ${esc(h.name)}"></td><td><b>${esc(h.pgm)}</b></td><td class="muted">${esc(h.post ?? '')}</td><td><b>${esc(h.name)}</b>${h.entry_status ? ' <span class="chip warn">' + esc(h.entry_status) + '</span>' : ''}${st === 'in' ? ' <span class="chip good">officially in</span>' : st === 'out' ? ' <span class="chip">held out</span>' : ''}</td><td>${esc(h.ml_odds ?? '')}</td><td>${esc(h.run_style ?? '')}${h.speed_pts != null ? ' ' + h.speed_pts : ''}</td><td>${s && !isScr ? (s.rank != null ? s.rank : (s.conditional_rank != null ? '(' + s.conditional_rank + ')' : '')) : ''}</td>${tfOn ? `<td class="small">${tfCell(h, s, r)}</td>` : ''}${tb ? `<td class="small">${toteCell(tb, h.pgm)}</td>` : ''}<td>${s && !isScr ? s.score.toFixed(1) : ''}</td><td>${s && !isScr && prob != null ? pct(prob) : ''}</td><td class="small ${val.startsWith('over') ? 'pos' : val.startsWith('under') ? 'neg' : 'muted'}">${s && !isScr ? esc(val) : ''}</td><td class="grade-${grade}">${isScr ? 'SCR' : grade}</td><td class="small muted" style="max-width:380px">${esc(why)}</td></tr>`;
+    return `<tr data-horse="${esc(h.pgm)}" class="clickable ${isScr ? 'scr' : ''} ${S.horse === String(h.pgm) ? 'sel' : ''}"><td><input type="checkbox" data-scr="${r.race_no}:${esc(String(h.pgm).toUpperCase())}" ${isScr ? 'checked' : ''} aria-label="Scratch ${esc(h.name)}"></td><td><b>${esc(h.pgm)}</b></td><td class="muted">${esc(h.post ?? '')}</td><td><b>${esc(h.name)}</b>${h.entry_status ? ' <span class="chip warn">' + esc(h.entry_status === 'AE' ? 'also-eligible (AE)' : h.entry_status === 'MTO' ? 'main-track-only (MTO)' : h.entry_status) + '</span>' : ''}${st === 'in' ? ' <span class="chip good">officially in</span>' : st === 'out' ? ' <span class="chip">held out</span>' : ''}</td><td>${esc(h.ml_odds ?? '')}</td><td>${esc(h.run_style ?? '')}${h.speed_pts != null ? ' ' + h.speed_pts : ''}</td><td>${s && !isScr ? (s.rank != null ? s.rank : (s.conditional_rank != null ? '(' + s.conditional_rank + ')' : '')) : ''}</td>${tfOn ? `<td class="small">${tfCell(h, s, r)}</td>` : ''}${tb ? `<td class="small">${toteCell(tb, h.pgm)}</td>` : ''}<td>${s && !isScr ? s.score.toFixed(1) : ''}</td><td>${s && !isScr && prob != null ? pct(prob) : ''}</td><td class="small ${val.startsWith('over') ? 'pos' : val.startsWith('under') ? 'neg' : 'muted'}">${s && !isScr ? esc(val) : ''}</td><td class="grade-${grade}">${isScr ? 'SCR' : grade}</td><td class="small muted" style="max-width:380px">${esc(why)}</td></tr>`;
   }).join('');
-  const table = `<div class="card tight"><div class="head"><h2>Horses</h2><span class="small muted">tick a horse to mark it scratched, then re-run · click a row for its audit · (rank) = where an AE/MTO would stand if it draws in</span>${S.dirty ? '<span class="chip warn" style="margin-left:auto">scratches changed — re-run picks</span>' : ''}</div><div class="scroll"><table><thead><tr><th>Scr</th><th>Pgm</th><th>PP</th><th>Horse</th><th>ML</th><th>Style/pts</th><th>Rank</th>${tfOn ? '<th title="TimeformUS rank by Top Fig / Top Fig">TF rk/fig</th>' : ''}${tb ? '<th title="current tote win odds to 1 and share of the WIN pool">Tote</th>' : ''}<th>Score</th><th>Win %</th><th>Value</th><th>Grade</th><th>Top reasons</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+  const table = `<div class="card tight"><div class="head"><h2>Horses</h2><span class="small muted">tick a horse to mark it scratched, then re-run · click a row for its audit · (rank) = where an also-eligible or main-track-only (AE/MTO) horse would stand if it draws in</span>${S.dirty ? '<span class="chip warn" style="margin-left:auto">scratches changed — re-run picks</span>' : ''}</div><div class="scroll"><table><thead><tr><th>Scr</th><th>Program</th><th>Post</th><th>Horse</th><th>Morning line (ML)</th><th>Style / speed points</th><th>Rank</th>${tfOn ? '<th title="TimeformUS rank by Top Fig / Top Fig">Timeform (TF) rank / Top Fig</th>' : ''}${tb ? '<th title="current tote win odds to 1 and share of the WIN pool">Tote</th>' : ''}<th>Score</th><th>Win %</th><th>Value</th><th>Grade</th><th>Top reasons</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
   let body = '';
+  if (S.tab === 'market') {
+    return head + marketPanel(r, p) + audit(p);
+  }
   if (S.tab === 'before') {
     const names = {}; r.horses.forEach(h => names[h.pgm] = h.name);
     const play = p ? (p.picks.length ? p.picks.map(k => `#${k} ${names[k] || ''} (${sb[k] ? sb[k].ml_odds : ''})`).join(', ') : 'PASS') : '';
     const tickets = p ? multiTickets(r.race_no) : '';
     body = table + `<div class="grid2"><div class="card"><h2>Bets from pick.py</h2>${p ? `<div class="play" style="margin-top:10px"><div class="k">PRIMARY PLAY · confidence ${p.confidence}</div><div class="v">${esc(play)}</div><div class="muted">${esc(p.bet_structure)}</div></div><div class="small muted" style="margin-top:10px;font-weight:600">OTHER WAGERS</div><ul style="margin:6px 0 0;padding-left:18px">${(p.other_wagers || []).map(w => `<li>${esc(w)}</li>`).join('')}</ul>${wagerRows(r, p)}` : '<p class="muted">Run picks first.</p>'}</div>
-      <div class="card"><h2>Multi-race tickets that include this race</h2>${tickets || '<p class="muted">None recommended through this race.</p>'}</div></div>` + audit(p);
+      <div class="card"><h2>Multi-race tickets that include this race</h2>${tickets || '<p class="muted">None recommended through this race.</p>'}</div></div>` + weatherCard(r, p) + audit(p);
   } else {
     const hasPng = (S.data.files.pngs || []).includes(`r${r.race_no}.png`) || (S.data.files.charts || []).includes(`r${r.race_no}.pdf`);
     body = (res && res.finish && res.finish.length ? afterPanel(r, p, res) : (hasPng ? `<div class="card"><h2>Screenshot r${r.race_no}.png is loaded but not read yet</h2><p class="muted">Press <b>Process results</b> to read every screenshot, or read just this one.</p><button class="btn primary" type="button" data-ocr="${r.race_no}">Read this screenshot</button></div>` : resultForm(r, p))) + audit(p);
@@ -220,7 +283,7 @@ function multiTickets(rn) {
 function audit(p) {
   if (!p) return '';
   const s = p.sheets.find(x => x.pgm === S.horse) || p.sheets[0]; if (!s) return '';
-  return `<div class="card"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><h2>Rule-by-rule audit · #${esc(s.pgm)} ${esc(s.name)} · ${s.score.toFixed(1)}</h2><span class="small muted">every point traces to a rule id</span></div><div class="scroll" style="margin-top:8px"><table><thead><tr><th>Rule</th><th>Name</th><th>Points</th><th>Note</th></tr></thead><tbody>${s.hits.map(h => `<tr><td><b style="color:var(--accent)">${esc(h.rule)}</b></td><td>${esc(h.name)}</td><td class="${h.points < 0 ? 'neg' : h.points > 0 ? 'pos' : 'muted'}">${h.points ? (h.points > 0 ? '+' : '') + h.points.toFixed(2) : ''}</td><td class="small muted">${esc(h.note)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  return `<div class="card"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><h2>Rule-by-rule audit · #${esc(s.pgm)} ${esc(s.name)} · ${s.score.toFixed(1)}</h2><span class="small muted">every point traces to a rule id; the note says it in words, the rule id is the reference</span></div><div class="scroll" style="margin-top:8px"><table><thead><tr><th>What the engine saw</th><th>Points</th><th>Rule (reference)</th></tr></thead><tbody>${s.hits.map(h => `<tr><td class="small">${esc(h.note)}</td><td class="${h.points < 0 ? 'neg' : h.points > 0 ? 'pos' : 'muted'}">${h.points ? (h.points > 0 ? '+' : '') + h.points.toFixed(2) : ''}</td><td class="small muted"><b style="color:var(--accent)">${esc(h.rule)}</b> ${esc(h.name)}</td></tr>`).join('')}</tbody></table></div></div>`;
 }
 function afterPanel(r, p, res) {
   const names = {}; r.horses.forEach(h => names[h.pgm] = h.name);

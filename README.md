@@ -232,6 +232,17 @@ With `--weather` (the Desk does it on every run) the forecast for `tracks.<code>
 or a location the run says `weather: unavailable` with the reason, never a guess. Typed weather
 (`POST /api/cards/<card>/weather`) is a second observation with provenance `manual`. No rule reads weather.
 
+## Desk additions (Phase F)
+
+Market view per race (source coverage, morning line, tote odds and pools with read time and age, rule rank,
+heuristic and market probabilities, break-even and minimum odds, research gate, decision record, odds and pool
+history); a weather text box whose parsed values sit beside the fetched forecast; scratch ticks compared with the
+set the last run used ("re-run" only when they differ); a labelled **Best bets of the day** view
+(`GET /api/best-bets?date=`); plain English on every horse-facing string (`handicapper/plain.py`,
+`docs/GLOSSARY.md`, `tests/test_plain.py`): the note says the thing in words and the rule id follows in brackets.
+`.env.example` lists the environment variables; `.env` is read at start and ignored by git. Windows 11 /
+PowerShell set-up is in `RACE-DAY.md`.
+
 ## Prospective evaluation and the data watch (Phase E)
 
 ```
