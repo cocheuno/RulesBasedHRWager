@@ -16,6 +16,7 @@ from brisnet_pp.parser import parse_pdf
 from brisnet_pp.sheet import merge_sheet, parse_sheet
 from .engine import load_config, resolve_track_code, score_card
 from .results import apply_scratches, attach_day_bias, load_results, parse_scratch_spec
+from .timing import parse_utc, race_cutoffs, timing_summary
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_CONFIG = os.path.join(ROOT, "rules_config.json")
@@ -115,4 +116,19 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
         "odds_source": "morning line",        # the only market input today
         "changes": (chg_sum if chg else None),  # Equibase race-day changes as read (data only; no rule reads it yet)
     }
+    # ---- per-race cutoffs: scheduled post from the PP (Eastern), the chart's off time when a result is on file
+    tz = (cfg.get("tracks", {}).get(code or "", {}) or {}).get("timezone")
+    by_no = {r["race_no"]: r for r in (res.get("races", []) if res else [])}
+    cut = race_cutoffs(card.get("date"), card["races"], parse_utc(result["run"]["at_utc"]), cfg.get("timing", {}).get("cutoff_margin_minutes", 2), by_no, tz)
+    result["run"]["cutoffs"] = cut
+    result["run"]["timing"] = timing_summary(cut) | {"margin_minutes": cfg.get("timing", {}).get("cutoff_margin_minutes", 2), "track_timezone": tz}
+    # ---- decision records: every suggested wager, frozen with this run (never edited by a later run)
+    for r in result["races"]:
+        for i, w in enumerate(r.get("wagers", [])):
+            key = f"{card.get('track_code')}|{card.get('date')}|{r['race_no']}|{w['type']}|{'/'.join(','.join(l) for l in w['legs'])}|{result['run']['at_utc']}"
+            w["decision"] = {"id": hashlib.sha1(key.encode()).hexdigest()[:16], "at_utc": result["run"]["at_utc"],
+                             "cutoff_status": cut.get(str(r["race_no"]), {}).get("status", "unknown"),
+                             "price_basis": "morning-line", "status": "suggested",
+                             "config_hash": result["run"]["config_hash"], "parser_version": card.get("parser_version"),
+                             "code_version": result["run"]["code_version"]}
     return {"card": card, "raw": raw, "result": result, "cfg": cfg, "track_code": code, "notes": notes}

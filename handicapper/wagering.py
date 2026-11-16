@@ -108,7 +108,8 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
     """Return {unit, cost, hit, ret, known}.  known=False when the result or the pool payout is not on file.
     Returns are scaled to the stake: a $2 win payout x (unit / 2), an exotic's per-dollar payout x unit."""
     cost = round(w["combos"] * unit, 2)
-    row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True, "placed": True, "status": None, "note": ""}
+    row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True, "placed": True, "status": None, "note": "",
+           "price_basis": "pool-payout", "decision_id": (w.get("decision") or {}).get("id")}
     wtype = w["type"]
     if wtype in ("WIN", "EXACTA", "TRIFECTA", "SUPERFECTA"):
         res = by_no.get(w["race_no"])
@@ -121,10 +122,16 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
             # the horse's minimum, the window was passed (cost 0, no hit); without final odds the ML decided
             fo = res.get("final_odds") or {}
             mins = w.get("min_odds_by") or {k: w.get("min_odds") for k in w["legs"][0]}
+            # the decision was made at the morning line; whether the price was met is *assumed* from the final
+            # odds the chart reports, never observed at the window (Phase C records observed quotes)
+            row["price_basis"] = "assumed-final" if any(fo.get(k) is not None for k in w["legs"][0]) else "unpriced"
+            accepted = (w.get("decision") or {}).get("status") == "accepted"   # the owner says it was placed: no hindsight pass
+            if accepted:
+                row["price_basis"] = "observed"
             placed, passed = [], []
             for k in w["legs"][0]:
                 mn = mins.get(k)
-                if fo.get(k) is not None and mn is not None and fo[k] < mn:
+                if not accepted and fo.get(k) is not None and mn is not None and fo[k] < mn:
                     passed.append(f"#{k} {fo[k]:g}-1 under the {mn:g}-1 minimum")
                 else:
                     placed.append(k)
@@ -241,6 +248,8 @@ def evaluate_card(picks: dict, results: dict, cfg: dict | None = None) -> dict:
            "known": len(known), "hits": sum(1 for x in known if x["hit"]),
            "cost": round(sum(x["cost"] for x in known), 2), "ret": round(sum(x["ret"] or 0 for x in known), 2)}
     tot["roi"] = round((tot["ret"] - tot["cost"]) / tot["cost"], 3) if tot["cost"] else None
+    tot["price_basis"] = {k: sum(1 for x in rows if x["type"] == "WIN" and x.get("price_basis") == k and not x["tracked_only"])
+                          for k in ("assumed-final", "unpriced", "observed")}
     tk = [x for x in tracked if x["known"]]
     tot["tracked"] = {"tickets": len(tracked), "known": len(tk), "hits": sum(1 for x in tk if x["hit"]),
                       "cost": round(sum(x["cost"] for x in tk), 2), "ret": round(sum(x["ret"] or 0 for x in tk), 2)}
@@ -319,6 +328,8 @@ def format_evaluation(ev: dict) -> str:
          f"{t['hits']} hit, cost ${t['cost']:.2f}, returned ${t['ret']:.2f}" + (f", ROI {t['roi']:+.0%}" if t["roi"] is not None else "")
          + (f"; {t['passed']} win bet(s) passed because the final odds were under the minimum" if t.get("passed") else "")
          + (f"; {t['not_offered']} wager(s) not offered by the track (no pool on the chart)" if t.get("not_offered") else ""), "",
+         "Price basis for win bets: " + ", ".join(f"{v} {k}" for k, v in (t.get("price_basis") or {}).items() if v)
+         + " (assumed-final = the chart's final odds decided whether the morning-line decision met its price; no quote was observed at the window).", ""
          "Unit stakes: " + format_units(ev.get("units") or DEFAULT_UNITS) + ".", ""]
     L.append("| Race | Wager | Unit | Cost | Result | Return |")
     L.append("|---|---|---|---|---|---|")

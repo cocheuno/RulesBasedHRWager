@@ -71,6 +71,67 @@ def list_snapshots(out_dir: str, card: str) -> list[dict]:
     return out
 
 
+def pre_race_by_race(out_dir: str, card: str, results: dict | None = None, tz: str | None = None,
+                     margin_minutes: float = 2) -> dict | None:
+    """The pre-race prediction per race, by the clock: for each race the newest snapshot made at least
+    `margin_minutes` before that race's cutoff.  The cutoff is the chart's actual off time when `results` carry
+    it (and the track timezone is known), else the scheduled post the run recorded, else unknown.  Races with
+    no before-cutoff snapshot are excluded and listed; a race whose cutoff is unknown falls back to the newest
+    pre-race-kind snapshot and is labelled unverified.  Returns a composite picks dict with a `timing` block,
+    or None when the card has no snapshots."""
+    from .timing import cutoff_status, off_at_utc, parse_utc, post_at_utc
+    metas = list_snapshots(out_dir, card)
+    if not metas:
+        return None
+    snaps = []
+    for m in metas:
+        with open(m["path"], encoding="utf-8") as fh:
+            snaps.append(json.load(fh))
+    by_no = {r["race_no"]: r for r in (results or {}).get("races", [])}
+    race_nos = sorted({r["race_no"] for s in snaps for r in s.get("races", [])})
+    chosen, per_race, excluded = {}, {}, []
+    for rn in race_nos:
+        best = None
+        unknown_all = True
+        for s in snaps:
+            race = next((r for r in s.get("races", []) if r["race_no"] == rn), None)
+            if race is None:
+                continue
+            run_at = parse_utc((s.get("run") or {}).get("at_utc") or (s.get("snapshot") or {}).get("at_utc"))
+            res = by_no.get(rn) or {}
+            off = off_at_utc(s.get("date"), res.get("off_at"), tz)
+            rec = ((s.get("run") or {}).get("cutoffs") or {}).get(str(rn)) or {}
+            post = parse_utc(rec.get("post_at_utc")) or post_at_utc(s.get("date"), race.get("post_time"))
+            cutoff = off or post
+            status = cutoff_status(run_at, cutoff, margin_minutes)
+            if status != "unknown":
+                unknown_all = False
+            if status == "before-cutoff":
+                best = (s, "off" if off else "scheduled")        # snapshots are oldest first: keeps the newest
+        if best is None and unknown_all:
+            legacy = [s for s in snaps if (s.get("snapshot") or {}).get("kind") == "pre-race" and any(r["race_no"] == rn for r in s.get("races", []))]
+            if legacy:
+                best = (legacy[-1], "unverified")
+        if best is None:
+            excluded.append(rn)
+            continue
+        chosen[rn] = best[0]
+        per_race[str(rn)] = {"file": best[0]["snapshot"]["file"], "at_utc": best[0]["snapshot"]["at_utc"], "basis": best[1],
+                             "scratches": best[0].get("scratches", "")}
+    if not chosen:
+        return None
+    first = chosen[min(chosen)]
+    comp = copy.deepcopy(first)
+    comp["races"] = [copy.deepcopy(next(r for r in chosen[rn]["races"] if r["race_no"] == rn)) for rn in sorted(chosen)]
+    comp["scratches"] = chosen[max(chosen)].get("scratches", "")
+    bases = {v["basis"] for v in per_race.values()}
+    comp["timing"] = {"label": ("verified" if bases <= {"off", "scheduled"} else "unverified" if bases == {"unverified"} else "mixed"),
+                      "per_race": per_race, "excluded": excluded, "margin_minutes": margin_minutes, "track_timezone": tz}
+    comp["snapshot"] = {"kind": "composite", "at_utc": max(v["at_utc"] for v in per_race.values()),
+                        "file": ", ".join(sorted({v["file"] for v in per_race.values()}))}
+    return comp
+
+
 def latest_snapshot(out_dir: str, card: str, kind: str | None = "pre-race") -> dict | None:
     """The newest snapshot of the given kind (any kind when None), loaded; None when there is none."""
     snaps = [s for s in list_snapshots(out_dir, card) if kind is None or s["kind"] == kind]

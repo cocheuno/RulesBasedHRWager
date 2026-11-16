@@ -52,7 +52,7 @@ from brisnet_pp.parser import PARSER_VERSION                  # noqa: E402
 from handicapper.engine import format_report, load_config   # noqa: E402
 from handicapper.pipeline import run_card                     # noqa: E402
 from handicapper.results import backtest, format_backtest, load_results   # noqa: E402
-from handicapper.snapshot import latest_snapshot, list_snapshots, write_snapshot   # noqa: E402
+from handicapper.snapshot import latest_snapshot, list_snapshots, pre_race_by_race, write_snapshot   # noqa: E402
 from handicapper.wagering import evaluate_card, format_evaluation, format_units, rollup, units_table  # noqa: E402
 from ocr_results import ocr_folder   # noqa: E402
 
@@ -219,9 +219,11 @@ class Desk:
             with open(os.path.join(self.out, f"{card}.picks.md"), "w", encoding="utf-8") as fh:
                 fh.write(format_report(result, detail=2))
             snap = write_snapshot(self.out, card, result, kind)
+        tm = result["run"].get("timing") or {}
         st.setdefault("runs", []).append({"at": datetime.now().isoformat(timespec="seconds"), "scratches": st.get("scratches", ""),
                                           "profile": result.get("track_profile"), "notes": out["notes"], "kind": kind,
-                                          "snapshot": os.path.basename(snap)})
+                                          "snapshot": os.path.basename(snap),
+                                          "timing": f"{tm.get('before', 0)} before / {tm.get('after', 0)} after / {tm.get('unknown', 0)} unknown"})
         self.log(st, "Run picks" if kind != "as-run" else "As-run re-score",
                  f"{len(result['races'])} races scored, profile {result.get('track_profile')}" +
                  (f", scratches: {st['scratches']}" if st.get("scratches") else "") + f"; snapshot {kind} {os.path.basename(snap)}")
@@ -269,13 +271,22 @@ class Desk:
     def pre_race(self, card: str, results: dict, wcfg: dict) -> dict | None:
         """Back-test and wager evaluation of the newest pre-race snapshot: what the engine said before any result
         was on file, which no later run can change.  None when the card has no pre-race snapshot."""
-        snap = latest_snapshot(self.out, card, "pre-race")
+        snap = self.clock_snapshot(card, results)
         if not snap:
             return None
-        if not snap.get("track_code"):
-            snap["track_code"] = self.payload_meta(card).get("track_code")
-        return {"snapshot": snap["snapshot"], "run": snap.get("run"), "scratches": snap.get("scratches", ""),
+        return {"snapshot": snap["snapshot"], "run": snap.get("run"), "scratches": snap.get("scratches", ""), "timing": snap.get("timing"),
                 "backtest": backtest(snap, results), "evaluation": evaluate_card(snap, results, wcfg)}
+
+    def clock_snapshot(self, card: str, results: dict | None) -> dict | None:
+        """The pre-race prediction per race, chosen by each race's cutoff (handicapper/snapshot.pre_race_by_race)."""
+        full = load_config(self.config)
+        meta = self.payload_meta(card)
+        code = meta.get("track_code")
+        tz = ((full.get("tracks") or {}).get(code or "") or {}).get("timezone")
+        snap = pre_race_by_race(self.out, card, results, tz, full.get("timing", {}).get("cutoff_margin_minutes", 2))
+        if snap and not snap.get("track_code"):
+            snap["track_code"] = code
+        return snap
 
     def payload_meta(self, card: str) -> dict:
         f = self.files(card)
@@ -386,9 +397,14 @@ class Desk:
         L = ["# " + card, ""]
         pre = pl.get("pre_race")
         if pre:
-            L += [f"## Pre-race prediction, as bet  (snapshot {pre['snapshot']['file']}, {pre['snapshot']['at_utc']} UTC"
-                  + (f", scratches {pre['scratches']}" if pre["scratches"] else "") + ")", "",
-                  "These numbers cannot change: the snapshot was frozen before any result for this card was on file.", "",
+            tm = pre.get("timing") or {}
+            L += [f"## Pre-race prediction, as bet  (timing {tm.get('label', 'unverified')}; per race the newest run made "
+                  f"{tm.get('margin_minutes', 2)} min before that race's cutoff)", "",
+                  "Race: run used (UTC) and cutoff basis (off = chart's actual off time, scheduled = PP post time, unverified = no clock evidence):", ""]
+            L += [f"- R{rn}: {v['file']} at {v['at_utc']} ({v['basis']})" + (f", scratches {v['scratches']}" if v.get("scratches") else "") for rn, v in sorted(tm.get("per_race", {}).items(), key=lambda kv: int(kv[0]))]
+            if tm.get("excluded"):
+                L.append(f"- excluded (every run was after the cutoff): R{', R'.join(str(x) for x in tm['excluded'])}")
+            L += ["", "These numbers cannot change: a later run never replaces an earlier one for a race.", "",
                   format_backtest(pre["backtest"]), "", format_evaluation(pre["evaluation"]), ""]
         else:
             L += ["## No pre-race snapshot on file", "",
@@ -412,10 +428,10 @@ class Desk:
             f = self.files(c["card"])
             if not (f["picks_json"] and f["results"]):
                 continue
-            snap = latest_snapshot(self.out, c["card"], "pre-race")
-            picks = snap or json.load(open(f["picks_json"], encoding="utf-8"))
-            basis = "pre-race" if snap else "latest (retrospective)"
             res = load_results(f["results"])
+            snap = self.clock_snapshot(c["card"], res)
+            picks = snap or json.load(open(f["picks_json"], encoding="utf-8"))
+            basis = ("pre-race (" + snap["timing"]["label"] + ")") if snap else "latest (retrospective)"
             bt = backtest(picks, res)
             ev = evaluate_card(picks, res, cfg)
             ev["card_code"], ev["track_code"] = c["card"], picks.get("track_code") or c.get("track_code") or self.payload_meta(c["card"]).get("track_code")

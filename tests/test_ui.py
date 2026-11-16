@@ -106,7 +106,8 @@ class TestDesk(Base):
         self.assertTrue(snap["run"]["at_utc"].endswith("Z") and snap["run"]["config_hash"])
         self.assertEqual(snap["run"]["results_known"], [])
         self.assertTrue(pl["pre_race"], "payload scores the pre-race snapshot once results exist")
-        self.assertEqual(pl["pre_race"]["snapshot"]["kind"], "pre-race")
+        self.assertEqual(pl["pre_race"]["snapshot"]["kind"], "composite", "scored per race by the clock")
+        self.assertEqual(pl["pre_race"]["timing"]["label"], "unverified", "the synthetic card prints no post times")
         self.assertEqual(pl["picks"]["run"]["results_known"], [2])
         # process: the as-run re-score is its own kind; the report has both sections
         rp = os.path.join(tmp, "results", "synth.results.json")
@@ -128,7 +129,7 @@ class TestDesk(Base):
         with self.assertRaises(ValueError):
             write_snapshot(d.out, "synth", pl["picks"], "guess")
         an = d.analysis()
-        self.assertEqual(next(c for c in an["cards"] if c["card"] == "synth")["basis"], "pre-race")
+        self.assertTrue(next(c for c in an["cards"] if c["card"] == "synth")["basis"].startswith("pre-race"))
 
     def test_result_edit_keeps_chart_fields(self):
         tmp = tempfile.mkdtemp(prefix="racedesk-edit-"); self.addCleanup(shutil.rmtree, tmp, True)

@@ -64,7 +64,8 @@ class TestIntegration(unittest.TestCase):
         self.assertTrue(any(n.startswith("changes: Churchill Downs") for n in out["notes"]))
         for r0, r1 in zip(base["races"], res["races"]):
             self.assertEqual([(s["pgm"], s["score"]) for s in r0["sheets"]], [(s["pgm"], s["score"]) for s in r1["sheets"]], "data only: no score moves")
-            self.assertEqual(r0["picks"], r1["picks"]); self.assertEqual(r0["wagers"], r1["wagers"])
+            strip = lambda ws: [{k: v for k, v in w.items() if k != "decision"} for w in ws]   # decision ids are per run
+            self.assertEqual(r0["picks"], r1["picks"]); self.assertEqual(strip(r0["wagers"]), strip(r1["wagers"]))
 
     def test_desk_upload_fills_scratches_and_run_block(self):
         from ui.server import Desk

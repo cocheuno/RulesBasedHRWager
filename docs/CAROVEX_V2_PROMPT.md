@@ -52,18 +52,21 @@ The frozen week of 2026-11-06 to 2026-11-15 produced findings that the owner rev
 the owner writes keep / change / drop and, for a change, what to. The implementer applies these in the phase
 named and makes no other change to scoring or wagering.
 
-| Finding (as of 11/13) | Owner decision | Phase |
+Confirmed by the owner on 2026-11-16 from `docs/WEEK_REVIEW_2026-11-15.md` (219 races):
+
+| Finding | Owner decision | Phase |
 |---|---|---|
-| Four-horse trifecta box in medium and contentious races: 4 of 23 for the week, the drag on every card | | D |
-| Lone-speed call (rule P1): 4 of 20, wins almost only on odds-on favourites | | B/D |
-| Turf and all-weather top picks: 9 of 48 | | B/D |
-| Off-track dirt: 3 of 20; no track-condition input exists | | B |
-| Speed-figure rules stacking (S1, S2, S3, S4, S7, S9 on one figure); a cap on the family's total | | D |
-| Hot-pace trigger fires too easily; speed held in 8 of 15 "hot" races on 11/07 | | D |
-| Pools not offered by the track (from the Equibase page): suppress the suggestion | | D |
-| Best bets of the day: top two races per card by win probability where the win price clears, +34% on 17 picks | | F |
-| Pick 3 / Pick 4: 2 of 30 tracked; keep tracked, or stop building them | | D |
-| Doubles: the best pool of the week; worth a structured place in the recommendations | | D |
+| Four-horse trifecta box in medium and contentious races (12 of 64, −70%) | **Drop** | D |
+| Lone-speed call (P1): 7 of 31; exotics in lone-speed races −51% | **Keep the weight; no exotics in lone-speed races** | D |
+| Turf: 10 of 62 top picks; firm turf 1 of 25, exotics −81 to −90%, win bets +11% | **Win bets only on turf; no exotics or doubles on firm turf** | D |
+| Off track: 5 of 23; no condition input | **Keep; add track condition and off-turf from the Equibase page as inputs** | B |
+| Speed-rule stacking cap | **No change** (no cap helps on 219 races) | — |
+| Hot-pace trigger | **Keep the weights; watch** (early types won 43 of 80 "hot" races) | E |
+| Pools not offered by the track | **Suppress the suggestion** | D |
+| Best bets of the day (12 of 45, −13%) | **Add as a labelled view** | F |
+| Pick 3 / Pick 4 (8 of 176 tracked) | **Keep building, keep tracked** | D |
+| Doubles | **Keep** (the turf rule removes the losing half) | D |
+| Medium-confidence races (20% top picks; trifectas −72%) | **Exacta box only** | D |
 
 ## Already in place (verify, then build on; do not rebuild)
 
