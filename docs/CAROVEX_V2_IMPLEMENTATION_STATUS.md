@@ -173,6 +173,23 @@ The legacy analysis keeps counting suggested bets as the owner decided; the rese
 `docs/DATA_WATCH.md` and `docs/EVALUATION.md` are written by the command above and should be refreshed when
 cards are added; the Analysis tab shows the same numbers live.
 
+## Circuits (owner decision, 2026-11-16)
+
+The data watch's second gate counts races per **circuit**, not per track: NYRA (BEL, SAR, AQU), SoCal (SA, DMR),
+Kentucky (CD, KEE), Florida (GP); an unlisted track is its own circuit (`rules_config.json` -> `circuits`;
+`data_watch.gates.track_specific.group` switches back to `track`). This is a pooling assumption the owner chose,
+a judgement that those tracks share a horse population, trainer and jockey colonies and condition books; it is
+not a statistical result, and the gate row says so. The four points the owner agreed:
+
+1. One global model is validated first (the 300-race gate). Nothing below it is fitted before that.
+2. When the gate is met, circuit effects come before track effects, as random effects shrunk toward the level
+   above (`handicapper/deferred.py` documents the hierarchy global -> circuit -> track). Never a separate fit per
+   circuit or track: with 50 to 70 races per track those would be noise.
+3. Surface and distance splits come first in the evaluation (they lead the breakdowns in `docs/EVALUATION.md`),
+   because the frozen week's turf / dirt gap is larger than any track difference. Distance is read from the
+   race's distance text (sprint under 8 furlongs, route 8 and over).
+4. The circuit gate reaches 400 sooner than a track gate would; the status doc and the Desk label it as pooling.
+
 ## Data on file (2026-11-15)
 
 25 cards with picks, 157 snapshots, 25 results files; 219 races with pre-race snapshots and chart results;

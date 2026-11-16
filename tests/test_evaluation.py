@@ -57,6 +57,9 @@ class TestMetrics(unittest.TestCase):
         rs2 = [rec("2026-11-07", 1, "1", {"1": 0.5, "2": 0.5}, {"1": 0.6, "2": 0.4})]
         self.assertEqual(EV.market_gap(rs2, "model")["mean_abs_gap"], 0.1)
         self.assertEqual([EV.field_bucket(n) for n in (4, 6, 9, 12)], ["<=5", "6-7", "8-9", "10+"])
+        self.assertEqual([EV.furlongs_from_text(t) for t in ("6 Furlongs", "6 1/2 Furlongs", "1 Mile", "1 Mile 70 Yards", "1 1/16 Miles", "About 7½ Furlongs", None, "odd")],
+                         [6.0, 6.5, 8.0, 8.32, 8.5, 7.5, None, None])
+        self.assertEqual([EV.distance_bucket(f) for f in (6.0, 8.0, None)], ["sprint (<8f)", "route (8f+)", "?"])
 
     def test_candidate_blends_split_chronologically(self):
         rs = []
@@ -81,8 +84,21 @@ class TestWatch(unittest.TestCase):
         self.assertEqual((w["races"], w["races_before_cutoff"], w["per_track"]), (30, 1, {"BEL": 15, "DMR": 15}))
         g = w["gates"]
         self.assertEqual((g["global_calibration"]["have"], g["global_calibration"]["short_by"], g["global_calibration"]["status"]), (30, 270, EV.DEFERRED))
-        self.assertEqual((g["odds_drift"]["have"], g["timeform_value"]["have"], g["track_specific"]["have"]), (1, 1, 15))
+        self.assertEqual((g["odds_drift"]["have"], g["timeform_value"]["have"], g["track_specific"]["have"]), (1, 1, 15))   # DMR and BEL are on different circuits
         self.assertEqual(g["track_specific"]["per_track"]["DMR"]["status"], EV.DEFERRED)
+        self.assertEqual(g["track_specific"]["group"], "circuit"); self.assertIn("pooling assumption", g["track_specific"]["basis"])
+        self.assertEqual(g["track_specific"]["per_circuit"]["SoCal"], {"have": 15, "tracks": {"DMR": 15}, "status": EV.DEFERRED})
+        # the circuit pools tracks that share a horse population: Saratoga races count with Belmont's
+        rs2 = rs + [rec("2026-11-08", i, "1", {"1": 0.6, "2": 0.4}, track="SAR") for i in range(1, 11)]
+        for r in rs2:
+            r["circuit"] = EV.circuit_of(r["track"], None)
+        w3 = EV.data_watch(rs2, None)
+        self.assertEqual(w3["gates"]["track_specific"]["per_circuit"]["NYRA"], {"have": 25, "tracks": {"BEL": 15, "SAR": 10}, "status": EV.DEFERRED})
+        self.assertEqual(w3["gates"]["track_specific"]["have"], 25)
+        self.assertEqual(EV.circuit_of("OP", None), "OP")                       # an unlisted track is its own circuit
+        self.assertEqual(EV.circuit_of("kee", {"circuits": {"Kentucky": ["CD", "KEE"]}}), "Kentucky")
+        w4 = EV.data_watch(rs2, {"data_watch": {"gates": {"track_specific": {"group": "track"}}}})   # the owner can switch back to tracks
+        self.assertEqual(w4["gates"]["track_specific"]["have"], 15); self.assertEqual(w4["gates"]["track_specific"]["group"], "track")
         w2 = EV.data_watch(rs, {"data_watch": {"gates": {"global_calibration": {"threshold": 20}}}})   # the owner lowers a threshold
         self.assertEqual(w2["gates"]["global_calibration"]["status"], EV.READY)
         self.assertEqual(w2["gates"]["odds_drift"]["threshold"], 150)              # others keep the defaults
@@ -125,6 +141,7 @@ class TestRecords(unittest.TestCase):
             recs = EV.race_records(tmp, load_config(CFG_PATH))
             self.assertEqual([r["race_no"] for r in recs], [1, 2])
             self.assertEqual(recs[0]["track"], "DMR"); self.assertTrue(recs[0]["has_final_odds"]); self.assertFalse(recs[1]["has_final_odds"])
+            self.assertEqual((recs[0]["circuit"], recs[0]["distance"], recs[1]["distance"]), ("SoCal", "route (8f+)", "sprint (<8f)"))
             self.assertTrue(recs[0]["top_pick_won"]); self.assertEqual(recs[0]["condition"], "fast")
             self.assertAlmostEqual(sum(recs[0]["model"].values()), 1.0, places=5); self.assertAlmostEqual(sum(recs[0]["final_market"].values()), 1.0, places=5)
             self.assertIn(recs[0]["clock"], ("before-cutoff", "after-cutoff", "unknown"))
@@ -133,6 +150,8 @@ class TestRecords(unittest.TestCase):
             self.assertIn("model", ev["compare"]); self.assertEqual(ev["compare"]["final_market"]["races"], 1)
             txt = EV.format_evaluation(ev)
             self.assertIn("# Prospective evaluation: 2 races", txt); self.assertIn("Data watch", txt); self.assertIn("hindsight", txt)
+            self.assertIn("## By distance", txt); self.assertIn("## By circuit", txt); self.assertIn("Circuit gate: SoCal 2 (DMR 2)", txt)
+            self.assertEqual(load_config(CFG_PATH)["circuits"]["NYRA"], ["BEL", "SAR", "AQU"])
             empty = EV.evaluate(tempfile.mkdtemp(), load_config(CFG_PATH))
             self.assertEqual(empty["races"], 0); self.assertIsNone(empty["compare"]["model"])
             self.assertIn("0 of 300", str(DeferredNotEnoughProspectiveData("global_calibration", 0, 300, "x")))

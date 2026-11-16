@@ -2,8 +2,13 @@
 asks the data watch whether its gate is met and raises DeferredNotEnoughProspectiveData otherwise, with the count
 and the threshold in the message.  When a gate is met the owner decides; the code does not start fitting on its own.
 
-  HierarchicalFigureCorrection   gate global_calibration   figure adjustments by track / surface / distance with
-                                                           partial pooling, replacing fixed bias tables
+  Hierarchy for every model below: global parameters first (the only thing validated at the 300-race gate), then
+  circuit effects (rules_config.json -> circuits: tracks sharing a horse population), then track effects, each level
+  a random effect shrunk toward the level above in proportion to its data. Never a separate fit per circuit or track.
+  Surface and distance enter as features before any place effect: the frozen week showed that gap is the large one.
+
+  HierarchicalFigureCorrection   gate global_calibration   figure adjustments by surface / distance, then circuit, then
+                                                           track, with partial pooling, replacing fixed bias tables
   ConditionalLogitRaceModel      gate global_calibration   a race-level conditional-logit (softmax) model of the win
                                                            probability from the engine's features and the market,
                                                            replacing the hand-set logit_scale and ml_blend
@@ -51,10 +56,12 @@ class DeferredModel:
 
 class HierarchicalFigureCorrection(DeferredModel):
     name = "hierarchical figure correction"
+    levels = ("global", "surface x distance", "circuit", "track")
 
 
 class ConditionalLogitRaceModel(DeferredModel):
     name = "conditional-logit race model"
+    levels = ("global", "circuit", "track")   # random effects on the scale and the market weight, shrunk toward the level above
 
 
 class OddsDriftForecast(DeferredModel):

@@ -89,11 +89,12 @@ def load_config(path: str | None, track_code: str | None = None) -> dict:
     track code the parser reads off the PP (card["track_code"]), or from --track-profile.  Unknown track:
     the global layer only, reported as profile "default"."""
     cfg = json.loads(json.dumps(DEFAULT_CONFIG))
-    cfg["tracks"], cfg["track_aliases"] = {}, {}
+    cfg["tracks"], cfg["track_aliases"], cfg["circuits"] = {}, {}, {}
     if path and os.path.exists(path):
         user = json.load(open(path, encoding="utf-8"))
         _apply_layer(cfg, user)
         cfg["tracks"] = user.get("tracks", {})
+        cfg["circuits"] = user.get("circuits", {})
         cfg["track_aliases"] = user.get("track_aliases", {})
     cfg["track_profile"] = "default"
     code = (track_code or "").upper()

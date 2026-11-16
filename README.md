@@ -256,7 +256,9 @@ blend) with the final-odds market shown as hindsight; multiclass log loss with a
 reliability bins with counts, breakdowns by field size, track, surface, condition, pace shape and clock, the mean
 gap to the final odds, bootstrap and Wilson intervals. Candidate blend weights are looked at on the earlier half
 of the races and reported on the later half; nothing is fitted on the races it is scored on and nothing is written
-back to the configuration. The data watch (`rules_config.json` → `data_watch.gates`) counts races against the
+back to the configuration. Circuits (`rules_config.json` → `circuits`: NYRA, SoCal, Kentucky, Florida) are the owner's pooling assumption:
+the second gate counts races per circuit, and the deferred models add circuit effects before track effects under
+one global model. The data watch (`rules_config.json` → `data_watch.gates`) counts races against the
 thresholds the owner set (300 global, 400 per track, 150 tote histories, 200 Timeform); until a gate is met the
 capability reads `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA`, and `handicapper/deferred.py` refuses to fit. The
 Analysis tab shows the same panel.
