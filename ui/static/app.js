@@ -123,6 +123,8 @@ function renderDesk(m) {
   m.querySelectorAll('tr[data-horse]').forEach(tr => tr.onclick = ev => { if (ev.target.tagName === 'INPUT') return; S.horse = tr.dataset.horse; render(); });
   const form = $('#resultForm', m); if (form) form.onsubmit = submitResult;
   m.querySelectorAll('button[data-ocr]').forEach(b => b.onclick = () => ocrRace(+b.dataset.ocr, b.dataset.force === '1'));
+  m.querySelectorAll('button[data-tote]').forEach(b => b.onclick = async () => { b.disabled = true; try { const j = await api('/api/cards/' + encodeURIComponent(S.card) + '/tote', { method: 'POST', body: JSON.stringify({}) }); if (j.status && j.status.feed !== 'ok') toast('Tote: ' + (j.status.reason || j.status.feed), 7000); await loadCard(S.card); } catch (e) { toast('Tote refresh failed: ' + e.message, 7000); } });
+  m.querySelectorAll('button[data-dec]').forEach(b => b.onclick = async () => { const st = b.dataset.st; if (st === 'accepted' && !confirm('Record that you placed this wager elsewhere, at the quote shown now?')) return; try { await api('/api/cards/' + encodeURIComponent(S.card) + '/decisions', { method: 'POST', body: JSON.stringify({ decision_id: b.dataset.dec, status: st }) }); await loadCard(S.card); } catch (e) { toast('Could not record: ' + e.message, 7000); } });
 }
 
 function tfCell(h, s, r) {
@@ -142,11 +144,48 @@ function inputsLine(r, p) {
   if (tf && tf.power_picks && tf.power_picks.length) bits.push(`<span class="chip">Timeform picks #${esc(tf.power_picks.join(', #'))}</span>`);
   return bits.length ? `<div class="small" style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${bits.join('')}</div>` : '';
 }
+function toteBoard(rn) { const t = S.data && S.data.tote; return t && t.races ? t.races[String(rn)] : null; }
+function toteChip(r) {
+  const b = toteBoard(r.race_no), st = (S.data.tote || {}).status;
+  const feed = st && st.feed && st.feed !== 'ok' ? `<span class="chip warn" title="${esc(st.reason || '')}">tote feed ${esc(st.feed)}</span>` : '';
+  if (!b) return `<div class="small" style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">${feed}<span class="chip">no tote board yet</span><button class="btn small" type="button" data-tote="${r.race_no}">Refresh tote</button></div>`;
+  const fr = b.freshness || {}, age = fr.age_seconds != null ? `${fr.age_seconds}s old` : 'age unknown';
+  const pool = b.win_pool_total != null ? ` · WIN pool ${money(b.win_pool_total)}` : '';
+  const state = b.final ? 'official (final)' : b.status + (b.pools_open ? '' : ' · pools not open');
+  return `<div class="small" style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">${feed}<span class="chip ${fr.stale && !b.final ? 'warn' : 'good'}">tote ${esc(state)}${pool} · read ${esc(age)}${fr.stale && !b.final ? ' · STALE' : ''}</span>${(b.flags || []).length ? `<span class="chip warn" title="${esc(b.flags.join('; '))}">${b.flags.length} flag${b.flags.length > 1 ? 's' : ''}</span>` : ''}${b.closed ? '' : `<button class="btn small" type="button" data-tote="${r.race_no}">Refresh tote</button>`}<span class="muted">odds to 1, net, as the track shows them; ML is not a quote</span></div>`;
+}
+function toteCell(b, pgm) {
+  if (!b) return '';
+  const key = String(pgm).replace(/[A-Za-z]/g, ''), it = (b.interests || {})[key];
+  if (!it) return '<span class="muted">–</span>';
+  if (it.scratched) return '<span class="muted">SCR</span>';
+  if (!b.pools_open || it.odds_to_1 == null) return `<span class="muted" title="pools not open: morning line only">ML ${esc(it.morning_line || '')}</span>`;
+  const q = (b.allocation || {})[key];
+  return `<b>${esc(it.odds_text)}</b>${q != null ? ` <span class="muted">${Math.round(q * 100)}%</span>` : ''}`;
+}
+function wagerRows(r, p) {
+  const b = toteBoard(r.race_no), decs = (S.data.decisions || {});
+  const ws = (p && p.wagers) || [];
+  if (!ws.length) return '';
+  const rows = ws.map(w => {
+    const d = w.decision || {}, rec = decs[d.id];
+    const single = w.legs.length === 1 && w.legs[0].length === 1, pgm = single ? w.legs[0][0] : null;
+    const key = pgm ? String(pgm).replace(/[A-Za-z]/g, '') : null, it = b && key ? (b.interests || {})[key] : null;
+    const quote = it ? (it.scratched ? 'SCR' : (b.pools_open && it.odds_to_1 != null ? it.odds_text : 'ML only')) : (single ? '–' : 'n/a');
+    const meets = it && b.pools_open && it.odds_to_1 != null && w.min_odds != null ? (it.odds_to_1 >= w.min_odds ? '<span class="pos">meets price</span>' : '<span class="neg">below price</span>') : '';
+    const mark = rec ? `<span class="chip ${rec.status === 'accepted' ? 'good' : ''}">${esc(rec.status === 'accepted' ? 'accepted (verified)' : rec.status)}${rec.quote && rec.quote.odds_text ? ' @ ' + esc(rec.quote.odds_text) : ''}</span>` : '<span class="muted">suggested</span>';
+    const canMark = d.id && b && !b.closed && (S.data.tote.status || {}).decisions_enabled !== false;
+    const btns = canMark ? `<button class="btn small" type="button" data-dec="${esc(d.id)}" data-st="paper">Paper</button> <button class="btn small" type="button" data-dec="${esc(d.id)}" data-st="accepted">Accepted (verified)</button>` : '';
+    return `<tr><td>${esc(w.label || w.type)}</td><td>${w.min_odds != null ? w.min_odds + '-1' : '<span class="muted">–</span>'}</td><td>${esc(quote)} ${meets}</td><td>${mark}</td><td>${btns}</td></tr>`;
+  }).join('');
+  return `<div class="small muted" style="margin-top:10px;font-weight:600">LAST-MINUTE CHECK · minimum price beside the current quote</div><div class="scroll"><table><thead><tr><th>Wager</th><th>Min price</th><th>Quote now</th><th>Decision</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><div class="small muted">Paper = you intend it. Accepted (verified) = you placed it elsewhere and say so; that alone records an observed price. Both freeze the quote snapshot id.</div>`;
+}
 function racePanel(r, p, res) {
   const sheets = p ? p.sheets : [], sb = {}; sheets.forEach(s => sb[s.pgm] = s);
+  const tb = toteBoard(r.race_no);
   const leg = (p && p.leg) || {}, scr = S.scratches[r.race_no] || new Set();
   const tfOn = sheets.some(s => s.timeform) || !!(r.timeform && r.timeform.rank);
-  const head = `<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px"><div><h1>Race ${r.race_no} · ${esc(r.class_text || '')}</h1><div class="muted">${esc(r.distance_text || '')}${r.surface ? ' (' + r.surface + ')' : ''} · field ${r.horses.length - scr.size}${p ? ' · pace ' + p.pace_shape + ' · confidence ' + p.confidence : ''}${r.post_time ? ' · post ' + esc(r.post_time) : ''}</div>${inputsLine(r, p)}</div>
+  const head = `<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px"><div><h1>Race ${r.race_no} · ${esc(r.class_text || '')}</h1><div class="muted">${esc(r.distance_text || '')}${r.surface ? ' (' + r.surface + ')' : ''} · field ${r.horses.length - scr.size}${p ? ' · pace ' + p.pace_shape + ' · confidence ' + p.confidence : ''}${r.post_time ? ' · post ' + esc(r.post_time) : ''}</div>${inputsLine(r, p)}${S.tab === 'before' ? toteChip(r) : ''}</div>
     <div class="segtabs"><button type="button" data-tab="before" class="${S.tab === 'before' ? 'on' : ''}">Before the race</button><button type="button" data-tab="after" class="${S.tab === 'after' ? 'on' : ''}">After the race</button></div></div>`;
   const rows = r.horses.map(h => {
     const s = sb[h.pgm], st = statusOf(scr, h.pgm), isScr = st === 'scr';
@@ -154,15 +193,15 @@ function racePanel(r, p, res) {
     const why = s ? s.hits.filter(x => x.points && !x.value).sort((a, b) => Math.abs(b.points) - Math.abs(a.points)).slice(0, 3).map(x => `${x.rule} ${x.points > 0 ? '+' : ''}${x.points.toFixed(1)} ${x.note}`).join('; ') : '';
     const prob = s ? (s.win_prob != null ? s.win_prob : (leg.probs && leg.probs[s.pgm] != null ? leg.probs[s.pgm] : s.implied_prob)) : null;
     const val = s && s.value ? (s.value.label === 'fair' || s.value.edge == null ? s.value.label : `${s.value.label} ${s.value.edge > 0 ? '+' : ''}${Math.round(s.value.edge * 100)}%`) : '';
-    return `<tr data-horse="${esc(h.pgm)}" class="clickable ${isScr ? 'scr' : ''} ${S.horse === String(h.pgm) ? 'sel' : ''}"><td><input type="checkbox" data-scr="${r.race_no}:${esc(String(h.pgm).toUpperCase())}" ${isScr ? 'checked' : ''} aria-label="Scratch ${esc(h.name)}"></td><td><b>${esc(h.pgm)}</b></td><td class="muted">${esc(h.post ?? '')}</td><td><b>${esc(h.name)}</b>${h.entry_status ? ' <span class="chip warn">' + esc(h.entry_status) + '</span>' : ''}${st === 'in' ? ' <span class="chip good">officially in</span>' : st === 'out' ? ' <span class="chip">held out</span>' : ''}</td><td>${esc(h.ml_odds ?? '')}</td><td>${esc(h.run_style ?? '')}${h.speed_pts != null ? ' ' + h.speed_pts : ''}</td><td>${s && !isScr ? (s.rank != null ? s.rank : (s.conditional_rank != null ? '(' + s.conditional_rank + ')' : '')) : ''}</td>${tfOn ? `<td class="small">${tfCell(h, s, r)}</td>` : ''}<td>${s && !isScr ? s.score.toFixed(1) : ''}</td><td>${s && !isScr && prob != null ? pct(prob) : ''}</td><td class="small ${val.startsWith('over') ? 'pos' : val.startsWith('under') ? 'neg' : 'muted'}">${s && !isScr ? esc(val) : ''}</td><td class="grade-${grade}">${isScr ? 'SCR' : grade}</td><td class="small muted" style="max-width:380px">${esc(why)}</td></tr>`;
+    return `<tr data-horse="${esc(h.pgm)}" class="clickable ${isScr ? 'scr' : ''} ${S.horse === String(h.pgm) ? 'sel' : ''}"><td><input type="checkbox" data-scr="${r.race_no}:${esc(String(h.pgm).toUpperCase())}" ${isScr ? 'checked' : ''} aria-label="Scratch ${esc(h.name)}"></td><td><b>${esc(h.pgm)}</b></td><td class="muted">${esc(h.post ?? '')}</td><td><b>${esc(h.name)}</b>${h.entry_status ? ' <span class="chip warn">' + esc(h.entry_status) + '</span>' : ''}${st === 'in' ? ' <span class="chip good">officially in</span>' : st === 'out' ? ' <span class="chip">held out</span>' : ''}</td><td>${esc(h.ml_odds ?? '')}</td><td>${esc(h.run_style ?? '')}${h.speed_pts != null ? ' ' + h.speed_pts : ''}</td><td>${s && !isScr ? (s.rank != null ? s.rank : (s.conditional_rank != null ? '(' + s.conditional_rank + ')' : '')) : ''}</td>${tfOn ? `<td class="small">${tfCell(h, s, r)}</td>` : ''}${tb ? `<td class="small">${toteCell(tb, h.pgm)}</td>` : ''}<td>${s && !isScr ? s.score.toFixed(1) : ''}</td><td>${s && !isScr && prob != null ? pct(prob) : ''}</td><td class="small ${val.startsWith('over') ? 'pos' : val.startsWith('under') ? 'neg' : 'muted'}">${s && !isScr ? esc(val) : ''}</td><td class="grade-${grade}">${isScr ? 'SCR' : grade}</td><td class="small muted" style="max-width:380px">${esc(why)}</td></tr>`;
   }).join('');
-  const table = `<div class="card tight"><div class="head"><h2>Horses</h2><span class="small muted">tick a horse to mark it scratched, then re-run · click a row for its audit · (rank) = where an AE/MTO would stand if it draws in</span>${S.dirty ? '<span class="chip warn" style="margin-left:auto">scratches changed — re-run picks</span>' : ''}</div><div class="scroll"><table><thead><tr><th>Scr</th><th>Pgm</th><th>PP</th><th>Horse</th><th>ML</th><th>Style/pts</th><th>Rank</th>${tfOn ? '<th title="TimeformUS rank by Top Fig / Top Fig">TF rk/fig</th>' : ''}<th>Score</th><th>Win %</th><th>Value</th><th>Grade</th><th>Top reasons</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+  const table = `<div class="card tight"><div class="head"><h2>Horses</h2><span class="small muted">tick a horse to mark it scratched, then re-run · click a row for its audit · (rank) = where an AE/MTO would stand if it draws in</span>${S.dirty ? '<span class="chip warn" style="margin-left:auto">scratches changed — re-run picks</span>' : ''}</div><div class="scroll"><table><thead><tr><th>Scr</th><th>Pgm</th><th>PP</th><th>Horse</th><th>ML</th><th>Style/pts</th><th>Rank</th>${tfOn ? '<th title="TimeformUS rank by Top Fig / Top Fig">TF rk/fig</th>' : ''}${tb ? '<th title="current tote win odds to 1 and share of the WIN pool">Tote</th>' : ''}<th>Score</th><th>Win %</th><th>Value</th><th>Grade</th><th>Top reasons</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
   let body = '';
   if (S.tab === 'before') {
     const names = {}; r.horses.forEach(h => names[h.pgm] = h.name);
     const play = p ? (p.picks.length ? p.picks.map(k => `#${k} ${names[k] || ''} (${sb[k] ? sb[k].ml_odds : ''})`).join(', ') : 'PASS') : '';
     const tickets = p ? multiTickets(r.race_no) : '';
-    body = table + `<div class="grid2"><div class="card"><h2>Bets from pick.py</h2>${p ? `<div class="play" style="margin-top:10px"><div class="k">PRIMARY PLAY · confidence ${p.confidence}</div><div class="v">${esc(play)}</div><div class="muted">${esc(p.bet_structure)}</div></div><div class="small muted" style="margin-top:10px;font-weight:600">OTHER WAGERS</div><ul style="margin:6px 0 0;padding-left:18px">${(p.other_wagers || []).map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : '<p class="muted">Run picks first.</p>'}</div>
+    body = table + `<div class="grid2"><div class="card"><h2>Bets from pick.py</h2>${p ? `<div class="play" style="margin-top:10px"><div class="k">PRIMARY PLAY · confidence ${p.confidence}</div><div class="v">${esc(play)}</div><div class="muted">${esc(p.bet_structure)}</div></div><div class="small muted" style="margin-top:10px;font-weight:600">OTHER WAGERS</div><ul style="margin:6px 0 0;padding-left:18px">${(p.other_wagers || []).map(w => `<li>${esc(w)}</li>`).join('')}</ul>${wagerRows(r, p)}` : '<p class="muted">Run picks first.</p>'}</div>
       <div class="card"><h2>Multi-race tickets that include this race</h2>${tickets || '<p class="muted">None recommended through this race.</p>'}</div></div>` + audit(p);
   } else {
     const hasPng = (S.data.files.pngs || []).includes(`r${r.race_no}.png`) || (S.data.files.charts || []).includes(`r${r.race_no}.pdf`);

@@ -28,6 +28,7 @@ Pure Python, one third-party runtime dependency (`pdfplumber`); OCR (`rapidocr_o
 | | `handicapper/provenance.py` | | parser field audit; raw / derived values with source and date; as-of filtering; missingness flags |
 | | `handicapper/weather.py` | | fetched (python-weather) and manual weather observations; newest before a race's cutoff |
 | | `handicapper/identity.py` | | canonical track / race / betting-interest mapping across sources; coupled entries; review list |
+| Phase C | `carovex/tote.py` | | PuntersEdge `/v1/racing/tote` client (keep-alive, gzip, retries, `Retry-After`), replay provider, board normalisation and public allocation, immutable capture, polling plan and credit cap, decision marks (`paper` / `accepted (verified)`), CLI |
 | Front ends | `pick.py`, `backtest.py`, `validate_parse.py`, `addresult.py` | | CLI |
 | | `ui/server.py`, `ui/static/{index.html,app.js,app.css}`, `ui.py` | 677 + 273 | Race Day Desk: Load / Desk / Analysis; start/stop; stale-code banner; upload guards |
 | Config | `rules_config.json` | | `weights`, `disabled`, `selection`, `probability`, `multirace`, `wagering`, `tracks` (profiles), `track_aliases`; validated at load |

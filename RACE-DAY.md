@@ -41,6 +41,12 @@ app). A picks run made before the restart used the old rules and parser.
    `4:-12` keeps it out. An AE that is not in shows its rank in brackets and is in no bet. That run is the one to
    bet from.
 4. Click any horse for its rule-by-rule audit; click a race on the left to switch races.
+5. If you are at the Desk near post time: press **Refresh tote** on the race. The Tote column shows the current
+   win odds (to 1, as the track displays them) and each horse's share of the WIN pool; the wagers list shows the
+   engine's minimum price beside the quote and how old the quote is. Mark a wager **Paper** if you intend it, or
+   **Accepted (verified)** only if you actually placed it elsewhere. Each refresh costs 2 PuntersEdge credits; the
+   app stops at the daily cap in `rules_config.json` (`tote.daily_credit_cap`). The key lives in
+   `data\private\puntersedge.key` (one line) or the `PUNTERSEDGE_API_KEY` environment variable, never in git.
 
 Reading the bets: **Confidence** high = one horse, medium = two, low = contentious. "Price leg" on a Pick 3/4 means
 the favourite is only a B. The other wagers list keys for a standout, boxes for a contentious race, win bets only on
