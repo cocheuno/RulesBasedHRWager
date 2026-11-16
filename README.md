@@ -232,6 +232,24 @@ With `--weather` (the Desk does it on every run) the forecast for `tracks.<code>
 or a location the run says `weather: unavailable` with the reason, never a guess. Typed weather
 (`POST /api/cards/<card>/weather`) is a second observation with provenance `manual`. No rule reads weather.
 
+## Prospective evaluation and the data watch (Phase E)
+
+```
+python -m handicapper.evaluation report --write   # docs/EVALUATION.md: log loss, Brier, reliability, breakdowns, blends
+python -m handicapper.evaluation watch --write    # docs/DATA_WATCH.md: race counts against the owner's gates
+```
+
+The unit is a race. Only pre-race predictions enter (the newest run made without the result, whatever the hour).
+Three vectors are compared on the same races (the morning line renormalised, the rule heuristic, the printed
+blend) with the final-odds market shown as hindsight; multiclass log loss with a documented floor, Brier score,
+reliability bins with counts, breakdowns by field size, track, surface, condition, pace shape and clock, the mean
+gap to the final odds, bootstrap and Wilson intervals. Candidate blend weights are looked at on the earlier half
+of the races and reported on the later half; nothing is fitted on the races it is scored on and nothing is written
+back to the configuration. The data watch (`rules_config.json` → `data_watch.gates`) counts races against the
+thresholds the owner set (300 global, 400 per track, 150 tote histories, 200 Timeform); until a gate is met the
+capability reads `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA`, and `handicapper/deferred.py` refuses to fit. The
+Analysis tab shows the same panel.
+
 ## Wager policy, price and the research layer (Phase D)
 
 `handicapper/policy.py` applies the owner's decisions table (`rules_config.json` → `wager_policy`) to the

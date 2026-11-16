@@ -484,8 +484,16 @@ class Desk:
         for ev in evals:
             for x in ev["rows"]:
                 rows.append(dict(x, card=ev["card_code"], track=ev["track_code"], date=ev.get("date"), basis=ev["basis"]))
+        try:
+            from handicapper.evaluation import evaluate
+            from handicapper.deferred import statuses
+            evaluation = evaluate(self.root, full)
+            evaluation["deferred"] = statuses(evaluation["data_watch"])
+        except Exception as e:   # the evaluation never takes the analysis screen down
+            traceback.print_exc()
+            evaluation = {"error": str(e)}
         return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench,
-                "units": units, "units_text": format_units(units)}
+                "units": units, "units_text": format_units(units), "evaluation": evaluation}
 
     # ---------------------------------------------------------------- uploads
     @staticmethod

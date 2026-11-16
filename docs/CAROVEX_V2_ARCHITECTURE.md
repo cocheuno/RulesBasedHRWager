@@ -28,6 +28,8 @@ Pure Python, one third-party runtime dependency (`pdfplumber`); OCR (`rapidocr_o
 | | `handicapper/provenance.py` | | parser field audit; raw / derived values with source and date; as-of filtering; missingness flags |
 | | `handicapper/weather.py` | | fetched (python-weather) and manual weather observations; newest before a race's cutoff |
 | | `handicapper/identity.py` | | canonical track / race / betting-interest mapping across sources; coupled entries; review list |
+| Phase E | `handicapper/evaluation.py` | | prospective evaluation (log loss, Brier, reliability, breakdowns, intervals, chronological blends), data watch with the owner's gates, `docs/DATA_WATCH.md` / `docs/EVALUATION.md` writers |
+| | `handicapper/deferred.py` | | interfaces of the deferred models (hierarchical figure correction, conditional-logit race model, odds-drift forecast, constrained Kelly, joint finishing-order pricing, Timeform value); `fit` raises until the gate is met |
 | Phase D | `handicapper/research.py` | | research probability vectors (heuristic / live market / market anchor), model status, EV, O_min, break-even, scenarios, NO_BET codes, Harville place / show candidates |
 | | `handicapper/policy.py` | | the owner's decisions table applied to suggested wagers; every suppression recorded with its reason |
 | Phase C | `carovex/tote.py` | | PuntersEdge `/v1/racing/tote` client (keep-alive, gzip, retries, `Retry-After`), replay provider, board normalisation and public allocation, immutable capture, polling plan and credit cap, decision marks (`paper` / `accepted (verified)`), CLI |
