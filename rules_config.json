@@ -239,5 +239,22 @@
     },
     "count_other_wagers": true,
     "count_multirace": false
+  },
+  "tote": {
+    "_comment": "PuntersEdge /v1/racing/tote (TVG's US board). One read = every race of the day for 2 credits. daily_credit_cap bounds what the app spends per UTC day; poll: nothing until from_minutes before post, then sparse_every seconds, near_every inside near_minutes, last_every inside last_minutes, stop at off/official. stale_seconds marks an old quote. Key: PUNTERSEDGE_API_KEY or data/private/puntersedge.key (never committed).",
+    "provider": "puntersedge",
+    "daily_credit_cap": 60,
+    "stale_seconds": 120,
+    "heartbeat_minutes": 5,
+    "poll": {
+      "from_minutes": 60,
+      "sparse_every": 300,
+      "near_minutes": 15,
+      "near_every": 60,
+      "last_minutes": 5,
+      "last_every": 30
+    },
+    "timeout_seconds": 15,
+    "max_retries": 3
   }
 }

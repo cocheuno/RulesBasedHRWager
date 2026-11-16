@@ -232,6 +232,35 @@ With `--weather` (the Desk does it on every run) the forecast for `tracks.<code>
 or a location the run says `weather: unavailable` with the reason, never a guess. Typed weather
 (`POST /api/cards/<card>/weather`) is a second observation with provenance `manual`. No rule reads weather.
 
+## Live odds and the tote board (`carovex/tote.py`)
+
+PuntersEdge's `/v1/racing/tote` is TVG's public US board: one read returns every race of the day for 2 credits.
+The key is read from `PUNTERSEDGE_API_KEY` or `data/private/puntersedge.key` (both outside git) and sent as
+`X-API-Key`; it never appears in a log, an error or a fixture. Every changed board is stored as an immutable
+`source_observation` (and as JSON under `data/private/tote/`), with the provider's read time and the local
+receipt time; unchanged boards are stored as heartbeats every five minutes. A board carries, per betting
+interest (1 and 1A are one interest), the WIN pool dollars, the displayed odds **to 1, net, as the track shows
+them** (`win_decimal` is the gross multiple, nothing deducts a second takeout), the morning line (never labelled a
+quote), scratches with reasons, the public allocation `q_i = W_i / ΣW_j` reconciled with the pool total and
+checked against normalised inverse odds, and flags for anything malformed, missing or stale.
+
+```
+python -m carovex.tote sample                 # today's board: tracks, races, status, credits (2 credits)
+python -m carovex.tote poll <card> [race]     # one read for the card's track; --loop follows the polling plan
+python -m carovex.tote result <card> <race>   # final board with the odds history and exotics (2 credits)
+python -m carovex.tote replay tests/fixtures/tote_replay.json
+python -m carovex.tote usage                  # credits used / remaining (free)
+```
+
+Polling plan (`rules_config.json` → `tote.poll`): nothing until 60 minutes before post, then every 5 minutes,
+every minute inside 15, every 30 seconds inside 5, stop at off / closed / official. `tote.daily_credit_cap`
+bounds the spend per day; a feed failure (key, credits, rate limit, network) disables decision marks and shows
+as a status, never a crash. On the Desk, **Refresh tote** on a race reads the board, the horses table gains a
+Tote column, and the wagers list shows the engine's minimum price beside the current quote and its age. A
+suggested wager can be marked **Paper** (you intend it) or **Accepted (verified)** (you placed it elsewhere and
+say so); both freeze the quote snapshot id, and accepted is the only way a wager's price basis becomes
+`observed`. Rules do not read the tote.
+
 ## Brisnet Power Play sheet (`--sheet <card>q.pdf`)
 
 The quick sheet that accompanies the PPs is read coordinate-wise by `brisnet_pp/sheet.py`.  Only two things are

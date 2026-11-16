@@ -105,9 +105,13 @@ def reparse_reason(pdf: str | None, card_json: str | None) -> str | None:
 class Desk:
     """All file-system and engine work, independent of HTTP so it can be tested directly."""
 
-    def __init__(self, root: str = ROOT, weather: str | None = None):
+    def __init__(self, root: str = ROOT, weather: str | None = None, tote_provider=None):
         # weather fetch: "auto" tries python-weather for tracks with a configured location; "off" records nothing
         self.weather = weather or os.environ.get("RACEDESK_WEATHER", "auto")
+        # tote: an injected provider (tests: replay), else PuntersEdge unless RACEDESK_TOTE=off
+        self.tote_provider = tote_provider
+        self.tote_mode = "auto" if tote_provider is not None else os.environ.get("RACEDESK_TOTE", "auto")
+        self._poller = None
         self.root = root
         self.pps = os.path.join(root, "data", "pps")
         self.out = os.path.join(root, "data", "out")
@@ -266,6 +270,7 @@ class Desk:
                     if r["race_no"] in pk and k in pk[r["race_no"]]:
                         r[k] = pk[r["race_no"]][k]
         results = load_results(f["results"]) if f["results"] else None
+        picks = self.apply_decisions(picks, st.get("decisions"))
         bt = ev = pre = None
         results_error = None
         if picks and results:
@@ -281,7 +286,9 @@ class Desk:
                 "state": st, "roster": roster, "picks": picks, "results": results, "backtest": bt, "evaluation": ev,
                 "results_error": results_error,
                 "latest_kind": (picks or {}).get("run", {}).get("kind") or ("as-run" if picks and "as-run" in str(st.get("activity", [])[-1:]) else None),
-                "pre_race": pre, "snapshots": snaps}
+                "pre_race": pre, "snapshots": snaps,
+                "tote": self.tote_latest(card, meta) if meta.get("track_code") else {"status": None, "races": {}},
+                "decisions": st.get("decisions", {})}
 
     def pre_race(self, card: str, results: dict, wcfg: dict) -> dict | None:
         """Back-test and wager evaluation of the newest pre-race snapshot: what the engine said before any result
@@ -289,6 +296,7 @@ class Desk:
         snap = self.clock_snapshot(card, results)
         if not snap:
             return None
+        snap = self.apply_decisions(snap, self.state(card).get("decisions"))
         return {"snapshot": snap["snapshot"], "run": snap.get("run"), "scratches": snap.get("scratches", ""), "timing": snap.get("timing"),
                 "backtest": backtest(snap, results), "evaluation": evaluate_card(snap, results, wcfg)}
 
@@ -538,6 +546,99 @@ class Desk:
         self.save_state(st)
         return {"ok": True, "observation": obs, "count": len(st["weather"])}
 
+    # ---------------------------------------------------------------- tote (Phase C)
+    def raw_config(self) -> dict:
+        with open(self.config, encoding="utf-8") as fh:
+            return json.load(fh)
+
+    def tote_poller(self):
+        """The poller, built once: PuntersEdge (key from PUNTERSEDGE_API_KEY or data/private/puntersedge.key) or the
+        injected provider.  None when the tote is off."""
+        if self._poller is None and self.tote_mode != "off":
+            from carovex.tote import PuntersEdgeProvider, TotePoller
+            cfg = self.raw_config()
+            prov = self.tote_provider or PuntersEdgeProvider(root=self.root, timeout=float((cfg.get("tote") or {}).get("timeout_seconds", 15)),
+                                                             max_retries=int((cfg.get("tote") or {}).get("max_retries", 3)))
+            self._poller = TotePoller(self.root, prov, cfg)
+        return self._poller
+
+    def tote_refresh(self, card: str, race_no: int | None = None) -> dict:
+        """One board read for this card's track and day (2 credits); changed boards are stored as observations.
+        Returns {"status", "races": {race_no: board}, "next_in"}; a feed failure is a status, never an error."""
+        meta = self.payload_meta(card)
+        poller = self.tote_poller()
+        if poller is None:
+            return {"status": {"feed": "off", "reason": "tote is off (RACEDESK_TOTE=off)", "decisions_enabled": False}, "races": {}, "next_in": None}
+        if not meta.get("track_code") or not meta.get("date"):
+            return {"status": {"feed": "error", "reason": "the card has no track code or date yet (run picks first)", "decisions_enabled": False}, "races": {}, "next_in": None}
+        res = poller.poll(meta["track_code"], str(meta["date"]), races=[race_no] if race_no else None)
+        st = self.state(card)
+        st["tote"] = {"status": res["status"], "last_refresh": datetime.now().isoformat(timespec="seconds"),
+                      "races": {str(rn): {"observation_id": b.get("observation_id"), "status": b.get("status"), "read_at": b.get("provider_read_at_utc")}
+                                for rn, b in res["races"].items()} | (st.get("tote") or {}).get("races", {})}
+        self.log(st, "Tote refresh", f"{res['status'].get('feed')}: {len(res['races'])} races" + (f"; {res['status'].get('reason')}" if res["status"].get("reason") else ""))
+        self.save_state(st)
+        return {"status": res["status"], "races": {str(k): v for k, v in res["races"].items()}, "next_in": res["next_in"]}
+
+    def tote_latest(self, card: str, meta: dict | None = None) -> dict:
+        """Latest stored board per race (from the ledger), with freshness against the clock now."""
+        meta = meta or self.payload_meta(card)
+        out = {"status": (self.state(card).get("tote") or {}).get("status"), "races": {}}
+        if not meta.get("track_code") or not os.path.exists(os.path.join(self.root, "data", "private", "carovex.db")):
+            return out
+        from carovex.ledger import connect, race_id
+        from carovex.tote import DEFAULT_TOTE, Capture, freshness, utc_now
+        cap = Capture(self.root, con=connect(self.root))
+        stale = int((self.raw_config().get("tote") or {}).get("stale_seconds", DEFAULT_TOTE["stale_seconds"]))
+        f = self.files(card)
+        races = [r["race_no"] for r in json.load(open(f["card_json"], encoding="utf-8"))["races"]] if f["card_json"] else []
+        for rn in races:
+            b = cap.latest(race_id(meta["track_code"], str(meta["date"]), rn))
+            if b:
+                b["freshness"] = freshness(b, utc_now(), stale)
+                b.pop("history", None); b.pop("exotics", None)
+                out["races"][str(rn)] = b
+        return out
+
+    def mark_decision(self, card: str, decision_id: str, status: str, note: str = "") -> dict:
+        """The owner's word on one suggested wager: paper (intends) or accepted (placed elsewhere and says so), with
+        the current quote snapshot attached.  The only path to price_basis observed."""
+        from carovex.tote import mark_decision, quote_for
+        f = self.files(card)
+        if not f["picks_json"]:
+            raise ValueError("run picks first")
+        picks = json.load(open(f["picks_json"], encoding="utf-8"))
+        wager = race = None
+        for r in picks["races"]:
+            for w in r.get("wagers", []):
+                if (w.get("decision") or {}).get("id") == decision_id:
+                    wager, race = w, r
+        if wager is None:
+            raise ValueError(f"no wager with decision id {decision_id} in the current picks")
+        latest = self.tote_latest(card)["races"].get(str(race["race_no"]))
+        quote = quote_for(latest, wager["legs"])
+        rec = mark_decision(self.root, card, decision_id, status, quote, note)
+        rec["race_no"], rec["type"], rec["label"] = race["race_no"], wager["type"], wager.get("label")
+        st = self.state(card)
+        st.setdefault("decisions", {})[decision_id] = rec
+        self.log(st, "Decision", f"R{race['race_no']} {wager.get('label')}: {status}" + (f" at {quote['odds_text']}" if quote and quote.get("odds_text") else ""))
+        self.save_state(st)
+        return rec
+
+    @staticmethod
+    def apply_decisions(picks: dict | None, decisions: dict | None) -> dict | None:
+        """Overlay the owner's marks on the wagers of a picks document before evaluation (the files stay as written)."""
+        if not picks or not decisions:
+            return picks
+        for r in picks.get("races", []):
+            for w in r.get("wagers", []):
+                d = w.get("decision") or {}
+                rec = decisions.get(d.get("id"))
+                if rec:
+                    w["decision"] = dict(d, status=rec["status"], quote=rec.get("quote"), price_basis=rec.get("price_basis", d.get("price_basis")),
+                                         marked_at_utc=rec.get("at_utc"))
+        return picks
+
     def pp_identity(data: bytes) -> dict:
         """Track name, track code and date read from a PP PDF (parsed in a temp file; the file is not kept)."""
         import tempfile
@@ -719,9 +820,14 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"ok": True, "stopping": True})
                 threading.Thread(target=self.server.shutdown, daemon=True).start()
                 return None
-            m = re.fullmatch(r"/api/cards/([^/]+)/(run|results|process|ocr|weather)", u.path)
+            m = re.fullmatch(r"/api/cards/([^/]+)/(run|results|process|ocr|weather|tote|decisions)", u.path)
             if m:
                 card, action = unquote(m.group(1)), m.group(2)
+                if action == "tote":
+                    rn = payload.get("race_no")
+                    return self._json(self.desk.tote_refresh(card, int(rn) if rn else None))
+                if action == "decisions":
+                    return self._json(self.desk.mark_decision(card, payload.get("decision_id", ""), payload.get("status", ""), payload.get("note", "")))
                 if action == "weather":
                     return self._json(self.desk.save_weather(card, payload.get("text", "")))
                 if action == "run":
