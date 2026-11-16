@@ -54,16 +54,16 @@ named and makes no other change to scoring or wagering.
 
 | Finding (as of 11/13) | Owner decision | Phase |
 |---|---|---|
-| Four-horse trifecta box in medium and contentious races: 4 of 23 for the week, the drag on every card | | D |
-| Lone-speed call (rule P1): 4 of 20, wins almost only on odds-on favourites | | B/D |
-| Turf and all-weather top picks: 9 of 48 | | B/D |
-| Off-track dirt: 3 of 20; no track-condition input exists | | B |
-| Speed-figure rules stacking (S1, S2, S3, S4, S7, S9 on one figure); a cap on the family's total | | D |
-| Hot-pace trigger fires too easily; speed held in 8 of 15 "hot" races on 11/07 | | D |
-| Pools not offered by the track (from the Equibase page): suppress the suggestion | | D |
-| Best bets of the day: top two races per card by win probability where the win price clears, +34% on 17 picks | | F |
-| Pick 3 / Pick 4: 2 of 30 tracked; keep tracked, or stop building them | | D |
-| Doubles: the best pool of the week; worth a structured place in the recommendations | | D |
+| Four-horse trifecta box in medium and contentious races: 4 of 23 for the week, the drag on every card | D | D |
+| Lone-speed call (rule P1): 4 of 20, wins almost only on odds-on favourites | B/D | B/D |
+| Turf and all-weather top picks: 9 of 48 | B/D | B/D |
+| Off-track dirt: 3 of 20; no track-condition input exists | B | B |
+| Speed-figure rules stacking (S1, S2, S3, S4, S7, S9 on one figure); a cap on the family's total | D | D |
+| Hot-pace trigger fires too easily; speed held in 8 of 15 "hot" races on 11/07 | D | D |
+| Pools not offered by the track (from the Equibase page): suppress the suggestion | D | D |
+| Best bets of the day: top two races per card by win probability where the win price clears, +34% on 17 picks | F | F |
+| Pick 3 / Pick 4: 2 of 30 tracked; keep tracked, or stop building them | D | D |
+| Doubles: the best pool of the week; worth a structured place in the recommendations | D | D |
 
 ## Already in place (verify, then build on; do not rebuild)
 
