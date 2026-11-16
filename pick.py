@@ -36,7 +36,7 @@ def main() -> int:
     ap.add_argument("--race", type=int, help="only this race number")
     ap.add_argument("--scratch", help="scratched horses as race:program pairs, e.g. \"3:3, 4:6, 8:4, 8:9\" (also-eligibles draw in)")
     ap.add_argument("--results", help="results JSON for this card (results/<card>.results.json); earlier races feed the same-day bias rule P10")
-    ap.add_argument("--changes", help="Equibase 'Today's Race Day Changes' page for this track, saved as HTML: its scratches are added to --scratch and the conditions / rail / jockey changes are recorded on the run")
+    ap.add_argument("--changes", help="Equibase 'Today's Race Day Changes' page for this track (saved HTML), or the day's Equibase late-changes XML for every track (this card's track is picked out): scratches are added to --scratch; conditions, rail, jockey changes, off-turf and pools not offered are recorded on the run")
     ap.add_argument("--timeform", help="TimeformUS PP PDF for the same card: figures, pace figures, running style and Power Picks are read under their own namespace and shown beside the Brisnet rank (no rule reads them)")
     ap.add_argument("--weather", action="store_true", help="fetch the forecast for the track's configured location at each post time (python-weather); recorded as an observation, not read by a rule")
     ap.add_argument("--sheet", help="Brisnet Power Play quick sheet PDF (<card>q.pdf): key-race angles (F16) and Brisnet's picks for the back-test")
@@ -53,13 +53,19 @@ def main() -> int:
         ap.error("card is required")
     scratch = args.scratch
     if args.changes:
-        from brisnet_pp.changes import merge_scratch_specs, parse_changes, scratch_spec
-        chg = parse_changes(open(args.changes, encoding="utf-8", errors="replace").read())
-        scratch = merge_scratch_specs(args.scratch, scratch_spec(chg))
-        print(f"changes page: scratches {scratch_spec(chg) or 'none'}", file=sys.stderr)
+        from brisnet_pp.changes import load_changes_file, merge_scratch_specs, scratch_spec
+        from handicapper.engine import load_config as _lc
+        from handicapper.pipeline import load_card as _load_card
+        _card, _ = _load_card(args.card)
+        chg = load_changes_file(args.changes, _card.get("track_code"), _card.get("track"), _lc(args.config))
+        if chg is None:
+            print(f"changes file: no section for {_card.get('track')} ({_card.get('track_code')})", file=sys.stderr)
+        if chg is not None:
+            scratch = merge_scratch_specs(args.scratch, scratch_spec(chg))
+            print(f"changes page: scratches {scratch_spec(chg) or 'none'}", file=sys.stderr)
     out = run_card(args.card, scratch=scratch, sheet=args.sheet, results=args.results, config_path=args.config,
                    track_profile=args.track_profile, multirace=not args.no_multi, budget3=args.budget3, budget4=args.budget4,
-                   race_no=args.race, changes=args.changes, timeform=args.timeform, weather="auto" if args.weather else None)
+                   race_no=args.race, changes=(chg if args.changes else None), timeform=args.timeform, weather="auto" if args.weather else None)
     for n in out["notes"]:
         print(n, file=sys.stderr)
     card, result = out["card"], out["result"]

@@ -46,6 +46,8 @@ def apply_surface_switch(race: dict, to_surface: str, notes: list[str]) -> None:
     race["surface_switch"] = {"from": "turf", "to": to_surface, "source": "equibase_changes"}
     race["surface"] = to_surface
     race["track_condition_morning"] = ((race.get("inputs") or {}).get("conditions") or {}).get("dirt")
+    if race.get("inputs"):
+        race["inputs"]["track_condition_morning"] = race["track_condition_morning"]   # the condition of the surface it now runs on
     on = []
     for h in race["horses"]:
         if (h.get("entry_status") or "").upper() == "MTO":

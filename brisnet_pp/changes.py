@@ -124,3 +124,122 @@ def merge_scratch_specs(*specs: str | None) -> str:
                 if t not in merged.setdefault(rn, []):
                     merged[rn].append(t)
     return ", ".join(f"{rn}:{t}" for rn in sorted(merged) for t in merged[rn])
+
+
+# ---------------------------------------------------------------------------
+# Equibase late-changes XML: one file for every track racing that day (schema: late_changes.xsd)
+# ---------------------------------------------------------------------------
+SURFACE_WORDS = ("turf", "dirt", "main track", "tapeta", "all weather", "all-weather", "synthetic", "inner", "outer")
+
+
+def is_late_changes_xml(text: str | bytes) -> bool:
+    head = (text[:2000] if isinstance(text, str) else text[:2000].decode("utf-8", errors="replace")).lstrip()
+    return head.startswith("<") and "<late_changes" in head
+
+
+def _xml_text(el, tag: str) -> str:
+    x = el.find(tag)
+    return (x.text or "").strip() if x is not None and x.text else ""
+
+
+def parse_late_changes_xml(text: str | bytes) -> dict:
+    """The day's Equibase late-changes XML -> {"race_date", "tracks": [{"track_name", "id", "country", "changes": <the same
+    dict parse_changes() returns for one track>}]}.  Every change is kept verbatim in `raw`; the per-track dict is
+    built from it so scratch_spec(), summary() and the pipeline's off-turf / pools-not-offered inputs work unchanged:
+      start_changes/horse/change  -> horse changes ("Scratched - <reason>", "Jockey - A changed to B", or "<description>: old -> new")
+      race_changes/change         -> race notes; a surface change from turf to a main surface adds an "Off Turf" note;
+                                     a condition change fills `conditions`; a rail change fills `rail`
+      wager_cancellations/wager   -> pools_not_offered (the wager type) and a "No <type> Wagering" note
+    The change descriptions Equibase prints are matched by keyword (scratch, jockey, surface / course, condition, rail,
+    post time, equipment); anything else is kept as "<description>: old -> new"."""
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(text if isinstance(text, (str, bytes)) else str(text))
+    if root.tag != "late_changes":
+        raise ValueError(f"not an Equibase late_changes document (root element {root.tag!r})")
+    out = {"race_date": _xml_text(root, "race_date") or None, "tracks": []}
+    for tr in root.findall("track"):
+        chg = {"track": (tr.get("track_name") or "").strip() or None, "track_id": (tr.get("id") or "").strip() or None,
+               "country": tr.get("country"), "updated": None, "first_post": None, "conditions": {}, "races": {}, "raw": [],
+               "source": "equibase_late_changes_xml", "race_date": out["race_date"]}
+        latest = None
+        for race in tr.findall("race"):
+            try:
+                rn = int(race.get("race_number"))
+            except (TypeError, ValueError):
+                continue
+            r = chg["races"].setdefault(rn, {"notes": [], "rail": None, "pools_not_offered": [], "horses": []})
+            rc = race.find("race_changes")
+            for c in (rc.findall("change") if rc is not None else []):
+                d, old, new, when = _xml_text(c, "change_description"), _xml_text(c, "old_value"), _xml_text(c, "new_value"), _xml_text(c, "date_changed")
+                chg["raw"].append({"race": rn, "scope": "race", "description": d, "old": old, "new": new, "when": when})
+                latest = max(latest or "", when)
+                low = d.lower()
+                r["notes"].append(f"{d}: {old} -> {new}" if old or new else d)
+                if "rail" in low:
+                    m = re.search(r"(\d+(?:\.\d+)?)", new)
+                    r["rail"] = float(m.group(1)) if m else r["rail"]
+                if any(w in low for w in ("surface", "course")) and "condition" not in low:
+                    if "turf" in old.lower() and new and "turf" not in new.lower():
+                        r["notes"].append(f"Off Turf: race moved from {old} to {new}")
+                elif "condition" in low:
+                    key = "turf" if "turf" in low or "turf" in old.lower() or "course" in low else "dirt"
+                    chg["conditions"][key] = new or chg["conditions"].get(key)
+                if "post" in low and "time" in low and rn == min(chg["races"]):
+                    chg["first_post"] = new or chg["first_post"]
+            sc = race.find("start_changes")
+            for h in (sc.findall("horse") if sc is not None else []):
+                entry = {"pgm": (h.get("program_number") or "").strip(), "name": (h.get("horse_name") or "").strip(), "changes": []}
+                for c in h.findall("change"):
+                    d, old, new, when = _xml_text(c, "change_description"), _xml_text(c, "old_value"), _xml_text(c, "new_value"), _xml_text(c, "date_changed")
+                    chg["raw"].append({"race": rn, "scope": "horse", "pgm": entry["pgm"], "name": entry["name"], "description": d, "old": old, "new": new, "when": when})
+                    latest = max(latest or "", when)
+                    low = d.lower()
+                    if "scratch" in low and "reason" not in low:
+                        text_ = "Scratched" + (f" - {new}" if new and new.lower() not in ("scratched", "yes", "true") else (f" - {old}" if old and "scratch" not in old.lower() else ""))
+                    elif "scratch" in low and "reason" in low:
+                        text_ = f"Scratch Reason - {old} changed to {new}" if old else f"Scratch Reason - {new}"
+                    elif "jockey" in low or "rider" in low:
+                        text_ = f"Jockey - {old} changed to {new}"
+                    else:
+                        text_ = f"{d} - {old} changed to {new}" if old else (f"{d} - {new}" if new else d)
+                    entry["changes"].append({"text": text_, "time": when or None})
+                r["horses"].append(entry)
+            wc = race.find("wager_cancellations")
+            for w in (wc.findall("wager") if wc is not None else []):
+                t = (w.get("type") or "").strip()
+                old, new, when = _xml_text(w, "old_value"), _xml_text(w, "new_value"), _xml_text(w, "date_changed")
+                chg["raw"].append({"race": rn, "scope": "wager", "type": t, "old": old, "new": new, "when": when})
+                latest = max(latest or "", when)
+                if t and t not in r["pools_not_offered"]:
+                    r["pools_not_offered"].append(t)
+                r["notes"].append(f"No {t} Wagering" + (f" ({new})" if new else ""))
+        chg["updated"] = latest
+        out["tracks"].append({"track_name": chg["track"], "id": chg["track_id"], "country": chg["country"], "changes": chg})
+    return out
+
+
+def changes_for_track(doc: dict, track_code: str | None = None, track_name: str | None = None, cfg: dict | None = None) -> dict | None:
+    """The one track's changes out of the day's XML, matched by Equibase id (track code) or by name."""
+    from handicapper.identity import canonical_track, norm_name
+    code = (track_code or "").upper()
+    want = norm_name(track_name)
+    for t in doc.get("tracks", []):
+        tid = (t.get("id") or "").upper()
+        if code and tid and tid == code:
+            return t["changes"]
+    for t in doc.get("tracks", []):
+        tc = canonical_track(t.get("track_name"), cfg) or canonical_track(t.get("id"), cfg)
+        if code and tc and tc == code:
+            return t["changes"]
+        if want and norm_name(t.get("track_name")) == want:
+            return t["changes"]
+    return None
+
+
+def load_changes_file(path: str, track_code: str | None = None, track_name: str | None = None, cfg: dict | None = None) -> dict | None:
+    """A saved changes page (HTML, one track) or the day's late-changes XML (every track): the dict for one track."""
+    with open(path, "rb") as fh:
+        data = fh.read()
+    if is_late_changes_xml(data):
+        return changes_for_track(parse_late_changes_xml(data), track_code, track_name, cfg)
+    return parse_changes(data.decode("utf-8", errors="replace"))
