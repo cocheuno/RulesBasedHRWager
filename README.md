@@ -226,6 +226,21 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 
 ## Results, scratches and back-testing
 
+* **Per-race timing** (`handicapper/timing.py`): every run records, for each race, whether it was made at least
+  `timing.cutoff_margin_minutes` (2) before that race's cutoff: the chart's actual off time when a result is on
+  file (track timezone from `tracks.<code>.timezone`), else the PP's scheduled post (the Eastern value of the
+  four-zone post-time string).  The back-test and the Analysis screen score, race by race, the newest run that did
+  not have that race's result on file (`snapshot.pre_race_by_race`), whatever the hour it was made: a late run
+  uses only the PPs and the public scratches, so it is a pre-race prediction.  The clock status is recorded beside
+  each race (before-cutoff / after-cutoff / unknown), never used to drop a run; only a race whose every run knew
+  the result is excluded.  Every suggested wager carries a frozen `decision` record (id, time, cutoff status,
+  price basis, status `suggested`).  Win-bet rows say their price basis: `assumed-final` (the chart's final odds
+  decided whether the morning-line decision met its price), `unpriced`, or `observed` (an accepted decision,
+  never passed by hindsight).
+* **Ledger** (`carovex/ledger.py`): SQLite at `data/private/carovex.db` (ignored), versioned migrations, tables
+  race / betting_interest / source_observation / forecast / decision / execution / settlement, append-only.
+  `python -m carovex.ledger import .` indexes every snapshot and results file; `python -m carovex.ledger as-of . <card>
+  <race> <UTC>` answers what was known at that time.
 * **Snapshots** (`handicapper/snapshot.py`): every run is also frozen, append-only, as
   `data/out/snapshots/<card>/<UTC>_<kind>.picks.json` with a `run` block (UTC time, scratches, parser version,
   configuration hash, git version, source file hash, which races had results on file, odds source).  Kinds:

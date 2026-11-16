@@ -59,7 +59,10 @@ charts / screenshots ──chart.py / ocr.py──► results/<card>.results.jso
 | Minimum win price | `engine.win_price`: max(3/2, fair × 1.15) | to be replaced by the EV formula (Phase D) |
 | Wager suggestions | `engine.primary_wagers`, `other_wagers`, `multirace` | per confidence; owner's policy (see prompt) |
 | "Placed" vs "passed" | `wagering.evaluate_wager` against the chart's final odds | assumed-price proxy (Phase A labels it) |
-| Pre-race label | `snapshot.write_snapshot`: no result on file at run time | card-level; Phase A makes it per race by the clock |
+| Pre-race, per race | `timing.race_cutoffs` in the run block; `snapshot.pre_race_by_race` picks, for each race, the newest run made ≥ `timing.cutoff_margin_minutes` before the chart's off time (track timezone from `tracks.<code>.timezone`) or the PP's scheduled post (Eastern value of the four-zone string) | Phase A; legacy runs without clock evidence are `unverified` |
+| Decision records | `pipeline.run_card`: `wager.decision{id, at_utc, cutoff_status, price_basis, status, hashes}` | per run, never edited; `status` moves only through the ledger's execution rows (Phase C) |
+| Price basis | `wagering.evaluate_wager`: `assumed-final` / `unpriced` / `observed` | an `accepted` decision is never passed by final odds |
+| Ledger | `carovex/ledger.py`: SQLite `data/private/carovex.db`, schema v1, `import_card`, `as_of` time-travel | legacy results carry `received_at` = import time |
 | Results identity | `results.check_identity` (track, date, chart's own track) | enforced |
 | Same-day bias (P10) | `results.attach_day_bias`, earlier races' results only | no leakage by construction |
 

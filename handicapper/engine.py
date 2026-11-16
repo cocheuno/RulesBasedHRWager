@@ -26,7 +26,9 @@ from collections import defaultdict
 from . import rules as R
 from . import multirace as MR
 from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
+from .timing import DEFAULT_TIMING
 from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
+from .timing import DEFAULT_TIMING
 from .wagering import DEFAULT_UNITS, DEFAULT_WAGERING, make_wager
 from .features import horse_features, race_context
 
@@ -47,6 +49,7 @@ DEFAULT_CONFIG = {
         "value_underlay": 0.60,    # V1 underlay: ML <= fair x 0.60
     },
     "probability": dict(DEFAULT_PROBABILITY),  # the one win-probability model (see probability.py)
+    "timing": dict(DEFAULT_TIMING),            # per-race cutoff margin (see timing.py)
     "multirace": dict(MR.DEFAULT_MULTIRACE),   # Pick 3 / Pick 4 construction (see multirace.py)
     "wagering": dict(DEFAULT_WAGERING),        # unit stake and what counts as a bet (see wagering.py)
 }
@@ -59,6 +62,7 @@ def _apply_layer(cfg: dict, layer: dict) -> None:
         cfg["disabled"] = list(layer["disabled"])
     cfg["selection"].update(layer.get("selection", {}))
     cfg["probability"].update(layer.get("probability", {}))
+    cfg.setdefault("timing", dict(DEFAULT_TIMING)).update(layer.get("timing", {}))
     for k, v in layer.get("multirace", {}).items():
         if isinstance(v, dict) and isinstance(cfg["multirace"].get(k), dict):
             cfg["multirace"][k].update(v)
@@ -115,6 +119,16 @@ def validate_config(cfg: dict) -> None:
             bad.append(f"selection.{k} must be a number >= 0, not {v!r}")
     if sel.get("max_picks") is not None and not (isinstance(sel["max_picks"], int) and 1 <= sel["max_picks"] <= 4):
         bad.append(f"selection.max_picks must be 1..4, not {sel['max_picks']!r}")
+    mm = (cfg.get("timing") or {}).get("cutoff_margin_minutes", 2)
+    if not isinstance(mm, (int, float)) or not (0 <= mm <= 60):
+        bad.append(f"timing.cutoff_margin_minutes must be 0..60, not {mm!r}")
+    for code, prof in (cfg.get("tracks") or {}).items():
+        tz = prof.get("timezone")
+        if tz:
+            try:
+                from zoneinfo import ZoneInfo; ZoneInfo(tz)
+            except Exception:
+                bad.append(f"tracks.{code}.timezone {tz!r} is not an IANA zone")
     if bad:
         raise ValueError("rules_config: " + "; ".join(bad))
 
@@ -218,6 +232,7 @@ def score_race(race: dict, cfg: dict) -> dict:
     picks, structure, confidence, note = select(sheets, sel)
     return {
         "race_no": race["race_no"], "class_text": race.get("class_text"), "distance_text": race.get("distance_text"),
+        "post_time": race.get("post_time"),
         "surface": race.get("surface"), "field_size": ctx["n"], "alternates": ctx["alternates"], "pars": race.get("pars"),
         "pace_shape": ctx["pace_shape"], "lone_speed": ctx["lone_speed"], "num_early": ctx["num_early"],
         "picks": picks, "bet_structure": structure, "confidence": confidence, "selection_note": note,

@@ -21,6 +21,10 @@
     "ml_blend": 0.35,
     "elim_floor": 0.02
   },
+  "timing": {
+    "_comment": "Per-race wagering cutoff (handicapper/timing.py): a run counts as pre-race for a race when made this many minutes before its post (or its chart's actual off time).",
+    "cutoff_margin_minutes": 2
+  },
   "multirace": {
     "_comment": "Pick 3 / Pick 4 construction (handicapper/multirace.py, rules H1-H10). Budgets in dollars; base = the denomination every ticket is bet at ($1 Pick 3, $0.50 Pick 4); a track menu minimum above it (e.g. $3 Late Pick 3) applies instead.",
     "pick3": {
@@ -98,7 +102,8 @@
         "pick4": {
           "budget": 100.0
         }
-      }
+      },
+      "timezone": "America/Los_Angeles"
     },
     "SA": {
       "_comment": "Santa Anita: speed holds on dirt, early pace figures (E2) decide sprints; downhill turf is its own course (D5).",
@@ -114,7 +119,8 @@
         "pick4": {
           "budget": 100.0
         }
-      }
+      },
+      "timezone": "America/Los_Angeles"
     },
     "SAR": {
       "_comment": "Saratoga: big fields, late pace and course specialists on turf, lone speed less reliable; trainer % thresholds are circuit-high.",
@@ -133,7 +139,8 @@
         "pick4": {
           "budget": 100.0
         }
-      }
+      },
+      "timezone": "America/New_York"
     },
     "BEL": {
       "_comment": "Belmont: long stretch, late pace matters; two turf courses.",
@@ -149,7 +156,8 @@
         "pick4": {
           "budget": 100.0
         }
-      }
+      },
+      "timezone": "America/New_York"
     },
     "AQU": {
       "_comment": "Aqueduct: inside speed on the main track in winter; smaller fields.",
@@ -164,7 +172,8 @@
         "pick4": {
           "budget": 100.0
         }
-      }
+      },
+      "timezone": "America/New_York"
     },
     "GP": {
       "_comment": "Gulfstream: large turf fields, turf form and late pace; chaos legs are common. $1 'Bet 3', $0.50 Pick 4/5 (per the Power Play sheet wager menu).",
@@ -180,7 +189,8 @@
         "pick4": {
           "budget": 100.0
         }
-      }
+      },
+      "timezone": "America/New_York"
     },
     "KEE": {
       "_comment": "Keeneland: speed-favouring dirt, course specialists; short meet so meet bias tables are thin (P5 lighter).",
@@ -188,14 +198,16 @@
         "P1": 8,
         "D5": 2.0,
         "P5": 3
-      }
+      },
+      "timezone": "America/New_York"
     },
     "CD": {
       "_comment": "Churchill Downs: fair main track, long stretch; course specialists on the turf.",
       "weights": {
         "D5": 2.0,
         "P4": 4.5
-      }
+      },
+      "timezone": "America/New_York"
     }
   },
   "wagering": {

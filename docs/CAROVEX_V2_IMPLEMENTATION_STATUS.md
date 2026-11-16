@@ -21,8 +21,8 @@ Updated at the end of every phase. Baseline audit: `main` d9216be, 2026-11-15, P
 
 | Phase | Status | Notes |
 |---|---|---|
-| 0 Audit | **done** (this PR) | architecture, status, prompt and week review in `docs/` |
-| A Timing and ledger | not started | needs track timezone table; PP post times are already parsed as text |
+| 0 Audit | **done** (PR 51) | architecture, status, prompt and week review in `docs/` |
+| A Timing and ledger | **done** (PR 52) | `handicapper/timing.py`, `snapshot.pre_race_by_race`, decision records in the run block, `carovex/ledger.py` (SQLite, migrations, import, `as_of`), price basis on every wager row |
 | B Data and provenance | not started | TimeformUS reader prototype exists outside the repo; four sample PDFs in the owner's `data/pps` |
 | C Tote (PuntersEdge) | not started | owner will supply `PUNTERSEDGE_API_KEY` when Phase C begins; schema to be read from the live OpenAPI document, never guessed |
 | D Research probabilities, EV, place/show, wagering decisions | not started | depends on the decisions table |
@@ -37,9 +37,7 @@ pricing. Each stays `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` until its gate is met
 
 ## Blocked or awaiting the owner
 
-- **Decisions table.** The owner's copy of the prompt carries phase letters in the "Owner decision" column.
-  The frozen-week review (`docs/WEEK_REVIEW_2026-11-15.md`) proposes keep / change / drop for each line; the
-  owner is asked to confirm that those recommendations are the decisions before Phase D changes any wagering.
+- **Decisions table.** Confirmed by the owner on 2026-11-16; recorded in `docs/CAROVEX_V2_PROMPT.md`.
 - **PuntersEdge key** for live checks in Phase C (replay fixtures do not need it).
 - **Weather provider** (`python-weather`) availability and its data source's terms, to confirm in Phase B.
 
@@ -50,6 +48,14 @@ pricing. Each stays `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` until its gate is met
 - TimeformUS: field meanings inferred from the PDF text layer (Top Fig, early/late pace figures, running style);
   Pace Projector order is a graphic and may not be recoverable from text.
 - Equibase charts: the `surface` field is unreliable (reads "DIRT" everywhere); fix in Phase B.
+
+## Phase A note: the clock is a label
+
+The owner's rule: picks and results are often run late in the day or the next day, and that does not compromise
+the data, because a run uses only the PPs and the public scratches. Scoring therefore takes, per race, the newest
+run made without that race's result, whatever the hour, and records whether it was before or after the cutoff.
+The frozen week scores as before (23 cards, 219 races, top pick 30%, counted bets −32%); of those 219 race
+predictions, 4 were made before the cutoff and 215 after, which the clock column now shows.
 
 ## Data on file (2026-11-15)
 
