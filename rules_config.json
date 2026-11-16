@@ -65,7 +65,7 @@
     "single_bonus": 0.25,
     "hit_prob_shrink": 0.5
   },
-  "_tracks_comment": "Track profiles layer over the global weights/selection/multirace above and are chosen by the track code the parser reads off the PP (pick.py --track-profile overrides). Every value here is an expert prior, not a fitted weight: fit them per track with backtest.py once enough cards are on file.",
+  "_tracks_comment": "Track profiles layer over the global weights/selection/multirace above and are chosen by the track code the parser reads off the PP (pick.py --track-profile overrides). Every value here is an expert prior, not a fitted weight: fit them per track with backtest.py once enough cards are on file. Each track also carries `timezone` (IANA), `location` (for the optional weather forecast) and `off_turf_surface` (what a turf race taken off the turf is scored on: dirt, or aw for a Tapeta main track).",
   "track_aliases": {
     "Del Mar": "DMR",
     "Santa Anita": "SA",
@@ -103,7 +103,9 @@
           "budget": 100.0
         }
       },
-      "timezone": "America/Los_Angeles"
+      "timezone": "America/Los_Angeles",
+      "location": "Del Mar, California",
+      "off_turf_surface": "dirt"
     },
     "SA": {
       "_comment": "Santa Anita: speed holds on dirt, early pace figures (E2) decide sprints; downhill turf is its own course (D5).",
@@ -120,7 +122,9 @@
           "budget": 100.0
         }
       },
-      "timezone": "America/Los_Angeles"
+      "timezone": "America/Los_Angeles",
+      "location": "Arcadia, California",
+      "off_turf_surface": "dirt"
     },
     "SAR": {
       "_comment": "Saratoga: big fields, late pace and course specialists on turf, lone speed less reliable; trainer % thresholds are circuit-high.",
@@ -140,7 +144,9 @@
           "budget": 100.0
         }
       },
-      "timezone": "America/New_York"
+      "timezone": "America/New_York",
+      "location": "Saratoga Springs, New York",
+      "off_turf_surface": "dirt"
     },
     "BEL": {
       "_comment": "Belmont: long stretch, late pace matters; two turf courses.",
@@ -157,7 +163,9 @@
           "budget": 100.0
         }
       },
-      "timezone": "America/New_York"
+      "timezone": "America/New_York",
+      "location": "Elmont, New York",
+      "off_turf_surface": "dirt"
     },
     "AQU": {
       "_comment": "Aqueduct: inside speed on the main track in winter; smaller fields.",
@@ -173,7 +181,9 @@
           "budget": 100.0
         }
       },
-      "timezone": "America/New_York"
+      "timezone": "America/New_York",
+      "location": "South Ozone Park, New York",
+      "off_turf_surface": "dirt"
     },
     "GP": {
       "_comment": "Gulfstream: large turf fields, turf form and late pace; chaos legs are common. $1 'Bet 3', $0.50 Pick 4/5 (per the Power Play sheet wager menu).",
@@ -190,7 +200,9 @@
           "budget": 100.0
         }
       },
-      "timezone": "America/New_York"
+      "timezone": "America/New_York",
+      "location": "Hallandale Beach, Florida",
+      "off_turf_surface": "aw"
     },
     "KEE": {
       "_comment": "Keeneland: speed-favouring dirt, course specialists; short meet so meet bias tables are thin (P5 lighter).",
@@ -199,7 +211,9 @@
         "D5": 2.0,
         "P5": 3
       },
-      "timezone": "America/New_York"
+      "timezone": "America/New_York",
+      "location": "Lexington, Kentucky",
+      "off_turf_surface": "dirt"
     },
     "CD": {
       "_comment": "Churchill Downs: fair main track, long stretch; course specialists on the turf.",
@@ -207,7 +221,9 @@
         "D5": 2.0,
         "P4": 4.5
       },
-      "timezone": "America/New_York"
+      "timezone": "America/New_York",
+      "location": "Louisville, Kentucky",
+      "off_turf_surface": "dirt"
     }
   },
   "wagering": {

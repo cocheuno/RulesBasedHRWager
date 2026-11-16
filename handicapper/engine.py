@@ -187,7 +187,8 @@ def score_race(race: dict, cfg: dict) -> dict:
             "pgm": h["pgm"], "name": h["name"], "ml_odds": h["ml_odds"], "ml_decimal": h["ml_decimal"],
             "run_style": h["run_style"], "speed_pts": h["speed_pts"], "prime_power": h["prime_power"],
             "score": round(total, 2), "eliminated": eliminated, "flags": flags, "hits": hits,
-            "features": {k: v for k, v in f.items() if not k.startswith("_") and k not in ("last", "positives", "negatives", "trainer_angles", "trainer_flagged")},
+            "sheet": f.get("sheet"), "timeform": f.get("timeform"), "missing": f.get("missing") or [],
+            "features": {k: v for k, v in f.items() if not k.startswith("_") and k not in ("last", "positives", "negatives", "trainer_angles", "trainer_flagged", "sheet", "timeform", "missing")},
         })
     # ---- probabilities: one model for the race, over the horses that can win (not eliminated, not AE/MTO)
     live = [s for s in sheets if not s["eliminated"] and not s["flags"]]
@@ -547,15 +548,23 @@ def format_report(result: dict, detail: int = 1) -> str:
         L.append(f"**PLAY: {', '.join('#' + p + ' ' + names[p]['name'] + ' (' + str(names[p]['ml_odds']) + ')' for p in r['picks'])}**  — {r['bet_structure']}")
         L.append(f"Confidence: {r['confidence']} — {r['selection_note']}")
         L.append("")
-        L.append("| Rk | # | Horse | ML | Style/pts | PP | Score | Win % | Fair / min | Value | Top reasons |")
-        L.append("|---|---|---|---|---|---|---|---|---|---|---|")
+        tf_on = any(s.get("timeform") for s in r["sheets"])
+        tfcol = " TF rk/fig |" if tf_on else ""
+        L.append(f"| Rk | # | Horse | ML | Style/pts | PP | Score | Win % | Fair / min | Value |{tfcol} Top reasons |")
+        L.append("|---|---|---|---|---|---|---|---|---|---|" + ("---|" if tf_on else "") + "---|")
+        if r.get("surface_switch"):
+            L.insert(len(L) - 2, f"Off the turf: scored as {r['surface_switch']['to']} (Equibase changes page).")
+        if (r.get("inputs") or {}).get("pools_not_offered"):
+            L.insert(len(L) - 2, f"Pools not offered (Equibase): {', '.join(r['inputs']['pools_not_offered'])}.")
         for s in r["sheets"]:
             hits = sorted([h for h in s["hits"] if h["points"] and not h.get("value")], key=lambda h: -abs(h["points"]))
             top = "; ".join(f"{h['rule']} {h['points']:+.1f} {h['note'][:60]}" for h in hits[:4 if detail else 2])
             elim = " **ELIM**" if s["eliminated"] else ""
             flag = (" [" + "; ".join(s["flags"]) + "]") if s["flags"] else ""
             rk = s['rank'] if s['rank'] is not None else f"({s['conditional_rank']})"
-            L.append(f"| {rk} | {s['pgm']} | {s['name']}{elim}{flag} | {s['ml_odds']} | {s['run_style']}/{s['speed_pts']} | {s['prime_power']} | {s['score']:.1f} | {s['win_prob']:.0%} | {s['fair_odds']}{'' if s.get('min_win_odds') is None else ' / ' + format(s['min_win_odds'], 'g')} | {value_text(s)} | {top} |")
+            tf = s.get("timeform") or {}
+            tfc = (f" {tf.get('rank') if tf.get('rank') is not None else '-'}/{tf.get('top_fig') if tf.get('top_fig') is not None else '-'} |" if tf_on else "")
+            L.append(f"| {rk} | {s['pgm']} | {s['name']}{elim}{flag} | {s['ml_odds']} | {s['run_style']}/{s['speed_pts']} | {s['prime_power']} | {s['score']:.1f} | {s['win_prob']:.0%} | {s['fair_odds']}{'' if s.get('min_win_odds') is None else ' / ' + format(s['min_win_odds'], 'g')} | {value_text(s)} |{tfc} {top} |")
         L.append("")
         if detail >= 2:
             for s in r["sheets"]:

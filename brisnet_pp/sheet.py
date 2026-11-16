@@ -122,7 +122,27 @@ def merge_sheet(card: dict, sheet: dict) -> list[str]:
                 notes.append(f"R{race['race_no']} #{h['pgm']}: sheet says {sh['name']!r}, card says {h['name']!r}; angles ignored")
                 continue
             h["sheet_angles"] = sh["angles"]
+            h["sheet"] = sheet_features(sh, blk, best)
     return notes
+
+
+def angle_key(label: str) -> str:
+    """A stable key for an angle label as the sheet prints it ("Exit Key Race" -> "exit_key_race")."""
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", label)
+    return re.sub(r"[^a-z0-9]+", "_", spaced.lower()).strip("_")
+
+
+def sheet_features(sh: dict, blk: dict, best: set) -> dict:
+    """Every angle and rank the sheet prints for one horse, typed, with the original label.  Not read for points
+    beyond the key-race angles (F16); the back-test reports each one's hit rate."""
+    pgm = next((p for p, x in blk["horses"].items() if x is sh), None)
+
+    def rank_in(lst):
+        return lst.index(pgm) + 1 if pgm in (lst or []) else None
+    return {"source": "brisnet_power_play",
+            "angles": [{"label": a, "key": angle_key(a)} for a in sh["angles"]],
+            "ranks": {"top": rank_in(blk.get("top3")), "speed": rank_in(blk.get("speed")), "class": rank_in(blk.get("class")), "pace": rank_in(blk.get("pace"))},
+            "top_pick": blk.get("top_pick") == pgm, "best_bet": (blk.get("race_no"), pgm) in best}
 
 
 if __name__ == "__main__":

@@ -30,7 +30,21 @@ ORDINALS = {"FIRST": 1, "SECOND": 2, "THIRD": 3, "FOURTH": 4, "FIFTH": 5, "SIXTH
 # and "50 CENT Pick 3 (6-8-7) Paid $40.55" in mixed case at the foot of the chart
 EXOTIC_RE = re.compile(r"(?P<base>\$\d+(?:\.\d+)?|\d+\s*CENT)\s+(?P<pool>[A-Za-z][A-Za-z0-9 \-]+?)\s+\((?P<combo>[\dA-Za-z/\-,]+)\)\s+PAID\s+\$(?P<paid>[\d,]+\.\d{2})", re.I)
 COND_RE = re.compile(r"\b(?:Track|Course)\s+(?P<cond>Fast|Sloppy|Muddy|Good|Firm|Yielding|Soft|Heavy|Wet Fast|Slow|Frozen|Standard)(?:\s*\((?P<note>[^)]+)\))?", re.I)
-DIST_RE = re.compile(r"^(?P<dist>(?:ABOUT\s+)?[\d\s/½¼¾]+(?:FURLONGS?|MILES?|MILE|YARDS))\.?\s*(?:\(.*?\))?\s*(?P<cls>.*)$", re.I)
+DIST_RE = re.compile(r"^(?P<dist>(?:ABOUT\s+)?[\d\s/½¼¾]+(?:FURLONGS?|MILES?|MILE|YARDS))\.?\s*(?P<parens>(?:\([^)]*\)\s*)*)(?P<cls>.*)$", re.I)
+SURFACE_WORDS = ((r"turf", "TURF"), (r"tapeta|all[- ]?weather|synthetic|polytrack", "SYNTHETIC"), (r"dirt|main track", "DIRT"))
+
+
+def surface_from_off_line(text: str, cond: str) -> str:
+    """"Course Firm" (turf) vs "Track Fast" (dirt); a turf-only condition is turf whatever the noun says."""
+    turfy = re.search(r"\bcourse\b", text or "", re.I) is not None or (cond or "").upper() in ("FIRM", "YIELDING", "SOFT")
+    return "TURF" if turfy else "DIRT"
+
+
+def surface_from_text(text: str | None) -> str | None:
+    for pat, surf in SURFACE_WORDS:
+        if re.search(pat, text or "", re.I):
+            return surf
+    return None
 
 
 def _rows(page):
@@ -79,6 +93,9 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
         md = DIST_RE.match(r.text(95, 420))
         if md and "distance_text" not in out:
             out["distance_text"] = md.group("dist").strip().title()
+            hs = surface_from_text(md.group("parens"))
+            if hs:
+                out["surface"], out["surface_source"] = hs, "header"
             cls = re.sub(r"\s+Purse.*$", "", md.group("cls"), flags=re.I).strip(" .")
             out["class_text"] = cls.title() if cls else None
             mp = re.search(r"Purse\s+\$([\d,]+)", t)
@@ -151,7 +168,9 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
                 out["track_condition"] = mc.group("cond").upper()
                 if mc.group("note"):
                     out["track_condition"] += " (" + mc.group("note") + ")"
-                out["surface"] = "TURF" if "Course" in t else "DIRT"
+                if out.get("surface_source") != "header":
+                    # "Course Firm" (turf) vs "Track Fast" (dirt); turf-only conditions are turf whatever the noun
+                    out["surface"], out["surface_source"] = surface_from_off_line(t, mc.group("cond")), "off-line"
             mo = re.search(r"OFF AT\s+([\d:]+)", t)
             out["off_at"] = mo.group(1) if mo else None
             out["start_note"] = (re.search(r"Start\s+(.*?)\.\s", t + " ") or [None, None])[1]
@@ -263,7 +282,7 @@ def parse_chart(path: str) -> list[dict]:
 
 def chart_to_result(chart: dict) -> dict:
     """The results-file entry (what backtest.py / wagering.py read) plus the extras, under the same keys."""
-    keys = ("race_no", "finish", "win", "place", "show", "exotics", "track_condition", "surface", "official", "distance_text",
+    keys = ("race_no", "finish", "win", "place", "show", "exotics", "track_condition", "surface", "surface_source", "official", "distance_text",
             "class_text", "purse", "weather", "times", "off_at", "final_odds", "runners", "scratched", "claimed", "source", "track")
     return {k: chart[k] for k in keys if k in chart}
 

@@ -105,7 +105,9 @@ def reparse_reason(pdf: str | None, card_json: str | None) -> str | None:
 class Desk:
     """All file-system and engine work, independent of HTTP so it can be tested directly."""
 
-    def __init__(self, root: str = ROOT):
+    def __init__(self, root: str = ROOT, weather: str | None = None):
+        # weather fetch: "auto" tries python-weather for tracks with a configured location; "off" records nothing
+        self.weather = weather or os.environ.get("RACEDESK_WEATHER", "auto")
         self.root = root
         self.pps = os.path.join(root, "data", "pps")
         self.out = os.path.join(root, "data", "out")
@@ -127,6 +129,7 @@ class Desk:
         charts = sorted(os.path.basename(p) for p in glob.glob(os.path.join(pngdir, "*.pdf")))
         return {"pp": pp if os.path.exists(pp) else None, "sheet": sheet,
                 "changes": self._opt(os.path.join(self.pps, f"{card}.changes.html")),
+                "timeform": self._opt(os.path.join(self.pps, f"{card}.tfus.pdf")) or self._opt(os.path.join(self.pps, f"{card}.tfus.txt")),
                 "card_json": self._opt(os.path.join(self.out, f"{card}.card.json")),
                 "picks_json": self._opt(os.path.join(self.out, f"{card}.picks.json")),
                 "results": self._opt(os.path.join(self.results, f"{card}.results.json")),
@@ -209,8 +212,9 @@ class Desk:
                     json.dump(out["raw"], fh, indent=1, ensure_ascii=False)
                 self.log(st, "Re-read PPs", why or "asked for")
             cj = os.path.join(self.out, f"{card}.card.json")
+            wx = {"fetch": self.weather == "auto", "observations": list(st.get("weather") or [])}
             out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config,
-                           changes=changes)
+                           changes=changes, timeform=f["timeform"], weather=wx)
             result = out["result"]
             kind = kind or ("post-results" if result["run"]["results_known"] else "pre-race")
             result["run"]["kind"] = kind
@@ -219,6 +223,10 @@ class Desk:
             with open(os.path.join(self.out, f"{card}.picks.md"), "w", encoding="utf-8") as fh:
                 fh.write(format_report(result, detail=2))
             snap = write_snapshot(self.out, card, result, kind)
+        wxr = result["run"].get("weather") or {}
+        if wxr.get("status") == "ok":    # fetched observations join the card's record (append-only, with provenance)
+            have = {(o.get("observed_at_utc"), o.get("race_no"), o.get("provenance")) for o in st.get("weather") or []}
+            st.setdefault("weather", []).extend(o for o in wxr.get("observations", []) if (o.get("observed_at_utc"), o.get("race_no"), o.get("provenance")) not in have)
         tm = result["run"].get("timing") or {}
         st.setdefault("runs", []).append({"at": datetime.now().isoformat(timespec="seconds"), "scratches": st.get("scratches", ""),
                                           "profile": result.get("track_profile"), "notes": out["notes"], "kind": kind,
@@ -244,12 +252,19 @@ class Desk:
             for r in cj["races"]:
                 roster.append({"race_no": r["race_no"], "class_text": r.get("class_text"), "distance_text": r.get("distance_text"),
                                "surface": r.get("surface"), "post_time": r.get("post_time"), "wagers": r.get("wagers"),
+                               "inputs": r.get("inputs"), "surface_switch": r.get("surface_switch"), "timeform": r.get("timeform"),
                                "horses": [{"pgm": h["pgm"], "post": h.get("post"), "name": h["name"], "ml_odds": h.get("ml_odds"),
                                            "run_style": h.get("run_style"), "speed_pts": h.get("speed_pts"), "entry_status": h.get("entry_status"),
                                            "jockey": h.get("jockey"), "trainer": h.get("trainer")} for h in r["horses"]]})
         picks = json.load(open(f["picks_json"], encoding="utf-8")) if f["picks_json"] else None
         if picks and not picks.get("track_code") and meta.get("track_code"):
             picks["track_code"] = meta["track_code"]
+        if picks:   # the latest run's inputs, surface switch and Timeform reading belong to the race, not the raw parse
+            pk = {r["race_no"]: r for r in picks.get("races", [])}
+            for r in roster:
+                for k in ("inputs", "surface_switch", "timeform"):
+                    if r["race_no"] in pk and k in pk[r["race_no"]]:
+                        r[k] = pk[r["race_no"]][k]
         results = load_results(f["results"]) if f["results"] else None
         bt = ev = pre = None
         results_error = None
@@ -465,6 +480,64 @@ class Desk:
 
     # ---------------------------------------------------------------- uploads
     @staticmethod
+    def timeform_identity(data: bytes) -> dict:
+        """Track name and date read from a TimeformUS PP PDF (parsed in a temp file; the file is not kept)."""
+        import tempfile
+        from timeform_pp.reader import identity, parse_lines, parse_pdf
+        if not data.startswith(b"%PDF"):          # a saved text layer
+            return identity(parse_lines(data.decode("utf-8", errors="replace").splitlines()))
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as fh:
+            fh.write(data)
+            tmp = fh.name
+        try:
+            return identity(parse_pdf(tmp))
+        finally:
+            os.remove(tmp)
+
+    def card_identity(self, card: str) -> dict | None:
+        """What this card is (track, track code, date) from its picks, its parsed card or its results."""
+        f = self.files(card)
+        for p in (f["picks_json"], f["card_json"]):
+            if p:
+                with open(p, encoding="utf-8") as fh:
+                    d = json.load(fh)
+                return {"track": d.get("track"), "track_code": d.get("track_code"), "date": d.get("date")}
+        if f["results"]:
+            d = load_results(f["results"])
+            return {"track": d.get("track"), "track_code": None, "date": d.get("date")}
+        return None
+
+    def guard_timeform(self, card: str, data: bytes) -> None:
+        """The Timeform file must be for this card's track and day (same guard as the PP; track by canonical code)."""
+        have = self.card_identity(card)
+        if not have or not (have.get("date") or have.get("track")):
+            return
+        new = self.timeform_identity(data)
+        from handicapper.identity import canonical_track
+        cfg = load_config(self.config)
+        problems = []
+        if have.get("date") and new.get("date") and str(have["date"]) != str(new["date"]):
+            problems.append(f"date {new['date']} vs this card's {have['date']}")
+        hc = (have.get("track_code") or canonical_track(have.get("track"), cfg) or "").upper()
+        nc = (canonical_track(new.get("track"), cfg) or "").upper()
+        if hc and nc and hc != nc:
+            problems.append(f"track {new['track']!r} ({nc}) vs this card's {have['track']!r} ({hc})")
+        elif not nc and have.get("track") and new.get("track") and have["track"].strip().lower() != new["track"].strip().lower():
+            problems.append(f"track {new['track']!r} vs this card's {have['track']!r}")
+        if problems:
+            raise ValueError(f"refused: this Timeform file is not {card}'s ({'; '.join(problems)}).")
+
+    def save_weather(self, card: str, text: str) -> dict:
+        """Owner-typed weather for the selected card: a manual observation with provenance, appended, never replacing
+        a fetched one.  Rules do not read it."""
+        from handicapper.weather import parse_manual
+        obs = parse_manual(text)
+        st = self.state(card)
+        st.setdefault("weather", []).append(obs)
+        self.log(st, "Weather typed", (text or "").strip()[:120])
+        self.save_state(st)
+        return {"ok": True, "observation": obs, "count": len(st["weather"])}
+
     def pp_identity(data: bytes) -> dict:
         """Track name, track code and date read from a PP PDF (parsed in a temp file; the file is not kept)."""
         import tempfile
@@ -513,6 +586,9 @@ class Desk:
             path = os.path.join(self.pps, f"{card[:-1]}q.pdf" if card.endswith("y") else f"{card}q.pdf")
         elif kind == "changes":
             path = os.path.join(self.pps, f"{card}.changes.html")
+        elif kind == "timeform":
+            path = os.path.join(self.pps, f"{card}.tfus.{'pdf' if data.startswith(b'%PDF') else 'txt'}")
+            self.guard_timeform(card, data)  # same identity guard as the PP: another track's or day's file is refused
         elif kind in ("png", "chart"):
             if not race_no:
                 m = re.search(r"USA(\d{1,2})$", os.path.splitext(filename)[0], re.I) or re.search(r"r?(\d{1,2})", os.path.splitext(filename)[0])
@@ -522,7 +598,7 @@ class Desk:
             os.makedirs(os.path.join(self.pngs, card), exist_ok=True)
             path = os.path.join(self.pngs, card, f"r{race_no}.{'png' if kind == 'png' else 'pdf'}")
         else:
-            raise ValueError("kind must be pp, sheet, changes, png or chart")
+            raise ValueError("kind must be pp, sheet, changes, timeform, png or chart")
         with open(path, "wb") as fh:
             fh.write(data)
         if kind == "changes":
@@ -643,9 +719,11 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"ok": True, "stopping": True})
                 threading.Thread(target=self.server.shutdown, daemon=True).start()
                 return None
-            m = re.fullmatch(r"/api/cards/([^/]+)/(run|results|process|ocr)", u.path)
+            m = re.fullmatch(r"/api/cards/([^/]+)/(run|results|process|ocr|weather)", u.path)
             if m:
                 card, action = unquote(m.group(1)), m.group(2)
+                if action == "weather":
+                    return self._json(self.desk.save_weather(card, payload.get("text", "")))
                 if action == "run":
                     return self._json(self.desk.run(card, payload.get("scratches"), bool(payload.get("reparse"))))
                 if action == "ocr":

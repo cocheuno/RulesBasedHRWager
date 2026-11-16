@@ -13,6 +13,7 @@ cannot know when a chart was read before it existed); from Phase A on the Desk i
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import sqlite3
@@ -96,7 +97,7 @@ def import_card(root: str, card: str, con: sqlite3.Connection | None = None) -> 
     Idempotent: rows keyed by content never duplicate; re-importing adds nothing."""
     from handicapper.snapshot import list_snapshots
     con = con or connect(root)
-    out = {"snapshots": 0, "forecasts": 0, "decisions": 0, "settlements": 0}
+    out = {"snapshots": 0, "forecasts": 0, "decisions": 0, "settlements": 0, "observations": 0}
     out_dir = os.path.join(root, "data", "out")
     ts = now_utc()
     for meta in list_snapshots(out_dir, card):
@@ -117,6 +118,16 @@ def import_card(root: str, card: str, con: sqlite3.Connection | None = None) -> 
                 con.execute("INSERT OR IGNORE INTO betting_interest VALUES (?,?,?,?,?,?,?)",
                             (rid + "|" + sh["pgm"], rid, sh["pgm"], sh.get("name"), 1 if sh["pgm"][-1:].isalpha() else 0,
                              "scratched" if sh["pgm"] in [] else "entered", ts))
+            for provider, payload in (("timeformus", r.get("timeform")), ("equibase_changes", r.get("inputs") if (r.get("inputs") or {}).get("source") else None),
+                                      ("weather:" + str((r.get("weather") or {}).get("provenance")), r.get("weather"))):
+                if not payload:
+                    continue
+                body = json.dumps(payload, sort_keys=True, default=str)
+                oid = hashlib.sha1((rid + "|" + provider + "|" + body).encode()).hexdigest()[:16]
+                con.execute("INSERT OR IGNORE INTO source_observation VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                            (oid, provider, meta["file"], hashlib.sha1(body.encode()).hexdigest(), (payload.get("forecast_for_utc") if isinstance(payload, dict) else None),
+                             (payload.get("observed_at_utc") if isinstance(payload, dict) else None) or at, at, at, rid, body, ts))
+                out["observations"] = out.get("observations", 0) + con.execute("SELECT changes()").fetchone()[0]
             fid = f"{meta['file']}|{r['race_no']}"
             vec = {sh["pgm"]: {"model": sh.get("model_prob"), "market": sh.get("market_prob"), "win": sh.get("win_prob"), "score": sh.get("score"),
                                "eliminated": sh.get("eliminated"), "flags": sh.get("flags")} for sh in r.get("sheets", [])}
@@ -149,7 +160,6 @@ def import_card(root: str, card: str, con: sqlite3.Connection | None = None) -> 
                 con.execute("INSERT OR IGNORE INTO race VALUES (?,?,?,?,?,?,?,?,?,?,?)",
                             (rid, card, None, res.get("date"), x["race_no"], None, None, None, None, "results", ts))
             payouts = json.dumps({k: x.get(k) for k in ("win", "place", "show", "exotics")}, sort_keys=True)
-            import hashlib
             sid = hashlib.sha1((rid + "|" + json.dumps(x.get("finish")) + "|" + payouts).encode()).hexdigest()[:16]
             ver = con.execute("SELECT COUNT(*) FROM settlement WHERE race_id=?", (rid,)).fetchone()[0] + 1
             cur = con.execute("INSERT OR IGNORE INTO settlement VALUES (?,?,?,?,?,?,?,?,?,?)",

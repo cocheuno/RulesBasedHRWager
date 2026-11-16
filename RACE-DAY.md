@@ -27,6 +27,9 @@ app). A picks run made before the restart used the old rules and parser.
 
 1. Download from TwinSpires into `data\pps\`: the **Ultimate PPs with QuickPlay Comments** as `<card>.pdf` and, if you
    take it, the **Power Play quick sheet** as `<card>q.pdf` (it turns on the key-race rule and the Brisnet benchmark).
+   If you have the **TimeformUS PPs** for the card, drop that PDF in the Load tab's third box: the Desk shows the
+   Timeform rank and Top Fig beside the Brisnet rank and the Timeform picks on each race; the rules do not use it,
+   and a file for another track or day is refused.
    Or drop them on the Load tab, which saves them to the same place.
 2. Pick the card in the selector at the top and press **Run picks**. The Desk shows each race's top three with rank,
    ML, score, win chance and A/B grade, the primary play, the other wagers, and the Pick 3 / Pick 4 tickets.
