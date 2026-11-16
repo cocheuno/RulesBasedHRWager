@@ -25,11 +25,15 @@ from collections import defaultdict
 
 from . import rules as R
 from . import multirace as MR
+from . import research as RS
+from .policy import apply_policy
 from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
 from .timing import DEFAULT_TIMING
 from .probability import DEFAULT_PROBABILITY, fair_odds, race_probs, validate as validate_probability
 from .timing import DEFAULT_TIMING
 from .wagering import DEFAULT_UNITS, DEFAULT_WAGERING, make_wager
+from .research import DEFAULT_PRICING, DEFAULT_RESEARCH, o_min, validate_pricing, validate_research
+from .policy import DEFAULT_POLICY
 from .features import horse_features, race_context
 
 DEFAULT_CONFIG = {
@@ -52,6 +56,9 @@ DEFAULT_CONFIG = {
     "timing": dict(DEFAULT_TIMING),            # per-race cutoff margin (see timing.py)
     "multirace": dict(MR.DEFAULT_MULTIRACE),   # Pick 3 / Pick 4 construction (see multirace.py)
     "wagering": dict(DEFAULT_WAGERING),        # unit stake and what counts as a bet (see wagering.py)
+    "pricing": dict(DEFAULT_PRICING),          # tau, costs, rebate: O_min = (1 + tau + costs - rebate) / p - 1 (see research.py)
+    "research": dict(DEFAULT_RESEARCH),        # research probabilities and model status (see research.py)
+    "wager_policy": dict(DEFAULT_POLICY),      # the owner's decisions table (see policy.py)
 }
 
 
@@ -69,6 +76,9 @@ def _apply_layer(cfg: dict, layer: dict) -> None:
         else:
             cfg["multirace"][k] = v
     cfg["wagering"].update(layer.get("wagering", {}))
+    cfg.setdefault("pricing", dict(DEFAULT_PRICING)).update(layer.get("pricing", {}))
+    cfg.setdefault("research", dict(DEFAULT_RESEARCH)).update(layer.get("research", {}))
+    cfg.setdefault("wager_policy", dict(DEFAULT_POLICY)).update(layer.get("wager_policy", {}))
 
 
 def load_config(path: str | None, track_code: str | None = None) -> dict:
@@ -112,6 +122,11 @@ def validate_config(cfg: dict) -> None:
     for rid in cfg.get("disabled", []):
         if rid not in known:
             bad.append(f"disabled: unknown rule id {rid!r}")
+    for fn, key in ((validate_pricing, "pricing"), (validate_research, "research")):
+        try:
+            fn(cfg.get(key))
+        except ValueError as e:
+            bad.append(str(e))
     sel = cfg.get("selection", {})
     for k in ("single_gap", "pair_gap", "third_gap", "spread_gap", "min_ml_for_win_bet", "win_margin"):
         v = sel.get(k)
@@ -150,7 +165,7 @@ def score_race(race: dict, cfg: dict) -> dict:
     ctx = race_context(race, feats)                       # active field only (no AE / MTO)
     active = {k: v for k, v in feats.items() if k not in ctx["alternates"]}
     cond_ctx = {alt: race_context(race, dict(active, **{alt: feats[alt]})) for alt in ctx["alternates"]}
-    sel = cfg["selection"]
+    sel = dict(cfg["selection"], pricing=cfg.get("pricing"))
     sheets = []
     for h in race["horses"]:
         f = feats[h["pgm"]]
@@ -236,6 +251,7 @@ def score_race(race: dict, cfg: dict) -> dict:
         "post_time": race.get("post_time"),
         "surface": race.get("surface"), "field_size": ctx["n"], "alternates": ctx["alternates"], "pars": race.get("pars"),
         "pace_shape": ctx["pace_shape"], "lone_speed": ctx["lone_speed"], "num_early": ctx["num_early"],
+        "inputs": race.get("inputs"), "surface_switch": race.get("surface_switch"), "track_condition_morning": race.get("track_condition_morning"),
         "picks": picks, "bet_structure": structure, "confidence": confidence, "selection_note": note,
         "brisnet": race.get("brisnet"), "wagers_menu": race.get("wagers"), "sheets": sheets,
     }
@@ -243,20 +259,24 @@ def score_race(race: dict, cfg: dict) -> dict:
 
 def win_price(s: dict, sel: dict) -> dict:
     """Minimum acceptable odds for a win bet on this horse, and whether the morning line meets it.
-    min_odds = max(min_ml_for_win_bet, fair_odds x (1 + win_margin)).  ok is True (bet), False (price too short)
+    min_odds = max(min_ml_for_win_bet, O_min) with O_min = (1 + tau + costs - rebate) / p - 1 (research.py; the
+    old fair x 1.15 is replaced; break-even odds 1/p - 1 are reported beside it).  ok is True (bet), False (price too short)
     or None when the PPs carry no morning line: then the price is unknown, the bet is advisory ("take X-1 or
     better on the board") and is never counted as a bet placed.  A missing price is never treated as a long one."""
     floor = float(sel["min_ml_for_win_bet"])
-    fair = s.get("fair_odds")
-    min_odds = floor if fair is None else max(floor, round(fair * (1 + sel.get("win_margin", 0.0)), 1))
+    pricing = validate_pricing(sel.get("pricing"))
+    fair = s.get("fair_odds")                                   # break-even odds 1/p - 1
+    p = s.get("model_prob") if s.get("model_prob") else (1.0 / (fair + 1.0) if fair is not None else None)
+    need = o_min(p, pricing) if p else None                     # (1 + tau + costs - rebate) / p - 1
+    min_odds = floor if need is None else max(floor, need)
     ml = s.get("ml_decimal")
-    out = {"min_odds": min_odds, "ml": ml, "fair": fair}
+    out = {"min_odds": min_odds, "ml": ml, "fair": fair, "break_even": fair, "o_min": need, "tau": pricing["tau"]}
     if ml is None:
         return out | {"ok": None, "why": f"no morning line in the PPs; take {min_odds:g}-1 or better on the board"}
     if ml < floor:
         return out | {"ok": False, "why": f"ML {s.get('ml_odds')} is below {floor:g}-1"}
     if ml < min_odds:
-        return out | {"ok": False, "why": f"ML {s.get('ml_odds')} is under fair {fair}-1 plus margin ({min_odds:g}-1 needed)"}
+        return out | {"ok": False, "why": f"ML {s.get('ml_odds')} is under the {min_odds:g}-1 needed for a {pricing['tau']:.0%} return (break-even {fair}-1)"}
     return out | {"ok": True, "why": f"ML {s.get('ml_odds')}, take {min_odds:g}-1 or better"}
 
 
@@ -320,15 +340,19 @@ def score_card(card: dict, cfg: dict, multirace: bool = True) -> dict:
     mr_cfg = dict(cfg["multirace"], probability=cfg.get("probability", DEFAULT_PROBABILITY))
     for r in out["races"]:
         r["leg"] = MR.leg_summary(r, mr_cfg) if multirace else None
+    sel = dict(cfg["selection"], pricing=cfg.get("pricing"))
     for i, r in enumerate(out["races"]):
         nxt = out["races"][i + 1] if i + 1 < len(out["races"]) else None
-        r["wagers"] = primary_wagers(r, cfg["selection"])
-        r["other_wagers"] = other_wagers(r, nxt, cfg["selection"], r["wagers"], units=cfg.get("wagering", {}).get("units"))
+        r["wagers"] = primary_wagers(r, sel)
+        r["other_wagers"] = other_wagers(r, nxt, sel, r["wagers"], units=cfg.get("wagering", {}).get("units"))
+        ps_w, ps_t = RS.place_show_wagers(r, cfg.get("pricing"), cfg.get("wagering", {}).get("units"))   # Phase D: place and show candidates
+        r["wagers"].extend(ps_w); r["other_wagers"].extend(ps_t)
         mins = {s["pgm"]: s.get("min_win_odds") for s in r["sheets"]}
         for w in r["wagers"]:
             if w["type"] == "WIN":        # the price each horse must show at post time; the evaluation checks it
                 w["min_odds_by"] = {k: mins.get(k) for k in w["legs"][0]}
                 w.setdefault("min_odds", w["min_odds_by"].get(w["legs"][0][0]))
+    apply_policy(out, cfg)                      # the owner's decisions table: suppress, record, never silently
     out["multirace"] = MR.build_all(out, mr_cfg) if multirace else None
     return out
 
@@ -547,6 +571,11 @@ def format_report(result: dict, detail: int = 1) -> str:
         names = {s["pgm"]: s for s in r["sheets"]}
         L.append(f"**PLAY: {', '.join('#' + p + ' ' + names[p]['name'] + ' (' + str(names[p]['ml_odds']) + ')' for p in r['picks'])}**  — {r['bet_structure']}")
         L.append(f"Confidence: {r['confidence']} — {r['selection_note']}")
+        rv = r.get("research")
+        if rv:
+            L.append(f"Research (model {rv['model_status']}; heuristic, not a validated edge): anchor = {rv.get('anchor_source') or 'none'}"
+                     + (f"; live market: {rv['q_reason']}" if rv.get("q_reason") else "; live market in use")
+                     + f"; every single-horse wager is {'NO_BET' if rv['model_status'] != 'VALIDATED' else 'gated'} in the research layer")
         L.append("")
         tf_on = any(s.get("timeform") for s in r["sheets"])
         tfcol = " TF rk/fig |" if tf_on else ""

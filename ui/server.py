@@ -217,8 +217,9 @@ class Desk:
                 self.log(st, "Re-read PPs", why or "asked for")
             cj = os.path.join(self.out, f"{card}.card.json")
             wx = {"fetch": self.weather == "auto", "observations": list(st.get("weather") or [])}
+            boards = {int(k): v for k, v in (self.tote_latest(card).get("races") or {}).items()}
             out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config,
-                           changes=changes, timeform=f["timeform"], weather=wx)
+                           changes=changes, timeform=f["timeform"], weather=wx, boards=boards)
             result = out["result"]
             kind = kind or ("post-results" if result["run"]["results_known"] else "pre-race")
             result["run"]["kind"] = kind

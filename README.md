@@ -232,6 +232,26 @@ With `--weather` (the Desk does it on every run) the forecast for `tracks.<code>
 or a location the run says `weather: unavailable` with the reason, never a guess. Typed weather
 (`POST /api/cards/<card>/weather`) is a second observation with provenance `manual`. No rule reads weather.
 
+## Wager policy, price and the research layer (Phase D)
+
+`handicapper/policy.py` applies the owner's decisions table (`rules_config.json` → `wager_policy`) to the
+suggested wagers after they are built: no exotics in lone-speed races; turf win bets only; no doubles through firm
+turf; no trifecta or superfecta outside high confidence (medium: exacta box only; contentious: the four-horse box
+is dropped); nothing the Equibase page says the track will not sell. Every suppression is kept on the race with its
+reason and shown as a POLICY line. Picks and scores never change.
+
+A win bet needs `O_min = (1 + tau + costs - rebate) / p - 1` (`pricing`, tau 0.15); the break-even odds `1/p - 1`
+are shown beside it. Every race names a place and a show candidate (Harville expansion of the win vector, labelled
+heuristic) with a minimum $2 price; they are $2 wagers settled against the chart's place and show prices.
+
+`handicapper/research.py` adds, per race and per wager, the research layer: `p_rule_heuristic`, `q_live_market`
+(from the latest tote board), `p_market_anchor` (q^alpha · exp(beta·z), alpha 1, beta 0), `p_final_model` (none),
+`model_status` (UNTRAINED until Phase E), EV at the quote / after an adverse drift / at break-even, and NO_BET
+reason codes (stale data, unmatched runner, scratch or coupled mismatch, market closed, untrained model, no
+validated edge, insufficient price, pool uncertainty, bankroll cap, invalid vector, unpriced exotic pool). While
+the model is untrained every single-horse wager is NO_BET in that layer and exotics are "candidate, unpriced";
+the legacy analysis still counts suggested bets as configured.
+
 ## Live odds and the tote board (`carovex/tote.py`)
 
 PuntersEdge's `/v1/racing/tote` is TVG's public US board: one read returns every race of the day for 2 credits.

@@ -151,10 +151,18 @@ class TestTickets(Base):
             self.assertTrue(r["other_wagers"], f"R{r['race_no']} has no wager suggestions")
             self.assertIn(r["leg"]["kind"], ("single", "standard", "chaos"))
         r5 = self.by_race[5]                      # 4/5 standout: key, no win bet, single in horizontals
-        self.assertTrue(any(w.startswith("EXACTA key #1") for w in r5["other_wagers"]))
+        if r5.get("lone_speed"):                  # Phase D policy: no exotics in a lone-speed race, said in a POLICY line
+            self.assertTrue(any(w.startswith("POLICY: no exacta") and "lone-speed" in w for w in r5["other_wagers"]))
+            self.assertFalse(any(w["type"] in ("EXACTA", "TRIFECTA") for w in r5["wagers"]))
+        else:
+            self.assertTrue(any(w.startswith("EXACTA key #1") for w in r5["other_wagers"]))
         self.assertTrue(any("no WIN bet" in w and "single" in w for w in r5["other_wagers"]))
         r6 = self.by_race[6]                      # beatable 8/5 favourite: chalk underneath only
-        self.assertTrue(any("favourite #1 looks beatable" in w for w in r6["other_wagers"]))
+        if r6["surface"] == "turf":               # Phase D policy: turf is win bets only, the H5 exacta is suppressed and said so
+            self.assertTrue(any("favourite #1 looks beatable" in g["label"] for g in r6["policy"]["suppressed"]))
+            self.assertTrue(any(w.startswith("POLICY: no exacta") and "turf" in w for w in r6["other_wagers"]))
+        else:
+            self.assertTrue(any("favourite #1 looks beatable" in w for w in r6["other_wagers"]))
         r4 = self.by_race[4]                      # daily double into R5's single
         self.assertTrue(any(w.startswith("DAILY DOUBLE") and "R5 #1" in w for w in r4["other_wagers"]))
         self.assertFalse(any(w.startswith("DAILY DOUBLE") for w in r6["other_wagers"]))   # last race: no next leg

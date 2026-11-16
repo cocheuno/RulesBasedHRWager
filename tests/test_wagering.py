@@ -51,7 +51,7 @@ class TestCard(unittest.TestCase):
         for r in res["races"]:
             self.assertTrue(r["wagers"], f"R{r['race_no']} has no structured wagers")
             others = [w for w in r["wagers"] if w["source"] == "other"]
-            self.assertEqual(len(others), sum(1 for t in r["other_wagers"] if not t.startswith("no WIN") and not t.startswith("PASS")))
+            self.assertEqual(len(others), sum(1 for t in r["other_wagers"] if not t.startswith(("no WIN", "PASS", "POLICY", "place/show candidates"))))
             for w in r["wagers"]:
                 self.assertGreater(w["combos"], 0)
         r5 = next(r for r in res["races"] if r["race_no"] == 5)       # 4/5 standout: no WIN bet, keys only
@@ -72,7 +72,9 @@ class TestCard(unittest.TestCase):
                     self.assertFalse(ca < cb, f"{a['label']} is covered by {b['label']}")
 
     def test_evaluate_card_and_rollup(self):
-        res = score_card(build_card(), CFG)
+        import copy
+        cfg = copy.deepcopy(CFG); cfg["wager_policy"] = {k: False for k in cfg["wager_policy"]}   # mechanics, not policy
+        res = score_card(build_card(), cfg)
         results = {"races": [{"race_no": 2, "finish": ["1", "3", "5", "4"], "win": 8.0,
                                "exotics": [{"type": "EXACTA", "base": 1.0, "combo": "1/3", "payout": 20.0}]},
                               {"race_no": 5, "finish": ["1", "2", "3"], "win": 3.6}]}
@@ -97,7 +99,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(ru["chart"][-1]["hits"], ru["all"]["hits"])
         self.assertIn("WIN", ru["by_type"])
         txt = format_evaluation(ev); format_rollup(ru)
-        self.assertIn("Unit stakes: $2 win, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double, $1 Pick 3, $0.50 Pick 4.", txt)
+        self.assertIn("Unit stakes: $2 win, $2 place, $2 show, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double, $1 Pick 3, $0.50 Pick 4.", txt)
 
     def test_win_bet_is_passed_when_final_odds_are_under_the_minimum(self):
         by = {4: {"race_no": 4, "finish": ["7", "2", "3"], "win": 3.6, "final_odds": {"7": 0.8, "2": 5.0}}}
@@ -133,7 +135,9 @@ class TestCard(unittest.TestCase):
             self.assertTrue(all(v is not None and v >= 1.5 for v in w["min_odds_by"].values()))
 
     def test_trifecta_structure_by_confidence(self):
-        res = score_card(build_card(), CFG)
+        import copy
+        cfg = copy.deepcopy(CFG); cfg["wager_policy"] = {k: False for k in cfg["wager_policy"]}   # the structures as built
+        res = score_card(build_card(), cfg)
         seen = set()
         for r in res["races"]:
             live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
@@ -148,6 +152,16 @@ class TestCard(unittest.TestCase):
                 box = [w for w in tris if w["box"]]
                 self.assertTrue(box and len(box[0]["legs"][0]) == 4 and box[0]["combos"] == 24, "four-horse box")
         self.assertIn("high", seen); self.assertTrue(seen & {"medium", "low"})
+        # with the owner's policy on: no trifecta or superfecta outside high confidence, no exotics on turf or behind lone speed
+        res = score_card(build_card(), CFG)
+        for r in res["races"]:
+            types = {w["type"] for w in r["wagers"]}
+            if r["confidence"] != "high":
+                self.assertFalse(types & {"TRIFECTA", "SUPERFECTA"}, f"R{r['race_no']}")
+            if r["surface"] == "turf" or r.get("lone_speed"):
+                self.assertFalse(types & {"EXACTA", "TRIFECTA", "SUPERFECTA"}, f"R{r['race_no']}")
+            if r["policy"]["suppressed"]:
+                self.assertTrue(any(t.startswith("POLICY:") for t in r["other_wagers"]))
 
     def test_multirace_tickets_tracked_not_counted(self):
         res = score_card(build_card(), CFG)

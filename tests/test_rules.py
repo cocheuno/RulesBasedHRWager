@@ -421,7 +421,7 @@ class TestWinPrice(Base):
         from handicapper.engine import win_price
         sel = {"min_ml_for_win_bet": 1.5, "win_margin": 0.15}
         self.assertIsNone(win_price({"fair_odds": 2.0, "ml_decimal": None, "ml_odds": None}, sel)["ok"])
-        self.assertEqual(win_price({"fair_odds": 2.0, "ml_decimal": None}, sel)["min_odds"], 2.3)
+        self.assertEqual(win_price({"fair_odds": 2.0, "ml_decimal": None}, sel)["min_odds"], 2.45)   # p = 1/3: 1.15 / p - 1
         self.assertFalse(win_price({"fair_odds": 2.0, "ml_decimal": 2.0, "ml_odds": "2/1"}, sel)["ok"], "at fair: no bet")
         self.assertFalse(win_price({"fair_odds": 0.3, "ml_decimal": 1.2, "ml_odds": "6/5"}, sel)["ok"], "under the floor")
         self.assertTrue(win_price({"fair_odds": 2.0, "ml_decimal": 2.5, "ml_odds": "5/2"}, sel)["ok"])
@@ -455,7 +455,7 @@ class TestWinPrice(Base):
         for h in race["horses"]:
             if h["pgm"] == top:
                 h["ml_odds"], h["ml_decimal"] = "8/5", 1.6      # above the 3/2 floor
-        cfg["selection"]["win_margin"] = 5.0                   # so fair x 6 is surely above 8/5
+        cfg["pricing"]["tau"] = 1.9                            # a 190% target: O_min is surely above 8/5
         res = score_card(card, cfg, multirace=False)
         r = next(x for x in res["races"] if x["race_no"] == r_with["race_no"])
         self.assertFalse([w for w in r["wagers"] if w["type"] == "WIN"])

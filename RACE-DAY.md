@@ -41,7 +41,10 @@ app). A picks run made before the restart used the old rules and parser.
    `4:-12` keeps it out. An AE that is not in shows its rank in brackets and is in no bet. That run is the one to
    bet from.
 4. Click any horse for its rule-by-rule audit; click a race on the left to switch races.
-5. If you are at the Desk near post time: press **Refresh tote** on the race. The Tote column shows the current
+5. Lines that start with **POLICY** say which suggested wagers the decisions table removed and why (lone speed,
+   turf, firm turf, medium confidence, pools the track does not sell). **PLACE** and **SHOW** lines name the
+   race's place and show candidates with the $2 price each needs.
+6. If you are at the Desk near post time: press **Refresh tote** on the race. The Tote column shows the current
    win odds (to 1, as the track displays them) and each horse's share of the WIN pool; the wagers list shows the
    engine's minimum price beside the quote and how old the quote is. Mark a wager **Paper** if you intend it, or
    **Accepted (verified)** only if you actually placed it elsewhere. Each refresh costs 2 PuntersEdge credits; the
