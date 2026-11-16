@@ -49,13 +49,13 @@ pricing. Each stays `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` until its gate is met
   Pace Projector order is a graphic and may not be recoverable from text.
 - Equibase charts: the `surface` field is unreliable (reads "DIRT" everywhere); fix in Phase B.
 
-## Phase A note: the week re-scored by the clock
+## Phase A note: the clock is a label
 
-With per-race cutoffs from the charts' actual off times, 19 of the 23 frozen-week cards have a before-cutoff run
-for most races (176 races; 2 excluded); the four 11/07 cards have none, because their only runs were made the
-following evening. On those 176 races the top pick won 56 (32%) and the counted bets lost 41% ($3,356.60 →
-$1,967.51), against −32% when the evening runs with the final scratches were scored. The clock is stricter, and
-that is the number to carry forward.
+The owner's rule: picks and results are often run late in the day or the next day, and that does not compromise
+the data, because a run uses only the PPs and the public scratches. Scoring therefore takes, per race, the newest
+run made without that race's result, whatever the hour, and records whether it was before or after the cutoff.
+The frozen week scores as before (23 cards, 219 races, top pick 30%, counted bets −32%); of those 219 race
+predictions, 4 were made before the cutoff and 215 after, which the clock column now shows.
 
 ## Data on file (2026-11-15)
 
