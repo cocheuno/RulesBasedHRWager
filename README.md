@@ -216,6 +216,22 @@ Processing (from any clone): read the screenshots into `results/dmr1106y.results
 `addresult.py`), run `python backtest.py data/out/dmr1106y.picks.json results/dmr1106y.results.json > results/dmr1106y.backtest.md`,
 commit `results/`.
 
+## TimeformUS PPs (`--timeform <file>.pdf`)
+
+`timeform_pp/reader.py` reads the TimeformUS PP through its text layer: Top Fig (pace-adjusted speed figure),
+running style with early and late pace figures, ML, weight, every running line with its own date and figures, the
+Power Picks and, when the graphic's digits come through in order, the Pace Projector. Values live under their own
+namespace (`horse["timeform"]`, `race["timeform"]` with a rank by Top Fig) and are never substituted for a Brisnet
+value or the reverse. The report and the Desk show `TF rk/fig` beside the Brisnet rank; no rule reads Timeform.
+The Desk's Load tab takes the PDF beside the Brisnet one, with the same track-and-day guard.
+
+## Weather (`--weather`)
+
+With `--weather` (the Desk does it on every run) the forecast for `tracks.<code>.location` is fetched with
+`python-weather` and one observation per race post time is recorded on the run and on the race; without network
+or a location the run says `weather: unavailable` with the reason, never a guess. Typed weather
+(`POST /api/cards/<card>/weather`) is a second observation with provenance `manual`. No rule reads weather.
+
 ## Brisnet Power Play sheet (`--sheet <card>q.pdf`)
 
 The quick sheet that accompanies the PPs is read coordinate-wise by `brisnet_pp/sheet.py`.  Only two things are
@@ -253,7 +269,11 @@ specialist, horse for course, clocker specials) restate data the PP rules alread
 * `--changes <saved Equibase race-day-changes page>.html` (`brisnet_pp/changes.py`) adds that page's scratches to
   `--scratch` and records the morning track condition, scheduled first post, temporary rail, jockey changes,
   gelding / equipment notes and pools the track is not offering, on the run block and on each race.  Data only:
-  no rule reads it yet.  The Desk takes the same file on the Load tab.
+  no rule reads it yet.  The Desk takes the same file on the Load tab.  Each race carries the page's `inputs`
+  (morning condition, off-turf, pools not offered, rail); a race the page takes **off the turf** is scored on
+  `tracks.<code>.off_turf_surface` with its MTO entrants in, and `surface_switch` is recorded on the race and the run.
+* `python -m handicapper.provenance audit <card.json>` lists the parser fields no rule reads; `horse_record` /
+  `card_records` expose every value with source and date, missingness flags, and an as-of filter.
 * `--scratch "r:p, r:p"` removes scratched horses before scoring; one also-eligible draws in per scratch, in
   program order (MTO horses stay flagged).  `r:+p` states that an AE/MTO is officially in (also when the race
   comes off the turf), `r:-p` that it stays out although a scratch would normally bring it in.  Pace shape and

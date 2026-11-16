@@ -24,6 +24,10 @@ Pure Python, one third-party runtime dependency (`pdfplumber`); OCR (`rapidocr_o
 | | `handicapper/results.py` | 266 | results file, scratches and draw-ins, same-day bias, identity check, back-test |
 | | `handicapper/pipeline.py` | 118 | `run_card()`: parse or load, sheet, scratches, changes, results → score; run block |
 | | `handicapper/snapshot.py` | 80 | append-only snapshots `data/out/snapshots/<card>/<UTC>_<kind>.picks.json` |
+| Phase B | `timeform_pp/reader.py` | | TimeformUS PP text layer → figures, pace figures, style, lines with dates, Power Picks, Pace Projector; merged under `timeform` |
+| | `handicapper/provenance.py` | | parser field audit; raw / derived values with source and date; as-of filtering; missingness flags |
+| | `handicapper/weather.py` | | fetched (python-weather) and manual weather observations; newest before a race's cutoff |
+| | `handicapper/identity.py` | | canonical track / race / betting-interest mapping across sources; coupled entries; review list |
 | Front ends | `pick.py`, `backtest.py`, `validate_parse.py`, `addresult.py` | | CLI |
 | | `ui/server.py`, `ui/static/{index.html,app.js,app.css}`, `ui.py` | 677 + 273 | Race Day Desk: Load / Desk / Analysis; start/stop; stale-code banner; upload guards |
 | Config | `rules_config.json` | | `weights`, `disabled`, `selection`, `probability`, `multirace`, `wagering`, `tracks` (profiles), `track_aliases`; validated at load |

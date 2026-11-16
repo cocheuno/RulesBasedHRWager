@@ -15,6 +15,8 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 sys.path.insert(0, HERE)
 
+os.environ["RACEDESK_WEATHER"] = "off"          # never reach for a forecast in tests
+
 from synthetic_card import build_card          # noqa: E402
 from ui.server import Desk, make_server, parse_multipart, reparse_reason   # noqa: E402
 

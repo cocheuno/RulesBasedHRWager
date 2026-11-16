@@ -82,6 +82,11 @@ BAD_EFFORT_WORDS = [r"no factor", r"no threat", r"no rally", r"no response", r"n
                     r"retreated", r"flatten", r"done early", r"trailed", r"no speed", r"never involved", r"lost whip"]
 
 
+def missing_flags(h: dict) -> list[str]:
+    from .provenance import missing_flags as _mf
+    return _mf(h)
+
+
 def _has(words, text: str) -> bool:
     t = (text or "").lower()
     return any(re.search(w, t) for w in words)
@@ -326,6 +331,9 @@ def horse_features(h: dict, race: dict) -> dict:
     f["sheet_angles"] = list(h.get("sheet_angles") or [])
     f["key_race"] = any(a.replace(" ", "") == "ExitKeyRace" for a in f["sheet_angles"])
     f["possible_key_race"] = any(a.replace(" ", "") == "ExitPossibleKeyRace" for a in f["sheet_angles"])
+    f["sheet"] = h.get("sheet")                      # every angle / rank as printed, typed (provenance: Power Play)
+    f["timeform"] = h.get("timeform")                # TimeformUS values under their own namespace; no rule reads them
+    f["missing"] = missing_flags(h)                  # what the PP does not say (absent is not zero)
     # ---- Brisnet QuickPlay comments
     f["positives"] = h.get("positives", [])
     f["negatives"] = h.get("negatives", [])
