@@ -70,7 +70,9 @@ result was on file is the one the analysis scores ("pre-race"); the re-score aft
 2. Press **Process results**. The app reads every chart, re-scores the card against the field that actually ran,
    back-tests, and writes `results\<card>.results.json` and `results\<card>.backtest.md`. Each race's After tab
    shows the finish, odds, payouts and what every suggested wager returned.
-3. Analysis tab: hit/miss bars per track and overall, ROI by bet type, by confidence, by rule and by card.
+3. Analysis tab: hit/miss bars per track and overall, ROI by bet type, by confidence, by rule and by card; and the
+   **Calibration and data watch** panel: how the pre-race predictions score against the charts (races, not bets)
+   and how far each deferred capability is from its gate.
 4. Push the day's files (the charts themselves stay on your disk):
 
 ```powershell

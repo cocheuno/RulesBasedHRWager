@@ -26,7 +26,7 @@ Updated at the end of every phase. Baseline audit: `main` d9216be, 2026-11-15, P
 | B Data and provenance | **done** (this PR) | `handicapper/provenance.py` (field audit, as-of records, missingness), typed Power Play angles with back-test hit rates, `timeform_pp/reader.py` + Desk drop zone + side-by-side ranks, Equibase condition / off-turf / pools as inputs (off-turf switch applied), `handicapper/weather.py` (python-weather + manual), `handicapper/identity.py`, chart surface fix |
 | C Tote (PuntersEdge) | **done** (this PR) | `carovex/tote.py`: `ToteProvider` / `PuntersEdgeProvider` / `ReplayToteProvider`, normalised boards with public allocation and explicit odds convention, immutable capture with heartbeats, polling plan with a daily credit cap, Desk refresh / Tote column / last-minute check with `paper` and `accepted (verified)` marks, CLI `sample` / `poll` / `result` / `replay` / `usage` |
 | D Research probabilities, EV, place/show, wagering decisions | **done** (this PR) | `handicapper/research.py` (p_rule_heuristic / q_live_market / p_market_anchor, model status, EV, O_min, break-even, scenarios, NO_BET codes, Harville place/show), `handicapper/policy.py` (the decisions table applied to suggested wagers, every suppression recorded), PLACE / SHOW settlement and roll-up, O_min replaces fair x 1.15 |
-| E Evaluation and data watch | not started | gates: 300 global, 400 per track, 150 tote, 200 Timeform |
+| E Evaluation and data watch | **done** (this PR) | `handicapper/evaluation.py` (log loss with floor, Brier, reliability, by field / track / surface / condition / pace / clock, gap to final odds, bootstrap and Wilson intervals, candidate blends on a chronological split, data watch), `handicapper/deferred.py` (model interfaces that refuse to fit until their gate is met), Analysis panel, `docs/DATA_WATCH.md`, `docs/EVALUATION.md` |
 | F Desk additions | not started | |
 
 ## Deliberately deferred (gated on prospective data, see Phase E)
@@ -150,6 +150,28 @@ beta 0 (the market, tote or renormalised morning line, labelled); EV at the quot
 break-even as research diagnostics. While the model is not `VALIDATED` every single-horse wager is `NO_BET`
 (`UNTRAINED_MODEL`, plus whatever else fails) and exotics and multi-race tickets are `candidate, unpriced`.
 The legacy analysis keeps counting suggested bets as the owner decided; the research layer never changes it.
+
+## Phase E note: what the 217 races say (and do not say)
+
+`python -m handicapper.evaluation report --write` scores the pre-race predictions on file (217 races, 23 cards,
+11/07 to 11/15; 4 made before the race's cutoff, 213 after) against the charts. Races are the unit.
+
+- Log loss (floor 0.001): morning line renormalised 1.797 on the 139 races where every runner had one; rule
+  heuristic 1.966; the printed blend 1.873; the final-odds market 1.696 (hindsight). Uniform would be about 2.0.
+  The 95% intervals overlap widely: with 217 races nothing here separates the vectors with confidence.
+- Reliability: the heuristic is over-confident at the top (horses it gives 60-100% win 45%; 40-60% win 32%) and
+  under-confident at the bottom (0-5% win 4.7%, 5-10% win 13%). The blend is closer; the morning line is close
+  to calibrated in every bin.
+- Candidate blends on a chronological split (69 early races to choose, 70 late races to report): every weight
+  above the configured 0.35 scored better on both halves; the weight chosen on the early half (1.0, the morning
+  line alone) gives 1.773 on the late half, 0.65 gives 1.749. This is a research diagnostic: the configured blend
+  is unchanged, because the global gate (300 races) is not met and 70 reporting races cannot carry the decision.
+- Data watch: global calibration 217 of 300; track-specific at most 72 of 400 (CD); odds drift 0 of 150 (no
+  tote history stored before Phase C); Timeform 0 of 200 (no Timeform file was merged into a run yet). Every
+  deferred capability reads `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA`.
+
+`docs/DATA_WATCH.md` and `docs/EVALUATION.md` are written by the command above and should be refreshed when
+cards are added; the Analysis tab shows the same numbers live.
 
 ## Data on file (2026-11-15)
 

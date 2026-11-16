@@ -281,5 +281,34 @@
     "turf_win_only": true,
     "firm_turf_no_doubles": true,
     "suppress_pools_not_offered": true
+  },
+  "data_watch": {
+    "_comment": "Phase E (handicapper/evaluation.py). Thresholds are the owner's; the code only counts races. floor is the probability floor in the log loss. blend_grid lists the morning-line weights looked at on the early half of the races and reported on the late half (nothing is fitted on the races it is scored on, nothing is written back here).",
+    "floor": 0.001,
+    "bootstrap": 1000,
+    "seed": 2026,
+    "blend_grid": [
+      0.0,
+      0.2,
+      0.35,
+      0.5,
+      0.65,
+      0.8,
+      1.0
+    ],
+    "gates": {
+      "global_calibration": {
+        "threshold": 300
+      },
+      "track_specific": {
+        "threshold": 400
+      },
+      "odds_drift": {
+        "threshold": 150
+      },
+      "timeform_value": {
+        "threshold": 200
+      }
+    }
   }
 }
