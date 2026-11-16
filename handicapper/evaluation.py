@@ -24,6 +24,7 @@ import json
 import math
 import os
 import random
+import re
 from collections import defaultdict
 from datetime import datetime, timezone
 
@@ -35,8 +36,8 @@ DEFAULT_DATA_WATCH = {
     "gates": {
         "global_calibration": {"threshold": 300, "unit": "races with a pre-race prediction and a chart result",
                                "capability": "calibration pass of the softmax scale and the morning-line blend (global)"},
-        "track_specific": {"threshold": 400, "unit": "races at one track with a pre-race prediction and a result",
-                           "capability": "anything track-specific (weights, scale, blend per track)"},
+        "track_specific": {"threshold": 400, "unit": "races on one circuit (rules_config.json -> circuits) with a pre-race prediction and a result",
+                           "capability": "anything circuit- or track-specific (weights, scale, blend) as shrunken effects under the global model", "group": "circuit"},
         "odds_drift": {"threshold": 150, "unit": "races with a complete tote history (final board with history stored)",
                        "capability": "late-odds drift forecast"},
         "timeform_value": {"threshold": 200, "unit": "races with both Brisnet and Timeform figures and a result",
@@ -44,6 +45,40 @@ DEFAULT_DATA_WATCH = {
     },
 }
 DEFERRED = "DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA"
+DEFAULT_CIRCUITS = {"NYRA": ["BEL", "SAR", "AQU"], "SoCal": ["SA", "DMR"], "Kentucky": ["CD", "KEE"], "Florida": ["GP"]}
+
+
+def circuit_of(track: str | None, cfg: dict | None) -> str:
+    """The owner's circuit for a track code (rules_config.json -> circuits); an unlisted track is its own circuit."""
+    circuits = (cfg or {}).get("circuits") or DEFAULT_CIRCUITS
+    t = (track or "?").upper()
+    for name, codes in circuits.items():
+        if t in {c.upper() for c in codes}:
+            return name
+    return t
+
+
+def furlongs_from_text(text: str | None) -> float | None:
+    """'6 1/2 Furlongs' -> 6.5, '1 Mile 70 Yards' -> 8.32, '1 1/16 Miles' -> 8.5, 'About 7 1/2 Furlongs' -> 7.5."""
+    if not text:
+        return None
+    t = text.lower().replace("½", " 1/2").replace("¼", " 1/4").replace("¾", " 3/4").replace("about", "").strip()
+    m = re.match(r"^(\d+)?\s*(?:(\d+)/(\d+))?\s*(furlongs?|f|miles?|m)\b(?:\s+(\d+)\s+yards?)?", t)
+    if not m:
+        return None
+    whole = int(m.group(1) or 0)
+    frac = int(m.group(2)) / int(m.group(3)) if m.group(2) else 0.0
+    n = whole + frac
+    f = n * 8.0 if m.group(4).startswith("m") else n
+    if m.group(5):
+        f += int(m.group(5)) / 220.0
+    return round(f, 2)
+
+
+def distance_bucket(furlongs: float | None) -> str:
+    if furlongs is None:
+        return "?"
+    return "sprint (<8f)" if furlongs < 8.0 else "route (8f+)"
 READY = "GATE_MET_AWAITING_OWNER_REVIEW"
 HINDSIGHT = "final-odds market (hindsight: not available before the race)"
 
@@ -99,7 +134,9 @@ def race_records(root: str, cfg: dict, cards: list[str] | None = None) -> list[d
             has_tf = sum(1 for s in running if (s.get("timeform") or {}).get("top_fig") is not None) >= max(2, len(running) // 2)
             pr = per_race.get(str(r["race_no"])) or {}
             live = [s for s in running if not s.get("eliminated")]
-            recs.append({"card": card, "track": code, "date": snap.get("date"), "race_no": r["race_no"], "winner": winner,
+            fur = furlongs_from_text(r.get("distance_text"))
+            recs.append({"card": card, "track": code, "circuit": circuit_of(code, cfg), "date": snap.get("date"), "race_no": r["race_no"], "winner": winner,
+                         "furlongs": fur, "distance": distance_bucket(fur),
                          "field_size": len(running), "live": len(live), "surface": (r.get("surface") or "").lower() or None,
                          "condition": (x.get("track_condition") or "").split(" ")[0].lower() or None, "pace_shape": r.get("pace_shape"),
                          "confidence": r.get("confidence"), "clock": pr.get("status", "unknown"), "predicted_at_utc": pr.get("at_utc"),
@@ -269,12 +306,16 @@ def data_watch(recs: list[dict], cfg: dict | None = None) -> dict:
         gates.setdefault(k, {}).update(v or {})
     n = len(recs)
     before = sum(1 for r in recs if r["clock"] == "before-cutoff")
-    per_track = defaultdict(int)
+    per_track, per_circuit = defaultdict(int), defaultdict(lambda: {"have": 0, "tracks": defaultdict(int)})
     for r in recs:
         per_track[r["track"]] += 1
+        circ = r.get("circuit") or circuit_of(r["track"], cfg)
+        per_circuit[circ]["have"] += 1; per_circuit[circ]["tracks"][r["track"]] += 1
     tote = sum(1 for r in recs if r["has_tote_history"])
     tf = sum(1 for r in recs if r["has_timeform"])
-    counts = {"global_calibration": n, "track_specific": max(per_track.values()) if per_track else 0, "odds_drift": tote, "timeform_value": tf}
+    group = (gates.get("track_specific") or {}).get("group", "circuit")
+    pooled = per_circuit if group == "circuit" else {t: {"have": v, "tracks": {t: v}} for t, v in per_track.items()}
+    counts = {"global_calibration": n, "track_specific": max((v["have"] for v in pooled.values()), default=0), "odds_drift": tote, "timeform_value": tf}
     out = {"as_of_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "races": n, "races_before_cutoff": before,
            "races_after_cutoff": sum(1 for r in recs if r["clock"] == "after-cutoff"), "per_track": dict(sorted(per_track.items())),
            "note": "counts are races with a pre-race prediction (made without the result, whatever the hour) and a chart result; "
@@ -285,6 +326,11 @@ def data_watch(recs: list[dict], cfg: dict | None = None) -> dict:
         row = {"capability": g.get("capability"), "unit": g.get("unit"), "threshold": thr, "have": have, "short_by": max(0, thr - have),
                "status": READY if have >= thr else DEFERRED}
         if k == "track_specific":
+            row["group"] = group
+            row["basis"] = ("pooling assumption chosen by the owner: tracks of one circuit (rules_config.json -> circuits) are counted together; "
+                            "this is a judgement about shared horse populations, not a statistical result" if group == "circuit" else "counted per track")
+            row["per_circuit"] = {c: {"have": v["have"], "tracks": dict(sorted(v["tracks"].items())), "status": READY if v["have"] >= thr else DEFERRED}
+                                  for c, v in sorted(pooled.items(), key=lambda kv: -kv[1]["have"])}
             row["per_track"] = {t: {"have": v, "status": READY if v >= thr else DEFERRED} for t, v in sorted(per_track.items())}
         out["gates"][k] = row
     return out
@@ -307,7 +353,7 @@ def evaluate(root: str, cfg: dict, cards: list[str] | None = None) -> dict:
                   "top_hit_wilson_95": wilson(m["top_prob_hits"], m["races"]), "market_gap": market_gap(recs, key)}
         comp[key] = m
     groups = {}
-    for grp in ("track", "surface", "condition", "pace_shape", "confidence", "clock"):
+    for grp in ("circuit", "track", "surface", "distance", "condition", "pace_shape", "confidence", "clock"):
         groups[grp] = {k: by_group(recs, k, grp, floor) for k in ("market", "model", "blend")}
     for r in recs:
         r["field_bucket"] = field_bucket(r["field_size"])
@@ -331,9 +377,12 @@ def format_watch(w: dict) -> str:
          "| Gate | Capability | Needs | Have | Short by | Status |", "|---|---|---|---|---|---|"]
     for k, g in w["gates"].items():
         L.append(f"| {k} | {g['capability']} | {g['threshold']} {g['unit']} | {g['have']} | {g['short_by']} | `{g['status']}` |")
-    if "track_specific" in w["gates"]:
+    g = w["gates"].get("track_specific")
+    if g:
         L.append("")
-        L.append("Per track for the track-specific gate: " + ", ".join(f"{t} {v['have']}" for t, v in w["gates"]["track_specific"]["per_track"].items()) + ".")
+        L.append("Circuit gate: " + ", ".join(f"{c} {v['have']} ({', '.join(f'{t} {n}' for t, n in v['tracks'].items())})" for c, v in (g.get("per_circuit") or {}).items()) + ".")
+        L.append("")
+        L.append(f"Basis: {g.get('basis')}. Surface and distance splits come first in the evaluation because the frozen week showed the turf / dirt gap is larger than any track difference.")
     L.append("")
     L.append("Thresholds are proposals the owner can change in `rules_config.json` -> `data_watch.gates`; the code only counts. "
              "Until a gate is met its capability stays `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA`; when it is met the status becomes "
@@ -344,6 +393,8 @@ def format_watch(w: dict) -> str:
 def format_evaluation(ev: dict) -> str:
     L = [f"# Prospective evaluation: {ev['races']} races on {ev['cards']} cards ({ev['first_date']} to {ev['last_date']})", "",
          f"Unit: races. Probability floor in the log loss: {ev['floor']}. {ev['note']}.", "",
+         "Order of the breakdowns: surface and distance first (the splits that mattered in the frozen week), then field size, circuit and track "
+         "(the owner's circuits pool tracks that share a horse population; track rows are shown for reference and are small).", "",
          "| Vector | Races | Log loss | 95% CI | Brier | Top-prob hit rate | 95% CI | Uniform log loss | Mean gap to final odds |", "|---|---|---|---|---|---|---|---|---|"]
     for k, m in ev["compare"].items():
         if not m:
@@ -358,7 +409,7 @@ def format_evaluation(ev: dict) -> str:
         L.append(""); L.append(f"**{k}**"); L.append(""); L.append("| Bin | Horses | Mean predicted | Observed | Wins |"); L.append("|---|---|---|---|---|")
         for b in ev["reliability"].get(k) or []:
             L.append(f"| {b['bin']} | {b['horses']} | {b['mean_predicted']} | {b['observed']} | {b['wins']} |")
-    for grp, label in (("field_size", "field size"), ("track", "track"), ("surface", "surface"), ("condition", "condition"), ("pace_shape", "pace shape"), ("clock", "clock")):
+    for grp, label in (("surface", "surface"), ("distance", "distance"), ("field_size", "field size"), ("circuit", "circuit"), ("track", "track"), ("condition", "condition"), ("pace_shape", "pace shape"), ("clock", "clock")):
         L.append(""); L.append(f"## By {label} (log loss; races)"); L.append("")
         L.append("| " + label + " | races | market | model | blend |"); L.append("|---|---|---|---|---|")
         rows = {r[grp if grp != "field_size" else "field_bucket"]: {} for r in ev["by"][grp]["market"]}

@@ -301,7 +301,10 @@
         "threshold": 300
       },
       "track_specific": {
-        "threshold": 400
+        "threshold": 400,
+        "unit": "races on one circuit (rules_config.json -> circuits) with a pre-race prediction and a result",
+        "capability": "anything circuit- or track-specific (weights, scale, blend) as shrunken effects under the global model",
+        "group": "circuit"
       },
       "odds_drift": {
         "threshold": 150
@@ -310,5 +313,24 @@
         "threshold": 200
       }
     }
+  },
+  "_circuits_comment": "Circuits are the owner's pooling assumption (2026-11-16): tracks that share a horse population, trainer and jockey colonies and condition books are counted together by the data watch's circuit gate and will be the middle level (global -> circuit -> track) of the hierarchical models once the global gate is met. A track not listed is its own circuit. This is a judgement about exchangeability, not a statistical result.",
+  "circuits": {
+    "NYRA": [
+      "BEL",
+      "SAR",
+      "AQU"
+    ],
+    "SoCal": [
+      "SA",
+      "DMR"
+    ],
+    "Kentucky": [
+      "CD",
+      "KEE"
+    ],
+    "Florida": [
+      "GP"
+    ]
   }
 }

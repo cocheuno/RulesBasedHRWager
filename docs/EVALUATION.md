@@ -2,6 +2,8 @@
 
 Unit: races. Probability floor in the log loss: 0.001. pre-race predictions only; chronological splits; nothing fitted on the races it is scored on.
 
+Order of the breakdowns: surface and distance first (the splits that mattered in the frozen week), then field size, circuit and track (the owner's circuits pool tracks that share a horse population; track rows are shown for reference and are small).
+
 | Vector | Races | Log loss | 95% CI | Brier | Top-prob hit rate | 95% CI | Uniform log loss | Mean gap to final odds |
 |---|---|---|---|---|---|---|---|---|
 | public market baseline (morning line renormalised) | 139 | 1.797 | [1.7044, 1.8955] | 0.8025 | 0.273 (38) | [0.2061, 0.3528] | 1.9736 | 0.0413 |
@@ -50,6 +52,21 @@ Unit: races. Probability floor in the log loss: 0.001. pre-race predictions only
 | 0.40-0.60 | 74 | 0.4702 | 0.3649 | 27 |
 | 0.60-1.00 | 20 | 0.6925 | 0.55 | 11 |
 
+## By surface (log loss; races)
+
+| surface | races | market | model | blend |
+|---|---|---|---|---|
+| dirt | 124 | 1.6857 | 1.9424 | 1.8354 |
+| turf | 60 | 1.9696 | 2.0821 | 1.9965 |
+| aw | 33 | 1.8274 | 1.8426 | 1.7899 |
+
+## By distance (log loss; races)
+
+| distance | races | market | model | blend |
+|---|---|---|---|---|
+| route (8f+) | 100 | 1.8493 | 1.9798 | 1.8843 |
+| sprint (<8f) | 117 | 1.7408 | 1.9539 | 1.8633 |
+
 ## By field size (log loss; races)
 
 | field size | races | market | model | blend |
@@ -59,6 +76,15 @@ Unit: races. Probability floor in the log loss: 0.001. pre-race predictions only
 | 10+ | 43 | 2.3202 | 2.1325 | 2.1296 |
 | <=5 | 25 | 1.3238 | 1.1974 | 1.2041 |
 
+## By circuit (log loss; races)
+
+| circuit | races | market | model | blend |
+|---|---|---|---|---|
+| Kentucky | 72 | 1.9252 | 1.8914 | 1.8698 |
+| NYRA | 50 | 1.6361 | 1.9811 | 1.8759 |
+| SoCal | 43 | 1.7932 | 1.9957 | 1.8162 |
+| Florida | 52 | 1.7864 | 2.0296 | 1.9216 |
+
 ## By track (log loss; races)
 
 | track | races | market | model | blend |
@@ -67,14 +93,6 @@ Unit: races. Probability floor in the log loss: 0.001. pre-race predictions only
 | BEL | 50 | 1.6361 | 1.9811 | 1.8759 |
 | DMR | 43 | 1.7932 | 1.9957 | 1.8162 |
 | GP | 52 | 1.7864 | 2.0296 | 1.9216 |
-
-## By surface (log loss; races)
-
-| surface | races | market | model | blend |
-|---|---|---|---|---|
-| dirt | 124 | 1.6857 | 1.9424 | 1.8354 |
-| turf | 60 | 1.9696 | 2.0821 | 1.9965 |
-| aw | 33 | 1.8274 | 1.8426 | 1.7899 |
 
 ## By condition (log loss; races)
 
@@ -118,7 +136,7 @@ Unit: races. Probability floor in the log loss: 0.001. pre-race predictions only
 
 Weight chosen on the early half: 1.0 -> late-half log loss 1.7728. The configuration keeps its own value.
 
-# Data watch (as of 2026-11-16T13:43:39Z)
+# Data watch (as of 2026-11-16T16:06:36Z)
 
 Races with a pre-race prediction and a chart result: **217** (4 made before the race's cutoff, 213 after; the owner's rule: a late run is a pre-race prediction all the same).
 
@@ -127,10 +145,12 @@ Per track: BEL 50, CD 72, DMR 43, GP 52.
 | Gate | Capability | Needs | Have | Short by | Status |
 |---|---|---|---|---|---|
 | global_calibration | calibration pass of the softmax scale and the morning-line blend (global) | 300 races with a pre-race prediction and a chart result | 217 | 83 | `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` |
-| track_specific | anything track-specific (weights, scale, blend per track) | 400 races at one track with a pre-race prediction and a result | 72 | 328 | `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` |
+| track_specific | anything circuit- or track-specific (weights, scale, blend) as shrunken effects under the global model | 400 races on one circuit (rules_config.json -> circuits) with a pre-race prediction and a result | 72 | 328 | `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` |
 | odds_drift | late-odds drift forecast | 150 races with a complete tote history (final board with history stored) | 0 | 150 | `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` |
 | timeform_value | Timeform's incremental value | 200 races with both Brisnet and Timeform figures and a result | 0 | 200 | `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` |
 
-Per track for the track-specific gate: BEL 50, CD 72, DMR 43, GP 52.
+Circuit gate: Kentucky 72 (CD 72), Florida 52 (GP 52), NYRA 50 (BEL 50), SoCal 43 (DMR 43).
+
+Basis: pooling assumption chosen by the owner: tracks of one circuit (rules_config.json -> circuits) are counted together; this is a judgement about shared horse populations, not a statistical result. Surface and distance splits come first in the evaluation because the frozen week showed the turf / dirt gap is larger than any track difference.
 
 Thresholds are proposals the owner can change in `rules_config.json` -> `data_watch.gates`; the code only counts. Until a gate is met its capability stays `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA`; when it is met the status becomes `GATE_MET_AWAITING_OWNER_REVIEW` and nothing is fitted until the owner says so.
