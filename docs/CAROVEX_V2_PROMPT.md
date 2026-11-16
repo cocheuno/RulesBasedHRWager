@@ -97,9 +97,12 @@ Goal: a prediction is "pre-race" per race, by the clock, not per card by the abs
   changes page gives the first post as a cross-check. A run's status is computed per race:
   `before-cutoff` (run time < post time minus a configurable margin, default 2 minutes), `after-cutoff`, or
   `unknown` when the card has no post times. Never ask the owner to type post times.
-- **Scoring.** The back-test and the Analysis screen score, for each race, the latest snapshot that is
-  `before-cutoff` for that race. A card can therefore be scored from several snapshots. Legacy snapshots with
-  no post-time evidence are scored as today but labelled `timing: unverified`.
+- **Scoring.** The owner often runs picks and processes results late in the day or the next day. That does not
+  compromise the data: a run uses only the PPs and the scratches, which are public before post. So the back-test
+  and the Analysis screen score, for each race, the newest run that did not have that race's result on file
+  (as-run re-scores excluded), whatever the hour, and record the clock status beside it. The clock is a label,
+  never a gate. Only a race whose every run already knew its result is excluded. Legacy snapshots with no
+  post-time evidence are scored the same way and labelled `clock: unknown`.
 - **Assumed price.** Keep the final-odds check, but label every price-gated row `price_basis: assumed-final`
   and keep the owner's ability to record `price_basis: observed` when a live quote (Phase C) was captured at
   decision time. For cards with no decision-time price and no final odds, mark `NOT_RECONSTRUCTABLE`; keep
@@ -115,9 +118,9 @@ Goal: a prediction is "pre-race" per race, by the clock, not per card by the abs
   the scratches, the results of earlier races only if their charts had been read by then, the tote board as of
   then. The back-test and the evaluation are built on this query, so there is one definition of "known".
 - **Tests.** (i) two races on one card have different cutoffs; (ii) a result entered after a decision cannot
-  change it; (iii) final odds cannot turn an `accepted` decision into a pass; (iv) a snapshot after post is
-  excluded for that race even with no result file; (v) reruns never overwrite prior decisions; (vi) legacy
-  cards score as `timing: unverified`, not as pre-race.
+  change it; (iii) final odds cannot turn an `accepted` decision into a pass; (iv) a run made after post is
+  scored and labelled `after-cutoff`, never excluded, while a run that had the result on file is not used for
+  that race; (v) reruns never overwrite prior decisions; (vi) legacy cards score with `clock: unknown`.
 
 ## Phase B — all the data from every form, with provenance
 

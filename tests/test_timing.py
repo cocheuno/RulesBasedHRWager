@@ -71,30 +71,35 @@ class TestSnapshotsByTheClock(unittest.TestCase):
                 w["decision"]["at_utc"] = at_utc; w["decision"]["id"] = w["decision"]["id"][:8] + at_utc[11:16].replace(":", "")
         return write_snapshot(self.tmp, "synth", res, kind)
 
-    def test_after_post_snapshot_is_excluded_even_without_results(self):   # (iv), (vi)
+    def test_late_runs_are_scored_and_labelled_never_excluded(self):   # (iv) as the owner decided, (vi)
         p1 = self._snap("2026-11-07T16:00:00Z")      # before every race
         p2 = self._snap("2026-11-07T17:55:00Z")      # 12:55 ET: after R1 and R2 (12:20, 12:50); before R3 (1:19)
         comp = pre_race_by_race(self.tmp, "synth", None, None, 2)
         pr = comp["timing"]["per_race"]
-        self.assertEqual(pr["1"]["file"], os.path.basename(p1)); self.assertEqual(pr["2"]["file"], os.path.basename(p1))
-        self.assertEqual(pr["3"]["file"], os.path.basename(p2), "the newest before-cutoff run wins per race")
-        self.assertEqual(comp["timing"]["label"], "verified"); self.assertEqual(comp["timing"]["excluded"], [])
+        self.assertTrue(all(v["file"] == os.path.basename(p2) for v in pr.values()), "the newest run without the result is scored, late or not")
+        self.assertEqual((pr["1"]["status"], pr["3"]["status"]), ("after-cutoff", "before-cutoff"), "the clock is recorded per race")
+        self.assertEqual(comp["timing"]["label"], "mixed"); self.assertEqual(comp["timing"]["excluded"], [])
+        self.assertEqual((comp["timing"]["before"], comp["timing"]["after"]), (4, 2))
         self.assertEqual(comp["snapshot"]["kind"], "composite")
-        # a card first run after R1 went off: R1 is excluded outright, with no result file in sight
-        shutil.rmtree(os.path.join(self.tmp, "snapshots")); self._snap("2026-11-07T17:55:00Z")
+        # a run that already had R1's result on file is not a pre-race prediction for R1: the earlier run is used
+        p3 = self._snap("2026-11-07T22:00:00Z"); d = json.load(open(p3)); d["run"]["results_known"] = [1]; json.dump(d, open(p3, "w"))
         comp = pre_race_by_race(self.tmp, "synth", None, None, 2)
-        self.assertEqual(comp["timing"]["excluded"], [1, 2]); self.assertNotIn(1, [r["race_no"] for r in comp["races"]])
-        # legacy: no post times, no cutoffs, no results -> unverified, newest pre-race snapshot
+        self.assertEqual(comp["timing"]["per_race"]["1"]["file"], os.path.basename(p2)); self.assertEqual(comp["timing"]["per_race"]["2"]["file"], os.path.basename(p3))
+        # only when every run knew the result is a race excluded
+        for p in (p1, p2): d = json.load(open(p)); d["run"]["results_known"] = [1]; json.dump(d, open(p, "w"))
+        comp = pre_race_by_race(self.tmp, "synth", None, None, 2)
+        self.assertEqual(comp["timing"]["excluded"], [1])
+        # legacy: no post times, no cutoffs, no results -> scored, clock unknown
         shutil.rmtree(os.path.join(self.tmp, "snapshots"))
         lc = build_card(); lc["date"] = "2026-11-07"
         legacy = run_card(lc, multirace=False)["result"]; legacy["run"].pop("cutoffs"); legacy["run"]["at_utc"] = "2026-11-07T23:00:00Z"
         for r in legacy["races"]: r.pop("post_time", None)
         write_snapshot(self.tmp, "synth", legacy, "pre-race")
         comp = pre_race_by_race(self.tmp, "synth", None, None, 2)
-        self.assertEqual(comp["timing"]["label"], "unverified")
-        # ... but once a chart with an off time exists, even a legacy evening run is judged by the clock
+        self.assertEqual(comp["timing"]["label"], "unverified"); self.assertEqual(len(comp["races"]), 6)
+        # a chart's off time labels even a legacy evening run, and it is still scored
         comp = pre_race_by_race(self.tmp, "synth", {"races": [{"race_no": 1, "off_at": "12:22", "finish": ["1"]}]}, "America/New_York", 2)
-        self.assertIn(1, comp["timing"]["excluded"])
+        self.assertEqual(comp["timing"]["per_race"]["1"]["status"], "after-cutoff"); self.assertEqual(comp["timing"]["excluded"], [])
 
     def test_decisions_are_frozen_per_run(self):                       # (ii), (v)
         p1 = self._snap("2026-11-07T16:00:00Z"); before = open(p1, "rb").read()

@@ -398,13 +398,15 @@ class Desk:
         pre = pl.get("pre_race")
         if pre:
             tm = pre.get("timing") or {}
-            L += [f"## Pre-race prediction, as bet  (timing {tm.get('label', 'unverified')}; per race the newest run made "
-                  f"{tm.get('margin_minutes', 2)} min before that race's cutoff)", "",
-                  "Race: run used (UTC) and cutoff basis (off = chart's actual off time, scheduled = PP post time, unverified = no clock evidence):", ""]
-            L += [f"- R{rn}: {v['file']} at {v['at_utc']} ({v['basis']})" + (f", scratches {v['scratches']}" if v.get("scratches") else "") for rn, v in sorted(tm.get("per_race", {}).items(), key=lambda kv: int(kv[0]))]
+            L += [f"## Pre-race prediction, as bet  (per race the newest run made without that race's result; "
+                  f"clock: {tm.get('before', 0)} before cutoff, {tm.get('after', 0)} after, {tm.get('unknown', 0)} unknown)", "",
+                  "A run made after the race used only the PPs and the scratches, which are public before post, so it is a "
+                  "pre-race prediction; the clock column is a record, not a filter.", "",
+                  "Race: run used (UTC), clock status, cutoff basis (off = chart's actual off time, scheduled = PP post time):", ""]
+            L += [f"- R{rn}: {v['file']} at {v['at_utc']} ({v['status']}, {v['basis']})" + (f", scratches {v['scratches']}" if v.get("scratches") else "") for rn, v in sorted(tm.get("per_race", {}).items(), key=lambda kv: int(kv[0]))]
             if tm.get("excluded"):
-                L.append(f"- excluded (every run was after the cutoff): R{', R'.join(str(x) for x in tm['excluded'])}")
-            L += ["", "These numbers cannot change: a later run never replaces an earlier one for a race.", "",
+                L.append(f"- excluded (every run already had the result on file): R{', R'.join(str(x) for x in tm['excluded'])}")
+            L += ["", "These numbers cannot change: a later run never rewrites an earlier record.", "",
                   format_backtest(pre["backtest"]), "", format_evaluation(pre["evaluation"]), ""]
         else:
             L += ["## No pre-race snapshot on file", "",

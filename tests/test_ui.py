@@ -107,7 +107,7 @@ class TestDesk(Base):
         self.assertEqual(snap["run"]["results_known"], [])
         self.assertTrue(pl["pre_race"], "payload scores the pre-race snapshot once results exist")
         self.assertEqual(pl["pre_race"]["snapshot"]["kind"], "composite", "scored per race by the clock")
-        self.assertEqual(pl["pre_race"]["timing"]["label"], "unverified", "the synthetic card prints no post times")
+        self.assertEqual(pl["pre_race"]["timing"]["label"], "unverified", "the synthetic card prints no post times; still scored")
         self.assertEqual(pl["picks"]["run"]["results_known"], [2])
         # process: the as-run re-score is its own kind; the report has both sections
         rp = os.path.join(tmp, "results", "synth.results.json")
