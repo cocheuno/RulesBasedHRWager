@@ -142,6 +142,8 @@ function inputsLine(r, p) {
   if (inp.rail) bits.push(`<span class="chip">rail ${esc(inp.rail)}</span>`);
   if (wx) bits.push(`<span class="chip">weather ${esc([wx.condition, wx.wind_mph != null ? 'wind ' + (wx.wind_direction || '') + ' ' + Math.round(wx.wind_mph) + ' mph' : '', wx.temperature_f != null ? Math.round(wx.temperature_f) + '°F' : '', wx.humidity_pct != null ? wx.humidity_pct + '% rh' : ''].filter(Boolean).join(', '))} <span class="muted">(${esc(wx.provenance)})</span></span>`);
   if (tf && tf.power_picks && tf.power_picks.length) bits.push(`<span class="chip">Timeform picks #${esc(tf.power_picks.join(', #'))}</span>`);
+  const pol = p && p.policy; if (pol && pol.notes && pol.notes.length) pol.notes.forEach(n => bits.push(`<span class="chip warn" title="owner's decisions table (frozen-week review)">${esc(n.replace(/^POLICY: /, ''))}</span>`));
+  const rv = p && p.research; if (rv) bits.push(`<span class="chip" title="research layer: heuristic probabilities, not a validated edge">model ${esc(rv.model_status)}${rv.q_live_market ? ' · live market' : rv.q_reason ? ' · ' + esc(rv.q_reason) : ''}</span>`);
   return bits.length ? `<div class="small" style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${bits.join('')}</div>` : '';
 }
 function toteBoard(rn) { const t = S.data && S.data.tote; return t && t.races ? t.races[String(rn)] : null; }
@@ -176,9 +178,11 @@ function wagerRows(r, p) {
     const mark = rec ? `<span class="chip ${rec.status === 'accepted' ? 'good' : ''}">${esc(rec.status === 'accepted' ? 'accepted (verified)' : rec.status)}${rec.quote && rec.quote.odds_text ? ' @ ' + esc(rec.quote.odds_text) : ''}</span>` : '<span class="muted">suggested</span>';
     const canMark = d.id && b && !b.closed && (S.data.tote.status || {}).decisions_enabled !== false;
     const btns = canMark ? `<button class="btn small" type="button" data-dec="${esc(d.id)}" data-st="paper">Paper</button> <button class="btn small" type="button" data-dec="${esc(d.id)}" data-st="accepted">Accepted (verified)</button>` : '';
-    return `<tr><td>${esc(w.label || w.type)}</td><td>${w.min_odds != null ? w.min_odds + '-1' : '<span class="muted">–</span>'}</td><td>${esc(quote)} ${meets}</td><td>${mark}</td><td>${btns}</td></tr>`;
+    const rs = w.research || {}, rsTxt = rs.decision === 'CANDIDATE' ? 'candidate, unpriced' : rs.decision ? `${rs.decision}${rs.codes && rs.codes.length ? ' · ' + rs.codes.map(c => c.toLowerCase().replace(/_/g, ' ')).join(', ') : ''}` : '';
+    const minp = w.min_odds != null ? w.min_odds + '-1' : (w.min_price_2 != null ? '$' + w.min_price_2.toFixed(2) + ' / $2' : '<span class="muted">–</span>');
+    return `<tr><td>${esc(w.label || w.type)}</td><td>${minp}</td><td>${esc(quote)} ${meets}</td><td class="small muted" title="research layer (heuristic): the paper-bet gates">${esc(rsTxt)}</td><td>${mark}</td><td>${btns}</td></tr>`;
   }).join('');
-  return `<div class="small muted" style="margin-top:10px;font-weight:600">LAST-MINUTE CHECK · minimum price beside the current quote</div><div class="scroll"><table><thead><tr><th>Wager</th><th>Min price</th><th>Quote now</th><th>Decision</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><div class="small muted">Paper = you intend it. Accepted (verified) = you placed it elsewhere and say so; that alone records an observed price. Both freeze the quote snapshot id.</div>`;
+  return `<div class="small muted" style="margin-top:10px;font-weight:600">LAST-MINUTE CHECK · minimum price beside the current quote</div><div class="scroll"><table><thead><tr><th>Wager</th><th>Min price</th><th>Quote now</th><th>Research</th><th>Decision</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><div class="small muted">Paper = you intend it. Accepted (verified) = you placed it elsewhere and say so; that alone records an observed price. Both freeze the quote snapshot id.</div>`;
 }
 function racePanel(r, p, res) {
   const sheets = p ? p.sheets : [], sb = {}; sheets.forEach(s => sb[s.pgm] = s);

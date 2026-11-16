@@ -256,5 +256,30 @@
     },
     "timeout_seconds": 15,
     "max_retries": 3
+  },
+  "pricing": {
+    "_comment": "Phase D price formula (handicapper/research.py): a win bet needs O_min = (1 + tau + costs - rebate) / p - 1 with p the engine's heuristic win probability; break-even odds 1/p - 1 are shown beside it. tau 0.15 replaces the old fair odds x 1.15. adverse_drift is a research scenario (the quote shortens by this share). place_show_tau sets the minimum $2 price of a place or show candidate.",
+    "tau": 0.15,
+    "costs": 0.0,
+    "rebate": 0.0,
+    "adverse_drift": 0.2,
+    "place_show_tau": 0.1
+  },
+  "research": {
+    "_comment": "Research probabilities (handicapper/research.py): p_rule_heuristic (softmax, eliminated starters at research_floor), q_live_market (tote), p_market_anchor ~ q^alpha * exp(beta * z). model_status is UNTRAINED until Phase E validates a model; while it is not VALIDATED every single-horse wager is NO_BET (UNTRAINED_MODEL) in the research layer and exotics are 'candidate, unpriced'. The legacy analysis still counts suggested bets as before.",
+    "model_status": "UNTRAINED",
+    "alpha": 1.0,
+    "beta": 0.0,
+    "research_floor": 0.02,
+    "market_max_age_seconds": 120
+  },
+  "wager_policy": {
+    "_comment": "The owner's decisions table (docs/CAROVEX_V2_PROMPT.md, 2026-11-16; handicapper/policy.py). Each flag suppresses a suggestion and records why on the race.",
+    "drop_trifecta_box": true,
+    "medium_exacta_box_only": true,
+    "no_exotics_lone_speed": true,
+    "turf_win_only": true,
+    "firm_turf_no_doubles": true,
+    "suppress_pools_not_offered": true
   }
 }

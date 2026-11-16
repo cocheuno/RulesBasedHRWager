@@ -111,6 +111,30 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
     row = {"unit": unit, "cost": cost, "hit": False, "ret": 0.0, "known": True, "placed": True, "status": None, "note": "",
            "price_basis": "pool-payout", "decision_id": (w.get("decision") or {}).get("id")}
     wtype = w["type"]
+    if wtype in ("PLACE", "SHOW"):
+        res = by_no.get(w["race_no"])
+        if not res or not res.get("finish"):
+            row["known"] = False
+            return row
+        fin, pgm = res["finish"], w["legs"][0][0]
+        prices = res.get("place" if wtype == "PLACE" else "show") or {}
+        slots = 2 if wtype == "PLACE" else 3
+        runners = len(res.get("runners") or []) or len(fin)
+        row["price_basis"] = "pool-payout"
+        if wtype == "SHOW" and not prices and len(fin) >= 3 and runners <= 4:
+            row.update(cost=0.0, placed=False, status="not offered", note="no show pool: four or fewer starters")
+            return row
+        if len(fin) < slots:
+            row["known"] = False
+            return row
+        if pgm in fin[:slots]:
+            row["hit"] = True
+            pay = prices.get(pgm)
+            row["ret"] = round(unit * (pay / 2.0), 2) if pay is not None else None
+            row["known"] = pay is not None
+            if pay is not None and w.get("min_price_2") is not None and pay < w["min_price_2"]:
+                row["note"] = f"paid ${pay:.2f}, under the ${w['min_price_2']:.2f} the candidate needed"
+        return row
     if wtype in ("WIN", "EXACTA", "TRIFECTA", "SUPERFECTA"):
         res = by_no.get(w["race_no"])
         if not res or not res.get("finish"):
@@ -268,7 +292,7 @@ def units_table(cfg: dict) -> dict:
 
 def format_units(units: dict) -> str:
     """'$2 win, $1 exacta, $0.50 trifecta, $0.10 superfecta, $1 double, $1 Pick 3, $0.50 Pick 4'."""
-    names = (("WIN", "win"), ("EXACTA", "exacta"), ("TRIFECTA", "trifecta"), ("SUPERFECTA", "superfecta"),
+    names = (("WIN", "win"), ("PLACE", "place"), ("SHOW", "show"), ("EXACTA", "exacta"), ("TRIFECTA", "trifecta"), ("SUPERFECTA", "superfecta"),
              ("DOUBLE", "double"), ("PICK3", "Pick 3"), ("PICK4", "Pick 4"))
     def money(v):
         return f"${v:.0f}" if float(v).is_integer() else f"${v:.2f}"

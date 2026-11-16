@@ -25,7 +25,7 @@ Updated at the end of every phase. Baseline audit: `main` d9216be, 2026-11-15, P
 | A Timing and ledger | **done** (PR 52) | `handicapper/timing.py`, `snapshot.pre_race_by_race`, decision records in the run block, `carovex/ledger.py` (SQLite, migrations, import, `as_of`), price basis on every wager row |
 | B Data and provenance | **done** (this PR) | `handicapper/provenance.py` (field audit, as-of records, missingness), typed Power Play angles with back-test hit rates, `timeform_pp/reader.py` + Desk drop zone + side-by-side ranks, Equibase condition / off-turf / pools as inputs (off-turf switch applied), `handicapper/weather.py` (python-weather + manual), `handicapper/identity.py`, chart surface fix |
 | C Tote (PuntersEdge) | **done** (this PR) | `carovex/tote.py`: `ToteProvider` / `PuntersEdgeProvider` / `ReplayToteProvider`, normalised boards with public allocation and explicit odds convention, immutable capture with heartbeats, polling plan with a daily credit cap, Desk refresh / Tote column / last-minute check with `paper` and `accepted (verified)` marks, CLI `sample` / `poll` / `result` / `replay` / `usage` |
-| D Research probabilities, EV, place/show, wagering decisions | not started | depends on the decisions table |
+| D Research probabilities, EV, place/show, wagering decisions | **done** (this PR) | `handicapper/research.py` (p_rule_heuristic / q_live_market / p_market_anchor, model status, EV, O_min, break-even, scenarios, NO_BET codes, Harville place/show), `handicapper/policy.py` (the decisions table applied to suggested wagers, every suppression recorded), PLACE / SHOW settlement and roll-up, O_min replaces fair x 1.15 |
 | E Evaluation and data watch | not started | gates: 300 global, 400 per track, 150 tote, 200 Timeform |
 | F Desk additions | not started | |
 
@@ -123,6 +123,33 @@ an owner who refreshes the races they are present for. The complete odds path of
 with `history=true` (`python -m carovex.tote result <card> <race>`), which is the cheap way to capture a whole
 race's market after the fact. The hobby plan (7,500 credits, AUD 9 a month) would cover a daily history fetch for
 four tracks; the owner decides.
+
+## Phase D note: what changed in the suggestions, and what did not
+
+Picks, scores, ranks and win probabilities are unchanged. The suggested wagers change where the decisions
+table says (`handicapper/policy.py`, `wager_policy` in `rules_config.json`): no exotics in lone-speed races; on
+turf win bets only (place and show candidates stay); no doubles through firm turf (morning condition from the
+Equibase page); no trifecta or superfecta outside high confidence (medium: exacta box only; contentious: the
+four-horse box is dropped); nothing the Equibase page says the track will not sell. Every suppression is kept on
+the race (`policy.suppressed` with its reason) and shown as a POLICY line; the high-confidence trifecta keys,
+doubles and Pick 3 / Pick 4 (tracked) are untouched.
+
+Price: a win bet needs `O_min = (1 + tau + costs - rebate) / p - 1` with `tau` 0.15 (`pricing` block), which is
+0.15 higher than the old fair x 1.15 at every probability (p = 1/3: 2.45-1 instead of 2.3-1); the break-even
+odds `1/p - 1` are shown beside it. A few win bets near the old margin will now be "no win bet" lines.
+
+Place and show: every race names one place and one show candidate from the Harville expansion of the blended
+win vector (labelled heuristic), with a minimum $2 price `2 x (1 + place_show_tau) / p` rounded up to the dime;
+they are suggested wagers at the configured $2 unit, settled against the chart's place and show prices, with a
+four-or-fewer-starter field's missing show pool reported as not offered, and roll up as their own bet types.
+
+Research layer (`research` on each race, `research` on each wager, `research` on each sheet row): model status
+`UNTRAINED`; `p_rule_heuristic` over betting interests with a floor for eliminated starters; `q_live_market` from
+the latest stored tote board when open, reconciled and fresh (else the reason); `p_market_anchor` with alpha 1,
+beta 0 (the market, tote or renormalised morning line, labelled); EV at the quote, after an adverse drift and at
+break-even as research diagnostics. While the model is not `VALIDATED` every single-horse wager is `NO_BET`
+(`UNTRAINED_MODEL`, plus whatever else fails) and exotics and multi-race tickets are `candidate, unpriced`.
+The legacy analysis keeps counting suggested bets as the owner decided; the research layer never changes it.
 
 ## Data on file (2026-11-15)
 

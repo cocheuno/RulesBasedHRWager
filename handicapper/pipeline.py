@@ -98,7 +98,8 @@ def load_card(source) -> tuple[dict, list[str]]:
 def run_card(source, *, scratch: str | None = None, sheet: str | None = None, results: str | dict | None = None,
              config_path: str = DEFAULT_CONFIG, track_profile: str | None = None, multirace: bool = True,
              budget3: float | None = None, budget4: float | None = None, race_no: int | None = None,
-             changes: str | dict | None = None, timeform: str | dict | None = None, weather: str | list | None = None) -> dict:
+             changes: str | dict | None = None, timeform: str | dict | None = None, weather: str | list | None = None,
+             boards: dict | None = None) -> dict:
     """Returns {"card": the card as scored (after scratches), "raw": the card before scratches, "result": picks,
     "cfg": config used, "track_code", "notes": [...]}.  `changes`: a saved Equibase race-day-changes page (path)
     or its parsed form; recorded on the run (conditions, rail, jockey changes, pools) and on each race as inputs; a
@@ -148,6 +149,8 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
     if budget4 is not None:
         cfg["multirace"]["pick4"]["budget"] = budget4
     result = score_card(card, cfg, multirace=multirace)
+    from .research import attach as attach_research
+    attach_research(result, boards, cfg)      # Phase D: research probabilities, EV diagnostics, NO_BET codes (no pick changes)
     if not result.get("track_code") and code:   # a card parsed before the parser recorded the code
         result["track_code"] = code
     # what this run was made from, so a picks.json on its own says which scratches and parser produced it
