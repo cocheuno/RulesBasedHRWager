@@ -51,6 +51,26 @@ class TestXml(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_late_changes_xml(b"<other/>")
 
+    def test_us_date_in_the_file_becomes_iso_and_a_safe_file_name(self):
+        from brisnet_pp.changes import iso_date
+        self.assertEqual([iso_date(x) for x in ("11/18/2026", "2026-11-18", "November 18, 2026", "11-18-2026", "garbage", None)],
+                         ["2026-11-18", "2026-11-18", "2026-11-18", "2026-11-18", None, None])
+        doc = parse_late_changes_xml(self.data.replace(b"<race_date>2026-11-06</race_date>", b"<race_date>11/06/2026</race_date>"))
+        self.assertEqual((doc["race_date"], doc["race_date_text"]), ("2026-11-06", "11/06/2026"))
+        from ui.server import Desk
+        tmp = tempfile.mkdtemp(prefix="racedesk-xmldate-")
+        try:
+            shutil.copy(CFG_PATH, os.path.join(tmp, "rules_config.json")); os.makedirs(os.path.join(tmp, "data", "out"))
+            with open(os.path.join(tmp, "data", "out", "dmr1106y.card.json"), "w", encoding="utf-8") as fh:
+                json.dump(build_card(), fh)
+            desk = Desk(tmp); desk.run("dmr1106y")
+            res = desk.save_upload("dmr1106y", "changes", "x.xml", self.data.replace(b"<race_date>2026-11-06</race_date>", b"<race_date>11/06/2026</race_date>"))
+            self.assertEqual(res["saved"], os.path.join("data", "pps", "latechanges_2026-11-06.xml"))
+            self.assertEqual(res["applied"][0]["scratches"], "1:4, 3:9")
+            self.assertTrue(desk.files("dmr1106y")["changes"].endswith("latechanges_2026-11-06.xml"))
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
     def test_load_changes_file_handles_html_and_xml(self):
         self.assertEqual(load_changes_file(FIX, "CD")["track"], "CHURCHILL DOWNS")
         html = os.path.join(HERE, "fixtures", "changes_cd_20261111.html")

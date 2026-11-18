@@ -71,7 +71,7 @@ def connect(root: str) -> sqlite3.Connection:
     """Open (creating and migrating as needed) the ledger under <root>/data/private."""
     p = db_path(root)
     os.makedirs(os.path.dirname(p), exist_ok=True)
-    con = sqlite3.connect(p, isolation_level=None)
+    con = sqlite3.connect(p, isolation_level=None, check_same_thread=False)   # the Desk serves requests from several threads; the capture takes a lock
     con.execute("PRAGMA journal_mode=WAL")
     con.execute("PRAGMA foreign_keys=ON")
     migrate(con)

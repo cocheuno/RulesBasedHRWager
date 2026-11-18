@@ -137,6 +137,20 @@ def is_late_changes_xml(text: str | bytes) -> bool:
     return head.startswith("<") and "<late_changes" in head
 
 
+def iso_date(text: str | None) -> str | None:
+    """'11/18/2026', '2026-11-18', '11-18-2026', 'November 18, 2026' -> '2026-11-18'; None when unreadable."""
+    if not text:
+        return None
+    from datetime import datetime
+    t = text.strip()
+    for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y", "%Y%m%d", "%B %d, %Y", "%b %d, %Y", "%m/%d/%y"):
+        try:
+            return datetime.strptime(t, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    return None
+
+
 def _xml_text(el, tag: str) -> str:
     x = el.find(tag)
     return (x.text or "").strip() if x is not None and x.text else ""
@@ -156,7 +170,8 @@ def parse_late_changes_xml(text: str | bytes) -> dict:
     root = ET.fromstring(text if isinstance(text, (str, bytes)) else str(text))
     if root.tag != "late_changes":
         raise ValueError(f"not an Equibase late_changes document (root element {root.tag!r})")
-    out = {"race_date": _xml_text(root, "race_date") or None, "tracks": []}
+    raw_date = _xml_text(root, "race_date") or None
+    out = {"race_date": iso_date(raw_date) or raw_date, "race_date_text": raw_date, "tracks": []}
     for tr in root.findall("track"):
         chg = {"track": (tr.get("track_name") or "").strip() or None, "track_id": (tr.get("id") or "").strip() or None,
                "country": tr.get("country"), "updated": None, "first_post": None, "conditions": {}, "races": {}, "raw": [],
