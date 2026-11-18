@@ -796,6 +796,7 @@ class Desk:
             if is_late_changes_xml(data):      # the day's file for every track: saved once, applied to every card of that date
                 doc = parse_late_changes_xml(data)
                 date = doc.get("race_date") or datetime.now().strftime("%Y-%m-%d")
+                date = re.sub(r"[^0-9A-Za-z-]", "-", str(date))      # never a path separator in the file name
                 path = os.path.join(self.pps, f"latechanges_{date}.xml")
                 with open(path, "wb") as fh:
                     fh.write(data)

@@ -156,6 +156,23 @@ class TestCapture(unittest.TestCase):
         self.assertTrue(fin["ok"]); self.assertIn("history", fin["races"][1])
         self.assertEqual(self.poller.capture.latest(rid)["kind"], "final")
 
+    def test_capture_is_usable_from_another_thread(self):
+        import threading
+        self.prov.set_clock("2026-11-06T20:16:00Z")
+        self.poller.poll("DMR", "2026-11-06")                         # connection created on this thread
+        errors = []
+
+        def other():
+            try:
+                self.prov.set_clock("2026-11-06T20:27:00Z")
+                r = self.poller.poll("DMR", "2026-11-06")              # the Desk serves the next request from another thread
+                assert r["ok"], r["status"]
+                assert self.poller.capture.latest(race_id("DMR", "2026-11-06", 1))["status"] == "open"
+            except Exception as e:   # noqa: BLE001
+                errors.append(repr(e))
+        t = threading.Thread(target=other); t.start(); t.join()
+        self.assertEqual(errors, [])
+
     def test_replayed_rate_limit_is_a_status_not_a_crash(self):
         self.prov.set_clock("2026-11-06T20:21:00Z")
         r = self.poller.poll("DMR", "2026-11-06")

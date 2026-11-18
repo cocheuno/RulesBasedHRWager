@@ -518,14 +518,17 @@ class Capture:
     `source_observation` row keyed by content, plus the normalised payload as a JSON file.  Never updates a row."""
 
     def __init__(self, root: str, heartbeat_minutes: int = 5, con=None):
+        import threading
         from carovex.ledger import connect
         self.root = root
         self.con = con or connect(root)
+        self.lock = threading.RLock()            # one connection, many Desk request threads
         self.heartbeat = timedelta(minutes=heartbeat_minutes)
         self.dir = os.path.join(root, "data", "private", "tote")
 
     def latest(self, race_id: str) -> dict | None:
-        row = self.con.execute("SELECT observation_id, payload, received_at_utc FROM source_observation WHERE race_id=? AND provider=? "
+        with self.lock:
+            row = self.con.execute("SELECT observation_id, payload, received_at_utc FROM source_observation WHERE race_id=? AND provider=? "
                                "ORDER BY received_at_utc DESC, rowid DESC LIMIT 1", (race_id, PROVIDER)).fetchone()
         if not row:
             return None
@@ -545,10 +548,11 @@ class Capture:
         payload = dict(board, kind=kind)
         body = json.dumps(payload, sort_keys=True, default=str)
         from carovex.ledger import now_utc
-        cur = self.con.execute("INSERT OR IGNORE INTO source_observation VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                               (oid, PROVIDER, board.get("source_race_id"), hashlib.sha1(body.encode()).hexdigest(), board.get("post_time_utc"),
-                                board.get("provider_read_at_utc"), iso(now), iso(now), race_id, body, now_utc()))
-        self.con.commit()
+        with self.lock:
+            cur = self.con.execute("INSERT OR IGNORE INTO source_observation VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                                   (oid, PROVIDER, board.get("source_race_id"), hashlib.sha1(body.encode()).hexdigest(), board.get("post_time_utc"),
+                                    board.get("provider_read_at_utc"), iso(now), iso(now), race_id, body, now_utc()))
+            self.con.commit()
         if cur.rowcount:
             d = os.path.join(self.dir, str(board.get("race_date") or "undated"), str(board.get("source_race_id") or race_id).replace("|", "_"))
             os.makedirs(d, exist_ok=True)
@@ -559,7 +563,8 @@ class Capture:
         return {"stored": bool(cur.rowcount), "observation_id": oid, "reason": kind}
 
     def history(self, race_id: str, limit: int = 500) -> list[dict]:
-        rows = self.con.execute("SELECT observation_id, payload FROM source_observation WHERE race_id=? AND provider=? "
+        with self.lock:
+            rows = self.con.execute("SELECT observation_id, payload FROM source_observation WHERE race_id=? AND provider=? "
                                 "ORDER BY received_at_utc ASC, rowid ASC LIMIT ?", (race_id, PROVIDER, limit)).fetchall()
         out = []
         for oid, payload in rows:
