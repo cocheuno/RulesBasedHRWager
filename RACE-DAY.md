@@ -105,7 +105,14 @@ result was on file is the one the analysis scores ("pre-race"); the re-score aft
 4. Push the day's files (the charts themselves stay on your disk):
 
 ```powershell
-git add results\ data\out\*.picks.json
+git add results\ data\out\*.picks.json data\out\snapshots\
+```
+
+   The snapshots are the pre-race record the evaluation and the data watch count; they must be pushed too.
+   To refresh `docs\EVALUATION.md` and `docs\DATA_WATCH.md` with the day's races:
+
+```powershell
+python -m handicapper.evaluation report --write; python -m handicapper.evaluation watch --write
 ```
 
 ```powershell
