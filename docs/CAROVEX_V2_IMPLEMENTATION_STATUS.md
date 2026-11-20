@@ -192,6 +192,15 @@ not a statistical result, and the gate row says so. The four points the owner ag
    race's distance text (sprint under 8 furlongs, route 8 and over).
 4. The circuit gate reaches 400 sooner than a track gate would; the status doc and the Desk label it as pooling.
 
+## Angles: track condition and race type (2026-11-20)
+
+`handicapper/angles.py` adds two sets of measured angles with no points, chosen because the parser read these fields
+and no rule used them: the condition of every past race against an off surface today (wet-track form, sire's
+mud-winner rate, Brisnet's off-track pedigree rating), and Brisnet's race-type statistics (how often favourites
+win the race type; the share of winners at 10-1 or more). They appear in the back-test's angles table and in an
+Analysis panel that also covers the cards already on file, computed from their saved pre-race past performances.
+Picks, scores and wagers are unchanged (verified on gpx1107y and bel1106y against `main`).
+
 ## Racing Dudes picks (2026-11-20)
 
 `racing_dudes/reader.py` reads the saved Racing Dudes premium dashboard (checked on the 2026-11-20 page: 14 tracks,

@@ -225,6 +225,22 @@ namespace (`horse["timeform"]`, `race["timeform"]` with a rank by Top Fig) and a
 value or the reverse. The report and the Desk show `TF rk/fig` beside the Brisnet rank; no rule reads Timeform.
 The Desk's Load tab takes the PDF beside the Brisnet one, with the same track-and-day guard.
 
+## Measured angles: track condition and race type (`handicapper/angles.py`)
+
+Two sets of labels per horse, scored in the back-test and in the Analysis tab's **Angles** panel (horses, wins,
+in-the-money rate, flat $2 win return) and given **no points**:
+
+- **Track condition**, when today's surface is off (wet dirt, or turf softer than firm): whether the horse has won,
+  run in the money, or failed on an off surface of the same kind before, read from the condition code on every past
+  line; on wet dirt also the sire's mud-winner rate and Brisnet's off-track pedigree rating. Today's condition is
+  the Equibase morning condition; for older runs without one, the chart's condition at post time (the report says
+  which).
+- **Race type**, from Brisnet's statistics for this race type at this track: the morning-line favourite by how
+  often favourites win this race type, and horses 10-1 or longer by the share of winners at 10-1 or more.
+
+The Analysis panel also scores the cards already on file, computing the angles from each card's saved past
+performances (pre-race data, so nothing leaks). `python -m handicapper.angles` prints the same table.
+
 ## Racing Dudes picks (`--racing-dudes <saved page>.html`)
 
 `racing_dudes/reader.py` reads the Racing Dudes premium picks dashboard saved from the browser ("Webpage, HTML
