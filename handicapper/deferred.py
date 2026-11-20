@@ -82,7 +82,13 @@ class TimeformIncrementalValue(DeferredModel):
     name = "Timeform incremental value"
 
 
-ALL = (HierarchicalFigureCorrection, ConditionalLogitRaceModel, OddsDriftForecast, ConstrainedKelly, JointFinishingOrderPricer, TimeformIncrementalValue)
+class RacingDudesIncrementalValue(DeferredModel):
+    gate = "racing_dudes_value"
+    name = "Racing Dudes incremental value"
+
+
+ALL = (HierarchicalFigureCorrection, ConditionalLogitRaceModel, OddsDriftForecast, ConstrainedKelly, JointFinishingOrderPricer, TimeformIncrementalValue,
+       RacingDudesIncrementalValue)
 
 
 def statuses(watch: dict) -> list[dict]:

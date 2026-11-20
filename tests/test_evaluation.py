@@ -111,7 +111,7 @@ class TestWatch(unittest.TestCase):
             OddsDriftForecast(w).fit([])
         self.assertIn("0 of 150 odds_drift", str(cm.exception)); self.assertEqual(cm.exception.gate, "odds_drift")
         st = statuses(w)
-        self.assertEqual(len(st), 6); self.assertTrue(all(s["status"] == EV.DEFERRED for s in st))
+        self.assertEqual(len(st), 7); self.assertTrue(all(s["status"] == EV.DEFERRED for s in st))
         w["gates"]["global_calibration"]["status"] = EV.READY
         with self.assertRaises(NotImplementedError):                                # met: still an owner decision
             ConditionalLogitRaceModel(w).fit([])

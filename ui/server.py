@@ -152,6 +152,7 @@ class Desk:
         return {"pp": pp if os.path.exists(pp) else None, "sheet": sheet,
                 "changes": self._opt(os.path.join(self.pps, f"{card}.changes.html")) or self.day_changes_file(card),
                 "timeform": self._opt(os.path.join(self.pps, f"{card}.tfus.pdf")) or self._opt(os.path.join(self.pps, f"{card}.tfus.txt")),
+                "racing_dudes": self.day_file(card, "racingdudes_{date}.html"),
                 "card_json": self._opt(os.path.join(self.out, f"{card}.card.json")),
                 "picks_json": self._opt(os.path.join(self.out, f"{card}.picks.json")),
                 "results": self._opt(os.path.join(self.results, f"{card}.results.json")),
@@ -205,17 +206,24 @@ class Desk:
         st["activity"] = st["activity"][-50:]
 
     # ---------------------------------------------------------------- engine
-    def day_changes_file(self, card: str) -> str | None:
-        """data/pps/latechanges_<date>.xml for this card's date (the day's Equibase file for every track), if any."""
+    def card_date(self, card: str) -> str | None:
         cj = os.path.join(self.out, f"{card}.card.json")      # read directly: files() calls this, payload_meta() calls files()
         if not os.path.exists(cj):
             return None
         try:
             with open(cj, encoding="utf-8") as fh:
-                date = json.load(fh).get("date")
+                return json.load(fh).get("date")
         except (OSError, ValueError):
             return None
-        return self._opt(os.path.join(self.pps, f"latechanges_{date}.xml")) if date else None
+
+    def day_file(self, card: str, pattern: str) -> str | None:
+        """A file saved once per race date for every track (data/pps/<pattern with the card's date>), if any."""
+        date = self.card_date(card)
+        return self._opt(os.path.join(self.pps, pattern.format(date=date))) if date else None
+
+    def day_changes_file(self, card: str) -> str | None:
+        """data/pps/latechanges_<date>.xml for this card's date (the day's Equibase file for every track), if any."""
+        return self.day_file(card, "latechanges_{date}.xml")
 
     def load_changes(self, card: str, path: str) -> dict | None:
         """The changes for this card from a saved HTML page or the day's XML (matched by track code or name)."""
@@ -256,7 +264,7 @@ class Desk:
             wx = {"fetch": self.weather == "auto", "observations": list(st.get("weather") or [])}
             boards = {int(k): v for k, v in (self.tote_latest(card).get("races") or {}).items()}
             out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config,
-                           changes=changes, timeform=f["timeform"], weather=wx, boards=boards)
+                           changes=changes, timeform=f["timeform"], weather=wx, boards=boards, racing_dudes=f["racing_dudes"])
             result = out["result"]
             kind = kind or ("post-results" if result["run"]["results_known"] else "pre-race")
             result["run"]["kind"] = kind
@@ -294,7 +302,7 @@ class Desk:
             for r in cj["races"]:
                 roster.append({"race_no": r["race_no"], "class_text": r.get("class_text"), "distance_text": r.get("distance_text"),
                                "surface": r.get("surface"), "post_time": r.get("post_time"), "wagers": r.get("wagers"),
-                               "inputs": r.get("inputs"), "surface_switch": r.get("surface_switch"), "timeform": r.get("timeform"),
+                               "inputs": r.get("inputs"), "surface_switch": r.get("surface_switch"), "timeform": r.get("timeform"), "racing_dudes": r.get("racing_dudes"),
                                "horses": [{"pgm": h["pgm"], "post": h.get("post"), "name": h["name"], "ml_odds": h.get("ml_odds"),
                                            "run_style": h.get("run_style"), "speed_pts": h.get("speed_pts"), "entry_status": h.get("entry_status"),
                                            "jockey": h.get("jockey"), "trainer": h.get("trainer")} for h in r["horses"]]})
@@ -304,7 +312,7 @@ class Desk:
         if picks:   # the latest run's inputs, surface switch and Timeform reading belong to the race, not the raw parse
             pk = {r["race_no"]: r for r in picks.get("races", [])}
             for r in roster:
-                for k in ("inputs", "surface_switch", "timeform"):
+                for k in ("inputs", "surface_switch", "timeform", "racing_dudes"):
                     if r["race_no"] in pk and k in pk[r["race_no"]]:
                         r[k] = pk[r["race_no"]][k]
         results = load_results(f["results"]) if f["results"] else None
@@ -487,7 +495,8 @@ class Desk:
         cfg = full["wagering"]
         units = units_table(cfg) | {"PICK3": full["multirace"]["pick3"]["base"], "PICK4": full["multirace"]["pick4"]["base"]}
         evals, cards, rules = [], [], {}
-        bench = {"races": 0, "engine_wins": 0, "brisnet_wins": 0, "brisnet_top3": 0, "best_bets": 0, "best_bet_wins": 0}
+        bench = {"races": 0, "engine_wins": 0, "brisnet_wins": 0, "brisnet_top3": 0, "best_bets": 0, "best_bet_wins": 0,
+                 "rd_races": 0, "rd_wins": 0, "rd_top4": 0, "rd_engine_wins": 0, "rd_likely": 0, "rd_likely_wins": 0}
         for c in self.cards():
             f = self.files(c["card"])
             if not (f["picks_json"] and f["results"]):
@@ -514,6 +523,9 @@ class Desk:
                 bench["races"] += s["brisnet_races"]; bench["brisnet_wins"] += s["brisnet_pick_wins"]; bench["brisnet_top3"] += s["brisnet_top3"]
                 bench["best_bets"] += s["brisnet_best_bets"]; bench["best_bet_wins"] += s["brisnet_best_bet_wins"]
                 bench["engine_wins"] += sum(1 for r in bt["races"] if r.get("brisnet_pick") and r["top_pick_won"])
+            if s.get("rd_races"):
+                bench["rd_races"] += s["rd_races"]; bench["rd_wins"] += s["rd_pick_wins"]; bench["rd_top4"] += s["rd_top4"]
+                bench["rd_engine_wins"] += s["rd_engine_wins"]; bench["rd_likely"] += s["rd_likely_winner"]; bench["rd_likely_wins"] += s["rd_likely_winner_wins"]
         rule_rows = sorted(rules.values(), key=lambda d: (-d["fired"], d["rule"]))
         for d in rule_rows:
             d["win_pct"] = round(100.0 * d["won"] / d["fired"], 1) if d["fired"] else 0
@@ -814,6 +826,31 @@ class Desk:
                     self.save_state(st); applied.append({"card": c["card"], "track": chg.get("track"), "scratches": scratch_spec(chg)})
                 return {"saved": os.path.relpath(path, self.root), "race_date": date, "tracks": [t["track_name"] for t in doc["tracks"]], "applied": applied}
             path = os.path.join(self.pps, f"{card}.changes.html")
+        elif kind == "racingdudes":
+            from racing_dudes.reader import is_racing_dudes, parse_page as parse_rd, track_day
+            if not is_racing_dudes(data):
+                raise ValueError("refused: this is not a saved Racing Dudes picks page")
+            doc = parse_rd(data, filename)
+            dates = sorted({d for t in doc["tracks"] for d in t["days"]})
+            if not dates:
+                raise ValueError("no picks found in this page (save it as 'Webpage, HTML only' after the races are expanded)")
+            saved = []
+            for d in dates:                    # one copy per race date on the page: a later page for that date replaces it
+                p = os.path.join(self.pps, f"racingdudes_{d}.html")
+                with open(p, "wb") as fh:
+                    fh.write(data)
+                saved.append(os.path.relpath(p, self.root))
+            cfg = load_config(self.config)
+            applied = []
+            for c in self.cards():
+                meta = self.payload_meta(c["card"])
+                if str(meta.get("date")) not in dates:
+                    continue
+                races = track_day(doc, str(meta.get("date")), meta.get("track_code"), meta.get("track"), cfg)
+                if races:
+                    st = self.state(c["card"]); self.log(st, "Load Racing Dudes", f"{len(races)} races for {meta.get('track')} {meta.get('date')}"); self.save_state(st)
+                    applied.append({"card": c["card"], "track": meta.get("track"), "races": len(races)})
+            return {"saved": saved[0], "files": saved, "race_dates": dates, "tracks": [t["name"] for t in doc["tracks"]], "applied": applied}
         elif kind == "timeform":
             path = os.path.join(self.pps, f"{card}.tfus.{'pdf' if data.startswith(b'%PDF') else 'txt'}")
             self.guard_timeform(card, data)  # same identity guard as the PP: another track's or day's file is refused
@@ -826,7 +863,7 @@ class Desk:
             os.makedirs(os.path.join(self.pngs, card), exist_ok=True)
             path = os.path.join(self.pngs, card, f"r{race_no}.{'png' if kind == 'png' else 'pdf'}")
         else:
-            raise ValueError("kind must be pp, sheet, changes, timeform, png or chart")
+            raise ValueError("kind must be pp, sheet, changes, timeform, racingdudes, png or chart")
         with open(path, "wb") as fh:
             fh.write(data)
         if kind == "changes":
@@ -948,7 +985,8 @@ class Handler(SimpleHTTPRequestHandler):
                     out.append(self.desk.save_upload(fields.get("card", ""), fields.get("kind", ""), f["filename"], f["data"],
                                                      int(rn) if rn else None))
                 extra = [o for o in out if o.get("applied") is not None]
-                return self._json({"saved": [o["saved"] for o in out], "applied": [a for o in extra for a in o["applied"]], "tracks": [t for o in extra for t in o.get("tracks", [])]})
+                return self._json({"saved": [o["saved"] for o in out], "applied": [a for o in extra for a in o["applied"]], "tracks": [t for o in extra for t in o.get("tracks", [])],
+                                   "kind": fields.get("kind")})
             body = self._body()
             payload = json.loads(body) if body else {}
             if u.path == "/api/shutdown":

@@ -333,6 +333,7 @@ def horse_features(h: dict, race: dict) -> dict:
     f["possible_key_race"] = any(a.replace(" ", "") == "ExitPossibleKeyRace" for a in f["sheet_angles"])
     f["sheet"] = h.get("sheet")                      # every angle / rank as printed, typed (provenance: Power Play)
     f["timeform"] = h.get("timeform")                # TimeformUS values under their own namespace; no rule reads them
+    f["racing_dudes"] = h.get("racing_dudes")        # Racing Dudes' role for this horse (Win / Place / Show / Next Best); no rule reads it
     f["missing"] = missing_flags(h)                  # what the PP does not say (absent is not zero)
     # ---- Brisnet QuickPlay comments
     f["positives"] = h.get("positives", [])

@@ -43,6 +43,9 @@ app). A picks run made before the restart used the old rules and parser.
 
 1. Download from TwinSpires into `data\pps\`: the **Ultimate PPs with QuickPlay Comments** as `<card>.pdf` and, if you
    take it, the **Power Play quick sheet** as `<card>q.pdf` (it turns on the key-race rule and the Brisnet benchmark).
+   If you take the **Racing Dudes** picks, save their dashboard page once ("Webpage, HTML only", after the page has
+   loaded) and drop it in the Load tab's fourth box: it applies to every loaded card of the dates on the page and
+   shows as a Racing Dudes column and chip. It is a benchmark; no rule reads it.
    If you have the **TimeformUS PPs** for the card, drop that PDF in the Load tab's third box: the Desk shows the
    Timeform rank and Top Fig beside the Brisnet rank and the Timeform picks on each race; the rules do not use it,
    and a file for another track or day is refused.

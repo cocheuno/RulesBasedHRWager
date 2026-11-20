@@ -38,6 +38,7 @@ def main() -> int:
     ap.add_argument("--results", help="results JSON for this card (results/<card>.results.json); earlier races feed the same-day bias rule P10")
     ap.add_argument("--changes", help="Equibase 'Today's Race Day Changes' page for this track (saved HTML), or the day's Equibase late-changes XML for every track (this card's track is picked out): scratches are added to --scratch; conditions, rail, jockey changes, off-turf and pools not offered are recorded on the run")
     ap.add_argument("--timeform", help="TimeformUS PP PDF for the same card: figures, pace figures, running style and Power Picks are read under their own namespace and shown beside the Brisnet rank (no rule reads them)")
+    ap.add_argument("--racing-dudes", dest="racing_dudes", help="saved Racing Dudes picks dashboard (HTML, every track): this card's track and date are picked out, shown beside the engine's rank and scored in the back-test; no rule reads it")
     ap.add_argument("--weather", action="store_true", help="fetch the forecast for the track's configured location at each post time (python-weather); recorded as an observation, not read by a rule")
     ap.add_argument("--sheet", help="Brisnet Power Play quick sheet PDF (<card>q.pdf): key-race angles (F16) and Brisnet's picks for the back-test")
     ap.add_argument("--track-profile", help="force a track profile from rules_config.json -> tracks (default: the track code read from the PP)")
@@ -65,7 +66,8 @@ def main() -> int:
             print(f"changes page: scratches {scratch_spec(chg) or 'none'}", file=sys.stderr)
     out = run_card(args.card, scratch=scratch, sheet=args.sheet, results=args.results, config_path=args.config,
                    track_profile=args.track_profile, multirace=not args.no_multi, budget3=args.budget3, budget4=args.budget4,
-                   race_no=args.race, changes=(chg if args.changes else None), timeform=args.timeform, weather="auto" if args.weather else None)
+                   race_no=args.race, changes=(chg if args.changes else None), timeform=args.timeform, weather="auto" if args.weather else None,
+                   racing_dudes=args.racing_dudes)
     for n in out["notes"]:
         print(n, file=sys.stderr)
     card, result = out["card"], out["result"]
