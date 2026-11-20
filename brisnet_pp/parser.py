@@ -31,7 +31,7 @@ import pdfplumber
 
 # Bump whenever the parser's output changes (surface, distance, workouts, ...): the app re-reads a cached
 # card.json whose stamp differs, so a parser fix reaches cards that were parsed before it.
-PARSER_VERSION = "2026-11-20.1"
+PARSER_VERSION = "2026-11-20.2"
 PARS_ROW_RE = re.compile(r"^\s*\d{2,3}\s+\d{2,3}\s*/\s*\d{2,3}\s+\d{2,3}\s*$")   # the header's pars figures on a continuation page
 
 from .symbols import (
@@ -358,7 +358,10 @@ class BrisnetPPParser:
         race["fillies_mares"] = SYM_FILLIES in h
         race["state_bred"] = SYM_STATEBRED in h
         all_weather = SYM_AW in h            # Tapeta / synthetic main track (Gulfstream, Woodbine, Turfway ...)
-        hc = clean_name(h.replace("\u00bd", " 1/2").replace("\u00bc", " 1/4").replace("\u00be", " 3/4"))
+        # Brisnet's mile fractions are glyphs after the mile count ("1ˆ Mile" = 1 1/16, "1„" = 1 1/8, "1‰" = 1 3/16,
+        # "1‚" = 1 1/2): spell them out before clean_name strips the glyphs, or every such race reads as "1 Mile"
+        h2 = re.sub(r"(\d)\s*([ˆ„‰‚])(?=\s*Miles?\b)", lambda m: m.group(1) + {"ˆ": " 1/16", "„": " 1/8", "‰": " 3/16", "‚": " 1/2"}[m.group(2)], h)
+        hc = clean_name(h2.replace("\u00bd", " 1/2").replace("\u00bc", " 1/4").replace("\u00be", " 3/4"))
         hc = re.sub(r"\b(\d+)m\s?(\d+)\s?yds?\b", r"\1 Mile \2 Yards", hc)   # "1m70yds" -> "1 Mile 70 Yards"
         m = re.match(r"^(?P<cls>.+?)\s+(?P<dist>(?:\d+(?:\s\d/\d+)?|About\s+\d+[^\s]*)\s+(?:Furlongs?|Miles?|Yards)(?:\s+\d+\s+Yards)?(?:\s+\d+/\d+)?)\s*(?P<surf>\([Tt]\))?\s+(?P<age>\S+)(?:,?\s*(?P<sex>F & M|F|C & G|Fillies(?: & Mares)?|Fillies and Mares|Colts(?: & Geldings)?|Mares))?\s+[A-Z][a-z]+day", hc)
         if m:
