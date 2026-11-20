@@ -31,7 +31,8 @@ import pdfplumber
 
 # Bump whenever the parser's output changes (surface, distance, workouts, ...): the app re-reads a cached
 # card.json whose stamp differs, so a parser fix reaches cards that were parsed before it.
-PARSER_VERSION = "2026-11-07.2"
+PARSER_VERSION = "2026-11-20.1"
+PARS_ROW_RE = re.compile(r"^\s*\d{2,3}\s+\d{2,3}\s*/\s*\d{2,3}\s+\d{2,3}\s*$")   # the header's pars figures on a continuation page
 
 from .symbols import (
     FRAC_CLASS, MARGIN_CLASS, SUP_CLASS, SYM_AGE_3UP, SYM_AGE_4UP, SYM_AW,
@@ -139,7 +140,7 @@ def pct(s: str | None):
 DATE_RE = re.compile(r"^(\d{2})([A-Z][a-z]{2})(\d{2})")
 WORK_RE = re.compile(
     r"(?P<bullet>" + re.escape(SYM_NEG) + r")?\s*(?P<date>\d{2}[A-Z][a-z]{2}(?:'\d{2})?)\s+(?P<trk>[A-Za-z]{2,4})\s+(?P<turf>" + re.escape(SYM_WORK_TURF) +
-    r"\s*\(d\)\s*)?(?P<dist>\d+f)\s+(?P<cond>[a-z]{2,3})\s+(?P<time>(?:\d*:)?\d\d" + SUP_CLASS + r"?)\s*"
+    r"\s*\(d\)\s*)?(?P<aw>" + re.escape(SYM_AW) + r"\s*)?(?P<dist>\d+f)\s+(?P<cond>[a-z]{2,3})\s+(?P<time>(?:\d*:)?\d\d" + SUP_CLASS + r"?)\s*"
     r"(?P<type>[HBhbg]+)\s*(?P<rank>\d+)/(?P<of>\d+)"
 )
 # US-format lines run at foreign tracks (no Brisnet pace/speed figures)
@@ -230,7 +231,7 @@ class BrisnetPPParser:
                 self.warn(f"page {pno}: no race header found; skipped")
                 continue
             race_no = header["race_no"]
-            body = [r for r in rows if r.top > 40 and r.top < 770]
+            body = [r for r in rows if r.top > self._body_top(rows) and r.top < 770 and not PARS_ROW_RE.match(r.text())]
             if self.card["track"] is None:
                 self.card["track"] = header["track"]
                 self.card["date"] = header["date"]
@@ -291,6 +292,14 @@ class BrisnetPPParser:
                 except ValueError:
                     date = None
         return {"race_no": race_no, "track": trk, "date": date, "conditions_line": cond_line}
+
+    @staticmethod
+    def _body_top(rows: list[Row]) -> float:
+        """Where the page body starts: just below the page's own header line ("Ultimate PP's ... <weekday>, <date>").
+        A race without pars prints no pars line in the header, so its pages start about 10 points higher; a fixed
+        line at 40 cut the first horse of every continuation page off (Churchill 11/20 race 9 lost #3, #6, #9)."""
+        hdr = [r.top for r in rows if r.top < 45 and ("Ultimate PP" in r.text() or re.search(r"[A-Z][a-z]+day,\s+[A-Z][a-z]+\s+\d{1,2},\s+\d{4}", r.text()))]
+        return min(40.0, max(hdr) + 3.0) if hdr else 40.0
 
     @staticmethod
     def _is_summary_start(r: Row) -> bool:
@@ -810,7 +819,7 @@ class BrisnetPPParser:
         out = []
         for m in WORK_RE.finditer(t):
             out.append({
-                "date": m.group("date"), "track": m.group("trk"), "turf": bool(m.group("turf")),
+                "date": m.group("date"), "track": m.group("trk"), "turf": bool(m.group("turf")), "all_weather": bool(m.group("aw")),
                 "distance_furlongs": float(m.group("dist")[:-1]), "condition": m.group("cond"),
                 "time": parse_time(m.group("time")), "type": m.group("type"), "rank": int(m.group("rank")), "of": int(m.group("of")),
                 "bullet": bool(m.group("bullet")) or int(m.group("rank")) == 1,
