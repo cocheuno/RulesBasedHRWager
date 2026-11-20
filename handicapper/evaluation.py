@@ -42,6 +42,8 @@ DEFAULT_DATA_WATCH = {
                        "capability": "late-odds drift forecast"},
         "timeform_value": {"threshold": 200, "unit": "races with both Brisnet and Timeform figures and a result",
                            "capability": "Timeform's incremental value"},
+        "racing_dudes_value": {"threshold": 200, "unit": "races with Racing Dudes picks in the pre-race run and a result",
+                               "capability": "Racing Dudes' incremental value (their ranking beside the engine's)"},
     },
 }
 DEFERRED = "DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA"
@@ -132,6 +134,7 @@ def race_records(root: str, cfg: dict, cards: list[str] | None = None) -> list[d
             fo = x.get("final_odds") or {}
             final = _norm({s["pgm"]: (1.0 / (fo[s["pgm"]] + 1.0) if fo.get(s["pgm"]) is not None else 0.0) for s in running}) if fo else None
             has_tf = sum(1 for s in running if (s.get("timeform") or {}).get("top_fig") is not None) >= max(2, len(running) // 2)
+            has_rd = bool((r.get("racing_dudes") or {}).get("order"))
             pr = per_race.get(str(r["race_no"])) or {}
             live = [s for s in running if not s.get("eliminated")]
             fur = furlongs_from_text(r.get("distance_text"))
@@ -142,7 +145,7 @@ def race_records(root: str, cfg: dict, cards: list[str] | None = None) -> list[d
                          "confidence": r.get("confidence"), "clock": pr.get("status", "unknown"), "predicted_at_utc": pr.get("at_utc"),
                          "model": _norm(model), "market": _norm(market) if all(v is not None for v in market.values()) and market else None,
                          "blend": _norm(blend), "final_market": final or None, "has_final_odds": bool(final),
-                         "has_timeform": has_tf, "has_tote_history": (code, snap.get("date"), r["race_no"]) in tote,
+                         "has_timeform": has_tf, "has_racing_dudes": has_rd, "has_tote_history": (code, snap.get("date"), r["race_no"]) in tote,
                          "top_pick": (live[0]["pgm"] if live else None), "top_pick_won": bool(live) and live[0]["pgm"] == winner})
     recs.sort(key=lambda z: (z["date"] or "", z["card"], z["race_no"]))
     return recs
@@ -313,9 +316,10 @@ def data_watch(recs: list[dict], cfg: dict | None = None) -> dict:
         per_circuit[circ]["have"] += 1; per_circuit[circ]["tracks"][r["track"]] += 1
     tote = sum(1 for r in recs if r["has_tote_history"])
     tf = sum(1 for r in recs if r["has_timeform"])
+    rdn = sum(1 for r in recs if r.get("has_racing_dudes"))
     group = (gates.get("track_specific") or {}).get("group", "circuit")
     pooled = per_circuit if group == "circuit" else {t: {"have": v, "tracks": {t: v}} for t, v in per_track.items()}
-    counts = {"global_calibration": n, "track_specific": max((v["have"] for v in pooled.values()), default=0), "odds_drift": tote, "timeform_value": tf}
+    counts = {"global_calibration": n, "track_specific": max((v["have"] for v in pooled.values()), default=0), "odds_drift": tote, "timeform_value": tf, "racing_dudes_value": rdn}
     out = {"as_of_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "races": n, "races_before_cutoff": before,
            "races_after_cutoff": sum(1 for r in recs if r["clock"] == "after-cutoff"), "per_track": dict(sorted(per_track.items())),
            "note": "counts are races with a pre-race prediction (made without the result, whatever the hour) and a chart result; "

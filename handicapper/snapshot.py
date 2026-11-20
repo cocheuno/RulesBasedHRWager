@@ -22,6 +22,7 @@ import copy
 import glob
 import json
 import os
+import re
 from datetime import datetime, timezone
 
 KINDS = ("pre-race", "post-results", "as-run")
@@ -54,10 +55,17 @@ def write_snapshot(out_dir: str, card: str, result: dict, kind: str) -> str:
     return path
 
 
+def _order_key(path: str) -> tuple:
+    """Oldest first: by timestamp, then by the same-second suffix (stem.picks.json is the first run, stem-2 the second ...)."""
+    name = os.path.basename(path)[: -len(".picks.json")]
+    m = re.match(r"^(.*?)(?:-(\d+))?$", name)
+    return (m.group(1), int(m.group(2) or 1))
+
+
 def list_snapshots(out_dir: str, card: str) -> list[dict]:
     """Oldest first: [{file, path, kind, at_utc, scratches, parser_version, results_known}]."""
     out = []
-    for p in sorted(glob.glob(os.path.join(snapshot_dir(out_dir, card), "*.picks.json"))):
+    for p in sorted(glob.glob(os.path.join(snapshot_dir(out_dir, card), "*.picks.json")), key=_order_key):
         try:
             with open(p, encoding="utf-8") as fh:
                 d = json.load(fh)

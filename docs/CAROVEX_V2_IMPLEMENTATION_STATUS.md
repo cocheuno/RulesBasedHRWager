@@ -192,6 +192,18 @@ not a statistical result, and the gate row says so. The four points the owner ag
    race's distance text (sprint under 8 furlongs, route 8 and over).
 4. The circuit gate reaches 400 sooner than a track gate would; the status doc and the Desk label it as pooling.
 
+## Racing Dudes picks (2026-11-20)
+
+`racing_dudes/reader.py` reads the saved Racing Dudes premium dashboard (checked on the 2026-11-20 page: 14 tracks,
+191 races over two dates, four picks in every race, 23 Likely Winner and 20 Best Value tags). Kept under its own
+namespace as a benchmark beside Brisnet's Power Play picks and Timeform's: shown on the Desk and in the report,
+scored in the back-test, counted by the data watch's `racing_dudes_value` gate (200 races). No rule reads it until
+that gate and a held-out comparison say it adds something to the engine. Archive pages for past dates: layout
+not yet seen; the reader falls back to a single-track page.
+
+Also fixed: two runs in the same second shared a snapshot timestamp and the newest-run chooser preferred the older
+file (`-2` sorts before `.`); snapshots are now ordered by timestamp and then by their same-second suffix.
+
 ## Data on file (2026-11-15)
 
 25 cards with picks, 157 snapshots, 25 results files; 219 races with pre-race snapshots and chart results;

@@ -28,6 +28,7 @@ Pure Python, one third-party runtime dependency (`pdfplumber`); OCR (`rapidocr_o
 | | `handicapper/provenance.py` | | parser field audit; raw / derived values with source and date; as-of filtering; missingness flags |
 | | `handicapper/weather.py` | | fetched (python-weather) and manual weather observations; newest before a race's cutoff |
 | | `handicapper/identity.py` | | canonical track / race / betting-interest mapping across sources; coupled entries; review list |
+| Benchmark | `racing_dudes/reader.py` | | Racing Dudes saved picks page (every track, per date): Win / Place / Show / Next Best, wagers, tags; merged under `racing_dudes`; back-test benchmark and data-watch gate; no rule reads it |
 | Phase F | `handicapper/plain.py` | | plain English (ASD-STE100 style) for every horse-facing string; glossary; violation check used by the tests |
 | Phase E | `handicapper/evaluation.py` | | prospective evaluation (log loss, Brier, reliability, breakdowns, intervals, chronological blends), data watch with the owner's gates, `docs/DATA_WATCH.md` / `docs/EVALUATION.md` writers |
 | | `handicapper/deferred.py` | | interfaces of the deferred models (hierarchical figure correction, conditional-logit race model, odds-drift forecast, constrained Kelly, joint finishing-order pricing, Timeform value); `fit` raises until the gate is met |

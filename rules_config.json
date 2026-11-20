@@ -311,6 +311,9 @@
       },
       "timeform_value": {
         "threshold": 200
+      },
+      "racing_dudes_value": {
+        "threshold": 200
       }
     }
   },

@@ -101,7 +101,7 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
              config_path: str = DEFAULT_CONFIG, track_profile: str | None = None, multirace: bool = True,
              budget3: float | None = None, budget4: float | None = None, race_no: int | None = None,
              changes: str | dict | None = None, timeform: str | dict | None = None, weather: str | list | None = None,
-             boards: dict | None = None) -> dict:
+             boards: dict | None = None, racing_dudes: str | dict | None = None) -> dict:
     """Returns {"card": the card as scored (after scratches), "raw": the card before scratches, "result": picks,
     "cfg": config used, "track_code", "notes": [...]}.  `changes`: a saved Equibase race-day-changes page (path)
     or its parsed form; recorded on the run (conditions, rail, jockey changes, pools) and on each race as inputs; a
@@ -132,6 +132,15 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
         from timeform_pp.reader import merge_timeform, parse_source as parse_timeform
         tf_doc = timeform if isinstance(timeform, dict) else parse_timeform(timeform)
         notes.extend("timeform: " + n for n in merge_timeform(card, tf_doc))
+    rd_races = None
+    if racing_dudes:
+        from racing_dudes.reader import merge_racing_dudes, parse_page as parse_rd, track_day
+        if isinstance(racing_dudes, dict) and "tracks" not in racing_dudes:
+            rd_races = racing_dudes                                     # already one track and day: {race_no: race}
+        else:
+            doc = racing_dudes if isinstance(racing_dudes, dict) else parse_rd(open(racing_dudes, "rb").read(), racing_dudes)
+            rd_races = track_day(doc, card.get("date"), code0, card.get("track"), base_cfg)
+        notes.extend("racing dudes: " + n for n in merge_racing_dudes(card, rd_races, None if isinstance(racing_dudes, dict) else os.path.basename(str(racing_dudes))))
     raw = copy.deepcopy(card)
     if sheet:
         notes.extend("sheet: " + n for n in merge_sheet(card, parse_sheet(sheet)))
@@ -174,7 +183,7 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
                       "races": len(tf_doc.get("races", []))} if tf_doc else None),
         "surface_switches": {str(r["race_no"]): r["surface_switch"] for r in card["races"] if r.get("surface_switch")},
         "data_sources": [s for s in ("brisnet_pp", "brisnet_power_play" if sheet else None, "equibase_changes" if chg else None,
-                                     "timeformus" if tf_doc else None, "results" if results else None) if s],
+                                     "timeformus" if tf_doc else None, "racing_dudes" if rd_races else None, "results" if results else None) if s],
     }
     # ---- per-race cutoffs: scheduled post from the PP (Eastern), the chart's off time when a result is on file
     tz = (cfg.get("tracks", {}).get(code or "", {}) or {}).get("timezone")
@@ -205,6 +214,7 @@ def run_card(source, *, scratch: str | None = None, sheet: str | None = None, re
         r["inputs"] = src.get("inputs")
         r["surface_switch"] = src.get("surface_switch")
         r["timeform"] = src.get("timeform")
+        r["racing_dudes"] = src.get("racing_dudes")
     # ---- decision records: every suggested wager, frozen with this run (never edited by a later run)
     for r in result["races"]:
         for i, w in enumerate(r.get("wagers", [])):

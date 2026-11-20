@@ -193,6 +193,12 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
                "picks_hit": win in r["picks"], "win_payoff": res.get("win"),
                "brisnet_pick": bn.get("top_pick"), "brisnet_won": bool(bn.get("top_pick")) and bn.get("top_pick") == win,
                "brisnet_top3": win in (bn.get("top3") or []), "brisnet_best_bet": bn.get("best_bet")}
+        rd = r.get("racing_dudes") or {}
+        rd_order = rd.get("order") or []
+        row["rd_pick"] = rd_order[0] if rd_order else None
+        row["rd_won"] = bool(rd_order) and rd_order[0] == win
+        row["rd_top4"] = bool(rd_order) and win in rd_order
+        row["rd_likely_winner"] = bool(rd.get("likely_winner"))
         tf = r.get("timeform") or {}
         tf_rank = tf.get("rank") or {}
         tf_top = [p for p, k in tf_rank.items() if k == 1]
@@ -222,6 +228,11 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
                 labels.append(("rank", "top pick"))
             if sh.get("best_bet"):
                 labels.append(("rank", "best bet"))
+            rdh = s.get("racing_dudes") or {}
+            if rdh.get("role"):
+                labels.append(("racing_dudes", f"{rdh['role']} pick"))
+                if rdh.get("role") == "Win" and (r.get("racing_dudes") or {}).get("likely_winner"):
+                    labels.append(("racing_dudes", "Likely Winner"))
             tfh = s.get("timeform") or {}
             if tfh.get("rank") == 1:
                 labels.append(("timeform", "Top Fig #1"))
@@ -251,6 +262,7 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
     n = len(races_out)
     bench = [r for r in races_out if r["brisnet_pick"]]
     tfb = [r for r in races_out if r.get("timeform_top")]
+    rdb = [r for r in races_out if r.get("rd_pick")]
     return {"races": races_out, "rules": rules, "angles": angles, "multirace": multi, "identity": identity,
             "summary": {"races": n, "top_pick_wins": sum(r["top_pick_won"] for r in races_out),
                         "winner_in_top3": sum(r["winner_in_top3"] for r in races_out),
@@ -259,6 +271,9 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
                         "brisnet_best_bets": sum(1 for r in bench if r["brisnet_best_bet"]),
                         "brisnet_best_bet_wins": sum(1 for r in bench if r["brisnet_best_bet"] and r["brisnet_best_bet"] == r["winner"]),
                         "winner_eliminated": sum(r["winner_eliminated"] for r in races_out),
+                        "rd_races": len(rdb), "rd_pick_wins": sum(r["rd_won"] for r in rdb), "rd_top4": sum(r["rd_top4"] for r in rdb),
+                        "rd_engine_wins": sum(r["top_pick_won"] for r in rdb),
+                        "rd_likely_winner": sum(1 for r in rdb if r["rd_likely_winner"]), "rd_likely_winner_wins": sum(1 for r in rdb if r["rd_likely_winner"] and r["rd_won"]),
                         "timeform_races": len(tfb), "timeform_top_wins": sum(r["timeform_won"] for r in tfb),
                         "timeform_winner_in_top3": sum(1 for r in tfb if (r.get("timeform_winner_rank") or 99) <= 3),
                         "timeform_power_pick_wins": sum(r["timeform_power_pick_won"] for r in races_out if r.get("timeform_power_pick")),
@@ -276,6 +291,10 @@ def format_backtest(bt: dict) -> str:
     if s.get("brisnet_races"):
         L.append(f"Brisnet Power Play benchmark over {s['brisnet_races']} races: its top pick won {s['brisnet_pick_wins']}, "
                  f"winner in its Top 3: {s['brisnet_top3']}; 3-Star Best Bets {s['brisnet_best_bet_wins']}/{s['brisnet_best_bets']}")
+        L.append("")
+    if s.get("rd_races"):
+        L.append(f"Racing Dudes benchmark over {s['rd_races']} races: their win pick won {s['rd_pick_wins']} (the engine's top pick {s['rd_engine_wins']} on the same races), "
+                 f"winner in their four {s['rd_top4']}; Likely Winner {s['rd_likely_winner_wins']}/{s['rd_likely_winner']}")
         L.append("")
     if s.get("timeform_races"):
         L.append(f"TimeformUS benchmark over {s['timeform_races']} races: its top figure won {s['timeform_top_wins']}, winner in its top 3 by figure: "
@@ -301,7 +320,7 @@ def format_backtest(bt: dict) -> str:
         L.append(f"| {st['rule']} | {st['sign']} | {st['fired']} | {st['won']} | {st['win_pct']} | {st['itm_pct']} |")
     if bt.get("angles"):
         L.append("")
-        L.append("Power Play angles and ranks, and Timeform marks, as printed (prospective hit rates; no points are awarded for these):")
+        L.append("Power Play angles and ranks, Timeform marks and Racing Dudes roles, as printed (prospective hit rates; no points are awarded for these):")
         L.append("")
         L.append("| Source | Label | Fired | Won | Win% | ITM% |")
         L.append("|---|---|---|---|---|---|")

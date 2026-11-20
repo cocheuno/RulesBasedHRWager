@@ -205,8 +205,8 @@ def score_race(race: dict, cfg: dict) -> dict:
             "pgm": h["pgm"], "name": h["name"], "ml_odds": h["ml_odds"], "ml_decimal": h["ml_decimal"],
             "run_style": h["run_style"], "speed_pts": h["speed_pts"], "prime_power": h["prime_power"],
             "score": round(total, 2), "eliminated": eliminated, "flags": flags, "hits": hits,
-            "sheet": f.get("sheet"), "timeform": f.get("timeform"), "missing": f.get("missing") or [],
-            "features": {k: v for k, v in f.items() if not k.startswith("_") and k not in ("last", "positives", "negatives", "trainer_angles", "trainer_flagged", "sheet", "timeform", "missing")},
+            "sheet": f.get("sheet"), "timeform": f.get("timeform"), "racing_dudes": f.get("racing_dudes"), "missing": f.get("missing") or [],
+            "features": {k: v for k, v in f.items() if not k.startswith("_") and k not in ("last", "positives", "negatives", "trainer_angles", "trainer_flagged", "sheet", "timeform", "racing_dudes", "missing")},
         })
     # ---- probabilities: one model for the race, over the horses that can win (not eliminated, not AE/MTO)
     live = [s for s in sheets if not s["eliminated"] and not s["flags"]]
@@ -596,6 +596,10 @@ def format_report(result: dict, detail: int = 1) -> str:
             L.insert(len(L) - 2, f"Off the turf: scored as {r['surface_switch']['to']} (Equibase changes page).")
         if (r.get("inputs") or {}).get("pools_not_offered"):
             L.insert(len(L) - 2, f"Pools not offered (Equibase): {', '.join(r['inputs']['pools_not_offered'])}.")
+        rd = r.get("racing_dudes")
+        if rd and rd.get("order"):
+            L.insert(len(L) - 2, "Racing Dudes (benchmark, not read by any rule): " + " / ".join(f"{rd['roles'].get(p, '')} #{p}" for p in rd["order"])
+                     + (" · Likely Winner" if rd.get("likely_winner") else "") + (" · Best Value" if rd.get("best_value") else "") + ".")
         for s in r["sheets"]:
             hits = sorted([h for h in s["hits"] if h["points"] and not h.get("value")], key=lambda h: -abs(h["points"]))
             top = "; ".join(f"{h['note'][:90]} ({h['rule']}, {h['points']:+.1f})" for h in hits[:4 if detail else 2])

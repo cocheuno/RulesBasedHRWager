@@ -225,6 +225,26 @@ namespace (`horse["timeform"]`, `race["timeform"]` with a rank by Top Fig) and a
 value or the reverse. The report and the Desk show `TF rk/fig` beside the Brisnet rank; no rule reads Timeform.
 The Desk's Load tab takes the PDF beside the Brisnet one, with the same track-and-day guard.
 
+## Racing Dudes picks (`--racing-dudes <saved page>.html`)
+
+`racing_dudes/reader.py` reads the Racing Dudes premium picks dashboard saved from the browser ("Webpage, HTML
+only"): one page, every track on your list, a tab per race date. Per race it keeps their Win, Place, Show and
+Next Best horses (program number, name, morning line, jockey, trainer), their exacta, trifecta and multi-race
+structures, and the Likely Winner / Best Value tags. It is an expert opinion built from the same past
+performances, so it is kept under its own namespace as a **benchmark**: shown beside the engine's rank on the Desk
+and in the report, scored in the back-test ("their win pick won X of Y"), counted by the data watch
+(`racing_dudes_value`, 200 races). No rule reads it. Drop the page once on the Load tab; it is saved as
+`data/pps/racingdudes_<date>.html` for each date on the page and applied to every loaded card of those dates.
+
+```
+python -m racing_dudes.reader read <page.html>                 # tracks and race counts on the page
+python -m racing_dudes.reader benchmark <page.html> [...]      # their picks against the results on file
+```
+
+The benchmark command also takes archive pages for past dates (unverified layout: the reader falls back to a
+single-track page when it finds no track sections), which scores their published picks against the races already
+on file without waiting weeks.
+
 ## Weather (`--weather`)
 
 With `--weather` (the Desk does it on every run) the forecast for `tracks.<code>.location` is fetched with
