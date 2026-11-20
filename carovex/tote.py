@@ -109,17 +109,48 @@ class ToteProvider:
         return utc_now()
 
 
-def read_key(root: str | None = None) -> str | None:
-    """The API key from PUNTERSEDGE_API_KEY, else data/private/puntersedge.key (ignored path).  None when
-    neither exists: the request goes out without the header (a network proxy may inject it)."""
-    k = os.environ.get(KEY_ENV)
-    if k:
-        return k.strip()
+PLACEHOLDER_KEYS = {"your-puntersedge-key-here", "your-key-here", "changeme", ""}
+
+
+def _env_file_value(root: str | None, name: str) -> str | None:
+    """NAME=value from <root>/.env (quotes stripped); None when the file or the line is absent."""
+    p = os.path.join(root or ".", ".env")
+    if not os.path.exists(p):
+        return None
+    with open(p, encoding="utf-8-sig") as fh:            # utf-8-sig: Notepad may save a byte-order mark
+        for line in fh:
+            line = line.strip()
+            if line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            if k.strip() == name:
+                return v.strip().strip('"').strip("'")
+    return None
+
+
+def key_with_source(root: str | None = None) -> tuple[str | None, str]:
+    """(key, where it came from): the PUNTERSEDGE_API_KEY environment variable, else the .env file in the repo
+    folder, else data/private/puntersedge.key.  A placeholder value counts as no key.  The key is never logged."""
+    k = (os.environ.get(KEY_ENV) or "").strip()
+    if k and k not in PLACEHOLDER_KEYS:
+        return k, "environment variable"
+    v = _env_file_value(root, KEY_ENV)
+    if v is not None:
+        if v in PLACEHOLDER_KEYS:
+            return None, ".env (still the placeholder from .env.example)"
+        return v, ".env"
     p = os.path.join(root or ".", KEY_FILE)
     if os.path.exists(p):
-        with open(p, encoding="utf-8") as fh:
-            return fh.read().strip() or None
-    return None
+        with open(p, encoding="utf-8-sig") as fh:
+            v = fh.read().strip()
+        return (v or None), KEY_FILE if v else f"{KEY_FILE} (empty)"
+    return None, "none found (no PUNTERSEDGE_API_KEY in the environment or .env, no data/private/puntersedge.key)"
+
+
+def read_key(root: str | None = None) -> str | None:
+    """The API key (see key_with_source).  None when there is none: the request goes out without the header (a
+    network proxy may inject it)."""
+    return key_with_source(root)[0]
 
 
 class PuntersEdgeProvider(ToteProvider):
@@ -130,7 +161,10 @@ class PuntersEdgeProvider(ToteProvider):
 
     def __init__(self, key: str | None = None, base_url: str = BASE_URL, timeout: float = 15.0, max_retries: int = 3,
                  sleep=time.sleep, root: str | None = None):
-        self.key = key if key is not None else read_key(root)
+        if key is not None:
+            self.key, self.key_source = key, "passed in"
+        else:
+            self.key, self.key_source = key_with_source(root)
         self.base = urlparse(base_url)
         self.timeout, self.max_retries, self._sleep = timeout, max_retries, sleep
         self._conn = None
@@ -189,7 +223,7 @@ class PuntersEdgeProvider(ToteProvider):
                         raise ToteError("malformed", f"response is not JSON ({e})", status=200)
                 body = raw.decode("utf-8", errors="replace")[:300]
                 if resp.status in (401, 403):
-                    raise ToteError("auth", f"HTTP {resp.status}: key missing, invalid or lacking access", status=resp.status)
+                    raise ToteError("auth", f"HTTP {resp.status}: key missing, invalid or lacking access (key source: {self.key_source})", status=resp.status)
                 if resp.status == 402:
                     raise ToteError("credits", "HTTP 402: monthly credit allowance exhausted", status=402)
                 if resp.status == 422:
@@ -743,7 +777,11 @@ def main(argv=None) -> int:
         return 0
     prov = ReplayToteProvider(a.replay) if a.replay else PuntersEdgeProvider(root=root, timeout=cfg.get("tote", {}).get("timeout_seconds", 15))
     if a.cmd == "usage":
-        print(json.dumps(prov.usage(), indent=1)); return 0
+        print(f"key source: {getattr(prov, 'key_source', 'replay')}")
+        try:
+            print(json.dumps(prov.usage(), indent=1)); return 0
+        except ToteError as e:
+            print(f"{e.kind}: {e}"); return 1
     if a.cmd == "sample":
         resp = prov.board(date=a.date)
         from collections import Counter

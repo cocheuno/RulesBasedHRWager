@@ -360,3 +360,46 @@ class TestDesk(unittest.TestCase):
         r = self.desk.tote_refresh("synth")
         self.assertEqual(r["status"]["feed"], "error"); self.assertFalse(r["status"]["decisions_enabled"])
         self.assertEqual(self.desk.payload("synth")["tote"]["status"]["feed"], "error")
+
+
+class TestKeySource(unittest.TestCase):
+    def test_env_file_placeholder_and_precedence(self):
+        tmp = tempfile.mkdtemp()
+        saved = os.environ.pop(T.KEY_ENV, None)
+        try:
+            self.assertIsNone(T.key_with_source(tmp)[0]); self.assertIn("none found", T.key_with_source(tmp)[1])
+            with open(os.path.join(tmp, ".env"), "w", encoding="utf-8") as fh:
+                fh.write("# comment\nPUNTERSEDGE_API_KEY=your-puntersedge-key-here\n")
+            k, src = T.key_with_source(tmp)
+            self.assertIsNone(k); self.assertIn("placeholder", src)
+            with open(os.path.join(tmp, ".env"), "w", encoding="utf-8-sig") as fh:          # Notepad's byte-order mark
+                fh.write('PUNTERSEDGE_API_KEY="realkey123"\n')
+            self.assertEqual(T.key_with_source(tmp), ("realkey123", ".env"))
+            os.environ[T.KEY_ENV] = "envkey"
+            self.assertEqual(T.key_with_source(tmp), ("envkey", "environment variable"))
+            p = T.PuntersEdgeProvider(root=tmp)
+            self.assertEqual((p.key, p.key_source), ("envkey", "environment variable"))
+        finally:
+            os.environ.pop(T.KEY_ENV, None)
+            if saved is not None:
+                os.environ[T.KEY_ENV] = saved
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_auth_error_names_the_source_not_the_key(self):
+        FakeAPI.script = [(401, {}, "{}")]
+        srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), FakeAPI)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        try:
+            tmp = tempfile.mkdtemp()
+            with open(os.path.join(tmp, ".env"), "w", encoding="utf-8") as fh:
+                fh.write(f"PUNTERSEDGE_API_KEY={SECRET}\n")
+            saved = os.environ.pop(T.KEY_ENV, None)
+            p = T.PuntersEdgeProvider(root=tmp, base_url=f"http://127.0.0.1:{srv.server_address[1]}", max_retries=0, sleep=lambda s: None)
+            with self.assertRaises(T.ToteError) as cm:
+                p.board()
+            self.assertIn("key source: .env", str(cm.exception)); self.assertNotIn(SECRET, str(cm.exception))
+            if saved is not None:
+                os.environ[T.KEY_ENV] = saved
+            shutil.rmtree(tmp, ignore_errors=True)
+        finally:
+            srv.shutdown()
