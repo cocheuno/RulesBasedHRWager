@@ -70,10 +70,11 @@ class TestReader(unittest.TestCase):
         self.assertEqual(self.h["3"]["lines"][0]["bias_note"], "Slight")
         self.assertEqual(self.h["3"]["notes"], ["CLAIMED FROM SAMPLE STABLE, TRAINER - SAMPLE TRAINER (68) FOR $35,000"])
 
-    def test_power_picks_and_pace_projector(self):
+    def test_power_picks_and_no_pace_projector_order(self):
         self.assertEqual(self.r1["power_picks"], ["3", "4", "1"])
-        self.assertEqual(self.r1["pace_projector"], ["1", "1A", "2", "3", "4"])
-        self.assertEqual(self.r1["pace_projector_basis"], "text-layer")
+        self.assertEqual(self.r1["pace_projector"], [])                      # a graphic: the text layer does not give its order
+        self.assertTrue(self.r1["pace_projector_basis"].startswith("not readable"))
+        self.assertTrue(self.r1["pace_projector_digits"])                    # kept for reference only
         self.assertEqual(self.r2["power_picks"], ["2", "1"])
 
     def test_year_boundary(self):

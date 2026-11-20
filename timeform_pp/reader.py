@@ -4,8 +4,8 @@ The PDF is a graphic layout; pdfplumber's text layer keeps one line per visual r
 ("Top 49 Fig" can arrive as "To 1 p 1 1 Fig" for a three-digit figure, the career record is interleaved letter
 by letter).  Only the parts that survive the text layer are read:
 
-  per race:  race number, post time, distance, surface, race type, Power Picks (three program numbers), and the
-             Pace Projector order when the digits of the graphic come through in order (marked "text-layer");
+  per race:  race number, post time, distance, surface, race type, Power Picks (three program numbers).  The Pace
+             Projector is a graphic: its digits come through the text layer but not its order, so no order is claimed;
   per horse: program number (letters kept: 1A), name, sex, age, ML, weight, Top Fig (pace-adjusted speed figure),
              running style with early and late pace figures, and for every running line the date, days since
              the previous start, track, Timeform race rating, surface, distance, class, condition, odds, the
@@ -171,7 +171,9 @@ def _finish(out: dict) -> None:
             if m:
                 picks.append((m.start(), h["pgm"]))
         race["power_picks"] = [p for _, p in sorted(picks)]
-        # Pace Projector: the program numbers of the graphic, as far as the text layer prints them in order
+        # Pace Projector: a 2-D graphic.  The text layer prints its program numbers line by line, left to right, which is
+        # not the projected running order (checked against the charts' first-call leaders: 0 of 15).  The digits are kept
+        # as `pace_projector_digits` for reference; the order is not claimed.
         order = []
         for ln in race["header_lines"][1:]:          # the race-number line carries distance and conditions, not the graphic
             t = re.sub(r"\([^)]*\)", " ", ln)
@@ -183,9 +185,9 @@ def _finish(out: dict) -> None:
             for tok in re.findall(r"(?<![\w/.-])(\d{1,2}[A-Z]?)(?![\w/.-])", t):
                 if tok in pgms and tok not in order:
                     order.append(tok)
-        race["pace_projector"] = order
-        race["pace_projector_basis"] = ("text-layer" if order and len(order) == len(pgms) else
-                                        "text-layer (partial)" if order else None)
+        race["pace_projector_digits"] = order
+        race["pace_projector"] = []
+        race["pace_projector_basis"] = "not readable: graphic (text-layer digits are not the running order)"
         race.pop("header_lines", None)
 
 
