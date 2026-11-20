@@ -63,7 +63,8 @@ class TestDeskF(unittest.TestCase):
         self.assertEqual(h["reads"][0]["status"], "open"); self.assertIn("2", h["reads"][-1]["odds"])
         self.assertEqual(self.desk.tote_history("synth", 9)["reads"], [])
         bb = self.desk.best_bets("2026-11-06")
-        self.assertIn("labelled view", bb["label"]); self.assertIn("12 of 45", bb["label"])
+        self.assertIn("labelled view", bb["label"]); self.assertIn("No best bets with results on file yet", bb["label"])   # the label carries the live record
+        self.assertEqual(bb["record"]["all"]["bets"], 0)
         self.assertTrue(1 <= len(bb["bets"]) <= 2)
         for x in bb["bets"]:
             self.assertEqual(x["card"], "synth"); self.assertIsNotNone(x["ev_at_ml"]); self.assertIsNotNone(x["min_odds"])

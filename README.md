@@ -279,6 +279,13 @@ set the last run used ("re-run" only when they differ); a labelled **Best bets o
 `.env.example` lists the environment variables; `.env` is read at start and ignored by git. Windows 11 /
 PowerShell set-up is in `RACE-DAY.md`.
 
+## Best bets of the day (`handicapper/bestbets.py`)
+
+One rule serves the Desk strip and the record: the engine's suggested win bets ranked by expected value at the
+morning line, top two per card. The record applies it to each card's pre-race prediction, so re-running a card
+after the races cannot change it, and settles each bet at $2 against the chart: every best bet, and only those whose
+final odds met the minimum price. It is on the Analysis tab, and `python -m handicapper.bestbets` prints it.
+
 ## Prospective evaluation and the data watch (Phase E)
 
 ```
