@@ -192,6 +192,20 @@ not a statistical result, and the gate row says so. The four points the owner ag
    race's distance text (sprint under 8 furlongs, route 8 and over).
 4. The circuit gate reaches 400 sooner than a track gate would; the status doc and the Desk label it as pooling.
 
+## Parser fixes from Churchill 11/20 (parser version 2026-11-20.1)
+
+- **Races without pars lost the first horse of every continuation page.** When a race has no pars, Brisnet drops
+  the pars line from each page header and the page moves up about 10 points; the parser read only below a fixed
+  line, so the first horse's name and sire rows fell outside the body. Churchill 11/20 race 9 showed 6 of 9 runners
+  (#3, #6, #9 missing). The body now starts below each page's own header line. On Gulfstream 11/07, Belmont 11/06
+  and every other race of Churchill 11/20 the parsed card is identical.
+- **Workouts on all-weather tracks were dropped.** The all-weather marker after the track (Turfway, Keeneland's
+  training track and other synthetics) did not fit the workout pattern. On Churchill 11/20, 22 horses gain works
+  (one had none read before and has 12 now); scores move by a few points and no pick changes on that card.
+  Gulfstream 11/07 and Belmont 11/06 are unaffected. Earlier Churchill cards were scored without these works; their
+  snapshots stay as they were (the frozen record), and the app re-reads any card's PPs on the next run because the
+  parser version changed.
+
 ## Angles: track condition and race type (2026-11-20)
 
 `handicapper/angles.py` adds two sets of measured angles with no points, chosen because the parser read these fields
