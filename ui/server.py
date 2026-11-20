@@ -535,6 +535,12 @@ class Desk:
             for x in ev["rows"]:
                 rows.append(dict(x, card=ev["card_code"], track=ev["track_code"], date=ev.get("date"), basis=ev["basis"]))
         try:
+            from handicapper.bestbets import record as bb_record
+            best = bb_record(self.root, full)
+        except Exception as e:   # never takes the analysis screen down
+            traceback.print_exc()
+            best = {"error": str(e)}
+        try:
             from handicapper.angles import angle_report
             angles = angle_report(self.root, full)
         except Exception as e:   # never takes the analysis screen down
@@ -549,7 +555,7 @@ class Desk:
             traceback.print_exc()
             evaluation = {"error": str(e)}
         return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench,
-                "units": units, "units_text": format_units(units), "evaluation": evaluation, "angles": angles}
+                "units": units, "units_text": format_units(units), "evaluation": evaluation, "angles": angles, "best_bets": best}
 
     # ---------------------------------------------------------------- uploads
     @staticmethod
@@ -687,42 +693,24 @@ class Desk:
         return {"race_no": race_no, "reads": reads}
 
     def best_bets(self, date: str | None = None) -> dict:
-        """A labelled view, not a validated edge: for every card on the date, the one or two win bets the engine
-        suggests with the best heuristic expected value at the morning line.  Frozen week: 12 of 45, -13%."""
-        from handicapper.research import ev as research_ev
+        """Today's best bets (handicapper/bestbets.py: the engine's win bets ranked by expected value at the morning
+        line, top two per card) from each card's latest run, with the record of the same rule on every card on file."""
+        from handicapper.bestbets import PER_CARD, record, select, summary_line
         rows = []
         for c in self.cards():
             f = self.files(c["card"])
             if not f["picks_json"]:
                 continue
-            picks = json.load(open(f["picks_json"], encoding="utf-8"))
+            with open(f["picks_json"], encoding="utf-8") as fh:
+                picks = json.load(fh)
             if date and str(picks.get("date")) != str(date):
                 continue
-            cands = []
-            for r in picks.get("races", []):
-                names = {s["pgm"]: s for s in r["sheets"]}
-                for w in r.get("wagers", []):
-                    if w["type"] != "WIN":
-                        continue
-                    for pgm in w["legs"][0]:
-                        s = names.get(pgm)
-                        if not s or s.get("ml_decimal") is None or not s.get("model_prob"):
-                            continue
-                        e = research_ev(s["model_prob"], s["ml_decimal"])
-                        cands.append({"card": c["card"], "track": picks.get("track_code"), "date": picks.get("date"), "race_no": r["race_no"], "pgm": pgm,
-                                      "name": s.get("name"), "ml_odds": s.get("ml_odds"), "min_odds": (w.get("min_odds_by") or {}).get(pgm, w.get("min_odds")),
-                                      "win_prob": s.get("win_prob"), "model_prob": s.get("model_prob"), "ev_at_ml": e, "confidence": r.get("confidence"),
-                                      "post_time": r.get("post_time"), "label": w.get("label"), "decision_id": (w.get("decision") or {}).get("id")})
-            seen = set(); top = []
-            for x in sorted(cands, key=lambda z: -(z["ev_at_ml"] or -9)):
-                if (x["race_no"], x["pgm"]) in seen:
-                    continue
-                seen.add((x["race_no"], x["pgm"])); top.append(x)
-                if len(top) == 2:
-                    break
-            rows.extend(top)
-        return {"date": date, "label": "Best bets of the day: a labelled view of the engine's win bets ranked by heuristic expected value at the morning line. "
-                                       "Not a validated edge: in the frozen week this view went 12 of 45 for -13%.", "bets": rows, "per_card": 2}
+            rows += [dict(b, card=c["card"], track=picks.get("track_code"), date=picks.get("date")) for b in select(picks)]
+        rec = record(self.root, load_config(self.config))
+        return {"date": date, "bets": rows, "per_card": PER_CARD,
+                "label": "Best bets of the day: the engine's win bets ranked by expected value at the morning line. A labelled view, not a validated edge. "
+                         + summary_line(rec),
+                "record": {k: rec[k] for k in ("all", "at_price", "passed_winners", "cards", "first_date", "last_date")}}
 
     def mark_decision(self, card: str, decision_id: str, status: str, note: str = "") -> dict:
         """The owner's word on one suggested wager: paper (intends) or accepted (placed elsewhere and says so), with

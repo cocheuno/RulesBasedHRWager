@@ -73,7 +73,9 @@ app). A picks run made before the restart used the old rules and parser.
 7. **Weather**: below the bets, type the weather as the track or Equibase page prints it (any line order) and save
    it; the parsed values show beside the fetched forecast so a disagreement is visible. Rules do not read it.
 8. **Best bets of the day** at the top of the Desk lists one or two win bets per card for the day, ranked by
-   heuristic expected value at the morning line. It is a labelled view: in the frozen week it went 12 of 45, -13%.
+   heuristic expected value at the morning line. It is a labelled view, and the strip shows its record so far. The
+   Analysis tab's **Best bets of the day: record** panel settles every best bet on file against the charts, from
+   each card's pre-race prediction: overall, only where the final odds met the minimum price, by track and by day.
 9. Ticking a horse and unticking it leaves the Desk as it was: "re-run" appears only when the scratch set differs
    from the set the last run was made with.
 10. If you are at the Desk near post time: press **Refresh tote** on the race. The Tote column shows the current

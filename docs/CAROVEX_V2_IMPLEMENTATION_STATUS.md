@@ -211,6 +211,13 @@ not a statistical result, and the gate row says so. The four points the owner ag
   snapshots stay as they were (the frozen record), and the app re-reads any card's PPs on the next run because the
   parser version changed.
 
+## Best bets record (2026-11-20)
+
+`handicapper/bestbets.py` holds the best-bets rule for both the Desk strip and a record taken from each card's
+pre-race prediction. On the 26 cards on file (11/07 to 11/19): 12 of 51 won, -30% at $2; only where the final odds
+met the minimum price, 5 of 41, -48% (seven winners went off under the minimum). The Desk label's earlier
+"12 of 45, -13%" came from the frozen-week review's ad-hoc version, not this rule; the strip now shows the live record.
+
 ## Angles: track condition and race type (2026-11-20)
 
 `handicapper/angles.py` adds two sets of measured angles with no points, chosen because the parser read these fields
