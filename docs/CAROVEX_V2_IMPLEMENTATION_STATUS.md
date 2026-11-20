@@ -211,6 +211,13 @@ not a statistical result, and the gate row says so. The four points the owner ag
   snapshots stay as they were (the frozen record), and the app re-reads any card's PPs on the next run because the
   parser version changed.
 
+## Picks sources by bet type (2026-11-20)
+
+`handicapper/sources.py` scores Racing Dudes' published tickets and Timeform's Power Picks (in the engine's
+structures) bet type by bet type beside the engine on the same races. On file: Timeform on Churchill 11/18 (9 races);
+Racing Dudes from the 11/20 cards on, once their results are processed. Samples are tiny; the panel is for the
+record, not for decisions yet.
+
 ## Best bets record (2026-11-20)
 
 `handicapper/bestbets.py` holds the best-bets rule for both the Desk strip and a record taken from each card's

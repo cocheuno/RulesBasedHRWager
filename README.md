@@ -279,6 +279,16 @@ set the last run used ("re-run" only when they differ); a labelled **Best bets o
 `.env.example` lists the environment variables; `.env` is read at start and ignored by git. Windows 11 /
 PowerShell set-up is in `RACE-DAY.md`.
 
+## Picks sources against the engine (`handicapper/sources.py`)
+
+The Analysis tab's **Picks sources against the engine, by bet type** panel settles Racing Dudes and Timeform on
+money beside the engine. Racing Dudes' tickets are settled as published: $2 win, place and show on their Win pick,
+their exacta and trifecta lines (box or part-wheel), and doubles and Pick 3 / Pick 4 built from their Multi Race
+horses in consecutive races. Timeform publishes no tickets, so its Power Picks go into the engine's structures
+(win on Power Pick 1, exacta box of 1-2, trifecta box of 1-3), labelled as built by us. The engine is scored on
+exactly the same races from each card's pre-race prediction; scratched horses leave every ticket; Pick 3 / 4 are
+tracked, not counted. `python -m handicapper.sources` prints the same table.
+
 ## Best bets of the day (`handicapper/bestbets.py`)
 
 One rule serves the Desk strip and the record: the engine's suggested win bets ranked by expected value at the
