@@ -535,6 +535,12 @@ class Desk:
             for x in ev["rows"]:
                 rows.append(dict(x, card=ev["card_code"], track=ev["track_code"], date=ev.get("date"), basis=ev["basis"]))
         try:
+            from handicapper.sources import compare as sources_compare
+            sources = sources_compare(self.root, full)
+        except Exception as e:   # never takes the analysis screen down
+            traceback.print_exc()
+            sources = {"error": str(e)}
+        try:
             from handicapper.bestbets import record as bb_record
             best = bb_record(self.root, full)
         except Exception as e:   # never takes the analysis screen down
@@ -555,7 +561,7 @@ class Desk:
             traceback.print_exc()
             evaluation = {"error": str(e)}
         return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench,
-                "units": units, "units_text": format_units(units), "evaluation": evaluation, "angles": angles, "best_bets": best}
+                "units": units, "units_text": format_units(units), "evaluation": evaluation, "angles": angles, "best_bets": best, "sources": sources}
 
     # ---------------------------------------------------------------- uploads
     @staticmethod

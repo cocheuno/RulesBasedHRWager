@@ -368,6 +368,21 @@ async function upload(kind, files) {
 }
 
 // ------------------------------------------------------------------ Analysis screen
+function sourcesPanel(C) {
+  if (!C) return '';
+  if (C.error) return `<div class="card" style="margin-top:14px"><h2>Picks sources against the engine</h2><p class="neg">${esc(C.error)}</p></div>`;
+  const names = { racing_dudes: 'Racing Dudes', timeform: 'Timeform' };
+  const order = ['WIN', 'PLACE', 'SHOW', 'EXACTA', 'TRIFECTA', 'SUPERFECTA', 'DOUBLE', 'PICK3', 'PICK4'];
+  const label = t => ({ PICK3: 'Pick 3 (tracked)', PICK4: 'Pick 4 (tracked)' }[t] || t.charAt(0) + t.slice(1).toLowerCase());
+  const roi = d => d && d.roi != null ? `<span class="${d.roi >= 0 ? 'pos' : 'neg'}">${d.roi >= 0 ? '+' : ''}${Math.round(d.roi * 100)}%</span>` : '';
+  const cells = d => d && d.bets ? `<td>${d.bets}</td><td>${d.won}</td><td>${money(d.cost)}</td><td>${money(d.ret)}</td><td>${roi(d)}</td>` : '<td class="muted">–</td><td></td><td></td><td></td><td></td>';
+  const blocks = Object.entries(C.sources || {}).map(([k, s]) => {
+    if (!s.races) return `<div style="margin-top:10px"><b>${names[k] || k}</b> <span class="small muted">· no races yet with its picks in the pre-race run and a result</span></div>`;
+    const rows = order.filter(t => s.by_type[t] || s.engine_by_type[t]).map(t => `<tr><td>${label(t)}</td>${cells(s.by_type[t])}${cells(s.engine_by_type[t])}</tr>`).join('');
+    return `<div style="margin-top:12px"><b>${names[k] || k}</b> <span class="small muted">· ${s.races} races on ${s.cards} cards</span><div class="scroll"><table><thead><tr><th>Bet</th><th colspan="5">${names[k] || k}: bets · won · cost · return · result</th><th colspan="5">Engine on the same races</th></tr></thead><tbody>${rows}<tr><td><b>Counted total</b></td>${cells(s.total)}${cells(s.engine_total)}</tr></tbody></table></div></div>`;
+  }).join('');
+  return `<div class="card" style="margin-top:14px"><h2>Picks sources against the engine, by bet type</h2><div class="small muted" style="margin-top:6px">${esc(C.note || '')}</div>${blocks}</div>`;
+}
 function bestBetsPanel(B) {
   if (!B) return '';
   if (B.error) return `<div class="card" style="margin-top:14px"><h2>Best bets of the day: record</h2><p class="neg">${esc(B.error)}</p></div>`;
@@ -432,6 +447,7 @@ async function renderAnalysis(m) {
     <div class="kpis" style="margin-top:14px">${[['CARDS · RACES', A.cards.length + ' · ' + A.cards.reduce((n, c) => n + c.races, 0), ''], ['TOP PICK WON', A.cards.reduce((n, c) => n + c.top_pick_wins, 0) + ' / ' + A.cards.reduce((n, c) => n + c.races, 0), ''], ['WINNER IN TOP 3', A.cards.reduce((n, c) => n + c.winner_in_top3, 0) + ' / ' + A.cards.reduce((n, c) => n + c.races, 0), ''], ['BETS (FILTERED)', all.bets, all.hits + ' successful · ' + all.misses + ' unsuccessful' + (passedRows ? ' · ' + passedRows + ' win bets passed (price)' : '')], ['STAKED · RETURNED', money(all.cost) + ' · ' + money(all.ret), A.rollup.tracked_multirace && A.rollup.tracked_multirace.tickets ? 'Pick 3/4: ' + A.rollup.tracked_multirace.hits + ' of ' + A.rollup.tracked_multirace.tickets + ' tickets hit, tracked not counted' : ''], ['ROI', roi(all) == null ? '—' : (roi(all) >= 0 ? '+' : '') + Math.round(roi(all) * 100) + '%', A.cards.length < 5 ? 'few cards: not yet meaningful' : '']].map(([l, v, s]) => `<div class="card kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`).join('')}</div>
     ${evaluationPanel(A.evaluation)}
     ${bestBetsPanel(A.best_bets)}
+    ${sourcesPanel(A.sources)}
     ${anglesPanel(A.angles)}
     <div class="card" style="margin-top:14px"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center"><h2>Bets won and lost, by track</h2><div class="legend" aria-label="Legend"><span><span class="sw" style="background:var(--hit)"></span>successful</span><span><span class="sw" style="background:var(--miss)"></span>unsuccessful</span></div></div>
       <div class="bars" style="margin-top:12px">${series.map(s => `<div class="bar"><div class="t">${esc(s.track)}</div><div class="seg" title="${esc(s.track)}: ${s.hits} successful, ${s.misses} unsuccessful"><div style="background:var(--hit);width:${(100 * s.hits / max).toFixed(1)}%"></div><div style="background:var(--miss);width:${(100 * s.misses / max).toFixed(1)}%"></div></div><div class="c">${s.hits} won · ${s.misses} lost · ${s.hits + s.misses} bets</div></div>`).join('')}</div><div class="small muted" style="margin-top:8px">scale 0 to ${max} bets; the By-track table is the same data</div></div>
