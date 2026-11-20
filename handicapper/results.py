@@ -228,6 +228,7 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
                 labels.append(("rank", "top pick"))
             if sh.get("best_bet"):
                 labels.append(("rank", "best bet"))
+            labels += [(a["kind"], a["label"]) for a in s.get("angles") or []]
             rdh = s.get("racing_dudes") or {}
             if rdh.get("role"):
                 labels.append(("racing_dudes", f"{rdh['role']} pick"))
@@ -320,7 +321,7 @@ def format_backtest(bt: dict) -> str:
         L.append(f"| {st['rule']} | {st['sign']} | {st['fired']} | {st['won']} | {st['win_pct']} | {st['itm_pct']} |")
     if bt.get("angles"):
         L.append("")
-        L.append("Power Play angles and ranks, Timeform marks and Racing Dudes roles, as printed (prospective hit rates; no points are awarded for these):")
+        L.append("Power Play angles and ranks, Timeform marks, Racing Dudes roles, track-condition and race-type angles (prospective hit rates; no points are awarded for these):")
         L.append("")
         L.append("| Source | Label | Fired | Won | Win% | ITM% |")
         L.append("|---|---|---|---|---|---|")

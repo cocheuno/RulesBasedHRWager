@@ -208,6 +208,12 @@ def score_race(race: dict, cfg: dict) -> dict:
             "sheet": f.get("sheet"), "timeform": f.get("timeform"), "racing_dudes": f.get("racing_dudes"), "missing": f.get("missing") or [],
             "features": {k: v for k, v in f.items() if not k.startswith("_") and k not in ("last", "positives", "negatives", "trainer_angles", "trainer_flagged", "sheet", "timeform", "racing_dudes", "missing")},
         })
+    # ---- measured angles (no points): past-race track condition and Brisnet's race-type statistics
+    from .angles import race_angles, today_condition
+    tc, tc_basis = today_condition(race)
+    am = race_angles(race, sheets, tc)
+    for s in sheets:
+        s["angles"] = am.get(s["pgm"], [])
     # ---- probabilities: one model for the race, over the horses that can win (not eliminated, not AE/MTO)
     live = [s for s in sheets if not s["eliminated"] and not s["flags"]]
     pr = race_probs(live, cfg.get("probability"))
