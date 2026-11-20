@@ -55,8 +55,10 @@ pricing. Each stays `DEFERRED_NOT_ENOUGH_PROSPECTIVE_DATA` until its gate is met
   provider keeps a race's tote history from 2026-10-26. `/v1/racing/results` returned nothing for a TVG race id,
   so settlement stays with the Equibase charts. TVG's codes for BEL, CD, DMR and GP equal Brisnet's (Parx is PHI,
   a `tvg_code` field on a track profile covers such cases).
-- TimeformUS: field meanings inferred from the PDF text layer (Top Fig, early/late pace figures, running style);
-  Pace Projector order is a graphic and may not be recoverable from text.
+- TimeformUS: field meanings inferred from the PDF text layer (Top Fig, early/late pace figures, running style).
+  The Pace Projector order is **not** recoverable from the text layer: the digits come out line by line across the
+  graphic, and the order the reader first claimed matched the charts' first-call leader in 0 of 15 races
+  (2026-11-20). The reader now keeps the digits only as `pace_projector_digits` and claims no order.
 - Equibase charts: the `surface` field read "DIRT" everywhere (236 of 236 races on file, 29 of them FIRM). Phase B reads
   the surface from the header parenthetical ("(Turf)", "(Tapeta)") and, failing that, from the OFF AT line case-
   insensitively with turf-only conditions (firm / yielding / soft) counted as turf; `surface_source` says which.
