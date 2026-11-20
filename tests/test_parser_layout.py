@@ -47,3 +47,16 @@ class TestWorks(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestRaceDistance(unittest.TestCase):
+    def test_mile_fraction_glyphs(self):
+        p = object.__new__(Parser)
+        cases = {"OC 100000n3x 1ˆ Mile (T) 3&up Friday, November 20, 2026": ("1 1/16 Mile", 8.5, "turf"),
+                 "OC 110000b 1„ Mile 3&up Friday, November 06, 2026": ("1 1/8 Mile", 9.0, "dirt"),
+                 "Mdn 100k 1 Mile 2yo Friday, November 06, 2026": ("1 Mile", 8.0, "dirt"),
+                 "™Clm 17500b 6½ Furlongs 3&up, F & M Saturday, November 07, 2026": ("6 1/2 Furlongs", 6.5, "dirt")}
+        for header, want in cases.items():
+            race = {"header_text": header}
+            p._derive_race_fields(race)
+            self.assertEqual((race["distance_text"], race["distance_furlongs"], race["surface"]), want, header)

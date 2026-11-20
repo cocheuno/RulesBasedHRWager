@@ -199,6 +199,11 @@ not a statistical result, and the gate row says so. The four points the owner ag
   line, so the first horse's name and sire rows fell outside the body. Churchill 11/20 race 9 showed 6 of 9 runners
   (#3, #6, #9 missing). The body now starts below each page's own header line. On Gulfstream 11/07, Belmont 11/06
   and every other race of Churchill 11/20 the parsed card is identical.
+- **1 1/16 and 1 1/8 mile races read as "1 Mile"** (parser version 2026-11-20.2). Brisnet prints the mile fraction
+  as a glyph after the count ("1ˆ Mile", "1„ Mile"); the header cleaner stripped the glyph before the distance was
+  read. Affected: Churchill 11/20 race 9, Belmont 11/06 races 2, 4, 7 and 8 among the cards checked. Display,
+  reports and the evaluation's distance field change; no score, pick or wager does (the distance rules read
+  Brisnet's own record at today's distance, which was right).
 - **Workouts on all-weather tracks were dropped.** The all-weather marker after the track (Turfway, Keeneland's
   training track and other synthetics) did not fit the workout pattern. On Churchill 11/20, 22 horses gain works
   (one had none read before and has 12 now); scores move by a few points and no pick changes on that card.
