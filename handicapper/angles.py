@@ -201,13 +201,14 @@ def angle_report(root: str, cfg: dict) -> dict:
             if is_off(tc, r.get("surface")):
                 races["off_condition"] += 1
                 races["basis"][basis] += 1
-            w, top3 = x["finish"][0], x["finish"][:3]
+            from handicapper.results import win_price_of, winners_of
+            wins, top3 = winners_of(x), x["finish"][:3]
             for pgm, lst in am.items():
                 for a in lst:
                     k = (a["kind"], a["label"])
                     d = stats.setdefault(k, {"kind": a["kind"], "label": a["label"], "fired": 0, "won": 0, "itm": 0, "bet": 0.0, "ret": 0.0})
-                    d["fired"] += 1; d["won"] += int(pgm == w); d["itm"] += int(pgm in top3)
-                    d["bet"] += 2.0; d["ret"] += (x.get("win") or 0.0) if pgm == w else 0.0
+                    d["fired"] += 1; d["won"] += int(pgm in wins); d["itm"] += int(pgm in top3)
+                    d["bet"] += 2.0; d["ret"] += (win_price_of(x, pgm) or 0.0) if pgm in wins else 0.0
     rows = sorted(stats.values(), key=lambda d: (d["kind"], -d["fired"]))
     for d in rows:
         d["win_pct"] = round(100.0 * d["won"] / d["fired"], 1)

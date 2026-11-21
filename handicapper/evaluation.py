@@ -130,9 +130,11 @@ def race_records(root: str, cfg: dict, cards: list[str] | None = None) -> list[d
             if not x or not x.get("finish"):
                 continue
             running = [s for s in r["sheets"] if not s.get("flags")]
-            winner = x["finish"][0]
-            if winner not in {s["pgm"] for s in running}:
+            from handicapper.results import winners_of
+            wins = [w for w in winners_of(x) if w in {s["pgm"] for s in running}]
+            if not wins:
                 continue
+            winner = wins[0] if len(wins) == 1 else wins             # a dead heat: the winners' combined probability
             model = {s["pgm"]: s.get("model_prob") or 0.0 for s in running}
             market = {s["pgm"]: (s.get("market_prob") if s.get("market_prob") is not None else None) for s in running}
             blend = {s["pgm"]: s.get("win_prob") or 0.0 for s in running}
@@ -151,7 +153,7 @@ def race_records(root: str, cfg: dict, cards: list[str] | None = None) -> list[d
                          "model": _norm(model), "market": _norm(market) if all(v is not None for v in market.values()) and market else None,
                          "blend": _norm(blend), "final_market": final or None, "has_final_odds": bool(final),
                          "has_timeform": has_tf, "has_racing_dudes": has_rd, "has_tote_history": (code, snap.get("date"), r["race_no"]) in tote,
-                         "top_pick": (live[0]["pgm"] if live else None), "top_pick_won": bool(live) and live[0]["pgm"] == winner})
+                         "top_pick": (live[0]["pgm"] if live else None), "top_pick_won": bool(live) and live[0]["pgm"] in _wins(winner)})
     recs.sort(key=lambda z: (z["date"] or "", z["card"], z["race_no"]))
     return recs
 
@@ -182,15 +184,21 @@ def _tote_history_races(root: str) -> set:
 # ---------------------------------------------------------------------------
 # Metrics
 # ---------------------------------------------------------------------------
-def log_loss(vec: dict, winner: str, floor: float) -> float:
-    """-log p(winner) after flooring every probability at `floor` and renormalising."""
+def _wins(winner) -> list:
+    return list(winner) if isinstance(winner, (list, tuple)) else [winner]
+
+
+def log_loss(vec: dict, winner, floor: float) -> float:
+    """-log p(winner) after flooring every probability at `floor` and renormalising; after a dead heat, -log of the
+    winners' combined probability."""
     v = {k: max(float(x), floor) for k, x in vec.items()}
     z = sum(v.values())
-    return -math.log(v.get(winner, floor) / z)
+    return -math.log(sum(v.get(w, floor) for w in _wins(winner)) / z)
 
 
-def brier(vec: dict, winner: str) -> float:
-    return sum((float(p) - (1.0 if k == winner else 0.0)) ** 2 for k, p in vec.items())
+def brier(vec: dict, winner) -> float:
+    ws = _wins(winner)
+    return sum((float(p) - (1.0 / len(ws) if k in ws else 0.0)) ** 2 for k, p in vec.items())
 
 
 def metrics(recs: list[dict], key: str, floor: float) -> dict | None:
@@ -199,7 +207,7 @@ def metrics(recs: list[dict], key: str, floor: float) -> dict | None:
         return None
     ll = [log_loss(r[key], r["winner"], floor) for r in rows]
     br = [brier(r[key], r["winner"]) for r in rows]
-    top = [max(r[key], key=r[key].get) == r["winner"] for r in rows]
+    top = [max(r[key], key=r[key].get) in _wins(r["winner"]) for r in rows]
     return {"races": len(rows), "log_loss": round(sum(ll) / len(ll), 4), "brier": round(sum(br) / len(br), 4),
             "top_prob_hit_rate": round(sum(top) / len(top), 4), "top_prob_hits": sum(top),
             "uniform_log_loss": round(sum(math.log(len(r[key])) for r in rows) / len(rows), 4)}
@@ -214,7 +222,7 @@ def reliability(recs: list[dict], key: str, bins=(0.0, 0.05, 0.1, 0.15, 0.2, 0.3
             continue
         for k, p in v.items():
             i = next(j for j in range(len(bins) - 1) if bins[j] <= p < bins[j + 1])
-            d = g[i]; d["n"] += 1; d["sum_p"] += p; d["wins"] += int(k == r["winner"])
+            d = g[i]; d["n"] += 1; d["sum_p"] += p; d["wins"] += int(k in _wins(r["winner"]))
     out = []
     for i in range(len(bins) - 1):
         d = g.get(i)
@@ -257,7 +265,7 @@ def bootstrap_ci(recs: list[dict], key: str, floor: float, n: int, seed: int) ->
     rnd = random.Random(seed)
     ll_s, hit_s = [], []
     pre_ll = [log_loss(r[key], r["winner"], floor) for r in rows]
-    pre_hit = [1.0 if max(r[key], key=r[key].get) == r["winner"] else 0.0 for r in rows]
+    pre_hit = [1.0 if max(r[key], key=r[key].get) in _wins(r["winner"]) else 0.0 for r in rows]
     m = len(rows)
     for _ in range(n):
         idx = [rnd.randrange(m) for _ in range(m)]

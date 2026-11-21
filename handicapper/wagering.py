@@ -22,6 +22,7 @@ rollup(evaluations) -> by bet type, by track, by confidence, plus hit/miss count
 from __future__ import annotations
 
 import itertools
+import re
 from collections import defaultdict
 
 DEFAULT_UNITS = {"WIN": 2.0, "PLACE": 2.0, "SHOW": 2.0, "EXACTA": 1.0, "TRIFECTA": 0.5, "SUPERFECTA": 0.10,
@@ -81,6 +82,11 @@ def _pool(res_race: dict, wtype: str):
         if t == wtype or (wtype == "DOUBLE" and t in ("DOUBLE", "DAILYDOUBLE")):
             return e
     return None
+
+
+def _type_of(e: dict) -> str:
+    t = e["type"].upper().replace(" ", "").replace("-", "")
+    return "DOUBLE" if t in ("DOUBLE", "DAILYDOUBLE") else t
 
 
 def _not_offered(res: dict | None, wtype: str) -> bool:
@@ -166,15 +172,28 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
             if not placed:
                 row["status"] = "passed"
                 return row
-            if fin[0] in placed:
+            from .results import win_price_of, winners_of
+            won = [k for k in placed if k in winners_of(res)]          # a dead heat for the win pays each winner its price
+            if won:
                 row["hit"] = True
-                row["ret"] = round(unit * (res["win"] / 2.0), 2) if res.get("win") is not None else None
-                row["known"] = res.get("win") is not None
+                prices = [win_price_of(res, k) for k in won]
+                row["known"] = all(p is not None for p in prices)
+                row["ret"] = round(sum(unit * (p / 2.0) for p in prices), 2) if row["known"] else None
             return row
         if _not_offered(res, wtype):
             row.update(cost=0.0, placed=False, status="not offered", note=f"no {wtype.lower()} pool on the chart: the track did not offer it")
             return row
         k = SLOTS[wtype]
+        # settle on the combinations the chart paid when it lists them: after a dead heat it pays more than one
+        # (6-9 and 9-6); a ticket collects every paid combination it covers
+        paid = [e for e in res.get("exotics", []) if _type_of(e) == wtype and e.get("combo") and _per_dollar(e) is not None]
+        if paid:
+            mine = set(combos(w["legs"], w["box"], False))
+            covered = [e for e in paid if tuple(p.strip() for p in re.split(r"[/-]", e["combo"])) in mine]
+            if covered:
+                row["hit"] = True
+                row["ret"] = round(sum(unit * _per_dollar(e) for e in covered), 2)
+            return row
         if len(fin) < k:
             row["known"] = False
             return row
@@ -186,27 +205,31 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
             row["known"] = pd is not None
         return row
     # multi-race: DOUBLE / PICK3 / PICK4
-    winners = []
+    from .results import winners_of
+    legw = []
     for rn in w["races"]:
         res = by_no.get(rn)
         if not res or not res.get("finish"):
             row["known"] = False
             return row
-        winners.append(res["finish"][0])
+        legw.append(winners_of(res))                             # more than one after a dead heat
     if _not_offered(by_no[w["races"][-1]], wtype):
         row.update(cost=0.0, placed=False, status="not offered", note=f"no {wtype.lower()} pool on the chart of R{w['races'][-1]}: the track did not offer it")
         return row
-    if all(wn in leg for wn, leg in zip(winners, w["legs"])):
+    if all(set(wn) & set(leg) for wn, leg in zip(legw, w["legs"])):
         row["hit"] = True
         last = by_no[w["races"][-1]]
-        e = _pool(last, wtype)
-        pd = _per_dollar(e)
-        if pd is not None and e.get("combo"):
-            # the pool's combo must agree with the winners we matched (alternates after scratches allowed)
+        # every paid combination the ticket covers (a dead heat in a leg pays two combinations)
+        covered = []
+        for e in last.get("exotics", []):
+            if _type_of(e) != wtype or not e.get("combo") or _per_dollar(e) is None:
+                continue
             cl = _combo_list(e["combo"])
-            if len(cl) == len(winners) and all(wn in part for wn, part in zip(winners, cl)):
-                row["ret"] = round(unit * pd, 2)
-                return row
+            if len(cl) == len(legw) and all(set(part) & set(leg) & set(wn) for part, leg, wn in zip(cl, w["legs"], legw)):
+                covered.append(e)
+        if covered:
+            row["ret"] = round(sum(unit * _per_dollar(e) for e in covered), 2)
+            return row
         row["ret"], row["known"] = None, False
     return row
 

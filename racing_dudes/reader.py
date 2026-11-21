@@ -192,13 +192,15 @@ def benchmark(root: str, doc: dict, cfg: dict | None = None) -> dict:
                     r = races.get(x["race_no"])
                     if not r or not x.get("finish") or not r["order"]:
                         continue
-                    w = x["finish"][0]
+                    from handicapper.results import winners_of
+                    wins = winners_of(x)
+                    w = wins[0]
                     live = [s for s in (eng.get(x["race_no"]) or {}).get("sheets", []) if not s["eliminated"] and not s["flags"]]
                     rows.append({"card": card, "track": code, "date": date, "race_no": x["race_no"], "winner": w,
-                                 "rd_pick": r["order"][0], "rd_won": r["order"][0] == w, "rd_top4": w in r["order"],
+                                 "rd_pick": r["order"][0], "rd_won": r["order"][0] in wins, "rd_top4": any(v in r["order"] for v in wins),
                                  "likely_winner": r["likely_winner"], "best_value": r["best_value"],
                                  "win_payoff": x.get("win"), "engine_pick": live[0]["pgm"] if live else None,
-                                 "engine_won": bool(live) and live[0]["pgm"] == w, "agree": bool(live) and live[0]["pgm"] == r["order"][0]})
+                                 "engine_won": bool(live) and live[0]["pgm"] in wins, "agree": bool(live) and live[0]["pgm"] == r["order"][0]})
     n = len(rows)
 
     def roi(sel):

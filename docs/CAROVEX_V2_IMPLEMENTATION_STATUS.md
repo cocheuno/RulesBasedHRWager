@@ -211,6 +211,22 @@ not a statistical result, and the gate row says so. The four points the owner ag
   snapshots stay as they were (the frozen record), and the app re-reads any card's PPs on the next run because the
   parser version changed.
 
+## Dead heats and disqualifications (2026-11-21)
+
+Churchill 11/20 race 9 was a dead heat for the win (#6 and #9) with a disqualification (#8 placed sixth). The chart
+reader lost the whole runner table (the names started left of the "Horse" heading, so the program-number cut took
+their first letters), took Plensa's show price as the win price, and nothing downstream allowed two winners.
+
+- Chart reader: program number and name from the start of each row; dead-heat marks (” “) dropped; a win price for
+  each winner (`win_by`), `winners` and `dead_heats` recorded; "disqualified and placed Nth" applied to the official
+  order (the finish now matches the superfecta the chart paid); the chart's track read from its left column.
+- Settlement and scoring: `winners_of` / `win_price_of` in results.py. Win bets pay each winner its own price;
+  exotics pay every combination the chart printed that the ticket covers (6-9 and 9-6); doubles and Pick 3 / 4
+  through a dead-heat leg likewise; the back-test, best bets, angles, the Racing Dudes benchmark and the evaluation
+  (the winners' combined probability) count every winner.
+- On the 29 cards already on file the wager totals are identical to before; Churchill 11/20 changes once its charts
+  are re-processed.
+
 ## Wrong-day charts are refused (2026-11-21)
 
 Belmont 11/20 was processed with Belmont 11/19's charts: every result in `results/bel1120y.results.json` is the

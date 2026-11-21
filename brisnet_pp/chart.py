@@ -18,6 +18,7 @@ Output (results-file race entry, extended):
 from __future__ import annotations
 
 import re
+from collections import defaultdict
 
 import pdfplumber
 
@@ -29,6 +30,7 @@ ORDINALS = {"FIRST": 1, "SECOND": 2, "THIRD": 3, "FOURTH": 4, "FIFTH": 5, "SIXTH
 # "$1 EXACTA (7-4) PAID $30.10" in the mutuel block; "$2 Daily Double (8-7) Paid $49.00; Daily Double Pool $23,490."
 # and "50 CENT Pick 3 (6-8-7) Paid $40.55" in mixed case at the foot of the chart
 EXOTIC_RE = re.compile(r"(?P<base>\$\d+(?:\.\d+)?|\d+\s*CENT)\s+(?P<pool>[A-Za-z][A-Za-z0-9 \-]+?)\s+\((?P<combo>[\dA-Za-z/\-,]+)\)\s+PAID\s+\$(?P<paid>[\d,]+\.\d{2})", re.I)
+DH_MARKS = "\u201d\u201c"   # ” “ dead-heat marks before a name
 COND_RE = re.compile(r"\b(?:Track|Course)\s+(?P<cond>Fast|Sloppy|Muddy|Good|Firm|Yielding|Soft|Heavy|Wet Fast|Slow|Frozen|Standard)(?:\s*\((?P<note>[^)]+)\))?", re.I)
 DIST_RE = re.compile(r"^(?P<dist>(?:ABOUT\s+)?[\d\s/½¼¾]+(?:FURLONGS?|MILES?|MILE|YARDS))\.?\s*(?P<parens>(?:\([^)]*\)\s*)*)(?P<cls>.*)$", re.I)
 SURFACE_WORDS = ((r"turf", "TURF"), (r"tapeta|all[- ]?weather|synthetic|polytrack", "SYNTHETIC"), (r"dirt|main track", "DIRT"))
@@ -105,7 +107,7 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
             out["weather"] = f"{mw.group('w').strip()} {mw.group('deg')}"
         if re.match(r"^[A-Z][a-z]+ \d+(?:st|nd|rd|th)?, \d{4}$", r.text(0, 95)):
             out["date_text"] = r.text(0, 95)
-        if r.x_min < 20 and re.match(r"^[A-Z][A-Za-z .]+$", r.text(0, 95)) and "track" not in out and "RACE" not in t:
+        if r.x_min < 20 and re.match(r"^[A-Z][A-Za-z .]+$", r.text(0, 95)) and "track" not in out and "RACE" not in r.text(0, 95):
             out["track"] = r.text(0, 95)
     if "race_no" not in out and race_no_hint:
         out["race_no"] = race_no_hint
@@ -127,10 +129,15 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
             continue
         if t.startswith("OFF AT") or t.startswith("Time ") or "Mutuel Prices" in t:
             break
-        pg = r.text(start_x, col["Horse"][0]).strip()
-        if not re.fullmatch(r"\d{1,2}[A-Z]?", pg):
+        # program number and name from the start of the row: in some charts the names begin a few points left of
+        # the "Horse" heading, so a fixed column cut splits "3 Plensa" into "3 Pl" + "ensa"; dead-heat marks
+        # (” “) between the number and the name are dropped
+        seg = r.text(start_x, col["M/Eqt."][0] if "M/Eqt." in col else col["Horse"][1]).strip()
+        mpg = re.match(r"^(\d{1,2}[A-Z]?)\s+[" + DH_MARKS + r"]?\s*(\S.*)$", seg)
+        if not mpg:
             continue
-        rec = {"pgm": pg, "name": clean_name(r.text(col["Horse"][0], col["M/Eqt."][0] if "M/Eqt." in col else col["Horse"][1])).strip(),
+        pg = mpg.group(1)
+        rec = {"pgm": pg, "name": clean_name(mpg.group(2).strip(DH_MARKS + " ")).strip(),
                "last_raced": r.text(0, start_x).strip() or None,
                "equipment": r.text(col["M/Eqt."][0], col["A/S"][0]).strip() if "M/Eqt." in col else "",
                "age_sex": r.text(col["A/S"][0], col["Wt"][0]).strip() if "A/S" in col else "",
@@ -153,12 +160,36 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
             rec["odds"] = None
         runners.append(rec)
     runners.sort(key=lambda x: (x["finish"] is None, x["finish"] or 99))
+    # disqualifications: "Tickled Quist disqualified and placed 6th" -> the official order (the payoffs follow it)
+    full_text = " ".join(t for _, t in texts)
+    for dq_name, place in re.findall(r"([A-Z][A-Za-z' .\-]+?)\s+disqualified and placed\s+(\d{1,2})(?:st|nd|rd|th)", full_text):
+        dq_name = dq_name.strip(DH_MARKS + " -").split(" - ")[-1].strip()
+        hit = next((x for x in runners if clean_name(x["name"]).lower() == dq_name.lower()), None)
+        if hit and hit["finish"]:
+            order = [x for x in runners if x is not hit and x["finish"]]
+            order.insert(min(int(place) - 1, len(order)), hit)
+            rest = [x for x in runners if not x["finish"]]
+            for i, x in enumerate(order, 1):
+                x["official"] = i
+            hit["disqualified"] = True
+            runners = order + rest
+            out.setdefault("disqualified", []).append({"pgm": hit["pgm"], "name": hit["name"], "placed": int(place)})
     beaten = 0.0
     for i, rec in enumerate(runners):
         rec["beaten"] = 0.0 if i == 0 else round(beaten, 2)
         beaten += rec["margin"] or 0.0
     out["runners"] = runners
     out["finish"] = [x["pgm"] for x in runners if x["finish"]]
+    # dead heats: runners sharing a finishing position (Equibase marks them ” “ and prints a price for each)
+    groups = defaultdict(list)
+    for x in runners:
+        if x["finish"] and not x.get("disqualified"):
+            groups[x["finish"]].append(x["pgm"])
+    ties = {str(k): v for k, v in sorted(groups.items()) if len(v) > 1}
+    if ties:
+        out["dead_heats"] = ties
+    if "1" in ties:
+        out["winners"] = ties["1"]
     out["final_odds"] = {x["pgm"]: x["odds"] for x in runners if x["odds"] is not None}
     # ---- off / condition / times
     for r, t in texts:
@@ -190,7 +221,7 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
     mutuel_rows = []
     for r, t in texts:
         tt = t.replace("$2 Mutuel Prices:", "").strip()
-        m = re.match(r"^(\d{1,2}[A-Z]?)-\s*[A-Z]", tt)
+        m = re.match(r"^(\d{1,2}[A-Z]?)-\s*[" + DH_MARKS + r"]?\s*[A-Z]", tt)
         if m and re.search(r"\d+\.\d{2}\s*$", tt):
             amts = [(tk["x0"], float(tk["text"])) for tk in r.tokens() if re.fullmatch(r"\d+\.\d{2}", tk["text"]) and tk["x0"] > 150]
             if amts:
@@ -203,10 +234,13 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
         show_x = cols[2] if len(cols) > 2 else None
         out["place"], out["show"] = {}, {}
         out["pools"] = ["win", "place", "show"][:len(cols)]
+        out["win_by"] = {}
         for pg, amts in mutuel_rows:
             for x, v in amts:
                 if abs(x - win_x) < 8:
-                    out["win"] = v
+                    out["win_by"][pg] = v
+                    if "win" not in out:
+                        out["win"] = v                # the first winner's price (a dead heat has one per winner)
                 elif place_x is not None and abs(x - place_x) < 8:
                     out["place"][pg] = v
                 elif show_x is not None and abs(x - show_x) < 8:
@@ -282,7 +316,7 @@ def parse_chart(path: str) -> list[dict]:
 
 def chart_to_result(chart: dict) -> dict:
     """The results-file entry (what backtest.py / wagering.py read) plus the extras, under the same keys."""
-    keys = ("race_no", "finish", "win", "place", "show", "exotics", "track_condition", "surface", "surface_source", "official", "distance_text",
+    keys = ("race_no", "finish", "win", "win_by", "winners", "dead_heats", "disqualified", "place", "show", "exotics", "track_condition", "surface", "surface_source", "official", "distance_text",
             "class_text", "purse", "weather", "times", "off_at", "final_odds", "runners", "scratched", "claimed", "source", "track", "date_text")
     out = {k: chart[k] for k in keys if k in chart}
     d = chart_date(chart.get("date_text"))
