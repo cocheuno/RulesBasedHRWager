@@ -80,6 +80,11 @@ def record(root: str, cfg: dict) -> dict:
                                     (cfg.get("timing") or {}).get("cutoff_margin_minutes", 2))
             if not snap:
                 continue
+            try:
+                from .results import check_identity
+                check_identity(snap, res)
+            except ValueError:                  # another card's results: never scored
+                continue
             code = snap.get("track_code") or code
             for b in select(snap):
                 x = by.get(b["race_no"])

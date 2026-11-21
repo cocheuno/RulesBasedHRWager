@@ -43,13 +43,46 @@ def check_identity(card_or_picks: dict, results: dict) -> str:
         problems.append(f"date {r_date} vs card {c_date}")
     if r_track and c_track and _norm_track(c_track) != _norm_track(r_track) and _norm_track(c_code) != _norm_track(r_track):
         problems.append(f"track {r_track!r} vs card {c_track!r}")
+    names = _card_names(card_or_picks)
     for r in results.get("races", []):
         t = r.get("track")
         if t and c_track and _norm_track(t) != _norm_track(c_track) and _norm_track(c_code) != _norm_track(t):
             problems.append(f"R{r.get('race_no')} chart is from {t!r}, card is {c_track!r}")
+        if r.get("date") and c_date and str(r["date"]) != str(c_date):
+            problems.append(f"R{r.get('race_no')} chart is dated {r['date']}, card is {c_date}")
+        ran = [u.get("name") for u in r.get("runners") or [] if u.get("name")]
+        mine = names.get(r.get("race_no"))
+        if mine and len(ran) >= 3:
+            hits = sum(1 for n in ran if _same_horse(n, mine))
+            if hits * 2 < len(ran):
+                problems.append(f"R{r.get('race_no')} chart's horses ({', '.join(ran[:3])} ...) are not this card's race {r.get('race_no')} "
+                                f"({hits} of {len(ran)} names match)")
     if problems:
         raise ValueError("results do not belong to this card: " + "; ".join(problems))
     return "verified" if (r_track and r_date) else "unverified"
+
+
+def _card_names(card_or_picks: dict) -> dict:
+    """{race_no: set of normalised horse names} from a card (horses) or a picks document (sheets)."""
+    from .identity import norm_name
+    out = {}
+    for r in card_or_picks.get("races", []) or []:
+        rows = r.get("horses") or r.get("sheets") or []
+        names = {norm_name(h.get("name")) for h in rows if h.get("name")}
+        if names:
+            out[r.get("race_no")] = names
+    return out
+
+
+def _same_horse(name: str, names: set) -> bool:
+    from .identity import norm_name
+    n = norm_name(name)
+    if not n:
+        return False
+    if n in names:
+        return True
+    first = n.split()[0]
+    return any(x.split()[:1] == [first] and (len(first) > 3 or x.startswith(n[:8])) for x in names)
 
 
 def load_results(path: str) -> dict:
