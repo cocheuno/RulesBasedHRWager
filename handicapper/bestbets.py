@@ -91,10 +91,11 @@ def record(root: str, cfg: dict) -> dict:
                 if not x or not x.get("finish"):
                     continue
                 fo = (x.get("final_odds") or {}).get(b["pgm"])
-                won = x["finish"][0] == b["pgm"]
-                pay = (x.get("win") or 0.0) if won else 0.0
-                rows.append(dict(b, card=card, track=code, date=snap.get("date"), winner=x["finish"][0], won=won,
-                                 itm=b["pgm"] in x["finish"][:3], final_odds=fo, win_payoff=x.get("win") if won else None,
+                from .results import win_price_of, winners_of
+                won = b["pgm"] in winners_of(x)                     # a dead heat for the win counts each winner
+                pay = (win_price_of(x, b["pgm"]) or 0.0) if won else 0.0
+                rows.append(dict(b, card=card, track=code, date=snap.get("date"), winner=winners_of(x)[0], won=won,
+                                 itm=b["pgm"] in x["finish"][:3], final_odds=fo, win_payoff=win_price_of(x, b["pgm"]) if won else None,
                                  **{"return": round(STAKE * pay / 2.0, 2)},
                                  price_met=None if fo is None or b["min_odds"] is None else fo >= b["min_odds"]))
     rows.sort(key=lambda r: (r["date"] or "", r["card"], r["race_no"]))

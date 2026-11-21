@@ -85,11 +85,31 @@ def _same_horse(name: str, names: set) -> bool:
     return any(x.split()[:1] == [first] and (len(first) > 3 or x.startswith(n[:8])) for x in names)
 
 
+def winners_of(res: dict | None) -> list[str]:
+    """The race's winners: one, or more after a dead heat for the win (the chart's "winners")."""
+    if not res:
+        return []
+    w = res.get("winners")
+    return [str(x) for x in w] if w else [str(x) for x in (res.get("finish") or [])[:1]]
+
+
+def win_price_of(res: dict | None, pgm: str) -> float | None:
+    """The $2 win price this horse paid: its own price after a dead heat, else the race's win price for the winner."""
+    if not res:
+        return None
+    wb = res.get("win_by") or {}
+    if str(pgm) in wb:
+        return wb[str(pgm)]
+    return res.get("win") if winners_of(res)[:1] == [str(pgm)] else None
+
+
 def load_results(path: str) -> dict:
     with open(path, encoding="utf-8") as fh:
         res = json.load(fh)
     for r in res.get("races", []):
         r["finish"] = [str(p) for p in r.get("finish", [])]
+        if r.get("winners"):
+            r["winners"] = [str(p) for p in r["winners"]]
     return res
 
 
@@ -214,36 +234,39 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
         res = by_no.get(r["race_no"])
         if not res or not res.get("finish"):
             continue
-        win = res["finish"][0]
+        wins = winners_of(res)                       # more than one after a dead heat for the win
+        win = wins[0]
         sheets = {s["pgm"]: s for s in r["sheets"]}
-        wsheet = sheets.get(win)
+        ranked = [sheets[w] for w in wins if w in sheets]
+        wsheet = min(ranked, key=lambda s: (s["rank"] is None, s["rank"] or 99)) if ranked else None
         live = [s for s in r["sheets"] if not s["eliminated"] and not s["flags"]]
         top = live[0]["pgm"] if live else None
         bn = r.get("brisnet") or {}
-        row = {"race_no": r["race_no"], "winner": win, "winner_rank": wsheet["rank"] if wsheet else None,
+        row = {"race_no": r["race_no"], "winner": win, "winners": wins, "dead_heat": len(wins) > 1,
+               "winner_rank": wsheet["rank"] if wsheet else None,
                "winner_eliminated": bool(wsheet and wsheet["eliminated"]), "top_pick": top,
-               "top_pick_won": top == win, "winner_in_top3": win in [s["pgm"] for s in live[:3]],
-               "picks_hit": win in r["picks"], "win_payoff": res.get("win"),
-               "brisnet_pick": bn.get("top_pick"), "brisnet_won": bool(bn.get("top_pick")) and bn.get("top_pick") == win,
-               "brisnet_top3": win in (bn.get("top3") or []), "brisnet_best_bet": bn.get("best_bet")}
+               "top_pick_won": top in wins, "winner_in_top3": any(w in [s["pgm"] for s in live[:3]] for w in wins),
+               "picks_hit": any(w in r["picks"] for w in wins), "win_payoff": win_price_of(res, top) if top in wins else res.get("win"),
+               "brisnet_pick": bn.get("top_pick"), "brisnet_won": bool(bn.get("top_pick")) and bn.get("top_pick") in wins,
+               "brisnet_top3": any(w in (bn.get("top3") or []) for w in wins), "brisnet_best_bet": bn.get("best_bet")}
         rd = r.get("racing_dudes") or {}
         rd_order = rd.get("order") or []
         row["rd_pick"] = rd_order[0] if rd_order else None
-        row["rd_won"] = bool(rd_order) and rd_order[0] == win
-        row["rd_top4"] = bool(rd_order) and win in rd_order
+        row["rd_won"] = bool(rd_order) and rd_order[0] in wins
+        row["rd_top4"] = bool(rd_order) and any(w in rd_order for w in wins)
         row["rd_likely_winner"] = bool(rd.get("likely_winner"))
         tf = r.get("timeform") or {}
         tf_rank = tf.get("rank") or {}
         tf_top = [p for p, k in tf_rank.items() if k == 1]
         row["timeform_top"] = tf_top[0] if len(tf_top) == 1 else None
-        row["timeform_won"] = bool(row["timeform_top"]) and row["timeform_top"] == win
-        row["timeform_winner_rank"] = tf_rank.get(win)
+        row["timeform_won"] = bool(row["timeform_top"]) and row["timeform_top"] in wins
+        row["timeform_winner_rank"] = min((tf_rank[w] for w in wins if tf_rank.get(w) is not None), default=None)
         row["timeform_power_pick"] = (tf.get("power_picks") or [None])[0]
-        row["timeform_power_pick_won"] = bool(row["timeform_power_pick"]) and row["timeform_power_pick"] == win
+        row["timeform_power_pick_won"] = bool(row["timeform_power_pick"]) and row["timeform_power_pick"] in wins
         if top:
             bet += stake
-            if top == win and res.get("win"):
-                ret += res["win"] * stake / 2.0
+            if top in wins and win_price_of(res, top):
+                ret += win_price_of(res, top) * stake / 2.0
         races_out.append(row)
         for s in r["sheets"]:
             for h in s["hits"]:
@@ -252,7 +275,7 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
                 k = (h["rule"], "pos" if h["points"] > 0 else "neg")
                 st = rule_stats.setdefault(k, {"rule": h["rule"], "sign": k[1], "fired": 0, "won": 0, "itm": 0})
                 st["fired"] += 1
-                st["won"] += int(s["pgm"] == win)
+                st["won"] += int(s["pgm"] in wins)
                 st["itm"] += int(s["pgm"] in res["finish"][:3])
             sh = s.get("sheet") or {}
             labels = [("angle", a["label"]) for a in sh.get("angles") or []]
@@ -275,18 +298,19 @@ def backtest(picks: dict, results: dict, stake: float = 2.0) -> dict:
             for kind, label in labels:
                 st = angle_stats.setdefault((kind, label), {"kind": kind, "label": label, "fired": 0, "won": 0, "itm": 0})
                 st["fired"] += 1
-                st["won"] += int(s["pgm"] == win)
+                st["won"] += int(s["pgm"] in wins)
                 st["itm"] += int(s["pgm"] in res["finish"][:3])
     multi = {}
     for key in ("pick3", "pick4"):
         rec = ((picks.get("multirace") or {}).get(key) or {}).get("recommended")
         if not rec:
             continue
-        winners = [by_no.get(n, {}).get("finish", [None])[0] for n in rec["races"]]
-        if any(w is None for w in winners):
+        legw = [winners_of(by_no.get(n)) for n in rec["races"]]
+        if any(not w for w in legw):
             multi[key] = {"name": rec["name"], "known": False}
             continue
-        hit = any(all(w in leg for w, leg in zip(winners, t["legs"])) for t in rec["tickets"])
+        winners = [w[0] for w in legw]
+        hit = any(all(set(w) & set(leg) for w, leg in zip(legw, t["legs"])) for t in rec["tickets"])
         multi[key] = {"name": rec["name"], "known": True, "winners": winners, "hit": hit, "cost": rec["cost"]}
     rules = sorted(rule_stats.values(), key=lambda x: (x["rule"], x["sign"]))
     angles = sorted(angle_stats.values(), key=lambda x: (x["kind"], -x["fired"], x["label"]))
