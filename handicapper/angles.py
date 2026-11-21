@@ -172,6 +172,11 @@ def angle_report(root: str, cfg: dict) -> dict:
         snap = pre_race_by_race(out_dir, card, res, ((cfg.get("tracks") or {}).get(code or "") or {}).get("timezone"), 2)
         if not snap:
             continue
+        try:
+            from handicapper.results import check_identity
+            check_identity(snap, res)
+        except ValueError:                      # another card's results: never scored
+            continue
         raw = None
         cj = os.path.join(out_dir, f"{card}.card.json")
         if os.path.exists(cj):

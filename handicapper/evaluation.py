@@ -117,6 +117,11 @@ def race_records(root: str, cfg: dict, cards: list[str] | None = None) -> list[d
         snap = pre_race_by_race(out_dir, card, res, (tracks.get(code or "") or {}).get("timezone"), margin)
         if not snap:
             continue
+        try:
+            from handicapper.results import check_identity
+            check_identity(snap, res)
+        except ValueError:                      # another card's results: never scored
+            continue
         code = snap.get("track_code") or code or (card[:3].upper())
         by_no = {r["race_no"]: r for r in res.get("races", [])}
         per_race = (snap.get("timing") or {}).get("per_race") or {}

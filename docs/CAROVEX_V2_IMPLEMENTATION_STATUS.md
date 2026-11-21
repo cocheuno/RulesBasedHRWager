@@ -211,6 +211,16 @@ not a statistical result, and the gate row says so. The four points the owner ag
   snapshots stay as they were (the frozen record), and the app re-reads any card's PPs on the next run because the
   parser version changed.
 
+## Wrong-day charts are refused (2026-11-21)
+
+Belmont 11/20 was processed with Belmont 11/19's charts: every result in `results/bel1120y.results.json` is the
+previous day's. The identity check compared only the results file's track and date, which the Desk takes from the
+card, so it could not see it. Now each chart's own date (from its date line) and its horses must match the card:
+a race whose chart names fewer than half of the card's horses for that race is a conflict, and the card's results
+are refused everywhere (Desk, back-test, Analysis, evaluation, best bets, angles, sources). A chart dropped with
+Equibase's file name (`20261119BELUSA3.pdf`) for another day or track is refused at upload. On the 29 cards on file
+only Belmont 11/20 is refused.
+
 ## Picks sources by bet type (2026-11-20)
 
 `handicapper/sources.py` scores Racing Dudes' published tickets and Timeform's Power Picks (in the engine's

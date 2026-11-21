@@ -283,8 +283,24 @@ def parse_chart(path: str) -> list[dict]:
 def chart_to_result(chart: dict) -> dict:
     """The results-file entry (what backtest.py / wagering.py read) plus the extras, under the same keys."""
     keys = ("race_no", "finish", "win", "place", "show", "exotics", "track_condition", "surface", "surface_source", "official", "distance_text",
-            "class_text", "purse", "weather", "times", "off_at", "final_odds", "runners", "scratched", "claimed", "source", "track")
-    return {k: chart[k] for k in keys if k in chart}
+            "class_text", "purse", "weather", "times", "off_at", "final_odds", "runners", "scratched", "claimed", "source", "track", "date_text")
+    out = {k: chart[k] for k in keys if k in chart}
+    d = chart_date(chart.get("date_text"))
+    if d:
+        out["date"] = d                      # the chart's own race date: a wrong day's chart is refused by check_identity
+    return out
+
+
+def chart_date(text: str | None) -> str | None:
+    """'November 19, 2026' (the chart's date line) -> '2026-11-19'."""
+    from datetime import datetime
+    t = re.sub(r"(\d)(st|nd|rd|th)\b", r"\1", (text or "").strip())
+    for fmt in ("%B %d, %Y", "%b %d, %Y"):
+        try:
+            return datetime.strptime(t, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    return None
 
 
 if __name__ == "__main__":

@@ -497,6 +497,7 @@ class Desk:
         evals, cards, rules = [], [], {}
         bench = {"races": 0, "engine_wins": 0, "brisnet_wins": 0, "brisnet_top3": 0, "best_bets": 0, "best_bet_wins": 0,
                  "rd_races": 0, "rd_wins": 0, "rd_top4": 0, "rd_engine_wins": 0, "rd_likely": 0, "rd_likely_wins": 0}
+        refused = []
         for c in self.cards():
             f = self.files(c["card"])
             if not (f["picks_json"] and f["results"]):
@@ -505,8 +506,12 @@ class Desk:
             snap = self.clock_snapshot(c["card"], res)
             picks = snap or json.load(open(f["picks_json"], encoding="utf-8"))
             basis = ("pre-race (" + snap["timing"]["label"] + ")") if snap else "latest (retrospective)"
-            bt = backtest(picks, res)
-            ev = evaluate_card(picks, res, cfg)
+            try:
+                bt = backtest(picks, res)
+                ev = evaluate_card(picks, res, cfg)
+            except ValueError as e:              # results that are not this card's: listed, never scored
+                refused.append({"card": c["card"], "reason": str(e)})
+                continue
             ev["card_code"], ev["track_code"] = c["card"], picks.get("track_code") or c.get("track_code") or self.payload_meta(c["card"]).get("track_code")
             ev["basis"] = basis
             evals.append(ev)
@@ -561,7 +566,7 @@ class Desk:
             traceback.print_exc()
             evaluation = {"error": str(e)}
         return {"rollup": rollup(evals) if evals else None, "cards": cards, "rules": rule_rows, "rows": rows, "benchmark": bench,
-                "units": units, "units_text": format_units(units), "evaluation": evaluation, "angles": angles, "best_bets": best, "sources": sources}
+                "units": units, "units_text": format_units(units), "evaluation": evaluation, "angles": angles, "best_bets": best, "sources": sources, "refused": refused}
 
     # ---------------------------------------------------------------- uploads
     @staticmethod
@@ -855,6 +860,17 @@ class Desk:
             path = os.path.join(self.pps, f"{card}.tfus.{'pdf' if data.startswith(b'%PDF') else 'txt'}")
             self.guard_timeform(card, data)  # same identity guard as the PP: another track's or day's file is refused
         elif kind in ("png", "chart"):
+            fm = re.match(r"^(\d{4})(\d{2})(\d{2})([A-Z]{2,4})USA(\d{1,2})$", os.path.splitext(filename)[0], re.I)
+            if fm and kind == "chart":        # Equibase's own file name says which day and track the chart is
+                meta = self.payload_meta(card)
+                fdate, fcode = f"{fm.group(1)}-{fm.group(2)}-{fm.group(3)}", fm.group(4).upper()
+                problems = []
+                if meta.get("date") and str(meta["date"]) != fdate:
+                    problems.append(f"chart is dated {fdate}, card {card} is {meta['date']}")
+                if meta.get("track_code") and fcode != str(meta["track_code"]).upper():
+                    problems.append(f"chart is for {fcode}, card {card} is {meta['track_code']}")
+                if problems:
+                    raise ValueError(f"refused {filename}: " + "; ".join(problems))
             if not race_no:
                 m = re.search(r"USA(\d{1,2})$", os.path.splitext(filename)[0], re.I) or re.search(r"r?(\d{1,2})", os.path.splitext(filename)[0])
                 race_no = int(m.group(1)) if m else None
