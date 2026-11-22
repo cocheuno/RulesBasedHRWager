@@ -1898,14 +1898,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "e5b2e97fedb176e9",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "8fabff8fbb1d87c8",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -1939,14 +1939,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "703cdcb2fe5e70dc",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "2fb3d8e2556f4f59",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -1980,14 +1980,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "201546ca784922d1",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "51ec13dc74c38577",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -2023,14 +2023,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "4c7e3666e59cdf95",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "28a83976f1ed6429",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -2063,14 +2063,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "e8b280f6d3a429ee",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "3759e19631154c26",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -2103,14 +2103,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "152dab7683f3b26a",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "aca0fc76b9154a9f",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -2143,14 +2143,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "a29a5c669b075579",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "bb1b00bd07622dfd",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -2183,14 +2183,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "481bb8f3779120b9",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "59497187e970302c",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -2283,9 +2283,9 @@
     "q_reason": "no tote board",
     "p_market_anchor": {
      "1": 0.2325,
-     "4": 0.3875,
      "2": 0.0894,
-     "5": 0.2906
+     "5": 0.2906,
+     "4": 0.3875
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -2294,9 +2294,9 @@
     },
     "z": {
      "1": -0.569,
-     "4": 0.918,
      "2": -1.352,
-     "5": 1.003
+     "5": 1.003,
+     "4": 0.918
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -5855,14 +5855,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "9bfc22e28329a63b",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "031895bcc0257913",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -5897,14 +5897,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "9bfc22e28329a63b",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "031895bcc0257913",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -5938,14 +5938,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "5657f0ce92bd3336",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "312898b490953946",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -5979,14 +5979,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "41767ee3d6a95f65",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "5065556a27865825",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -6020,14 +6020,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "81ce77cef0f8e63a",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "9ef844269db1f957",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -6180,14 +6180,14 @@
     "q_live_market": null,
     "q_reason": "no tote board",
     "p_market_anchor": {
-     "1": 0.1601,
      "6": 0.1334,
-     "2": 0.0889,
-     "5": 0.2001,
      "8": 0.0381,
-     "7": 0.0616,
      "3": 0.2287,
-     "4": 0.0889
+     "4": 0.0889,
+     "2": 0.0889,
+     "7": 0.0616,
+     "1": 0.1601,
+     "5": 0.2001
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -6195,14 +6195,14 @@
      "beta": 0.0
     },
     "z": {
-     "1": -0.223,
      "6": 1.064,
-     "2": -0.756,
-     "5": -0.248,
      "8": -1.36,
-     "7": -0.634,
      "3": 1.975,
-     "4": 0.182
+     "4": 0.182,
+     "2": -0.756,
+     "7": -0.634,
+     "1": -0.223,
+     "5": -0.248
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -10758,14 +10758,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "003ed68ee2ccd899",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "fe3c4052ecdd159a",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -10799,14 +10799,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "209979479fd31bf5",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "931b5de507618028",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -10841,14 +10841,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "976f21588398cb62",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "747489e78f0cc922",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -10883,14 +10883,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "e1c30c6f514761b2",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "c624b4382aab6976",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -10925,14 +10925,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "9aa46fac2eabd293",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "be75950c44a0be12",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -10966,14 +10966,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "8c69a9b43533e3a6",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "e41aee1c39892115",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -11007,14 +11007,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "174e609b6c8ecc15",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "61868d0feef8d99d",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -11157,14 +11157,14 @@
     "q_live_market": null,
     "q_reason": "no tote board",
     "p_market_anchor": {
-     "1": 0.1976,
      "6": 0.0376,
-     "2": 0.1757,
-     "5": 0.0494,
      "8": 0.1129,
-     "7": 0.0878,
      "3": 0.2259,
-     "4": 0.1129
+     "2": 0.1757,
+     "4": 0.1129,
+     "7": 0.0878,
+     "1": 0.1976,
+     "5": 0.0494
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -11172,14 +11172,14 @@
      "beta": 0.0
     },
     "z": {
-     "1": 0.906,
      "6": -1.374,
-     "2": 0.903,
-     "5": -1.577,
      "8": 0.776,
-     "7": -0.817,
      "3": 0.49,
-     "4": 0.693
+     "2": 0.903,
+     "4": 0.693,
+     "7": -0.817,
+     "1": 0.906,
+     "5": -1.577
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -13842,14 +13842,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "6cdbbd431b526f63",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "unknown",
+      "id": "e99352ba77bfd8fe",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -13883,14 +13883,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "2da7628d0930078b",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "unknown",
+      "id": "57d63d4bc48a3e0f",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -13924,14 +13924,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "460aeac7d5b9c95e",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "unknown",
+      "id": "dfe44eb782ccdb36",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -14079,14 +14079,14 @@
     "q_live_market": null,
     "q_reason": "no tote board",
     "p_market_anchor": {
-     "1": 0.089,
      "6": 0.0381,
-     "2": 0.0616,
-     "5": 0.2289,
      "8": 0.1602,
-     "7": 0.2003,
      "3": 0.0616,
-     "4": 0.1602
+     "4": 0.1602,
+     "2": 0.0616,
+     "7": 0.2003,
+     "1": 0.089,
+     "5": 0.2289
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -14094,14 +14094,14 @@
      "beta": 0.0
     },
     "z": {
-     "1": -0.32,
      "6": 4.271,
-     "2": -1.48,
-     "5": 1.318,
      "8": 1.148,
-     "7": 0.53,
      "3": -1.17,
-     "4": -0.027
+     "4": -0.027,
+     "2": -1.48,
+     "7": 0.53,
+     "1": -0.32,
+     "5": 1.318
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -20472,14 +20472,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "493376e31e56d0b9",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "0eea9ecaf8980806",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20512,14 +20512,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "2177e7d7a90881d3",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "3da2e40cb872864f",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20558,14 +20558,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "cb22eb62687a63e0",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "55e9d446682aab30",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20604,14 +20604,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "6e63a53cc3bd5d08",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "2c437eeb4a613ec1",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20646,14 +20646,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "493376e31e56d0b9",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "0eea9ecaf8980806",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20697,14 +20697,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "c66938ca09e15a7d",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "3016416cbde6065d",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20737,14 +20737,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "cb8a1d486e0e4810",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "0a12df64272dd4e1",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20778,14 +20778,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "975b191077103b29",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "e48ffd1938de6660",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20819,14 +20819,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "8976c5240a582965",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "f701cd97fe5bb7dd",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -20860,14 +20860,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "f5c545578aac6dc0",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "84e653db779f83bb",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -21023,18 +21023,18 @@
     "q_live_market": null,
     "q_reason": "no tote board",
     "p_market_anchor": {
-     "9": 0.1542,
-     "1": 0.0593,
-     "12": 0.1713,
      "6": 0.0856,
-     "2": 0.1101,
-     "11": 0.0593,
-     "5": 0.0249,
      "8": 0.1285,
-     "7": 0.0249,
+     "11": 0.0593,
      "3": 0.0856,
+     "12": 0.1713,
      "10": 0.0482,
-     "4": 0.0482
+     "2": 0.1101,
+     "4": 0.0482,
+     "7": 0.0249,
+     "1": 0.0593,
+     "5": 0.0249,
+     "9": 0.1542
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -21042,18 +21042,18 @@
      "beta": 0.0
     },
     "z": {
-     "9": 1.79,
-     "1": 0.131,
-     "12": 0.989,
      "6": -0.569,
-     "2": 0.225,
-     "11": -0.363,
-     "5": -2.002,
      "8": 0.795,
-     "7": -0.863,
+     "11": -0.363,
      "3": -0.538,
+     "12": 0.989,
      "10": 0.244,
-     "4": -0.569
+     "2": 0.225,
+     "4": -0.569,
+     "7": -0.863,
+     "1": 0.131,
+     "5": -2.002,
+     "9": 1.79
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -23926,14 +23926,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "99dd287241127e20",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "2b14b9cb6e8390ea",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -23967,14 +23967,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "99dd287241127e20",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "2b14b9cb6e8390ea",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -24008,14 +24008,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "963bae344373b429",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "17eb039bfd07c5c7",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -24048,14 +24048,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "fc57b83b25b80712",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "8708b80f115218cf",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -24088,14 +24088,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "35f6d42c8f31eb2d",
-      "at_utc": "2026-11-20T23:16:13Z",
+      "id": "ef03d2c48fcc3f21",
+      "at_utc": "2026-11-21T14:14:48Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -24254,14 +24254,14 @@
     "q_live_market": null,
     "q_reason": "no tote board",
     "p_market_anchor": {
-     "1": 0.1319,
      "6": 0.1131,
-     "2": 0.1319,
-     "5": 0.0879,
      "8": 0.1583,
-     "7": 0.1759,
      "3": 0.0879,
-     "4": 0.1131
+     "4": 0.1131,
+     "2": 0.1319,
+     "7": 0.1759,
+     "1": 0.1319,
+     "5": 0.0879
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -24269,14 +24269,14 @@
      "beta": 0.0
     },
     "z": {
-     "1": -0.556,
      "6": -0.654,
-     "2": -0.654,
-     "5": 0.174,
      "8": 2.189,
-     "7": -0.572,
      "3": -0.882,
-     "4": 0.953
+     "4": 0.953,
+     "2": -0.654,
+     "7": -0.572,
+     "1": -0.556,
+     "5": 0.174
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -28147,14 +28147,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "4d6566c4e3706c24",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "36f0c829efe10453",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -28189,14 +28189,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "976b5473eb64c57c",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "2799659a71e73ae0",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -28230,14 +28230,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "ab13be5c6a0c19e4",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "668a873be9c80426",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -28272,14 +28272,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "976b5473eb64c57c",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "2799659a71e73ae0",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -28312,14 +28312,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "4ebc50537600ba07",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "01b79542239521fd",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -28354,14 +28354,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "7fafdafbe6517d09",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "b488d75e552d5963",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -28395,14 +28395,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "213db27784fff5c6",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "5c1a55bfc5530b14",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -28436,14 +28436,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "85eff601d270a50a",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "2aa431798dbc5503",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -28580,14 +28580,14 @@
     "q_live_market": null,
     "q_reason": "no tote board",
     "p_market_anchor": {
-     "1": 0.1316,
      "6": 0.1974,
-     "2": 0.0493,
-     "5": 0.1579,
      "8": 0.1128,
-     "7": 0.0877,
      "3": 0.0376,
-     "4": 0.2256
+     "4": 0.2256,
+     "2": 0.0493,
+     "7": 0.0877,
+     "1": 0.1316,
+     "5": 0.1579
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -28595,14 +28595,14 @@
      "beta": 0.0
     },
     "z": {
-     "1": 1.412,
      "6": 0.816,
-     "2": -1.228,
-     "5": 0.25,
      "8": -1.264,
-     "7": 0.015,
      "3": -1.043,
-     "4": 1.042
+     "4": 1.042,
+     "2": -1.228,
+     "7": 0.015,
+     "1": 1.412,
+     "5": 0.25
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -32452,14 +32452,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "80d65399b2b02865",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "869bc0139c0d13b1",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -32493,14 +32493,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "80d65399b2b02865",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "869bc0139c0d13b1",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -32533,14 +32533,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "8783f71b56b2e297",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "6564c0cdb5dc3a9e",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     },
     {
@@ -32573,14 +32573,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "64bd1c61927c5dc9",
-      "at_utc": "2026-11-20T23:16:13Z",
-      "cutoff_status": "before-cutoff",
+      "id": "f20be51a74e94994",
+      "at_utc": "2026-11-21T14:14:48Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "5bf6f6bd532d8dbf",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "f5a2bde"
      }
     }
    ],
@@ -32746,16 +32746,16 @@
     "q_live_market": null,
     "q_reason": "no tote board",
     "p_market_anchor": {
-     "1": 0.0251,
-     "9": 0.0708,
      "6": 0.0865,
-     "2": 0.1297,
-     "5": 0.0251,
      "8": 0.1557,
-     "7": 0.1557,
      "3": 0.173,
+     "4": 0.1297,
+     "2": 0.1297,
+     "7": 0.1557,
+     "1": 0.0251,
+     "5": 0.0251,
      "10": 0.0487,
-     "4": 0.1297
+     "9": 0.0708
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -32763,16 +32763,16 @@
      "beta": 0.0
     },
     "z": {
-     "1": -0.725,
-     "9": -1.325,
      "6": -0.264,
-     "2": -0.408,
-     "5": -2.048,
      "8": 1.068,
-     "7": 0.542,
      "3": 0.18,
+     "4": 1.685,
+     "2": -0.408,
+     "7": 0.542,
+     "1": -0.725,
+     "5": -2.048,
      "10": -1.16,
-     "4": 1.685
+     "9": -1.325
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -35127,16 +35127,25 @@
   "track: Del Mar (DMR); profile: DMR"
  ],
  "run": {
-  "at_utc": "2026-11-20T23:16:13Z",
+  "at_utc": "2026-11-21T14:14:48Z",
   "scratches": "1:6, 1:3, 4:10, 4:9, 6:9, 6:10, 6:11, 6:12, 8:11, 8:12, 8:13",
   "parser_version": "2026-11-20.2",
   "config_hash": "5bf6f6bd532d8dbf",
   "track_profile": "DMR",
-  "code_version": "b25251b",
+  "code_version": "f5a2bde",
   "source": "dmr1120y.card.json",
   "source_sha256": "bb446a5b830bb4c10dd46f6af811868188fdd38d5f96b9b5e4e548ea96f57877",
   "sheet": "dmr1120q.pdf",
-  "results_known": [],
+  "results_known": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
   "odds_source": "morning line",
   "changes": {
    "track": "DEL MAR",
@@ -35272,71 +35281,72 @@
    "brisnet_power_play",
    "equibase_changes",
    "timeformus",
-   "racing_dudes"
+   "racing_dudes",
+   "results"
   ],
   "cutoffs": {
    "1": {
     "post_at_utc": "2026-11-20T20:30:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T20:30:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T20:31:00+00:00",
+    "cutoff_at_utc": "2026-11-20T20:31:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "2": {
     "post_at_utc": "2026-11-20T21:01:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T21:01:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T21:03:00+00:00",
+    "cutoff_at_utc": "2026-11-20T21:03:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "3": {
     "post_at_utc": "2026-11-20T21:32:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T21:32:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T21:33:00+00:00",
+    "cutoff_at_utc": "2026-11-20T21:33:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "4": {
     "post_at_utc": null,
-    "off_at_utc": null,
-    "cutoff_at_utc": null,
-    "basis": "none",
-    "status": "unknown"
+    "off_at_utc": "2026-11-20T22:06:00+00:00",
+    "cutoff_at_utc": "2026-11-20T22:06:00+00:00",
+    "basis": "off",
+    "status": "after-cutoff"
    },
    "5": {
     "post_at_utc": "2026-11-20T22:35:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T22:35:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T22:37:00+00:00",
+    "cutoff_at_utc": "2026-11-20T22:37:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "6": {
     "post_at_utc": "2026-11-20T23:05:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T23:05:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T23:07:00+00:00",
+    "cutoff_at_utc": "2026-11-20T23:07:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "7": {
     "post_at_utc": "2026-11-20T23:35:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T23:35:00+00:00",
-    "basis": "scheduled",
-    "status": "before-cutoff"
+    "off_at_utc": "2026-11-20T23:36:00+00:00",
+    "cutoff_at_utc": "2026-11-20T23:36:00+00:00",
+    "basis": "off",
+    "status": "after-cutoff"
    },
    "8": {
     "post_at_utc": "2026-11-21T00:05:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-21T00:05:00+00:00",
-    "basis": "scheduled",
-    "status": "before-cutoff"
+    "off_at_utc": "2026-11-21T00:07:00+00:00",
+    "cutoff_at_utc": "2026-11-21T00:07:00+00:00",
+    "basis": "off",
+    "status": "after-cutoff"
    }
   },
   "timing": {
    "races": 8,
-   "before": 2,
-   "after": 5,
-   "unknown": 1,
+   "before": 0,
+   "after": 8,
+   "unknown": 0,
    "label": "mixed",
    "margin_minutes": 2,
    "track_timezone": "America/Los_Angeles"
@@ -35344,11 +35354,11 @@
   "weather": {
    "status": "unavailable",
    "reason": "forecast did not cover the post times",
-   "fetched_at_utc": "2026-11-20T23:16:16Z",
+   "fetched_at_utc": "2026-11-21T14:14:49Z",
    "provider": "python-weather (wttr.in)",
    "location": "Del Mar, California",
    "observations": []
   },
-  "kind": "pre-race"
+  "kind": "post-results"
  }
 }
