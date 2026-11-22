@@ -404,7 +404,8 @@ class Desk:
         return self.payload(card)
 
     def ocr(self, card: str, race_no: int | None = None, force: bool = False) -> dict:
-        """Read the card's payout screenshots into results/<card>.results.json (only races not yet on file unless force)."""
+        """Read the card's charts and payout screenshots into results/<card>.results.json: races not yet on file, and charts
+        read by an older chart reader or with no finish (not hand corrections); force re-reads everything."""
         f = self.files(card)
         src = os.path.join(self.pngs, card, f"r{race_no}.png") if race_no else os.path.join(self.pngs, card)
         if race_no and not os.path.exists(src):

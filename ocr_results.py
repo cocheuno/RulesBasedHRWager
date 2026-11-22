@@ -25,7 +25,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from handicapper.ocr import read_screenshot   # noqa: E402
-from brisnet_pp.chart import chart_to_result, parse_chart   # noqa: E402
+from brisnet_pp.chart import CHART_READER_VERSION, chart_to_result, parse_chart   # noqa: E402
 
 
 def race_no_of(path: str) -> int | None:
@@ -40,6 +40,14 @@ def roster_from_card(card_path: str | None) -> dict:
     card = json.load(open(card_path, encoding="utf-8"))
     return {"meta": {"track": card.get("track"), "date": card.get("date")},
             "races": {r["race_no"]: {h["pgm"]: h["name"] for h in r["horses"]} for r in card["races"]}}
+
+
+def stale_chart(race: dict) -> bool:
+    """A race read from a chart by an older chart reader, or one that gave no finishing order, is read again from
+    its chart - unless someone corrected it by hand, which only an explicit re-read (force) replaces."""
+    if race.get("corrections"):
+        return False
+    return not race.get("finish") or race.get("reader") != CHART_READER_VERSION
 
 
 def ocr_folder(src: str, results_path: str, card_path: str | None = None, force: bool = False) -> dict:
@@ -58,13 +66,14 @@ def ocr_folder(src: str, results_path: str, card_path: str | None = None, force:
     else:
         data = {"track": info.get("meta", {}).get("track"), "date": info.get("meta", {}).get("date"), "_source": "OCR of payout-page screenshots", "races": []}
     have = {r["race_no"]: (r.get("source") or r.get("ocr", {}).get("source") or "manual") for r in data["races"]}
+    on_file = {r["race_no"]: r for r in data["races"]}
     done = []
     for p in files:
         rn = race_no_of(p)
         if rn is None:
             continue
-        if rn in have and not force and not (p.lower().endswith(".pdf") and have[rn] != "chart"):
-            continue   # already on file - unless a chart can replace a screenshot / typed entry
+        if rn in have and not force and not (p.lower().endswith(".pdf") and (have[rn] != "chart" or stale_chart(on_file[rn]))):
+            continue   # already on file - unless a chart can replace a screenshot / typed entry, or an older reading
         if p.lower().endswith(".pdf"):
             charts = parse_chart(p)
             if not charts:

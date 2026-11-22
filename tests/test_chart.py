@@ -105,6 +105,41 @@ class TestChart(unittest.TestCase):
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
 
+    def test_older_or_empty_chart_reading_is_read_again(self):
+        """Process results reads a chart again when the race on file came from an older chart reader or gave no
+        finishing order (CD 2026-11-20 race 9: the dead heat the old reader could not read); a race corrected by
+        hand is kept, and a current reading is not read twice."""
+        import json as _json, os as _os, shutil, tempfile
+        import ocr_results
+        from brisnet_pp.chart import CHART_READER_VERSION
+        tmp = tempfile.mkdtemp()
+        try:
+            res = _os.path.join(tmp, "x.results.json")
+            races = [{"race_no": 1, "finish": [], "win": 3.08, "source": "chart"},                              # empty old reading
+                     {"race_no": 2, "finish": ["9", "8"], "win": 4.0, "source": "chart"},                       # older reader
+                     {"race_no": 3, "finish": ["7", "1"], "win": 6.0, "source": "chart",                        # corrected by hand
+                      "corrections": [{"fields": ["finish"], "original_source": "chart"}]},
+                     {"race_no": 4, "finish": ["5", "6"], "win": 8.0, "source": "chart", "reader": CHART_READER_VERSION}]
+            _json.dump({"track": "Belmont Park", "races": races}, open(res, "w"))
+            for rn in (1, 2, 3, 4):
+                open(_os.path.join(tmp, f"20261106BELUSA{rn}.pdf"), "wb").write(b"%PDF")
+            chart = chart_to_result(parse_chart_rows(rows_from_fixture(_json.load(open(_os.path.join(HERE, "fixtures_chart_rows.json")))), 1))
+            self.assertEqual(chart["reader"], CHART_READER_VERSION)
+            orig = ocr_results.parse_chart
+            ocr_results.parse_chart = lambda path: [dict(chart)]
+            try:
+                out = ocr_results.ocr_folder(tmp, res)
+                self.assertEqual(sorted(r["race_no"] for r in out["races"]), [1, 2], "empty and older readings are read again")
+                data = {r["race_no"]: r for r in _json.load(open(res))["races"]}
+                self.assertEqual(data[1]["finish"], ["1", "2", "6", "5", "4", "3"])
+                self.assertEqual(data[3]["finish"], ["7", "1"], "a hand correction is kept")
+                self.assertEqual(data[4]["finish"], ["5", "6"], "a current reading is not read twice")
+                self.assertEqual(ocr_results.ocr_folder(tmp, res)["races"], [], "nothing left to read the second time")
+            finally:
+                ocr_results.parse_chart = orig
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
     def test_pool_lines_with_digits_in_the_name(self):
         from brisnet_pp.chart import EXOTIC_RE, _pool, _base
         line = "$2 DAILY DOUBLE (6-8) PAID $29.80 50 CENT PICK 3 (1-6-8) PAID $19.55 $1 SUPERFECTA (8-3-1-4) PAID $92.81 50 CENT PICK 4 (6-8-7-2) PAID $109.20"

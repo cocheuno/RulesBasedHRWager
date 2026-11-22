@@ -31,6 +31,10 @@ ORDINALS = {"FIRST": 1, "SECOND": 2, "THIRD": 3, "FOURTH": 4, "FIFTH": 5, "SIXTH
 # and "50 CENT Pick 3 (6-8-7) Paid $40.55" in mixed case at the foot of the chart
 EXOTIC_RE = re.compile(r"(?P<base>\$\d+(?:\.\d+)?|\d+\s*CENT)\s+(?P<pool>[A-Za-z][A-Za-z0-9 \-]+?)\s+\((?P<combo>[\dA-Za-z/\-,]+)\)\s+PAID\s+\$(?P<paid>[\d,]+\.\d{2})", re.I)
 DH_MARKS = "\u201d\u201c"   # ” “ dead-heat marks before a name
+# Stamped on every race read from a chart.  Change it whenever the reader learns something that changes what a
+# chart gives (dead heats, DQs, a column fix): Process results then reads those charts again, except races
+# corrected by hand.
+CHART_READER_VERSION = "2026-11-21"
 COND_RE = re.compile(r"\b(?:Track|Course)\s+(?P<cond>Fast|Sloppy|Muddy|Good|Firm|Yielding|Soft|Heavy|Wet Fast|Slow|Frozen|Standard)(?:\s*\((?P<note>[^)]+)\))?", re.I)
 DIST_RE = re.compile(r"^(?P<dist>(?:ABOUT\s+)?[\d\s/½¼¾]+(?:FURLONGS?|MILES?|MILE|YARDS))\.?\s*(?P<parens>(?:\([^)]*\)\s*)*)(?P<cls>.*)$", re.I)
 SURFACE_WORDS = ((r"turf", "TURF"), (r"tapeta|all[- ]?weather|synthetic|polytrack", "SYNTHETIC"), (r"dirt|main track", "DIRT"))
@@ -322,6 +326,7 @@ def chart_to_result(chart: dict) -> dict:
     d = chart_date(chart.get("date_text"))
     if d:
         out["date"] = d                      # the chart's own race date: a wrong day's chart is refused by check_identity
+    out["reader"] = CHART_READER_VERSION
     return out
 
 
