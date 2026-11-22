@@ -276,3 +276,10 @@ file (`-2` sorts before `.`); snapshots are now ordered by timestamp and then by
 
 25 cards with picks, 157 snapshots, 25 results files; 219 races with pre-race snapshots and chart results;
 79 races with a Timeform comparison; 0 tote observations.
+
+### Charts read again after a reader fix (2026-11-22)
+
+Each race read from a chart carries the chart reader's version (`reader`, `CHART_READER_VERSION` in
+`brisnet_pp/chart.py`). **Process results** reads a chart again when the race on file came from an older reader or
+has no finishing order, so a fix to the reader (like the dead-heat fix) reaches races already on file. A race
+corrected by hand is kept; only **Re-read all results files** replaces it.
