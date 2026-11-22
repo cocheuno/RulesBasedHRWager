@@ -2821,14 +2821,14 @@
       }
      },
      "decision": {
-      "id": "518cd8f9cb95c10f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "1ebaab5684b92451",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -2861,14 +2861,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "5879c265f598f3f1",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "5c8e4683c7d7e620",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -2907,14 +2907,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "07f49a05e2a0a886",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "a289d06fe4f07e18",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -2953,14 +2953,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "c82b4b3c1d2c3b68",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "0bb14a43169c4a65",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -3004,14 +3004,14 @@
       }
      },
      "decision": {
-      "id": "518cd8f9cb95c10f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "1ebaab5684b92451",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -3044,14 +3044,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "237c172503c5749b",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "e412e6e967a3ba96",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -3083,14 +3083,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "c50810baae7b8930",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "3ee9559430247699",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -3122,14 +3122,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "802cd5156c4376c5",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "a7746425a848dee8",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -3232,21 +3232,21 @@
     },
     "p_rule_label": "heuristic (softmax of the ability score; eliminated starters at the research floor)",
     "q_live_market": {
-     "7": 0.2691,
      "1": 0.1585,
-     "3": 0.0626,
-     "2": 0.1974,
      "4": 0.2202,
-     "5": 0.0923
+     "7": 0.2691,
+     "5": 0.0923,
+     "3": 0.0626,
+     "2": 0.1974
     },
     "q_reason": null,
     "p_market_anchor": {
-     "7": 0.2691,
      "1": 0.1585,
-     "3": 0.0626,
-     "2": 0.1974,
      "4": 0.2202,
-     "5": 0.0923
+     "7": 0.2691,
+     "5": 0.0923,
+     "3": 0.0626,
+     "2": 0.1974
     },
     "anchor_source": "tote",
     "anchor_params": {
@@ -3254,12 +3254,12 @@
      "beta": 0.0
     },
     "z": {
-     "7": 1.859,
      "1": -0.23,
-     "3": -1.267,
-     "2": 0.052,
      "4": -0.646,
-     "5": -1.035
+     "7": 1.859,
+     "5": -1.035,
+     "3": -1.267,
+     "2": 0.052
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -7717,14 +7717,14 @@
       }
      },
      "decision": {
-      "id": "b4e656d7268ac591",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "6a7885cf7bb018ee",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -7757,14 +7757,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "36d61cbcf638228f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "b429347b7ef6a869",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -7803,14 +7803,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "215b7beae68eb31c",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "f9197857dc25aac6",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -7849,14 +7849,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "8342c88ffc48c487",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "cdf230eed4bff123",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -7900,14 +7900,14 @@
       }
      },
      "decision": {
-      "id": "b4e656d7268ac591",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "6a7885cf7bb018ee",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -7951,14 +7951,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "2d1e8e559fd13a8e",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "25ba826aec7948b3",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -7992,14 +7992,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "48fef7405400e08a",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "e2aa479af1c50429",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -8031,14 +8031,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "2e7c00877b785e37",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "405c0258454c63ca",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -8070,14 +8070,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "c78ad1d863302086",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "54037214e914d081",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -8204,16 +8204,16 @@
     },
     "p_rule_label": "heuristic (softmax of the ability score; eliminated starters at the research floor)",
     "q_live_market": null,
-    "q_reason": "quote is 33627s old",
+    "q_reason": "quote is 164093s old",
     "p_market_anchor": {
-     "1": 0.1769,
-     "6": 0.199,
-     "2": 0.0498,
-     "5": 0.0885,
-     "8": 0.1592,
      "7": 0.2275,
+     "5": 0.0885,
+     "6": 0.199,
      "3": 0.0612,
-     "4": 0.0379
+     "2": 0.0498,
+     "1": 0.1769,
+     "4": 0.0379,
+     "8": 0.1592
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -8221,14 +8221,14 @@
      "beta": 0.0
     },
     "z": {
-     "1": 0.937,
-     "6": 0.939,
-     "2": -0.134,
-     "5": -0.837,
-     "8": -0.335,
      "7": 1.68,
+     "5": -0.837,
+     "6": 0.939,
      "3": -0.96,
-     "4": -1.29
+     "2": -0.134,
+     "1": 0.937,
+     "4": -1.29,
+     "8": -0.335
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -11368,14 +11368,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "225364125331d30f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "66260d4e2cb5ecfb",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -11409,14 +11409,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "58df9389c62c781a",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "319b8b2359fc17d3",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -11450,14 +11450,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "620726c7a5c43449",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "92b1dae6ca862efd",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -11586,12 +11586,12 @@
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "1": 0.1158,
-     "3": 0.0901,
-     "6": 0.1622,
-     "2": 0.2317,
      "4": 0.3379,
-     "5": 0.0624
+     "1": 0.1158,
+     "5": 0.0624,
+     "3": 0.0901,
+     "2": 0.2317,
+     "6": 0.1622
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -11599,12 +11599,12 @@
      "beta": 0.0
     },
     "z": {
-     "1": -0.475,
-     "3": 0.782,
-     "6": -0.184,
-     "2": 0.151,
      "4": 1.455,
-     "5": -1.729
+     "1": -0.475,
+     "5": -1.729,
+     "3": 0.782,
+     "2": 0.151,
+     "6": -0.184
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -15505,14 +15505,14 @@
       }
      },
      "decision": {
-      "id": "53156c4a3ca94206",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "a04ae66ae9281b24",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15545,14 +15545,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "971363c66b3bbd59",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "9ac4a9e08e641352",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15591,14 +15591,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "b603ec2cbe4098af",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "abe2cd4b2a44f417",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15637,14 +15637,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "314de1478dfcf84b",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "b877d79c989630cf",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15691,14 +15691,14 @@
       }
      },
      "decision": {
-      "id": "53156c4a3ca94206",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "a04ae66ae9281b24",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15742,14 +15742,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "753e53e174309352",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "1b449448006c7efd",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15784,14 +15784,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "5d627e265c64c8e3",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "b80d9d4a4a08507b",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15825,14 +15825,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "e1b1a7459c989e4f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "8eebaad5898c3bde",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -15866,14 +15866,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "b77f5da79d4697c8",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "766f852720ebbd71",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -16020,16 +16020,16 @@
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "1": 0.0735,
-     "9": 0.1738,
-     "12": 0.0597,
+     "7": 0.0455,
+     "3": 0.2124,
      "6": 0.0869,
      "2": 0.0597,
      "13": 0.1062,
      "11": 0.1366,
-     "7": 0.0455,
-     "3": 0.2124,
-     "4": 0.0455
+     "1": 0.0735,
+     "4": 0.0455,
+     "9": 0.1738,
+     "12": 0.0597
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -16037,16 +16037,16 @@
      "beta": 0.0
     },
     "z": {
-     "1": 0.857,
-     "9": 0.836,
-     "12": -1.282,
+     "7": -0.654,
+     "3": 2.168,
      "6": 0.15,
      "2": -0.338,
      "13": -1.035,
      "11": 0.06,
-     "7": -0.654,
-     "3": 2.168,
-     "4": -0.764
+     "1": 0.857,
+     "4": -0.764,
+     "9": 0.836,
+     "12": -1.282
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -16148,9 +16148,9 @@
    "picks": [
     "2"
    ],
-   "bet_structure": "WIN (take 1.75-1 or better)",
+   "bet_structure": "WIN (take 1.92-1 or better)",
    "confidence": "high",
-   "selection_note": "#2 is 17.0 points clear",
+   "selection_note": "#2 is 14.5 points clear",
    "brisnet": {
     "top_pick": "6",
     "top3": [
@@ -16185,7 +16185,7 @@
      "run_style": "P",
      "speed_pts": 6,
      "prime_power": 113.1,
-     "score": 38.9,
+     "score": 37.9,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -16256,6 +16256,12 @@
        "note": "Meet P IV 0.89, week P IV 0.68"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier dirt winners were early types"
+      },
+      {
        "rule": "F4",
        "name": "Closed ground late last out",
        "points": 2.0,
@@ -16320,7 +16326,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 6/1 against fair 1.4-1 (value, not in the ability score)"
+       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 6/1 against fair 1.5-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -16639,28 +16645,28 @@
       "num_clean_pp": 5
      },
      "angles": [],
-     "model_prob": 0.4183,
+     "model_prob": 0.3934,
      "market_prob": 0.1396,
-     "win_prob": 0.3207,
-     "implied_prob": 0.4183,
-     "fair_odds": 1.4,
+     "win_prob": 0.3046,
+     "implied_prob": 0.3934,
+     "fair_odds": 1.5,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 3.29
+      "edge": 3.0
      },
      "rank": 1,
      "conditional_rank": null,
-     "min_win_odds": 1.75,
+     "min_win_odds": 1.92,
      "research": {
       "interest": "2",
-      "p_rule_heuristic": 0.3873,
+      "p_rule_heuristic": 0.3643,
       "q_live_market": null,
       "p_market_anchor": 0.115,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 1.39,
-      "o_min": 1.75
+      "break_even_odds": 1.54,
+      "o_min": 1.92
      }
     },
     {
@@ -16671,7 +16677,7 @@
      "run_style": "E",
      "speed_pts": 5,
      "prime_power": 122.5,
-     "score": 21.9,
+     "score": 23.4,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -16742,6 +16748,12 @@
        "note": "Meet E IV 1.05, week E IV 1.15"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types"
+      },
+      {
        "rule": "F5",
        "name": "Bad effort last out",
        "points": -4.5,
@@ -16806,7 +16818,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 2/1 against fair 5.1-1 (value, not in the ability score)"
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 2/1 against fair 4.7-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -17184,28 +17196,28 @@
        "label": "Morning-line favourite: favourites win 40% or more of this race type"
       }
      ],
-     "model_prob": 0.1627,
+     "model_prob": 0.1758,
      "market_prob": 0.3256,
-     "win_prob": 0.2197,
-     "implied_prob": 0.1627,
-     "fair_odds": 5.1,
+     "win_prob": 0.2282,
+     "implied_prob": 0.1758,
+     "fair_odds": 4.7,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.61
+      "edge": -0.57
      },
      "rank": 2,
      "conditional_rank": null,
-     "min_win_odds": 6.07,
+     "min_win_odds": 5.54,
      "research": {
       "interest": "6",
-      "p_rule_heuristic": 0.1506,
+      "p_rule_heuristic": 0.1628,
       "q_live_market": null,
       "p_market_anchor": 0.2684,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 5.15,
-      "o_min": 6.07
+      "break_even_odds": 4.69,
+      "o_min": 5.54
      }
     },
     {
@@ -17216,7 +17228,7 @@
      "run_style": "E/P",
      "speed_pts": 5,
      "prime_power": 114.7,
-     "score": 19.4,
+     "score": 20.9,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -17255,6 +17267,12 @@
        "name": "Running style vs. track bias",
        "points": 4.0,
        "note": "Meet early-presser IV 1.54, week early-presser IV 1.98"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "F1",
@@ -17321,13 +17339,6 @@
        "name": "QuickPlay negative comments",
        "points": -0.8,
        "note": "Moves up in class from last start"
-      },
-      {
-       "rule": "V1",
-       "name": "Morning-line value",
-       "points": -2.4,
-       "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 7/2 against fair 6.1-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -17654,28 +17665,28 @@
       "num_clean_pp": 5
      },
      "angles": [],
-     "model_prob": 0.1416,
+     "model_prob": 0.153,
      "market_prob": 0.2171,
-     "win_prob": 0.168,
-     "implied_prob": 0.1416,
-     "fair_odds": 6.1,
+     "win_prob": 0.1754,
+     "implied_prob": 0.153,
+     "fair_odds": 5.5,
      "value": {
-      "label": "underlay",
-      "points": -2.4,
-      "edge": -0.43
+      "label": "fair",
+      "points": 0.0,
+      "edge": -0.36
      },
      "rank": 3,
      "conditional_rank": null,
-     "min_win_odds": 7.12,
+     "min_win_odds": 6.52,
      "research": {
       "interest": "4",
-      "p_rule_heuristic": 0.1311,
+      "p_rule_heuristic": 0.1417,
       "q_live_market": null,
       "p_market_anchor": 0.1789,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 6.06,
-      "o_min": 7.12
+      "break_even_odds": 5.54,
+      "o_min": 6.52
      }
     },
     {
@@ -17686,7 +17697,7 @@
      "run_style": "E",
      "speed_pts": 5,
      "prime_power": 111.4,
-     "score": 16.4,
+     "score": 17.9,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -17749,6 +17760,12 @@
        "name": "Running style vs. track bias",
        "points": 1.0,
        "note": "Meet E IV 1.05, week E IV 1.15"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "F9",
@@ -18097,28 +18114,28 @@
       "num_clean_pp": 5
      },
      "angles": [],
-     "model_prob": 0.1198,
+     "model_prob": 0.1295,
      "market_prob": 0.1776,
-     "win_prob": 0.1401,
-     "implied_prob": 0.1198,
-     "fair_odds": 7.3,
+     "win_prob": 0.1464,
+     "implied_prob": 0.1295,
+     "fair_odds": 6.7,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.38
+      "edge": -0.33
      },
      "rank": 4,
      "conditional_rank": null,
-     "min_win_odds": 8.6,
+     "min_win_odds": 7.88,
      "research": {
       "interest": "3",
-      "p_rule_heuristic": 0.1109,
+      "p_rule_heuristic": 0.1199,
       "q_live_market": null,
       "p_market_anchor": 0.1464,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 7.35,
-      "o_min": 8.6
+      "break_even_odds": 6.72,
+      "o_min": 7.88
      }
     },
     {
@@ -18129,7 +18146,7 @@
      "run_style": "P",
      "speed_pts": 6,
      "prime_power": 110.1,
-     "score": 10.7,
+     "score": 9.7,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -18168,6 +18185,12 @@
        "name": "Running style vs. track bias",
        "points": -1.0,
        "note": "Meet P IV 0.89, week P IV 0.68"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "F4",
@@ -18592,28 +18615,28 @@
       "num_clean_pp": 10
      },
      "angles": [],
-     "model_prob": 0.0873,
+     "model_prob": 0.0821,
      "market_prob": 0.1085,
-     "win_prob": 0.0947,
-     "implied_prob": 0.0873,
-     "fair_odds": 10.5,
+     "win_prob": 0.0914,
+     "implied_prob": 0.0821,
+     "fair_odds": 11.2,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.24
+      "edge": -0.29
      },
      "rank": 5,
      "conditional_rank": null,
-     "min_win_odds": 12.17,
+     "min_win_odds": 13.01,
      "research": {
       "interest": "8",
-      "p_rule_heuristic": 0.0808,
+      "p_rule_heuristic": 0.076,
       "q_live_market": null,
       "p_market_anchor": 0.0895,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 10.45,
-      "o_min": 12.17
+      "break_even_odds": 11.18,
+      "o_min": 13.01
      }
     },
     {
@@ -18624,7 +18647,7 @@
      "run_style": "P",
      "speed_pts": 3,
      "prime_power": 105.9,
-     "score": 6.8,
+     "score": 5.8,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -18651,6 +18674,12 @@
        "name": "Running style vs. track bias",
        "points": -1.0,
        "note": "Meet P IV 0.89, week P IV 0.68"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "K2",
@@ -18693,7 +18722,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 30/1 against fair 13.2-1 (value, not in the ability score)"
+       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 30/1 against fair 14.1-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -19079,28 +19108,28 @@
        "label": "10-1 or longer: winners at 10-1 or more are under 8% of this race type"
       }
      ],
-     "model_prob": 0.0703,
+     "model_prob": 0.0661,
      "market_prob": 0.0315,
-     "win_prob": 0.0567,
-     "implied_prob": 0.0703,
-     "fair_odds": 13.2,
+     "win_prob": 0.054,
+     "implied_prob": 0.0661,
+     "fair_odds": 14.1,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 1.27
+      "edge": 1.13
      },
      "rank": 6,
      "conditional_rank": null,
-     "min_win_odds": 15.36,
+     "min_win_odds": 16.4,
      "research": {
       "interest": "1",
-      "p_rule_heuristic": 0.0651,
+      "p_rule_heuristic": 0.0612,
       "q_live_market": null,
       "p_market_anchor": 0.026,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 13.22,
-      "o_min": 15.36
+      "break_even_odds": 14.13,
+      "o_min": 16.4
      }
     },
     {
@@ -19111,7 +19140,7 @@
      "run_style": "P",
      "speed_pts": 6,
      "prime_power": 93.5,
-     "score": 13.7,
+     "score": 12.7,
      "eliminated": true,
      "flags": [],
      "hits": [
@@ -19144,6 +19173,12 @@
        "name": "Running style vs. track bias",
        "points": -1.0,
        "note": "Meet P IV 0.89, week P IV 0.68"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "F3",
@@ -19594,7 +19629,7 @@
      "run_style": "E",
      "speed_pts": 6,
      "prime_power": 102.8,
-     "score": -1.8,
+     "score": -0.3,
      "eliminated": true,
      "flags": [],
      "hits": [
@@ -19627,6 +19662,12 @@
        "name": "Probable pace leader by E1 figure",
        "points": 3.0,
        "note": "Early pace (E1) 89.7 is 4 clear of the next early type"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "F3",
@@ -20098,7 +20139,7 @@
      "run_style": "E",
      "speed_pts": 8,
      "prime_power": 94.2,
-     "score": -2.7,
+     "score": -1.2,
      "eliminated": true,
      "flags": [],
      "hits": [
@@ -20131,6 +20172,12 @@
        "name": "Running style vs. track bias",
        "points": 1.0,
        "note": "Meet E IV 1.05, week E IV 1.15"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "K2",
@@ -20597,7 +20644,7 @@
      "run_style": "E/P",
      "speed_pts": 4,
      "prime_power": 103.6,
-     "score": -4.9,
+     "score": -3.4,
      "eliminated": true,
      "flags": [],
      "hits": [
@@ -20636,6 +20683,12 @@
        "name": "Pace figures vs. par",
        "points": -1.5,
        "note": "Second-call pace (E2) average 60.7 against par 82"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "3 of 4 earlier dirt winners were early types"
       },
       {
        "rule": "F8",
@@ -21085,19 +21138,19 @@
     "favorite": "6",
     "price_leg": true,
     "probs": {
-     "2": 0.3207,
-     "6": 0.2197,
-     "4": 0.168,
-     "3": 0.1401,
-     "8": 0.0947,
-     "1": 0.0567
+     "2": 0.3046,
+     "6": 0.2282,
+     "4": 0.1754,
+     "3": 0.1464,
+     "8": 0.0914,
+     "1": 0.054
     },
     "price_factor": 0.92,
     "audit": [
      "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-     "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
+     "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
      "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-     "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
+     "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
     ]
    },
    "wagers": [
@@ -21110,15 +21163,15 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #2 (take 1.75-1 or better)",
+     "label": "WIN #2 (take 1.92-1 or better)",
      "source": "primary",
      "race_no": 5,
      "races": [
       5
      ],
-     "min_odds": 1.75,
+     "min_odds": 1.92,
      "min_odds_by": {
-      "2": 1.75
+      "2": 1.92
      },
      "research": {
       "decision": "NO_BET",
@@ -21132,9 +21185,9 @@
       "experimental": false,
       "diagnostics": {
        "label": "research diagnostics (heuristic probability; not a validated edge)",
-       "p": 0.3873,
-       "break_even_odds": 1.58,
-       "o_min": 1.97,
+       "p": 0.3643,
+       "break_even_odds": 1.74,
+       "o_min": 2.16,
        "tau": 0.15,
        "quote_odds": null,
        "ev_at_quote": null,
@@ -21144,14 +21197,14 @@
       }
      },
      "decision": {
-      "id": "7e6d00243aa4e32d",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "861a89f5714e6b2b",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21184,14 +21237,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "3195b482985a353b",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "8de1acb0e0e291c3",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21230,14 +21283,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "bf2f7582476055cf",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "09912ea2ce17a308",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21276,14 +21329,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "1fc8ec32d49edaf5",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "7b8fc53c0a87eada",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21295,15 +21348,15 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #2 (ML 6/1, take 1.75-1 or better; fair 1.4-1)",
+     "label": "WIN #2 (ML 6/1, take 1.92-1 or better; fair 1.5-1)",
      "source": "other",
      "race_no": 5,
      "races": [
       5
      ],
-     "min_odds": 1.75,
+     "min_odds": 1.92,
      "min_odds_by": {
-      "2": 1.75
+      "2": 1.92
      },
      "research": {
       "decision": "NO_BET",
@@ -21317,9 +21370,9 @@
       "experimental": false,
       "diagnostics": {
        "label": "research diagnostics (heuristic probability; not a validated edge)",
-       "p": 0.3873,
-       "break_even_odds": 1.58,
-       "o_min": 1.97,
+       "p": 0.3643,
+       "break_even_odds": 1.74,
+       "o_min": 2.16,
        "tau": 0.15,
        "quote_odds": null,
        "ev_at_quote": null,
@@ -21329,14 +21382,14 @@
       }
      },
      "decision": {
-      "id": "7e6d00243aa4e32d",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "861a89f5714e6b2b",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21380,14 +21433,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "8752481047d06b98",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "6f2bcb889a138947",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21420,14 +21473,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "8c830350e3e5bd67",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "4680fa592976a7fa",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21439,14 +21492,14 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "PLACE #6 Legitimate (chance 44%; needs $5.10 per $2)",
+     "label": "PLACE #6 Legitimate (chance 45%; needs $4.90 per $2)",
      "source": "other",
      "race_no": 5,
      "races": [
       5
      ],
-     "min_price_2": 5.1,
-     "prob": 0.4398,
+     "min_price_2": 4.9,
+     "prob": 0.4518,
      "prob_label": "heuristic: Harville expansion of the blended win vector",
      "research": {
       "decision": "NO_BET",
@@ -21460,14 +21513,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "3ccb4b59afc3a56a",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "74b98868e87d25e7",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -21479,14 +21532,14 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "SHOW #6 Legitimate (chance 65%; needs $3.50 per $2)",
+     "label": "SHOW #6 Legitimate (chance 66%; needs $3.40 per $2)",
      "source": "other",
      "race_no": 5,
      "races": [
       5
      ],
-     "min_price_2": 3.5,
-     "prob": 0.6469,
+     "min_price_2": 3.4,
+     "prob": 0.6591,
      "prob_label": "heuristic: Harville expansion of the blended win vector",
      "research": {
       "decision": "NO_BET",
@@ -21500,14 +21553,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "3d76b42ef737eaa2",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "9de7c78a2fffa620",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -21515,11 +21568,11 @@
     "EXACTA key #2 over #6,#4,#3",
     "TRIFECTA key #2 / #6,#4,#3 / #6,#4,#3,#8",
     "TRIFECTA key second #6,#4,#3 / #2 / #6,#4,#3,#8 (a standout that runs second still pays)",
-    "WIN #2 (ML 6/1, take 1.75-1 or better; fair 1.4-1)",
+    "WIN #2 (ML 6/1, take 1.92-1 or better; fair 1.5-1)",
     "SUPERFECTA key #2 / #6,#4,#3 / #6,#4,#3 / #6,#4,#3,#8",
     "Favourite #6 looks beatable (H5): EXACTA #2 over #2,#6,#4 - chalk underneath only, never on top",
-    "PLACE #6 Legitimate (chance 44%; needs $5.10 per $2)",
-    "SHOW #6 Legitimate (chance 65%; needs $3.50 per $2)",
+    "PLACE #6 Legitimate (chance 45%; needs $4.90 per $2)",
+    "SHOW #6 Legitimate (chance 66%; needs $3.40 per $2)",
     "Place/show candidates: top pick is a win bet; the second horse is the place/show candidate",
     "POLICY: no double - no doubles through firm turf (R6)"
    ],
@@ -21529,47 +21582,47 @@
     "place": [
      {
       "pgm": "6",
-      "prob": 0.4398,
-      "min_price_2": 5.1
+      "prob": 0.4518,
+      "min_price_2": 4.9
      }
     ],
     "show": [
      {
       "pgm": "6",
-      "prob": 0.6469,
-      "min_price_2": 3.5
+      "prob": 0.6591,
+      "min_price_2": 3.4
      }
     ],
     "probs": {
      "2": {
-      "win": 0.3207,
-      "place": 0.5809,
-      "show": 0.7776
+      "win": 0.3046,
+      "place": 0.5597,
+      "show": 0.7599
      },
      "6": {
-      "win": 0.2197,
-      "place": 0.4398,
-      "show": 0.6469
+      "win": 0.2282,
+      "place": 0.4518,
+      "show": 0.6591
      },
      "4": {
-      "win": 0.168,
-      "place": 0.3497,
-      "show": 0.5438
+      "win": 0.1754,
+      "place": 0.3618,
+      "show": 0.5582
      },
      "3": {
-      "win": 0.1401,
-      "place": 0.2971,
-      "show": 0.4745
+      "win": 0.1464,
+      "place": 0.308,
+      "show": 0.4886
      },
      "8": {
-      "win": 0.0947,
-      "place": 0.2064,
-      "show": 0.3423
+      "win": 0.0914,
+      "place": 0.1988,
+      "show": 0.33
      },
      "1": {
-      "win": 0.0567,
-      "place": 0.1261,
-      "show": 0.2149
+      "win": 0.054,
+      "place": 0.1198,
+      "show": 0.2042
      }
     }
    },
@@ -21629,12 +21682,12 @@
      ]
     },
     "p_rule_heuristic": {
-     "2": 0.3873,
-     "6": 0.1506,
-     "4": 0.1311,
-     "3": 0.1109,
-     "8": 0.0808,
-     "1": 0.0651,
+     "2": 0.3643,
+     "6": 0.1628,
+     "4": 0.1417,
+     "3": 0.1199,
+     "8": 0.076,
+     "1": 0.0612,
      "5": 0.0185,
      "9": 0.0185,
      "7": 0.0185,
@@ -21644,16 +21697,16 @@
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "1": 0.026,
-     "9": 0.026,
-     "6": 0.2684,
-     "2": 0.115,
-     "5": 0.0383,
-     "8": 0.0895,
      "7": 0.0732,
+     "5": 0.0383,
+     "6": 0.2684,
      "3": 0.1464,
+     "2": 0.115,
      "10": 0.0383,
-     "4": 0.1789
+     "4": 0.1789,
+     "1": 0.026,
+     "8": 0.0895,
+     "9": 0.026
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -21661,16 +21714,16 @@
      "beta": 0.0
     },
     "z": {
-     "1": -1.193,
-     "9": -2.033,
-     "6": 0.282,
-     "2": 1.942,
-     "5": -0.519,
-     "8": -0.812,
-     "7": -2.121,
-     "3": -0.256,
-     "10": -2.336,
-     "4": 0.037
+     "7": -1.979,
+     "5": -0.635,
+     "6": 0.4,
+     "3": -0.132,
+     "2": 1.802,
+     "10": -2.192,
+     "4": 0.158,
+     "1": -1.302,
+     "8": -0.925,
+     "9": -1.892
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -25639,14 +25692,14 @@
       }
      },
      "decision": {
-      "id": "6c96b5193369b10f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "aebc24b8adf25d82",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -25692,14 +25745,14 @@
       }
      },
      "decision": {
-      "id": "6c96b5193369b10f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "aebc24b8adf25d82",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -25732,14 +25785,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "e8999e44bf31724f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "dd57b315e746345a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -25772,14 +25825,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "aa3722aa65ba4c48",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "be043b07abc712bc",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -25948,15 +26001,15 @@
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "9": 0.0795,
-     "1": 0.0416,
-     "6": 0.1749,
-     "2": 0.0547,
-     "5": 0.0795,
-     "8": 0.159,
      "7": 0.2186,
+     "5": 0.0795,
+     "6": 0.1749,
      "3": 0.0673,
-     "10": 0.1249
+     "10": 0.1249,
+     "2": 0.0547,
+     "1": 0.0416,
+     "8": 0.159,
+     "9": 0.0795
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -25964,15 +26017,15 @@
      "beta": 0.0
     },
     "z": {
-     "9": -0.543,
-     "1": -0.561,
-     "6": 0.925,
-     "2": -0.65,
-     "5": -1.351,
-     "8": 0.38,
      "7": 2.245,
+     "5": -1.351,
+     "6": 0.925,
      "3": -0.171,
-     "10": -0.273
+     "10": -0.273,
+     "2": -0.65,
+     "1": -0.561,
+     "8": 0.38,
+     "9": -0.543
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -26077,7 +26130,7 @@
    ],
    "bet_structure": "WIN (take 1.5-1 or better)",
    "confidence": "high",
-   "selection_note": "#11 is 23.3 points clear",
+   "selection_note": "#11 is 25.8 points clear",
    "brisnet": {
     "top_pick": "11",
     "top3": [
@@ -26112,7 +26165,7 @@
      "run_style": "E",
      "speed_pts": 6,
      "prime_power": 123.2,
-     "score": 54.5,
+     "score": 56.0,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -26195,6 +26248,12 @@
        "note": "Early pace (E1) 84 is 4 clear of the next early type"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "4 of 5 earlier dirt winners were early types"
+      },
+      {
        "rule": "F2",
        "name": "In the money last race",
        "points": 2.0,
@@ -26265,7 +26324,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 3/1 against fair 1.1-1 (value, not in the ability score)"
+       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 3/1 against fair 1.0-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -26513,28 +26572,28 @@
        "label": "Morning-line favourite: favourites win 40% or more of this race type"
       }
      ],
-     "model_prob": 0.4761,
+     "model_prob": 0.5046,
      "market_prob": 0.2004,
-     "win_prob": 0.3796,
-     "implied_prob": 0.4761,
-     "fair_odds": 1.1,
+     "win_prob": 0.3981,
+     "implied_prob": 0.5046,
+     "fair_odds": 1.0,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 1.73
+      "edge": 2.0
      },
      "rank": 1,
      "conditional_rank": null,
      "min_win_odds": 1.5,
      "research": {
       "interest": "11",
-      "p_rule_heuristic": 0.4761,
+      "p_rule_heuristic": 0.5046,
       "q_live_market": null,
       "p_market_anchor": 0.2004,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 1.1,
-      "o_min": 1.42
+      "break_even_odds": 0.98,
+      "o_min": 1.28
      }
     },
     {
@@ -26545,7 +26604,7 @@
      "run_style": "P",
      "speed_pts": 4,
      "prime_power": 120.2,
-     "score": 31.2,
+     "score": 30.2,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -26596,6 +26655,12 @@
        "name": "Running style vs. track bias",
        "points": -1.0,
        "note": "Meet P IV 0.89, week P IV 0.68"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
       },
       {
        "rule": "F7",
@@ -26883,28 +26948,28 @@
       "num_clean_pp": 2
      },
      "angles": [],
-     "model_prob": 0.1305,
+     "model_prob": 0.1204,
      "market_prob": 0.1457,
-     "win_prob": 0.1358,
-     "implied_prob": 0.1305,
-     "fair_odds": 6.7,
+     "win_prob": 0.1292,
+     "implied_prob": 0.1204,
+     "fair_odds": 7.3,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.33
+      "edge": -0.38
      },
      "rank": 2,
      "conditional_rank": null,
-     "min_win_odds": 7.81,
+     "min_win_odds": 8.55,
      "research": {
       "interest": "1",
-      "p_rule_heuristic": 0.1305,
+      "p_rule_heuristic": 0.1204,
       "q_live_market": null,
       "p_market_anchor": 0.1457,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 6.66,
-      "o_min": 7.81
+      "break_even_odds": 7.31,
+      "o_min": 8.55
      }
     },
     {
@@ -26915,7 +26980,7 @@
      "run_style": "E",
      "speed_pts": 4,
      "prime_power": 116.1,
-     "score": 24.0,
+     "score": 25.5,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -26966,6 +27031,12 @@
        "name": "Pace figures vs. par",
        "points": -1.5,
        "note": "Second-call pace (E2) average 75 against par 82"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": 1.5,
+       "note": "4 of 5 earlier dirt winners were early types"
       },
       {
        "rule": "F2",
@@ -27032,7 +27103,7 @@
        "name": "Morning-line value",
        "points": 3.0,
        "value": true,
-       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 15/1 against fair 10.4-1 (value, not in the ability score)"
+       "note": "Overlay (the price is longer than the engine's fair odds): morning line (ML) 15/1 against fair 9.8-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -27303,28 +27374,28 @@
        "label": "10-1 or longer: winners at 10-1 or more are 8 to 14% of this race type"
       }
      ],
-     "model_prob": 0.0875,
+     "model_prob": 0.0927,
      "market_prob": 0.0501,
-     "win_prob": 0.0744,
-     "implied_prob": 0.0875,
-     "fair_odds": 10.4,
+     "win_prob": 0.0778,
+     "implied_prob": 0.0927,
+     "fair_odds": 9.8,
      "value": {
       "label": "overlay",
       "points": 3.0,
-      "edge": 0.44
+      "edge": 0.53
      },
      "rank": 3,
      "conditional_rank": null,
-     "min_win_odds": 12.14,
+     "min_win_odds": 11.41,
      "research": {
       "interest": "3",
-      "p_rule_heuristic": 0.0875,
+      "p_rule_heuristic": 0.0927,
       "q_live_market": null,
       "p_market_anchor": 0.0501,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 10.43,
-      "o_min": 12.14
+      "break_even_odds": 9.79,
+      "o_min": 11.41
      }
     },
     {
@@ -27335,10 +27406,16 @@
      "run_style": "NA",
      "speed_pts": 0,
      "prime_power": null,
-     "score": 20.5,
+     "score": 19.5,
      "eliminated": false,
      "flags": [],
      "hits": [
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
+      },
       {
        "rule": "F9",
        "name": "Recent workout pattern",
@@ -27398,7 +27475,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 5/1 against fair 12.9-1 (value, not in the ability score)"
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 5/1 against fair 14.1-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -27622,28 +27699,28 @@
       "num_clean_pp": 0
      },
      "angles": [],
-     "model_prob": 0.072,
+     "model_prob": 0.0664,
      "market_prob": 0.1336,
-     "win_prob": 0.0936,
-     "implied_prob": 0.072,
-     "fair_odds": 12.9,
+     "win_prob": 0.0899,
+     "implied_prob": 0.0664,
+     "fair_odds": 14.1,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.61
+      "edge": -0.65
      },
      "rank": 4,
      "conditional_rank": null,
-     "min_win_odds": 14.97,
+     "min_win_odds": 16.32,
      "research": {
       "interest": "2",
-      "p_rule_heuristic": 0.072,
+      "p_rule_heuristic": 0.0664,
       "q_live_market": null,
       "p_market_anchor": 0.1336,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 12.89,
-      "o_min": 14.97
+      "break_even_odds": 14.06,
+      "o_min": 16.32
      }
     },
     {
@@ -27654,7 +27731,7 @@
      "run_style": "P",
      "speed_pts": 4,
      "prime_power": 118.9,
-     "score": 11.5,
+     "score": 10.5,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -27701,6 +27778,12 @@
        "note": "Meet P IV 0.89, week P IV 0.68"
       },
       {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
+      },
+      {
        "rule": "F4",
        "name": "Closed ground late last out",
        "points": 1.0,
@@ -27735,7 +27818,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 8/1 against fair 21.9-1 (value, not in the ability score)"
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 8/1 against fair 23.8-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -27989,28 +28072,28 @@
       "num_clean_pp": 2
      },
      "angles": [],
-     "model_prob": 0.0437,
+     "model_prob": 0.0403,
      "market_prob": 0.089,
-     "win_prob": 0.0596,
-     "implied_prob": 0.0437,
-     "fair_odds": 21.9,
+     "win_prob": 0.0574,
+     "implied_prob": 0.0403,
+     "fair_odds": 23.8,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.63
+      "edge": -0.66
      },
      "rank": 5,
      "conditional_rank": null,
-     "min_win_odds": 25.32,
+     "min_win_odds": 27.54,
      "research": {
       "interest": "9",
-      "p_rule_heuristic": 0.0437,
+      "p_rule_heuristic": 0.0403,
       "q_live_market": null,
       "p_market_anchor": 0.089,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 21.88,
-      "o_min": 25.32
+      "break_even_odds": 23.81,
+      "o_min": 27.54
      }
     },
     {
@@ -28021,10 +28104,16 @@
      "run_style": "NA",
      "speed_pts": 0,
      "prime_power": null,
-     "score": 10.6,
+     "score": 9.6,
      "eliminated": false,
      "flags": [],
      "hits": [
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
+      },
       {
        "rule": "F9",
        "name": "Recent workout pattern",
@@ -28078,7 +28167,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 6/1 against fair 23.1-1 (value, not in the ability score)"
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 6/1 against fair 25.1-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -28292,28 +28381,28 @@
       "num_clean_pp": 0
      },
      "angles": [],
-     "model_prob": 0.0415,
+     "model_prob": 0.0383,
      "market_prob": 0.1145,
-     "win_prob": 0.0671,
-     "implied_prob": 0.0415,
-     "fair_odds": 23.1,
+     "win_prob": 0.065,
+     "implied_prob": 0.0383,
+     "fair_odds": 25.1,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.74
+      "edge": -0.76
      },
      "rank": 6,
      "conditional_rank": null,
-     "min_win_odds": 26.71,
+     "min_win_odds": 29.03,
      "research": {
       "interest": "8",
-      "p_rule_heuristic": 0.0415,
+      "p_rule_heuristic": 0.0383,
       "q_live_market": null,
       "p_market_anchor": 0.1145,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 23.1,
-      "o_min": 26.71
+      "break_even_odds": 25.11,
+      "o_min": 29.03
      }
     },
     {
@@ -28324,10 +28413,16 @@
      "run_style": "NA",
      "speed_pts": 0,
      "prime_power": null,
-     "score": 8.6,
+     "score": 7.6,
      "eliminated": false,
      "flags": [],
      "hits": [
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
+      },
       {
        "rule": "F9",
        "name": "Recent workout pattern",
@@ -28381,7 +28476,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 6/1 against fair 25.9-1 (value, not in the ability score)"
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 6/1 against fair 28.2-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -28600,28 +28695,28 @@
       "num_clean_pp": 0
      },
      "angles": [],
-     "model_prob": 0.0372,
+     "model_prob": 0.0343,
      "market_prob": 0.1145,
-     "win_prob": 0.0642,
-     "implied_prob": 0.0372,
-     "fair_odds": 25.9,
+     "win_prob": 0.0624,
+     "implied_prob": 0.0343,
+     "fair_odds": 28.2,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.77
+      "edge": -0.79
      },
      "rank": 7,
      "conditional_rank": null,
-     "min_win_odds": 29.91,
+     "min_win_odds": 32.53,
      "research": {
       "interest": "4",
-      "p_rule_heuristic": 0.0372,
+      "p_rule_heuristic": 0.0343,
       "q_live_market": null,
       "p_market_anchor": 0.1145,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 25.88,
-      "o_min": 29.91
+      "break_even_odds": 28.15,
+      "o_min": 32.53
      }
     },
     {
@@ -28632,7 +28727,7 @@
      "run_style": "S",
      "speed_pts": 4,
      "prime_power": 121.1,
-     "score": 8.6,
+     "score": 7.6,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -28677,6 +28772,12 @@
        "name": "Running style vs. track bias",
        "points": -4.0,
        "note": "Meet S IV 0.42, week S IV 0.0"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
       },
       {
        "rule": "F4",
@@ -28743,7 +28844,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 15/1 against fair 25.9-1 (value, not in the ability score)"
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 15/1 against fair 28.2-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -29012,28 +29113,28 @@
        "label": "10-1 or longer: winners at 10-1 or more are 8 to 14% of this race type"
       }
      ],
-     "model_prob": 0.0372,
+     "model_prob": 0.0343,
      "market_prob": 0.0501,
-     "win_prob": 0.0417,
-     "implied_prob": 0.0372,
-     "fair_odds": 25.9,
+     "win_prob": 0.0398,
+     "implied_prob": 0.0343,
+     "fair_odds": 28.2,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.42
+      "edge": -0.47
      },
      "rank": 8,
      "conditional_rank": null,
-     "min_win_odds": 29.91,
+     "min_win_odds": 32.53,
      "research": {
       "interest": "7",
-      "p_rule_heuristic": 0.0372,
+      "p_rule_heuristic": 0.0343,
       "q_live_market": null,
       "p_market_anchor": 0.0501,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 25.88,
-      "o_min": 29.91
+      "break_even_odds": 28.15,
+      "o_min": 32.53
      }
     },
     {
@@ -29044,7 +29145,7 @@
      "run_style": "NA",
      "speed_pts": 4,
      "prime_power": 120.2,
-     "score": 5.8,
+     "score": 4.8,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -29083,6 +29184,12 @@
        "name": "Last race rating beats the field",
        "points": 3.0,
        "note": "Last race rating 111 ranks first"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
       },
       {
        "rule": "F9",
@@ -29361,28 +29468,28 @@
        "label": "10-1 or longer: winners at 10-1 or more are 8 to 14% of this race type"
       }
      ],
-     "model_prob": 0.0318,
+     "model_prob": 0.0294,
      "market_prob": 0.0382,
-     "win_prob": 0.034,
-     "implied_prob": 0.0318,
-     "fair_odds": 30.4,
+     "win_prob": 0.0324,
+     "implied_prob": 0.0294,
+     "fair_odds": 33.0,
      "value": {
       "label": "fair",
       "points": 0.0,
-      "edge": -0.34
+      "edge": -0.39
      },
      "rank": 9,
      "conditional_rank": null,
-     "min_win_odds": 35.16,
+     "min_win_odds": 38.12,
      "research": {
       "interest": "12",
-      "p_rule_heuristic": 0.0318,
+      "p_rule_heuristic": 0.0294,
       "q_live_market": null,
       "p_market_anchor": 0.0382,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 30.45,
-      "o_min": 35.16
+      "break_even_odds": 33.01,
+      "o_min": 38.12
      }
     },
     {
@@ -29393,7 +29500,7 @@
      "run_style": "S",
      "speed_pts": 4,
      "prime_power": 113.0,
-     "score": -0.5,
+     "score": -1.5,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -29420,6 +29527,12 @@
        "name": "Running style vs. track bias",
        "points": -4.0,
        "note": "Meet S IV 0.42, week S IV 0.0"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
       },
       {
        "rule": "F4",
@@ -29468,7 +29581,7 @@
        "name": "Morning-line value",
        "points": -2.4,
        "value": true,
-       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 20/1 against fair 43.6-1 (value, not in the ability score)"
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 20/1 against fair 47.3-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -29704,28 +29817,28 @@
        "label": "10-1 or longer: winners at 10-1 or more are 8 to 14% of this race type"
       }
      ],
-     "model_prob": 0.0224,
+     "model_prob": 0.0207,
      "market_prob": 0.0382,
-     "win_prob": 0.0279,
-     "implied_prob": 0.0224,
-     "fair_odds": 43.6,
+     "win_prob": 0.0268,
+     "implied_prob": 0.0207,
+     "fair_odds": 47.3,
      "value": {
       "label": "underlay",
       "points": -2.4,
-      "edge": -0.54
+      "edge": -0.58
      },
      "rank": 10,
      "conditional_rank": null,
-     "min_win_odds": 50.34,
+     "min_win_odds": 54.56,
      "research": {
       "interest": "10",
-      "p_rule_heuristic": 0.0224,
+      "p_rule_heuristic": 0.0207,
       "q_live_market": null,
       "p_market_anchor": 0.0382,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 43.64,
-      "o_min": 50.34
+      "break_even_odds": 47.31,
+      "o_min": 54.56
      }
     },
     {
@@ -29736,7 +29849,7 @@
      "run_style": "NA",
      "speed_pts": 1,
      "prime_power": 110.2,
-     "score": -2.4,
+     "score": -3.4,
      "eliminated": false,
      "flags": [],
      "hits": [
@@ -29757,6 +29870,12 @@
        "name": "Last race rating beats the field",
        "points": 3.0,
        "note": "Last race rating 111 ranks first"
+      },
+      {
+       "rule": "P10",
+       "name": "Same-day bias from earlier results",
+       "points": -1.0,
+       "note": "4 of 5 earlier dirt winners were early types"
       },
       {
        "rule": "F3",
@@ -29811,6 +29930,13 @@
        "name": "QuickPlay negative comments",
        "points": -1.6,
        "note": "Never close in only career start; Poor Speed Figure in only start; Has never raced at a route distance"
+      },
+      {
+       "rule": "V1",
+       "name": "Morning-line value",
+       "points": -2.4,
+       "value": true,
+       "note": "Underlay (the price is shorter than the engine's fair odds): morning line (ML) 30/1 against fair 52.8-1 (value, not in the ability score)"
       }
      ],
      "sheet": {
@@ -30046,28 +30172,28 @@
        "label": "10-1 or longer: winners at 10-1 or more are 8 to 14% of this race type"
       }
      ],
-     "model_prob": 0.0202,
+     "model_prob": 0.0186,
      "market_prob": 0.0259,
-     "win_prob": 0.0222,
-     "implied_prob": 0.0202,
-     "fair_odds": 48.5,
+     "win_prob": 0.0211,
+     "implied_prob": 0.0186,
+     "fair_odds": 52.8,
      "value": {
-      "label": "fair",
-      "points": 0.0,
-      "edge": -0.38
+      "label": "underlay",
+      "points": -2.4,
+      "edge": -0.43
      },
      "rank": 11,
      "conditional_rank": null,
-     "min_win_odds": 55.93,
+     "min_win_odds": 60.83,
      "research": {
       "interest": "6",
-      "p_rule_heuristic": 0.0202,
+      "p_rule_heuristic": 0.0186,
       "q_live_market": null,
       "p_market_anchor": 0.0259,
       "p_final_model": null,
       "model_status": "UNTRAINED",
-      "break_even_odds": 48.5,
-      "o_min": 55.93
+      "break_even_odds": 52.76,
+      "o_min": 60.83
      }
     }
    ],
@@ -30086,22 +30212,22 @@
     "favorite": "11",
     "price_leg": false,
     "probs": {
-     "11": 0.3796,
-     "1": 0.1358,
-     "3": 0.0744,
-     "2": 0.0936,
-     "9": 0.0596,
-     "8": 0.0671,
-     "4": 0.0642,
-     "7": 0.0417,
-     "12": 0.034,
-     "10": 0.0279,
-     "6": 0.0222
+     "11": 0.3981,
+     "1": 0.1292,
+     "3": 0.0778,
+     "2": 0.0899,
+     "9": 0.0574,
+     "8": 0.065,
+     "4": 0.0624,
+     "7": 0.0398,
+     "12": 0.0324,
+     "10": 0.0268,
+     "6": 0.0211
     },
     "price_factor": 1.0,
     "audit": [
-     "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-     "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+     "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+     "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
      "H5 favourite #11 (3/1) looks legitimate"
     ]
    },
@@ -30138,9 +30264,9 @@
       "experimental": false,
       "diagnostics": {
        "label": "research diagnostics (heuristic probability; not a validated edge)",
-       "p": 0.4761,
-       "break_even_odds": 1.1,
-       "o_min": 1.42,
+       "p": 0.5046,
+       "break_even_odds": 0.98,
+       "o_min": 1.28,
        "tau": 0.15,
        "quote_odds": null,
        "ev_at_quote": null,
@@ -30150,14 +30276,14 @@
       }
      },
      "decision": {
-      "id": "7d985b0bd2d28fc8",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "fab0c559e5da17e3",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30190,14 +30316,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "b832b1d1368c19e2",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "996b82a0dfa19d6a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30236,14 +30362,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "bb516710feea1399",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "1114aeeae0f8a3d3",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30282,14 +30408,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "da8f9eb9c1ac8911",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "385d5ff0ee0cd4d4",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30301,7 +30427,7 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "WIN #11 (ML 3/1, take 1.5-1 or better; fair 1.1-1)",
+     "label": "WIN #11 (ML 3/1, take 1.5-1 or better; fair 1.0-1)",
      "source": "other",
      "race_no": 7,
      "races": [
@@ -30324,9 +30450,9 @@
       "experimental": false,
       "diagnostics": {
        "label": "research diagnostics (heuristic probability; not a validated edge)",
-       "p": 0.4761,
-       "break_even_odds": 1.1,
-       "o_min": 1.42,
+       "p": 0.5046,
+       "break_even_odds": 0.98,
+       "o_min": 1.28,
        "tau": 0.15,
        "quote_odds": null,
        "ev_at_quote": null,
@@ -30336,14 +30462,14 @@
       }
      },
      "decision": {
-      "id": "7d985b0bd2d28fc8",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "fab0c559e5da17e3",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30387,14 +30513,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "31fa5f390e91d4bc",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "420efdf777ca814a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30430,14 +30556,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "346870a9b8c950ae",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "06f91dfbb30012c9",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30449,14 +30575,14 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "PLACE #1 Ice Empress (chance 29%; needs $7.70 per $2)",
+     "label": "PLACE #1 Ice Empress (chance 28%; needs $7.90 per $2)",
      "source": "other",
      "race_no": 7,
      "races": [
       7
      ],
-     "min_price_2": 7.7,
-     "prob": 0.2891,
+     "min_price_2": 7.9,
+     "prob": 0.2798,
      "prob_label": "heuristic: Harville expansion of the blended win vector",
      "research": {
       "decision": "NO_BET",
@@ -30471,14 +30597,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "6505a08f92115b92",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "cf16245b4046ad6f",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -30490,14 +30616,14 @@
      ],
      "box": false,
      "combos": 1,
-     "label": "SHOW #1 Ice Empress (chance 44%; needs $5.00 per $2)",
+     "label": "SHOW #1 Ice Empress (chance 43%; needs $5.10 per $2)",
      "source": "other",
      "race_no": 7,
      "races": [
       7
      ],
-     "min_price_2": 5.0,
-     "prob": 0.4433,
+     "min_price_2": 5.1,
+     "prob": 0.4334,
      "prob_label": "heuristic: Harville expansion of the blended win vector",
      "research": {
       "decision": "NO_BET",
@@ -30512,14 +30638,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "517d1b8bd68bbd2f",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "23e2621aecbfee2a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -30527,11 +30653,11 @@
     "EXACTA key #11 over #1,#3,#2",
     "TRIFECTA key #11 / #1,#3,#2 / #1,#3,#2,#9",
     "TRIFECTA key second #1,#3,#2 / #11 / #1,#3,#2,#9 (a standout that runs second still pays)",
-    "WIN #11 (ML 3/1, take 1.5-1 or better; fair 1.1-1)",
+    "WIN #11 (ML 3/1, take 1.5-1 or better; fair 1.0-1)",
     "SUPERFECTA key #11 / #1,#3,#2 / #1,#3,#2 / #1,#3,#2,#9",
     "DAILY DOUBLE #11,#1,#2 with R8 #10,#7,#2 (9 x $1)",
-    "PLACE #1 Ice Empress (chance 29%; needs $7.70 per $2)",
-    "SHOW #1 Ice Empress (chance 44%; needs $5.00 per $2)",
+    "PLACE #1 Ice Empress (chance 28%; needs $7.90 per $2)",
+    "SHOW #1 Ice Empress (chance 43%; needs $5.10 per $2)",
     "Place/show candidates: top pick is a win bet; the second horse is the place/show candidate"
    ],
    "place_show": {
@@ -30540,72 +30666,72 @@
     "place": [
      {
       "pgm": "1",
-      "prob": 0.2891,
-      "min_price_2": 7.7
+      "prob": 0.2798,
+      "min_price_2": 7.9
      }
     ],
     "show": [
      {
       "pgm": "1",
-      "prob": 0.4433,
-      "min_price_2": 5.0
+      "prob": 0.4334,
+      "min_price_2": 5.1
      }
     ],
     "probs": {
      "11": {
-      "win": 0.3796,
-      "place": 0.6357,
-      "show": 0.7997
+      "win": 0.3981,
+      "place": 0.658,
+      "show": 0.8185
      },
      "1": {
-      "win": 0.1358,
-      "place": 0.2891,
-      "show": 0.4433
+      "win": 0.1292,
+      "place": 0.2798,
+      "show": 0.4334
      },
      "3": {
-      "win": 0.0744,
-      "place": 0.1641,
-      "show": 0.266
+      "win": 0.0778,
+      "place": 0.1735,
+      "show": 0.282
      },
      "2": {
-      "win": 0.0936,
-      "place": 0.2043,
-      "show": 0.3259
+      "win": 0.0899,
+      "place": 0.1992,
+      "show": 0.3204
      },
      "9": {
-      "win": 0.0596,
-      "place": 0.1325,
-      "show": 0.2172
+      "win": 0.0574,
+      "place": 0.1293,
+      "show": 0.2137
      },
      "8": {
-      "win": 0.0671,
-      "place": 0.1486,
-      "show": 0.2422
+      "win": 0.065,
+      "place": 0.1459,
+      "show": 0.2397
      },
      "4": {
-      "win": 0.0642,
-      "place": 0.1424,
-      "show": 0.2326
+      "win": 0.0624,
+      "place": 0.1403,
+      "show": 0.2309
      },
      "7": {
-      "win": 0.0417,
-      "place": 0.0935,
-      "show": 0.1553
+      "win": 0.0398,
+      "place": 0.0905,
+      "show": 0.1514
      },
      "12": {
-      "win": 0.034,
-      "place": 0.0765,
-      "show": 0.1278
+      "win": 0.0324,
+      "place": 0.0739,
+      "show": 0.1243
      },
      "10": {
-      "win": 0.0279,
-      "place": 0.063,
-      "show": 0.1056
+      "win": 0.0268,
+      "place": 0.0613,
+      "show": 0.1035
      },
      "6": {
-      "win": 0.0222,
-      "place": 0.0503,
-      "show": 0.0845
+      "win": 0.0211,
+      "place": 0.0484,
+      "show": 0.082
      }
     }
    },
@@ -30659,33 +30785,33 @@
      ]
     },
     "p_rule_heuristic": {
-     "11": 0.4761,
-     "1": 0.1305,
-     "3": 0.0875,
-     "2": 0.072,
-     "9": 0.0437,
-     "8": 0.0415,
-     "4": 0.0372,
-     "7": 0.0372,
-     "12": 0.0318,
-     "10": 0.0224,
-     "6": 0.0202
+     "11": 0.5046,
+     "1": 0.1204,
+     "3": 0.0927,
+     "2": 0.0664,
+     "9": 0.0403,
+     "8": 0.0383,
+     "4": 0.0343,
+     "7": 0.0343,
+     "12": 0.0294,
+     "10": 0.0207,
+     "6": 0.0186
     },
     "p_rule_label": "heuristic (softmax of the ability score; eliminated starters at the research floor)",
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "1": 0.1457,
-     "9": 0.089,
-     "12": 0.0382,
-     "6": 0.0259,
-     "2": 0.1336,
-     "11": 0.2004,
-     "8": 0.1145,
      "7": 0.0501,
      "3": 0.0501,
      "10": 0.0382,
-     "4": 0.1145
+     "2": 0.1336,
+     "6": 0.0259,
+     "11": 0.2004,
+     "1": 0.1457,
+     "4": 0.1145,
+     "9": 0.089,
+     "8": 0.1145,
+     "12": 0.0382
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -30693,17 +30819,17 @@
      "beta": 0.0
     },
     "z": {
-     "1": 0.997,
-     "9": -0.268,
-     "12": -0.634,
-     "6": -1.16,
-     "2": 0.31,
-     "11": 2.492,
-     "8": -0.326,
-     "7": -0.454,
-     "3": 0.534,
-     "10": -1.038,
-     "4": -0.454
+     "7": -0.462,
+     "3": 0.637,
+     "10": -1.021,
+     "2": 0.269,
+     "6": -1.138,
+     "11": 2.51,
+     "1": 0.926,
+     "4": -0.462,
+     "9": -0.284,
+     "8": -0.339,
+     "12": -0.634
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -35066,14 +35192,14 @@
       }
      },
      "decision": {
-      "id": "22ab6c6dec2f3058",
-      "at_utc": "2026-11-21T03:31:47Z",
-      "cutoff_status": "unknown",
+      "id": "3f7d675146df2f49",
+      "at_utc": "2026-11-22T15:46:14Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -35119,14 +35245,14 @@
       }
      },
      "decision": {
-      "id": "22ab6c6dec2f3058",
-      "at_utc": "2026-11-21T03:31:47Z",
-      "cutoff_status": "unknown",
+      "id": "3f7d675146df2f49",
+      "at_utc": "2026-11-22T15:46:14Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -35159,14 +35285,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "53789f74262d7895",
-      "at_utc": "2026-11-21T03:31:47Z",
-      "cutoff_status": "unknown",
+      "id": "1b73517a6b5098ca",
+      "at_utc": "2026-11-22T15:46:14Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -35199,14 +35325,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "32916d81ac70c294",
-      "at_utc": "2026-11-21T03:31:47Z",
-      "cutoff_status": "unknown",
+      "id": "b8606c5288632a53",
+      "at_utc": "2026-11-22T15:46:14Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -35372,14 +35498,14 @@
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "9": 0.0769,
-     "1": 0.0651,
-     "2": 0.2116,
-     "8": 0.2418,
      "7": 0.1539,
      "3": 0.0529,
      "10": 0.1209,
-     "4": 0.0769
+     "2": 0.2116,
+     "1": 0.0651,
+     "4": 0.0769,
+     "8": 0.2418,
+     "9": 0.0769
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -35387,14 +35513,14 @@
      "beta": 0.0
     },
     "z": {
-     "9": -0.026,
-     "1": -1.244,
-     "2": 0.69,
-     "8": 0.273,
      "7": 0.9,
      "3": -0.85,
      "10": 1.601,
-     "4": -1.344
+     "2": 0.69,
+     "1": -1.244,
+     "4": -1.344,
+     "8": 0.273,
+     "9": -0.026
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -40029,14 +40155,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "d27340b3fef3852e",
-      "at_utc": "2026-11-21T03:31:47Z",
-      "cutoff_status": "unknown",
+      "id": "ee939a5ba3242191",
+      "at_utc": "2026-11-22T15:46:14Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -40070,14 +40196,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "aa19b0f449e38e3d",
-      "at_utc": "2026-11-21T03:31:47Z",
-      "cutoff_status": "unknown",
+      "id": "e04a9fd906fe7120",
+      "at_utc": "2026-11-22T15:46:14Z",
+      "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -40237,14 +40363,14 @@
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "9": 0.1152,
+     "7": 0.0896,
+     "5": 0.0504,
+     "3": 0.2304,
      "6": 0.1152,
      "2": 0.1466,
-     "5": 0.0504,
-     "8": 0.0733,
-     "7": 0.0896,
-     "3": 0.2304,
-     "4": 0.1792
+     "4": 0.1792,
+     "9": 0.1152,
+     "8": 0.0733
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -40252,14 +40378,14 @@
      "beta": 0.0
     },
     "z": {
-     "9": 0.249,
+     "7": 0.068,
+     "5": -0.322,
+     "3": 1.92,
      "6": -0.449,
      "2": 0.874,
-     "5": -0.322,
-     "8": -0.701,
-     "7": 0.068,
-     "3": 1.92,
-     "4": -1.639
+     "4": -1.639,
+     "9": 0.249,
+     "8": -0.701
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -45807,14 +45933,14 @@
       }
      },
      "decision": {
-      "id": "0777bab27df16f9d",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "529ad47a172fe34a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -45847,14 +45973,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "db7619e8c6f3496d",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "be2cd98de301a76a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -45893,14 +46019,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "729f8a0c08c1da9d",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "9bbf48a947835e1a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -45939,14 +46065,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "d77a4944652fc73c",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "9c03906824f69e67",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -45992,14 +46118,14 @@
       }
      },
      "decision": {
-      "id": "0777bab27df16f9d",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "529ad47a172fe34a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -46043,14 +46169,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "3c9b47fae6dc4a50",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "b9df64acd2b8275a",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -46085,14 +46211,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "65c3cf6f87ffdad4",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "e110c40965c70b02",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -46125,14 +46251,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "626626418c6f810c",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "6f0641864744ffee",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     },
     {
@@ -46165,14 +46291,14 @@
       "diagnostics": null
      },
      "decision": {
-      "id": "46b2c1d679f11f10",
-      "at_utc": "2026-11-21T03:31:47Z",
+      "id": "ee0819ce8e15ac17",
+      "at_utc": "2026-11-22T15:46:14Z",
       "cutoff_status": "after-cutoff",
       "price_basis": "morning-line",
       "status": "suggested",
       "config_hash": "3d24cde7ebd5a49a",
       "parser_version": "2026-11-20.2",
-      "code_version": "b25251b"
+      "code_version": "03c7275"
      }
     }
    ],
@@ -46317,18 +46443,18 @@
     "q_live_market": null,
     "q_reason": "pools not open",
     "p_market_anchor": {
-     "9": 0.1947,
-     "1": 0.0283,
-     "12": 0.0417,
+     "7": 0.0283,
      "6": 0.1593,
-     "2": 0.0974,
+     "10": 0.0674,
+     "3": 0.0417,
      "13": 0.146,
      "11": 0.0283,
+     "4": 0.1252,
+     "2": 0.0974,
+     "1": 0.0283,
+     "9": 0.1947,
      "8": 0.0417,
-     "7": 0.0283,
-     "3": 0.0417,
-     "10": 0.0674,
-     "4": 0.1252
+     "12": 0.0417
     },
     "anchor_source": "morning-line",
     "anchor_params": {
@@ -46336,18 +46462,18 @@
      "beta": 0.0
     },
     "z": {
-     "9": -0.037,
-     "1": -2.335,
-     "12": -0.422,
+     "7": -0.446,
      "6": 1.816,
-     "2": -1.246,
+     "10": -0.662,
+     "3": -1.661,
      "13": 0.703,
      "11": -0.747,
+     "4": 0.667,
+     "2": -1.246,
+     "1": -2.335,
+     "9": -0.037,
      "8": -0.079,
-     "7": -0.446,
-     "3": -1.661,
-     "10": -0.662,
-     "4": 0.667
+     "12": -0.422
     },
     "p_final_model": null,
     "model_status": "UNTRAINED",
@@ -46432,14 +46558,14 @@
      "budget": 60.0,
      "cost": 60.0,
      "cost_before_trim": 60.0,
-     "hit_prob": 0.2223,
-     "hit_prob_raw": 0.4445,
+     "hit_prob": 0.2246,
+     "hit_prob_raw": 0.4492,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.3,
+     "score": 0.3032,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 64.0,
-     "all_favorites_prob": 0.0232,
+     "all_favorites_prob": 0.0243,
      "notes": [],
      "tickets": [
       {
@@ -46575,22 +46701,22 @@
        "favorite": "11",
        "price_leg": false,
        "probs": {
-        "11": 0.3796,
-        "1": 0.1358,
-        "3": 0.0744,
-        "2": 0.0936,
-        "9": 0.0596,
-        "8": 0.0671,
-        "4": 0.0642,
-        "7": 0.0417,
-        "12": 0.034,
-        "10": 0.0279,
-        "6": 0.0222
+        "11": 0.3981,
+        "1": 0.1292,
+        "3": 0.0778,
+        "2": 0.0899,
+        "9": 0.0574,
+        "8": 0.065,
+        "4": 0.0624,
+        "7": 0.0398,
+        "12": 0.0324,
+        "10": 0.0268,
+        "6": 0.0211
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-        "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+        "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
         "H5 favourite #11 (3/1) looks legitimate"
        ]
       },
@@ -46832,6 +46958,209 @@
      ]
     },
     {
+     "name": "Pick 3 R5-R7",
+     "races": [
+      5,
+      6,
+      7
+     ],
+     "base": 1.0,
+     "budget": 60.0,
+     "cost": 48.0,
+     "cost_before_trim": 48.0,
+     "hit_prob": 0.1914,
+     "hit_prob_raw": 0.3829,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.2584,
+     "singles": 0,
+     "price_legs": 1,
+     "ml_parlay": 72.0,
+     "all_favorites_prob": 0.0376,
+     "notes": [],
+     "tickets": [
+      {
+       "name": "main (all A)",
+       "legs": [
+        [
+         "2",
+         "4"
+        ],
+        [
+         "7",
+         "6"
+        ],
+        [
+         "11",
+         "1",
+         "2"
+        ]
+       ],
+       "combos": 12,
+       "cost": 12.0
+      },
+      {
+       "name": "backup: B in R5",
+       "legs": [
+        [
+         "6",
+         "3"
+        ],
+        [
+         "7",
+         "6"
+        ],
+        [
+         "11",
+         "1",
+         "2"
+        ]
+       ],
+       "combos": 12,
+       "cost": 12.0
+      },
+      {
+       "name": "backup: B in R6",
+       "legs": [
+        [
+         "2",
+         "4"
+        ],
+        [
+         "8",
+         "10"
+        ],
+        [
+         "11",
+         "1",
+         "2"
+        ]
+       ],
+       "combos": 12,
+       "cost": 12.0
+      },
+      {
+       "name": "backup: B in R7",
+       "legs": [
+        [
+         "2",
+         "4"
+        ],
+        [
+         "7",
+         "6"
+        ],
+        [
+         "3",
+         "8",
+         "4"
+        ]
+       ],
+       "combos": 12,
+       "cost": 12.0
+      }
+     ],
+     "legs": [
+      {
+       "race_no": 5,
+       "class_text": "Clm 20000n2L",
+       "kind": "standard",
+       "A": [
+        "2",
+        "4"
+       ],
+       "B": [
+        "6",
+        "3"
+       ],
+       "favorite": "6",
+       "price_leg": true,
+       "probs": {
+        "2": 0.3046,
+        "6": 0.2282,
+        "4": 0.1754,
+        "3": 0.1464,
+        "8": 0.0914,
+        "1": 0.054
+       },
+       "price_factor": 0.92,
+       "audit": [
+        "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
+        "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
+        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
+       ]
+      },
+      {
+       "race_no": 6,
+       "class_text": "Mdn 120k",
+       "kind": "standard",
+       "A": [
+        "7",
+        "6"
+       ],
+       "B": [
+        "8",
+        "10"
+       ],
+       "favorite": "7",
+       "price_leg": false,
+       "probs": {
+        "7": 0.4138,
+        "6": 0.1603,
+        "8": 0.1154,
+        "3": 0.0594,
+        "10": 0.0763,
+        "9": 0.0532,
+        "1": 0.0396,
+        "2": 0.0421,
+        "5": 0.0398
+       },
+       "price_factor": 1.0,
+       "audit": [
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #7 41%",
+        "H4 A=['7', '6'] (57%) B=['8', '10'] (77%) targets 55%/78%",
+        "H5 favourite #7 (3/1) looks legitimate"
+       ]
+      },
+      {
+       "race_no": 7,
+       "class_text": "Mdn 120k",
+       "kind": "standard",
+       "A": [
+        "11",
+        "1",
+        "2"
+       ],
+       "B": [
+        "3",
+        "8",
+        "4"
+       ],
+       "favorite": "11",
+       "price_leg": false,
+       "probs": {
+        "11": 0.3981,
+        "1": 0.1292,
+        "3": 0.0778,
+        "2": 0.0899,
+        "9": 0.0574,
+        "8": 0.065,
+        "4": 0.0624,
+        "7": 0.0398,
+        "12": 0.0324,
+        "10": 0.0268,
+        "6": 0.0211
+       },
+       "price_factor": 1.0,
+       "audit": [
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+        "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
+        "H5 favourite #11 (3/1) looks legitimate"
+       ]
+      }
+     ]
+    },
+    {
      "name": "Pick 3 R3-R5",
      "races": [
       3,
@@ -46842,14 +47171,14 @@
      "budget": 60.0,
      "cost": 44.0,
      "cost_before_trim": 44.0,
-     "hit_prob": 0.1914,
-     "hit_prob_raw": 0.3827,
+     "hit_prob": 0.1912,
+     "hit_prob_raw": 0.3824,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.2583,
+     "score": 0.2581,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 48.6,
-     "all_favorites_prob": 0.0272,
+     "all_favorites_prob": 0.0282,
      "notes": [],
      "tickets": [
       {
@@ -47011,222 +47340,19 @@
        "favorite": "6",
        "price_leg": true,
        "probs": {
-        "2": 0.3207,
-        "6": 0.2197,
-        "4": 0.168,
-        "3": 0.1401,
-        "8": 0.0947,
-        "1": 0.0567
+        "2": 0.3046,
+        "6": 0.2282,
+        "4": 0.1754,
+        "3": 0.1464,
+        "8": 0.0914,
+        "1": 0.054
        },
        "price_factor": 0.92,
        "audit": [
         "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
         "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 3 R5-R7",
-     "races": [
-      5,
-      6,
-      7
-     ],
-     "base": 1.0,
-     "budget": 60.0,
-     "cost": 48.0,
-     "cost_before_trim": 48.0,
-     "hit_prob": 0.1893,
-     "hit_prob_raw": 0.3785,
-     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.2555,
-     "singles": 0,
-     "price_legs": 1,
-     "ml_parlay": 72.0,
-     "all_favorites_prob": 0.0345,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "2",
-         "4"
-        ],
-        [
-         "7",
-         "6"
-        ],
-        [
-         "11",
-         "1",
-         "2"
-        ]
-       ],
-       "combos": 12,
-       "cost": 12.0
-      },
-      {
-       "name": "backup: B in R5",
-       "legs": [
-        [
-         "6",
-         "3"
-        ],
-        [
-         "7",
-         "6"
-        ],
-        [
-         "11",
-         "1",
-         "2"
-        ]
-       ],
-       "combos": 12,
-       "cost": 12.0
-      },
-      {
-       "name": "backup: B in R6",
-       "legs": [
-        [
-         "2",
-         "4"
-        ],
-        [
-         "8",
-         "10"
-        ],
-        [
-         "11",
-         "1",
-         "2"
-        ]
-       ],
-       "combos": 12,
-       "cost": 12.0
-      },
-      {
-       "name": "backup: B in R7",
-       "legs": [
-        [
-         "2",
-         "4"
-        ],
-        [
-         "7",
-         "6"
-        ],
-        [
-         "3",
-         "8",
-         "4"
-        ]
-       ],
-       "combos": 12,
-       "cost": 12.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 5,
-       "class_text": "Clm 20000n2L",
-       "kind": "standard",
-       "A": [
-        "2",
-        "4"
-       ],
-       "B": [
-        "6",
-        "3"
-       ],
-       "favorite": "6",
-       "price_leg": true,
-       "probs": {
-        "2": 0.3207,
-        "6": 0.2197,
-        "4": 0.168,
-        "3": 0.1401,
-        "8": 0.0947,
-        "1": 0.0567
-       },
-       "price_factor": 0.92,
-       "audit": [
-        "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
-        "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 6,
-       "class_text": "Mdn 120k",
-       "kind": "standard",
-       "A": [
-        "7",
-        "6"
-       ],
-       "B": [
-        "8",
-        "10"
-       ],
-       "favorite": "7",
-       "price_leg": false,
-       "probs": {
-        "7": 0.4138,
-        "6": 0.1603,
-        "8": 0.1154,
-        "3": 0.0594,
-        "10": 0.0763,
-        "9": 0.0532,
-        "1": 0.0396,
-        "2": 0.0421,
-        "5": 0.0398
-       },
-       "price_factor": 1.0,
-       "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #7 41%",
-        "H4 A=['7', '6'] (57%) B=['8', '10'] (77%) targets 55%/78%",
-        "H5 favourite #7 (3/1) looks legitimate"
-       ]
-      },
-      {
-       "race_no": 7,
-       "class_text": "Mdn 120k",
-       "kind": "standard",
-       "A": [
-        "11",
-        "1",
-        "2"
-       ],
-       "B": [
-        "3",
-        "8",
-        "4"
-       ],
-       "favorite": "11",
-       "price_leg": false,
-       "probs": {
-        "11": 0.3796,
-        "1": 0.1358,
-        "3": 0.0744,
-        "2": 0.0936,
-        "9": 0.0596,
-        "8": 0.0671,
-        "4": 0.0642,
-        "7": 0.0417,
-        "12": 0.034,
-        "10": 0.0279,
-        "6": 0.0222
-       },
-       "price_factor": 1.0,
-       "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-        "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
-        "H5 favourite #11 (3/1) looks legitimate"
+        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
        ]
       }
      ]
@@ -47242,14 +47368,14 @@
      "budget": 60.0,
      "cost": 44.0,
      "cost_before_trim": 44.0,
-     "hit_prob": 0.1815,
-     "hit_prob_raw": 0.363,
+     "hit_prob": 0.1816,
+     "hit_prob_raw": 0.3632,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.2451,
+     "score": 0.2452,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 81.0,
-     "all_favorites_prob": 0.0301,
+     "all_favorites_prob": 0.0313,
      "notes": [],
      "tickets": [
       {
@@ -47382,19 +47508,19 @@
        "favorite": "6",
        "price_leg": true,
        "probs": {
-        "2": 0.3207,
-        "6": 0.2197,
-        "4": 0.168,
-        "3": 0.1401,
-        "8": 0.0947,
-        "1": 0.0567
+        "2": 0.3046,
+        "6": 0.2282,
+        "4": 0.1754,
+        "3": 0.1464,
+        "8": 0.0914,
+        "1": 0.054
        },
        "price_factor": 0.92,
        "audit": [
         "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
         "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
+        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
        ]
       },
       {
@@ -47442,14 +47568,14 @@
      "budget": 60.0,
      "cost": 54.0,
      "cost_before_trim": 90.0,
-     "hit_prob": 0.1698,
-     "hit_prob_raw": 0.3396,
+     "hit_prob": 0.1725,
+     "hit_prob_raw": 0.3451,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.2292,
+     "score": 0.2329,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 56.0,
-     "all_favorites_prob": 0.0144,
+     "all_favorites_prob": 0.0151,
      "notes": [
       "H8 over budget $90.00 > $60.00: dropped B #4 from R7",
       "H8 over budget $81.00 > $60.00: dropped B #4 from R9",
@@ -47556,22 +47682,22 @@
        "favorite": "11",
        "price_leg": false,
        "probs": {
-        "11": 0.3796,
-        "1": 0.1358,
-        "3": 0.0744,
-        "2": 0.0936,
-        "9": 0.0596,
-        "8": 0.0671,
-        "4": 0.0642,
-        "7": 0.0417,
-        "12": 0.034,
-        "10": 0.0279,
-        "6": 0.0222
+        "11": 0.3981,
+        "1": 0.1292,
+        "3": 0.0778,
+        "2": 0.0899,
+        "9": 0.0574,
+        "8": 0.065,
+        "4": 0.0624,
+        "7": 0.0398,
+        "12": 0.0324,
+        "10": 0.0268,
+        "6": 0.0211
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-        "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+        "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
         "H5 favourite #11 (3/1) looks legitimate"
        ]
       },
@@ -48012,14 +48138,14 @@
     "budget": 60.0,
     "cost": 60.0,
     "cost_before_trim": 60.0,
-    "hit_prob": 0.2223,
-    "hit_prob_raw": 0.4445,
+    "hit_prob": 0.2246,
+    "hit_prob_raw": 0.4492,
     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-    "score": 0.3,
+    "score": 0.3032,
     "singles": 0,
     "price_legs": 1,
     "ml_parlay": 64.0,
-    "all_favorites_prob": 0.0232,
+    "all_favorites_prob": 0.0243,
     "notes": [],
     "tickets": [
      {
@@ -48155,22 +48281,22 @@
       "favorite": "11",
       "price_leg": false,
       "probs": {
-       "11": 0.3796,
-       "1": 0.1358,
-       "3": 0.0744,
-       "2": 0.0936,
-       "9": 0.0596,
-       "8": 0.0671,
-       "4": 0.0642,
-       "7": 0.0417,
-       "12": 0.034,
-       "10": 0.0279,
-       "6": 0.0222
+       "11": 0.3981,
+       "1": 0.1292,
+       "3": 0.0778,
+       "2": 0.0899,
+       "9": 0.0574,
+       "8": 0.065,
+       "4": 0.0624,
+       "7": 0.0398,
+       "12": 0.0324,
+       "10": 0.0268,
+       "6": 0.0211
       },
       "price_factor": 1.0,
       "audit": [
-       "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-       "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+       "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+       "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
        "H5 favourite #11 (3/1) looks legitimate"
       ]
      },
@@ -48231,14 +48357,14 @@
      "budget": 100.0,
      "cost": 78.0,
      "cost_before_trim": 78.0,
-     "hit_prob": 0.1388,
-     "hit_prob_raw": 0.2777,
+     "hit_prob": 0.1402,
+     "hit_prob_raw": 0.2805,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.236,
+     "score": 0.2384,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 144.0,
-     "all_favorites_prob": 0.0051,
+     "all_favorites_prob": 0.0055,
      "notes": [],
      "tickets": [
       {
@@ -48381,19 +48507,19 @@
        "favorite": "6",
        "price_leg": true,
        "probs": {
-        "2": 0.3207,
-        "6": 0.2197,
-        "4": 0.168,
-        "3": 0.1401,
-        "8": 0.0947,
-        "1": 0.0567
+        "2": 0.3046,
+        "6": 0.2282,
+        "4": 0.1754,
+        "3": 0.1464,
+        "8": 0.0914,
+        "1": 0.054
        },
        "price_factor": 0.92,
        "audit": [
         "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
         "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
+        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
        ]
       },
       {
@@ -48445,22 +48571,22 @@
        "favorite": "11",
        "price_leg": false,
        "probs": {
-        "11": 0.3796,
-        "1": 0.1358,
-        "3": 0.0744,
-        "2": 0.0936,
-        "9": 0.0596,
-        "8": 0.0671,
-        "4": 0.0642,
-        "7": 0.0417,
-        "12": 0.034,
-        "10": 0.0279,
-        "6": 0.0222
+        "11": 0.3981,
+        "1": 0.1292,
+        "3": 0.0778,
+        "2": 0.0899,
+        "9": 0.0574,
+        "8": 0.065,
+        "4": 0.0624,
+        "7": 0.0398,
+        "12": 0.0324,
+        "10": 0.0268,
+        "6": 0.0211
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-        "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+        "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
         "H5 favourite #11 (3/1) looks legitimate"
        ]
       },
@@ -48509,14 +48635,14 @@
      "budget": 100.0,
      "cost": 99.0,
      "cost_before_trim": 117.0,
-     "hit_prob": 0.1373,
-     "hit_prob_raw": 0.2746,
+     "hit_prob": 0.1391,
+     "hit_prob_raw": 0.2782,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.1854,
+     "score": 0.1878,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 112.0,
-     "all_favorites_prob": 0.006,
+     "all_favorites_prob": 0.0062,
      "notes": [
       "H8 over budget $117.00 > $100.00: dropped B #4 from R7",
       "H8 over budget $108.00 > $100.00: dropped B #4 from R9"
@@ -48698,22 +48824,22 @@
        "favorite": "11",
        "price_leg": false,
        "probs": {
-        "11": 0.3796,
-        "1": 0.1358,
-        "3": 0.0744,
-        "2": 0.0936,
-        "9": 0.0596,
-        "8": 0.0671,
-        "4": 0.0642,
-        "7": 0.0417,
-        "12": 0.034,
-        "10": 0.0279,
-        "6": 0.0222
+        "11": 0.3981,
+        "1": 0.1292,
+        "3": 0.0778,
+        "2": 0.0899,
+        "9": 0.0574,
+        "8": 0.065,
+        "4": 0.0624,
+        "7": 0.0398,
+        "12": 0.0324,
+        "10": 0.0268,
+        "6": 0.0211
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-        "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+        "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
         "H5 favourite #11 (3/1) looks legitimate"
        ]
       },
@@ -48794,14 +48920,14 @@
      "budget": 100.0,
      "cost": 99.0,
      "cost_before_trim": 130.5,
-     "hit_prob": 0.1064,
-     "hit_prob_raw": 0.2128,
+     "hit_prob": 0.1078,
+     "hit_prob_raw": 0.2155,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.1808,
+     "score": 0.1832,
      "singles": 0,
      "price_legs": 2,
      "ml_parlay": 154.0,
-     "all_favorites_prob": 0.0023,
+     "all_favorites_prob": 0.0024,
      "notes": [
       "H8 over budget $130.50 > $100.00: dropped B #4 from R7",
       "H8 over budget $121.50 > $100.00: dropped B #4 from R9",
@@ -48952,22 +49078,22 @@
        "favorite": "11",
        "price_leg": false,
        "probs": {
-        "11": 0.3796,
-        "1": 0.1358,
-        "3": 0.0744,
-        "2": 0.0936,
-        "9": 0.0596,
-        "8": 0.0671,
-        "4": 0.0642,
-        "7": 0.0417,
-        "12": 0.034,
-        "10": 0.0279,
-        "6": 0.0222
+        "11": 0.3981,
+        "1": 0.1292,
+        "3": 0.0778,
+        "2": 0.0899,
+        "9": 0.0574,
+        "8": 0.065,
+        "4": 0.0624,
+        "7": 0.0398,
+        "12": 0.0324,
+        "10": 0.0268,
+        "6": 0.0211
        },
        "price_factor": 1.0,
        "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-        "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+        "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
         "H5 favourite #11 (3/1) looks legitimate"
        ]
       },
@@ -49069,6 +49195,288 @@
      ]
     },
     {
+     "name": "Pick 4 R4-R7",
+     "races": [
+      4,
+      5,
+      6,
+      7
+     ],
+     "base": 0.5,
+     "budget": 100.0,
+     "cost": 84.0,
+     "cost_before_trim": 84.0,
+     "hit_prob": 0.1276,
+     "hit_prob_raw": 0.2551,
+     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
+     "score": 0.1722,
+     "singles": 0,
+     "price_legs": 1,
+     "ml_parlay": 162.0,
+     "all_favorites_prob": 0.0125,
+     "notes": [],
+     "tickets": [
+      {
+       "name": "main (all A)",
+       "legs": [
+        [
+         "3",
+         "9",
+         "1"
+        ],
+        [
+         "2",
+         "4"
+        ],
+        [
+         "7",
+         "6"
+        ],
+        [
+         "11",
+         "1",
+         "2"
+        ]
+       ],
+       "combos": 36,
+       "cost": 18.0
+      },
+      {
+       "name": "backup: B in R4",
+       "legs": [
+        [
+         "11",
+         "6"
+        ],
+        [
+         "2",
+         "4"
+        ],
+        [
+         "7",
+         "6"
+        ],
+        [
+         "11",
+         "1",
+         "2"
+        ]
+       ],
+       "combos": 24,
+       "cost": 12.0
+      },
+      {
+       "name": "backup: B in R5",
+       "legs": [
+        [
+         "3",
+         "9",
+         "1"
+        ],
+        [
+         "6",
+         "3"
+        ],
+        [
+         "7",
+         "6"
+        ],
+        [
+         "11",
+         "1",
+         "2"
+        ]
+       ],
+       "combos": 36,
+       "cost": 18.0
+      },
+      {
+       "name": "backup: B in R6",
+       "legs": [
+        [
+         "3",
+         "9",
+         "1"
+        ],
+        [
+         "2",
+         "4"
+        ],
+        [
+         "8",
+         "10"
+        ],
+        [
+         "11",
+         "1",
+         "2"
+        ]
+       ],
+       "combos": 36,
+       "cost": 18.0
+      },
+      {
+       "name": "backup: B in R7",
+       "legs": [
+        [
+         "3",
+         "9",
+         "1"
+        ],
+        [
+         "2",
+         "4"
+        ],
+        [
+         "7",
+         "6"
+        ],
+        [
+         "3",
+         "8",
+         "4"
+        ]
+       ],
+       "combos": 36,
+       "cost": 18.0
+      }
+     ],
+     "legs": [
+      {
+       "race_no": 4,
+       "class_text": "MC 30000",
+       "kind": "standard",
+       "A": [
+        "3",
+        "9",
+        "1"
+       ],
+       "B": [
+        "11",
+        "6"
+       ],
+       "favorite": "3",
+       "price_leg": false,
+       "probs": {
+        "3": 0.3316,
+        "1": 0.1148,
+        "9": 0.1484,
+        "6": 0.0807,
+        "11": 0.0945,
+        "2": 0.0548,
+        "7": 0.0422,
+        "4": 0.0399,
+        "13": 0.0564,
+        "12": 0.0367
+       },
+       "price_factor": 1.0,
+       "audit": [
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #3 33%",
+        "H4 A=['3', '9', '1'] (59%) B=['11', '6'] (77%) targets 55%/78%",
+        "H5 favourite #3 (7/2) looks legitimate"
+       ]
+      },
+      {
+       "race_no": 5,
+       "class_text": "Clm 20000n2L",
+       "kind": "standard",
+       "A": [
+        "2",
+        "4"
+       ],
+       "B": [
+        "6",
+        "3"
+       ],
+       "favorite": "6",
+       "price_leg": true,
+       "probs": {
+        "2": 0.3046,
+        "6": 0.2282,
+        "4": 0.1754,
+        "3": 0.1464,
+        "8": 0.0914,
+        "1": 0.054
+       },
+       "price_factor": 0.92,
+       "audit": [
+        "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
+        "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
+        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
+       ]
+      },
+      {
+       "race_no": 6,
+       "class_text": "Mdn 120k",
+       "kind": "standard",
+       "A": [
+        "7",
+        "6"
+       ],
+       "B": [
+        "8",
+        "10"
+       ],
+       "favorite": "7",
+       "price_leg": false,
+       "probs": {
+        "7": 0.4138,
+        "6": 0.1603,
+        "8": 0.1154,
+        "3": 0.0594,
+        "10": 0.0763,
+        "9": 0.0532,
+        "1": 0.0396,
+        "2": 0.0421,
+        "5": 0.0398
+       },
+       "price_factor": 1.0,
+       "audit": [
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #7 41%",
+        "H4 A=['7', '6'] (57%) B=['8', '10'] (77%) targets 55%/78%",
+        "H5 favourite #7 (3/1) looks legitimate"
+       ]
+      },
+      {
+       "race_no": 7,
+       "class_text": "Mdn 120k",
+       "kind": "standard",
+       "A": [
+        "11",
+        "1",
+        "2"
+       ],
+       "B": [
+        "3",
+        "8",
+        "4"
+       ],
+       "favorite": "11",
+       "price_leg": false,
+       "probs": {
+        "11": 0.3981,
+        "1": 0.1292,
+        "3": 0.0778,
+        "2": 0.0899,
+        "9": 0.0574,
+        "8": 0.065,
+        "4": 0.0624,
+        "7": 0.0398,
+        "12": 0.0324,
+        "10": 0.0268,
+        "6": 0.0211
+       },
+       "price_factor": 1.0,
+       "audit": [
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+        "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
+        "H5 favourite #11 (3/1) looks legitimate"
+       ]
+      }
+     ]
+    },
+    {
      "name": "Pick 4 R2-R5",
      "races": [
       2,
@@ -49080,14 +49488,14 @@
      "budget": 100.0,
      "cost": 56.0,
      "cost_before_trim": 56.0,
-     "hit_prob": 0.1268,
-     "hit_prob_raw": 0.2537,
+     "hit_prob": 0.1264,
+     "hit_prob_raw": 0.2527,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.1712,
+     "score": 0.1706,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 85.05,
-     "all_favorites_prob": 0.0098,
+     "all_favorites_prob": 0.0102,
      "notes": [],
      "tickets": [
       {
@@ -49320,301 +49728,19 @@
        "favorite": "6",
        "price_leg": true,
        "probs": {
-        "2": 0.3207,
-        "6": 0.2197,
-        "4": 0.168,
-        "3": 0.1401,
-        "8": 0.0947,
-        "1": 0.0567
+        "2": 0.3046,
+        "6": 0.2282,
+        "4": 0.1754,
+        "3": 0.1464,
+        "8": 0.0914,
+        "1": 0.054
        },
        "price_factor": 0.92,
        "audit": [
         "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
         "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
-       ]
-      }
-     ]
-    },
-    {
-     "name": "Pick 4 R4-R7",
-     "races": [
-      4,
-      5,
-      6,
-      7
-     ],
-     "base": 0.5,
-     "budget": 100.0,
-     "cost": 84.0,
-     "cost_before_trim": 84.0,
-     "hit_prob": 0.1263,
-     "hit_prob_raw": 0.2527,
-     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.1706,
-     "singles": 0,
-     "price_legs": 1,
-     "ml_parlay": 162.0,
-     "all_favorites_prob": 0.0114,
-     "notes": [],
-     "tickets": [
-      {
-       "name": "main (all A)",
-       "legs": [
-        [
-         "3",
-         "9",
-         "1"
-        ],
-        [
-         "2",
-         "4"
-        ],
-        [
-         "7",
-         "6"
-        ],
-        [
-         "11",
-         "1",
-         "2"
-        ]
-       ],
-       "combos": 36,
-       "cost": 18.0
-      },
-      {
-       "name": "backup: B in R4",
-       "legs": [
-        [
-         "11",
-         "6"
-        ],
-        [
-         "2",
-         "4"
-        ],
-        [
-         "7",
-         "6"
-        ],
-        [
-         "11",
-         "1",
-         "2"
-        ]
-       ],
-       "combos": 24,
-       "cost": 12.0
-      },
-      {
-       "name": "backup: B in R5",
-       "legs": [
-        [
-         "3",
-         "9",
-         "1"
-        ],
-        [
-         "6",
-         "3"
-        ],
-        [
-         "7",
-         "6"
-        ],
-        [
-         "11",
-         "1",
-         "2"
-        ]
-       ],
-       "combos": 36,
-       "cost": 18.0
-      },
-      {
-       "name": "backup: B in R6",
-       "legs": [
-        [
-         "3",
-         "9",
-         "1"
-        ],
-        [
-         "2",
-         "4"
-        ],
-        [
-         "8",
-         "10"
-        ],
-        [
-         "11",
-         "1",
-         "2"
-        ]
-       ],
-       "combos": 36,
-       "cost": 18.0
-      },
-      {
-       "name": "backup: B in R7",
-       "legs": [
-        [
-         "3",
-         "9",
-         "1"
-        ],
-        [
-         "2",
-         "4"
-        ],
-        [
-         "7",
-         "6"
-        ],
-        [
-         "3",
-         "8",
-         "4"
-        ]
-       ],
-       "combos": 36,
-       "cost": 18.0
-      }
-     ],
-     "legs": [
-      {
-       "race_no": 4,
-       "class_text": "MC 30000",
-       "kind": "standard",
-       "A": [
-        "3",
-        "9",
-        "1"
-       ],
-       "B": [
-        "11",
-        "6"
-       ],
-       "favorite": "3",
-       "price_leg": false,
-       "probs": {
-        "3": 0.3316,
-        "1": 0.1148,
-        "9": 0.1484,
-        "6": 0.0807,
-        "11": 0.0945,
-        "2": 0.0548,
-        "7": 0.0422,
-        "4": 0.0399,
-        "13": 0.0564,
-        "12": 0.0367
-       },
-       "price_factor": 1.0,
-       "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #3 33%",
-        "H4 A=['3', '9', '1'] (59%) B=['11', '6'] (77%) targets 55%/78%",
-        "H5 favourite #3 (7/2) looks legitimate"
-       ]
-      },
-      {
-       "race_no": 5,
-       "class_text": "Clm 20000n2L",
-       "kind": "standard",
-       "A": [
-        "2",
-        "4"
-       ],
-       "B": [
-        "6",
-        "3"
-       ],
-       "favorite": "6",
-       "price_leg": true,
-       "probs": {
-        "2": 0.3207,
-        "6": 0.2197,
-        "4": 0.168,
-        "3": 0.1401,
-        "8": 0.0947,
-        "1": 0.0567
-       },
-       "price_factor": 0.92,
-       "audit": [
-        "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
-        "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
-       ]
-      },
-      {
-       "race_no": 6,
-       "class_text": "Mdn 120k",
-       "kind": "standard",
-       "A": [
-        "7",
-        "6"
-       ],
-       "B": [
-        "8",
-        "10"
-       ],
-       "favorite": "7",
-       "price_leg": false,
-       "probs": {
-        "7": 0.4138,
-        "6": 0.1603,
-        "8": 0.1154,
-        "3": 0.0594,
-        "10": 0.0763,
-        "9": 0.0532,
-        "1": 0.0396,
-        "2": 0.0421,
-        "5": 0.0398
-       },
-       "price_factor": 1.0,
-       "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #7 41%",
-        "H4 A=['7', '6'] (57%) B=['8', '10'] (77%) targets 55%/78%",
-        "H5 favourite #7 (3/1) looks legitimate"
-       ]
-      },
-      {
-       "race_no": 7,
-       "class_text": "Mdn 120k",
-       "kind": "standard",
-       "A": [
-        "11",
-        "1",
-        "2"
-       ],
-       "B": [
-        "3",
-        "8",
-        "4"
-       ],
-       "favorite": "11",
-       "price_leg": false,
-       "probs": {
-        "11": 0.3796,
-        "1": 0.1358,
-        "3": 0.0744,
-        "2": 0.0936,
-        "9": 0.0596,
-        "8": 0.0671,
-        "4": 0.0642,
-        "7": 0.0417,
-        "12": 0.034,
-        "10": 0.0279,
-        "6": 0.0222
-       },
-       "price_factor": 1.0,
-       "audit": [
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-        "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
-        "H5 favourite #11 (3/1) looks legitimate"
+        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
        ]
       }
      ]
@@ -49631,14 +49757,14 @@
      "budget": 100.0,
      "cost": 56.0,
      "cost_before_trim": 56.0,
-     "hit_prob": 0.1241,
-     "hit_prob_raw": 0.2482,
+     "hit_prob": 0.1237,
+     "hit_prob_raw": 0.2475,
      "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-     "score": 0.1675,
+     "score": 0.1671,
      "singles": 0,
      "price_legs": 1,
      "ml_parlay": 97.2,
-     "all_favorites_prob": 0.0112,
+     "all_favorites_prob": 0.0117,
      "notes": [],
      "tickets": [
       {
@@ -49840,19 +49966,19 @@
        "favorite": "6",
        "price_leg": true,
        "probs": {
-        "2": 0.3207,
-        "6": 0.2197,
-        "4": 0.168,
-        "3": 0.1401,
-        "8": 0.0947,
-        "1": 0.0567
+        "2": 0.3046,
+        "6": 0.2282,
+        "4": 0.1754,
+        "3": 0.1464,
+        "8": 0.0914,
+        "1": 0.054
        },
        "price_factor": 0.92,
        "audit": [
         "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
+        "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
         "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
+        "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
        ]
       },
       {
@@ -50137,14 +50263,14 @@
     "budget": 100.0,
     "cost": 78.0,
     "cost_before_trim": 78.0,
-    "hit_prob": 0.1388,
-    "hit_prob_raw": 0.2777,
+    "hit_prob": 0.1402,
+    "hit_prob_raw": 0.2805,
     "hit_prob_note": "estimate: formula x hit_prob_shrink; no measured hit rate yet",
-    "score": 0.236,
+    "score": 0.2384,
     "singles": 0,
     "price_legs": 2,
     "ml_parlay": 144.0,
-    "all_favorites_prob": 0.0051,
+    "all_favorites_prob": 0.0055,
     "notes": [],
     "tickets": [
      {
@@ -50287,19 +50413,19 @@
       "favorite": "6",
       "price_leg": true,
       "probs": {
-       "2": 0.3207,
-       "6": 0.2197,
-       "4": 0.168,
-       "3": 0.1401,
-       "8": 0.0947,
-       "1": 0.0567
+       "2": 0.3046,
+       "6": 0.2282,
+       "4": 0.1754,
+       "3": 0.1464,
+       "8": 0.0914,
+       "1": 0.054
       },
       "price_factor": 0.92,
       "audit": [
        "Pricing keeps 2% for each of the 4 eliminated horse(s): live probabilities x 0.92 in the hit probability only",
-       "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 32%",
+       "H1 win probabilities (model 65% / morning line (ML) 35%); top #2 30%",
        "H4 A=['2', '6', '4'] (71%) B=['3'] (85%) targets 55%/78%",
-       "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 16% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
+       "H5 vulnerable favourite #6 (2/1): ranks 2 by score; model 18% against morning line (ML) 33%; hits P2,F5,V1 -> demoted to B; price leg"
       ]
      },
      {
@@ -50351,22 +50477,22 @@
       "favorite": "11",
       "price_leg": false,
       "probs": {
-       "11": 0.3796,
-       "1": 0.1358,
-       "3": 0.0744,
-       "2": 0.0936,
-       "9": 0.0596,
-       "8": 0.0671,
-       "4": 0.0642,
-       "7": 0.0417,
-       "12": 0.034,
-       "10": 0.0279,
-       "6": 0.0222
+       "11": 0.3981,
+       "1": 0.1292,
+       "3": 0.0778,
+       "2": 0.0899,
+       "9": 0.0574,
+       "8": 0.065,
+       "4": 0.0624,
+       "7": 0.0398,
+       "12": 0.0324,
+       "10": 0.0268,
+       "6": 0.0211
       },
       "price_factor": 1.0,
       "audit": [
-       "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 38%",
-       "H4 A=['11', '1', '2'] (61%) B=['3', '8', '4'] (81%) targets 55%/78%",
+       "H1 win probabilities (model 65% / morning line (ML) 35%); top #11 40%",
+       "H4 A=['11', '1', '2'] (62%) B=['3', '8', '4'] (82%) targets 55%/78%",
        "H5 favourite #11 (3/1) looks legitimate"
       ]
      },
@@ -50437,16 +50563,27 @@
   "track: Churchill Downs (CD); profile: CD"
  ],
  "run": {
-  "at_utc": "2026-11-21T03:31:47Z",
+  "at_utc": "2026-11-22T15:46:14Z",
   "scratches": "1:6, 4:10, 4:5, 4:8, 6:4, 6:11, 6:12, 6:13, 6:14, 6:15, 6:16, 7:5, 8:5, 8:6, 9:1, 10:5",
   "parser_version": "2026-11-20.2",
   "config_hash": "3d24cde7ebd5a49a",
   "track_profile": "CD",
-  "code_version": "b25251b",
+  "code_version": "03c7275",
   "source": "cdx1120y.card.json",
   "source_sha256": "8a7016fd383470259b6b64f9e0d0742f1d08b72b74bd3c57128607e22d335038",
   "sheet": "cdx1120q.pdf",
-  "results_known": [],
+  "results_known": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
   "odds_source": "morning line",
   "changes": {
    "track": "CHURCHILL DOWNS",
@@ -50617,85 +50754,86 @@
    "brisnet_power_play",
    "equibase_changes",
    "timeformus",
-   "racing_dudes"
+   "racing_dudes",
+   "results"
   ],
   "cutoffs": {
    "1": {
     "post_at_utc": "2026-11-20T18:00:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T18:00:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T18:01:00+00:00",
+    "cutoff_at_utc": "2026-11-20T18:01:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "2": {
     "post_at_utc": "2026-11-20T18:29:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T18:29:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T18:30:00+00:00",
+    "cutoff_at_utc": "2026-11-20T18:30:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "3": {
     "post_at_utc": "2026-11-20T18:58:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T18:58:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T18:59:00+00:00",
+    "cutoff_at_utc": "2026-11-20T18:59:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "4": {
     "post_at_utc": "2026-11-20T19:27:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T19:27:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T19:28:00+00:00",
+    "cutoff_at_utc": "2026-11-20T19:28:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "5": {
     "post_at_utc": "2026-11-20T19:57:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T19:57:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T19:58:00+00:00",
+    "cutoff_at_utc": "2026-11-20T19:58:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "6": {
     "post_at_utc": "2026-11-20T20:26:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T20:26:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T20:27:00+00:00",
+    "cutoff_at_utc": "2026-11-20T20:27:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "7": {
     "post_at_utc": "2026-11-20T20:55:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T20:55:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T20:57:00+00:00",
+    "cutoff_at_utc": "2026-11-20T20:57:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    },
    "8": {
     "post_at_utc": null,
-    "off_at_utc": null,
-    "cutoff_at_utc": null,
-    "basis": "none",
-    "status": "unknown"
+    "off_at_utc": "2026-11-20T21:25:00+00:00",
+    "cutoff_at_utc": "2026-11-20T21:25:00+00:00",
+    "basis": "off",
+    "status": "after-cutoff"
    },
    "9": {
     "post_at_utc": null,
-    "off_at_utc": null,
-    "cutoff_at_utc": null,
-    "basis": "none",
-    "status": "unknown"
+    "off_at_utc": "2026-11-20T21:55:00+00:00",
+    "cutoff_at_utc": "2026-11-20T21:55:00+00:00",
+    "basis": "off",
+    "status": "after-cutoff"
    },
    "10": {
     "post_at_utc": "2026-11-20T22:24:00+00:00",
-    "off_at_utc": null,
-    "cutoff_at_utc": "2026-11-20T22:24:00+00:00",
-    "basis": "scheduled",
+    "off_at_utc": "2026-11-20T22:33:00+00:00",
+    "cutoff_at_utc": "2026-11-20T22:33:00+00:00",
+    "basis": "off",
     "status": "after-cutoff"
    }
   },
   "timing": {
    "races": 10,
    "before": 0,
-   "after": 8,
-   "unknown": 2,
+   "after": 10,
+   "unknown": 0,
    "label": "mixed",
    "margin_minutes": 2,
    "track_timezone": "America/New_York"
@@ -50703,11 +50841,11 @@
   "weather": {
    "status": "unavailable",
    "reason": "forecast did not cover the post times",
-   "fetched_at_utc": "2026-11-21T03:31:48Z",
+   "fetched_at_utc": "2026-11-22T15:46:15Z",
    "provider": "python-weather (wttr.in)",
    "location": "Louisville, Kentucky",
    "observations": []
   },
-  "kind": "pre-race"
+  "kind": "post-results"
  }
 }
