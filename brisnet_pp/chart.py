@@ -34,7 +34,7 @@ DH_MARKS = "\u201d\u201c"   # ” “ dead-heat marks before a name
 # Stamped on every race read from a chart.  Change it whenever the reader learns something that changes what a
 # chart gives (dead heats, DQs, a column fix): Process results then reads those charts again, except races
 # corrected by hand.
-CHART_READER_VERSION = "2026-11-21"
+CHART_READER_VERSION = "2026-11-23"
 COND_RE = re.compile(r"\b(?:Track|Course)\s+(?P<cond>Fast|Sloppy|Muddy|Good|Firm|Yielding|Soft|Heavy|Wet Fast|Slow|Frozen|Standard)(?:\s*\((?P<note>[^)]+)\))?", re.I)
 DIST_RE = re.compile(r"^(?P<dist>(?:ABOUT\s+)?[\d\s/½¼¾]+(?:FURLONGS?|MILES?|MILE|YARDS))\.?\s*(?P<parens>(?:\([^)]*\)\s*)*)(?P<cls>.*)$", re.I)
 SURFACE_WORDS = ((r"turf", "TURF"), (r"tapeta|all[- ]?weather|synthetic|polytrack", "SYNTHETIC"), (r"dirt|main track", "DIRT"))
@@ -257,7 +257,7 @@ def parse_chart_rows(rows, race_no_hint: int | None = None) -> dict:
     for r, t in texts:
         for m in EXOTIC_RE.finditer(t):
             out["exotics"].append({"type": _pool(m.group("pool")), "base": _base(m.group("base")),
-                                   "combo": m.group("combo").replace("-", "/"), "payout": float(m.group("paid").replace(",", ""))})
+                                   "combo": chart_combo(m.group("combo")), "payout": float(m.group("paid").replace(",", ""))})
     # ---- footnotes: comments per horse, scratches, claims
     foot_start = next((i for i, (r, t) in enumerate(texts) if re.match(r"^(Bay|Dk|Ch|Gr|B\.|Dark|Chestnut|Gray|Grey|Roan|Brown|Black|Blk)", t) and "by" in t), None)
     if foot_start is not None:
@@ -316,6 +316,17 @@ def parse_chart(path: str) -> list[dict]:
             except ValueError:
                 continue
     return out
+
+
+def chart_combo(raw: str) -> str:
+    """The chart's winning combination in the results file's form: legs (or positions) joined by '/', several
+    horses in one leg by ','.  A chart separates legs with '-' and lists every horse that counts in a leg with '/'
+    (a dead heat, or tickets on a scratched horse moved to the favourite):
+    '6-7-6-1/3/4/5/8' -> '6/7/6/1,3,4,5,8'.  A combination written with '/' only ('6/8') is already legs."""
+    raw = raw.strip()
+    if "-" not in raw:
+        return raw
+    return "/".join(",".join(p.strip() for p in leg.split("/") if p.strip()) for leg in raw.split("-"))
 
 
 def chart_to_result(chart: dict) -> dict:
