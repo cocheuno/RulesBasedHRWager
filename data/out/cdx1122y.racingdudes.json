@@ -1,0 +1,576 @@
+{
+ "card": "cdx1122y",
+ "track": "Churchill Downs",
+ "track_code": "CD",
+ "date": "2026-11-22",
+ "file": "Dashboard - Racing Dudes 112226.html",
+ "reader_version": "rd-1",
+ "saved_at_utc": "2026-11-23T03:12:40Z",
+ "note": "Racing Dudes' picks for this card from the newest page loaded for its date: a benchmark, read by no rule",
+ "races": {
+  "1": {
+   "race_no": 1,
+   "class_text": "Maiden Claiming",
+   "post_time": "10:00 am PST",
+   "distance_text": "6 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "1",
+     "name": "Joe Joe Dude",
+     "ml": "6-1",
+     "jockey": "Y Ortiz, Jr.",
+     "trainer": "S R Radosevich"
+    },
+    {
+     "role": "Place",
+     "pgm": "3",
+     "name": "Mission Achieved",
+     "ml": "3-1",
+     "jockey": "T Gaffalione",
+     "trainer": "S M Asmussen"
+    },
+    {
+     "role": "Show",
+     "pgm": "4",
+     "name": "Nickyb",
+     "ml": "7-5",
+     "jockey": "M Garcia",
+     "trainer": "D L Romans"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "6",
+     "name": "Informer",
+     "ml": "5-2",
+     "jockey": "L Saez",
+     "trainer": "E Kenneally"
+    }
+   ],
+   "order": [
+    "1",
+    "3",
+    "4",
+    "6"
+   ],
+   "wagers": {
+    "exacta": "1,3,4 BOX",
+    "trifecta": "1,3/1,3,4,6/1,3,4,6",
+    "multi_race": "1,3,4,6"
+   }
+  },
+  "2": {
+   "race_no": 2,
+   "class_text": "Claiming",
+   "post_time": "10:29 am PST",
+   "distance_text": "7 1/2 Furlongs",
+   "surface": "Dirt",
+   "tags": [
+    "Likely Winner"
+   ],
+   "likely_winner": true,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "7",
+     "name": "Wild Acclaim",
+     "ml": "8-5",
+     "jockey": "K J Asmussen",
+     "trainer": "S M Asmussen"
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "Silvertown",
+     "ml": "8-1",
+     "jockey": "E Morales",
+     "trainer": "G Garcia"
+    },
+    {
+     "role": "Show",
+     "pgm": "3",
+     "name": "Lilmorecraken",
+     "ml": "5-2",
+     "jockey": "M Fernandez",
+     "trainer": "I R Wilkes"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "5",
+     "name": "Sweet Magnolia",
+     "ml": "4-1",
+     "jockey": "B Martinez",
+     "trainer": "J L Greenhill"
+    }
+   ],
+   "order": [
+    "7",
+    "2",
+    "3",
+    "5"
+   ],
+   "wagers": {
+    "exacta": "2,7/2,3,7",
+    "trifecta": "2,7/2,3,5,7/2,3,5,7",
+    "multi_race": "2,7"
+   }
+  },
+  "3": {
+   "race_no": 3,
+   "class_text": "Allowance Optional Claiming",
+   "post_time": "10:58 am PST",
+   "distance_text": "5 1/2 Furlongs",
+   "surface": "Turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "3",
+     "name": "Amoudi Bay",
+     "ml": "4-1",
+     "jockey": "F Arrieta",
+     "trainer": "L Schultz"
+    },
+    {
+     "role": "Place",
+     "pgm": "4",
+     "name": "Zakinthos",
+     "ml": "3-1",
+     "jockey": "L Saez",
+     "trainer": "B A Lynch"
+    },
+    {
+     "role": "Show",
+     "pgm": "6",
+     "name": "Heart Headed",
+     "ml": "5-2",
+     "jockey": "J L Ortiz",
+     "trainer": "M J Maker"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "2",
+     "name": "Our Starry Night",
+     "ml": "5-1",
+     "jockey": "J Alvarado",
+     "trainer": "P A Bauer"
+    }
+   ],
+   "order": [
+    "3",
+    "4",
+    "6",
+    "2"
+   ],
+   "wagers": {
+    "exacta": "3,4,6 BOX",
+    "trifecta": "3,4/2,3,4,6/2,3,4,6",
+    "multi_race": "3,4,6"
+   }
+  },
+  "4": {
+   "race_no": 4,
+   "class_text": "Maiden Special Weight",
+   "post_time": "11:27 am PST",
+   "distance_text": "6 1/2 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "11",
+     "name": "French Sand",
+     "ml": "5-2",
+     "jockey": "J L Ortiz",
+     "trainer": "E Kenneally"
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "Jasmine Absolute",
+     "ml": "9-5",
+     "jockey": "J Alvarado",
+     "trainer": "P A Bauer"
+    },
+    {
+     "role": "Show",
+     "pgm": "10",
+     "name": "Goodbye Girl",
+     "ml": "6-1",
+     "jockey": "L Machado",
+     "trainer": "J Ennis"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "8",
+     "name": "Dreamology",
+     "ml": "8-1",
+     "jockey": "A Concepcion",
+     "trainer": "D Beckman"
+    }
+   ],
+   "order": [
+    "11",
+    "2",
+    "10",
+    "8"
+   ],
+   "wagers": {
+    "exacta": "2,10,11 BOX",
+    "trifecta": "2,8,10,11 BOX",
+    "multi_race": "2,8,10,11"
+   }
+  },
+  "5": {
+   "race_no": 5,
+   "class_text": "Maiden Claiming",
+   "post_time": "11:57 am PST",
+   "distance_text": "1 Mile",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "3",
+     "name": "Good Lies",
+     "ml": "3-1",
+     "jockey": "G Corrales",
+     "trainer": "N W Casse"
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "Big Mike Fink",
+     "ml": "2-1",
+     "jockey": "T Gaffalione",
+     "trainer": "B P Walsh"
+    },
+    {
+     "role": "Show",
+     "pgm": "1",
+     "name": "Captain Call",
+     "ml": "6-1",
+     "jockey": "K J Asmussen",
+     "trainer": "S M Asmussen"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "4",
+     "name": "Mambo Man",
+     "ml": "5-1",
+     "jockey": "D Machado",
+     "trainer": "K A Fernandez"
+    }
+   ],
+   "order": [
+    "3",
+    "2",
+    "1",
+    "4"
+   ],
+   "wagers": {
+    "exacta": "1,2,3 BOX",
+    "trifecta": "1,2,3,4 BOX",
+    "multi_race": "1,2,3,4"
+   }
+  },
+  "6": {
+   "race_no": 6,
+   "class_text": "Starter Allowance",
+   "post_time": "12:26 pm PST",
+   "distance_text": "7 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "4",
+     "name": "Mandy's Man Can",
+     "ml": "8-5",
+     "jockey": "W A Rodriguez",
+     "trainer": "P H Lobo"
+    },
+    {
+     "role": "Place",
+     "pgm": "7",
+     "name": "Good Mojo",
+     "ml": "5-2",
+     "jockey": "L Saez",
+     "trainer": "N W Casse"
+    },
+    {
+     "role": "Show",
+     "pgm": "5",
+     "name": "Admiral Hall",
+     "ml": "7-2",
+     "jockey": "R Bejarano",
+     "trainer": "C A Hartman"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "1",
+     "name": "Daiquiri Sommelier",
+     "ml": "10-1",
+     "jockey": "K J Asmussen",
+     "trainer": "S M Asmussen"
+    }
+   ],
+   "order": [
+    "4",
+    "7",
+    "5",
+    "1"
+   ],
+   "wagers": {
+    "exacta": "4,5,7 BOX",
+    "trifecta": "1,4,5,7 BOX",
+    "multi_race": "1,4,5,7"
+   }
+  },
+  "7": {
+   "race_no": 7,
+   "class_text": "Allowance Optional Claiming",
+   "post_time": "12:55 pm PST",
+   "distance_text": "1 1/8 Miles",
+   "surface": "Turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "10",
+     "name": "Esmark",
+     "ml": "3-1",
+     "jockey": "L Saez",
+     "trainer": "V H Oliver"
+    },
+    {
+     "role": "Place",
+     "pgm": "8",
+     "name": "Lucky Mischief",
+     "ml": "8-1",
+     "jockey": "Y Ortiz, Jr.",
+     "trainer": "M J Maker"
+    },
+    {
+     "role": "Show",
+     "pgm": "6",
+     "name": "Restore",
+     "ml": "20-1",
+     "jockey": "M Gutierrez",
+     "trainer": "D Stewart"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "11",
+     "name": "Tough Little Nut",
+     "ml": "4-1",
+     "jockey": "D Sheehy",
+     "trainer": "C M Block"
+    }
+   ],
+   "order": [
+    "10",
+    "8",
+    "6",
+    "11"
+   ],
+   "wagers": {
+    "exacta": "6,8,10 BOX",
+    "trifecta": "6,8,10,11 BOX",
+    "multi_race": "6,8,10,11"
+   }
+  },
+  "8": {
+   "race_no": 8,
+   "class_text": "Maiden Claiming",
+   "post_time": "1:25 pm PST",
+   "distance_text": "7 Furlongs",
+   "surface": "Dirt",
+   "tags": [
+    "Best Value"
+   ],
+   "likely_winner": false,
+   "best_value": true,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "7",
+     "name": "Stakeholder",
+     "ml": "10-1",
+     "jockey": "E Esquivel",
+     "trainer": "J Blair"
+    },
+    {
+     "role": "Place",
+     "pgm": "11",
+     "name": "Unionista",
+     "ml": "3-1",
+     "jockey": "R Bejarano",
+     "trainer": "E G Harty"
+    },
+    {
+     "role": "Show",
+     "pgm": "9",
+     "name": "Page Two",
+     "ml": "6-1",
+     "jockey": "M Gutierrez",
+     "trainer": "V H Oliver"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "3",
+     "name": "Cerberus",
+     "ml": "5-1",
+     "jockey": "T Gaffalione",
+     "trainer": "L Robson"
+    }
+   ],
+   "order": [
+    "7",
+    "11",
+    "9",
+    "3"
+   ],
+   "wagers": {
+    "exacta": "7,9,11 BOX",
+    "trifecta": "3,7,9,11 BOX",
+    "multi_race": "3,7,9,11"
+   }
+  },
+  "9": {
+   "race_no": 9,
+   "class_text": "Starter Allowance",
+   "post_time": "1:55 pm PST",
+   "distance_text": "1 1/16 Miles",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "1A",
+     "name": "Oh She Said Yes",
+     "ml": "3-1",
+     "jockey": "J L Ortiz",
+     "trainer": "K G McPeek"
+    },
+    {
+     "role": "Place",
+     "pgm": "3",
+     "name": "Spur of the Moment",
+     "ml": "2-1",
+     "jockey": "T Gaffalione",
+     "trainer": "J Sharp"
+    },
+    {
+     "role": "Show",
+     "pgm": "7",
+     "name": "Donie Maronie",
+     "ml": "4-1",
+     "jockey": "F Geroux",
+     "trainer": "M E Casse"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "6",
+     "name": "Mooberry",
+     "ml": "8-1",
+     "jockey": "R Bejarano",
+     "trainer": "D F O'Neill"
+    }
+   ],
+   "order": [
+    "1A",
+    "3",
+    "7",
+    "6"
+   ],
+   "wagers": {
+    "exacta": "1,3/1,3,7",
+    "trifecta": "1,3/1,3,6,7/1,3,6,7",
+    "multi_race": "1,3"
+   }
+  },
+  "10": {
+   "race_no": 10,
+   "class_text": "Allowance",
+   "post_time": "2:24 pm PST",
+   "distance_text": "1 1/8 Miles",
+   "surface": "Turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "6",
+     "name": "Sneakily",
+     "ml": "3-1",
+     "jockey": "L Saez",
+     "trainer": "B H Cox"
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "The Palace Girl",
+     "ml": "8-1",
+     "jockey": "A Concepcion",
+     "trainer": "W Walden"
+    },
+    {
+     "role": "Show",
+     "pgm": "8",
+     "name": "Ellesmere Island",
+     "ml": "6-1",
+     "jockey": "J L Ortiz",
+     "trainer": "C C Brown"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "1",
+     "name": "Stir",
+     "ml": "6-1",
+     "jockey": "C A Torres",
+     "trainer": "T Drury, Jr."
+    }
+   ],
+   "order": [
+    "6",
+    "2",
+    "8",
+    "1"
+   ],
+   "wagers": {
+    "exacta": "2,6,8 BOX",
+    "trifecta": "1,2,6,8 BOX",
+    "multi_race": "1,2,6,8"
+   }
+  }
+ }
+}

@@ -1,0 +1,455 @@
+{
+ "card": "bel1122y",
+ "track": "Belmont Park",
+ "track_code": "BEL",
+ "date": "2026-11-22",
+ "file": "Dashboard - Racing Dudes 112226.html",
+ "reader_version": "rd-1",
+ "saved_at_utc": "2026-11-23T03:12:42Z",
+ "note": "Racing Dudes' picks for this card from the newest page loaded for its date: a benchmark, read by no rule",
+ "races": {
+  "1": {
+   "race_no": 1,
+   "class_text": "Maiden Special Weight",
+   "post_time": "9:40 am PST",
+   "distance_text": "6 1/2 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "4",
+     "name": "Turn N Burn",
+     "ml": "7-5",
+     "jockey": "F Prat",
+     "trainer": "C C Brown"
+    },
+    {
+     "role": "Place",
+     "pgm": "5",
+     "name": "Magic Bijou",
+     "ml": "3-1",
+     "jockey": "D Davis",
+     "trainer": "C C Brown"
+    },
+    {
+     "role": "Show",
+     "pgm": "6",
+     "name": "Immaculate Moon",
+     "ml": "8-1",
+     "jockey": "G Kocakaya",
+     "trainer": "I Kantarmaci"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "3",
+     "name": "Serenique",
+     "ml": "10-1",
+     "jockey": "S Marin",
+     "trainer": "H Bond"
+    }
+   ],
+   "order": [
+    "4",
+    "5",
+    "6",
+    "3"
+   ],
+   "wagers": {
+    "exacta": "4,5/4,5,6",
+    "trifecta": "4,5/4,5,6/3,4,5,6",
+    "multi_race": "4,5"
+   }
+  },
+  "2": {
+   "race_no": 2,
+   "class_text": "New York Stallion Thunder Rumble Stakes",
+   "post_time": "10:10 am PST",
+   "distance_text": "7 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "2",
+     "name": "Buttah",
+     "ml": "6-5",
+     "jockey": "M Franco",
+     "trainer": "I Kantarmaci"
+    },
+    {
+     "role": "Place",
+     "pgm": "4",
+     "name": "Wynstock",
+     "ml": "7-2",
+     "jockey": "K Carmouche",
+     "trainer": "J Sharp"
+    },
+    {
+     "role": "Show",
+     "pgm": "5",
+     "name": "New York Scrappy",
+     "ml": "15-1",
+     "jockey": "S Gonzalez",
+     "trainer": "I Kantarmaci"
+    }
+   ],
+   "order": [
+    "2",
+    "4",
+    "5"
+   ],
+   "wagers": {
+    "exacta": "2/4",
+    "trifecta": "NONE",
+    "multi_race": "2,4"
+   }
+  },
+  "3": {
+   "race_no": 3,
+   "class_text": "Maiden Special Weight",
+   "post_time": "10:40 am PST",
+   "distance_text": "1 1/16 Miles",
+   "surface": "Turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "8",
+     "name": "Calling Mr. Mo",
+     "ml": "5-2",
+     "jockey": "F Prat",
+     "trainer": "M Clement"
+    },
+    {
+     "role": "Place",
+     "pgm": "9",
+     "name": "Raise the Roof",
+     "ml": "3-1",
+     "jockey": "M Franco",
+     "trainer": "H De Paz"
+    },
+    {
+     "role": "Show",
+     "pgm": "2",
+     "name": "Neptuneroad Richie",
+     "ml": "8-1",
+     "jockey": "J Castellano",
+     "trainer": "T A Hills"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "6",
+     "name": "Don't Blame Tate",
+     "ml": "6-1",
+     "jockey": "S Marin",
+     "trainer": "M Clement"
+    }
+   ],
+   "order": [
+    "8",
+    "9",
+    "2",
+    "6"
+   ],
+   "wagers": {
+    "exacta": "2,8,9 BOX",
+    "trifecta": "2,6,8,9 BOX",
+    "multi_race": "2,6,8,9"
+   }
+  },
+  "4": {
+   "race_no": 4,
+   "class_text": "Maiden Special Weight",
+   "post_time": "11:10 am PST",
+   "distance_text": "6 1/2 Furlongs",
+   "surface": "Inner turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "5",
+     "name": "Break Up",
+     "ml": "5-2",
+     "jockey": "M Franco",
+     "trainer": "B P Walsh"
+    },
+    {
+     "role": "Place",
+     "pgm": "8",
+     "name": "Hedge Book",
+     "ml": "4-1",
+     "jockey": "F Prat",
+     "trainer": "C C Brown"
+    },
+    {
+     "role": "Show",
+     "pgm": "1",
+     "name": "Oath",
+     "ml": "6-1",
+     "jockey": "J Lezcano",
+     "trainer": "L Rice"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "9",
+     "name": "My Divine Spirit",
+     "ml": "8-1",
+     "jockey": "S Marin",
+     "trainer": "J R Abreu"
+    }
+   ],
+   "order": [
+    "5",
+    "8",
+    "1",
+    "9"
+   ],
+   "wagers": {
+    "exacta": "1,5,8 BOX",
+    "trifecta": "1,5,8,9 BOX",
+    "multi_race": "1,5,8,9"
+   }
+  },
+  "5": {
+   "race_no": 5,
+   "class_text": "New York Stallion Staten Island Stakes",
+   "post_time": "11:41 am PST",
+   "distance_text": "7 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "9",
+     "name": "Material Girl",
+     "ml": "7-2",
+     "jockey": "M Franco",
+     "trainer": "C C Brown"
+    },
+    {
+     "role": "Place",
+     "pgm": "7",
+     "name": "Braverthanubelieve",
+     "ml": "4-1",
+     "jockey": "J R Velazquez",
+     "trainer": "L Robson"
+    },
+    {
+     "role": "Show",
+     "pgm": "8",
+     "name": "Combat Move",
+     "ml": "4-1",
+     "jockey": "J Lezcano",
+     "trainer": "L Rice"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "4",
+     "name": "Bam's Bliss Kiss",
+     "ml": "9-2",
+     "jockey": "F Prat",
+     "trainer": "J R Abreu"
+    }
+   ],
+   "order": [
+    "9",
+    "7",
+    "8",
+    "4"
+   ],
+   "wagers": {
+    "exacta": "7,8,9 BOX",
+    "trifecta": "7,9/4,7,8,9/4,7,8,9",
+    "multi_race": "7,8,9"
+   }
+  },
+  "6": {
+   "race_no": 6,
+   "class_text": "Manila Stakes (G3)",
+   "post_time": "12:12 pm PST",
+   "distance_text": "1 Mile",
+   "surface": "Turf",
+   "tags": [
+    "Likely Winner"
+   ],
+   "likely_winner": true,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "5",
+     "name": "Touch of Fire",
+     "ml": "8-5",
+     "jockey": "F Prat",
+     "trainer": "B H Cox"
+    },
+    {
+     "role": "Place",
+     "pgm": "3",
+     "name": "McCready",
+     "ml": "9-2",
+     "jockey": "J A Hernandez",
+     "trainer": "M Robertson"
+    },
+    {
+     "role": "Show",
+     "pgm": "6",
+     "name": "Iron Palace",
+     "ml": "6-1",
+     "jockey": "E J Zayas",
+     "trainer": "G Weaver"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "4",
+     "name": "Print",
+     "ml": "2-1",
+     "jockey": "J Castellano",
+     "trainer": "R Ribaudo"
+    }
+   ],
+   "order": [
+    "5",
+    "3",
+    "6",
+    "4"
+   ],
+   "wagers": {
+    "exacta": "3,5/3,5,6",
+    "trifecta": "3,5/3,4,5,6/3,4,5,6",
+    "multi_race": "3,5"
+   }
+  },
+  "7": {
+   "race_no": 7,
+   "class_text": "Starter Optional Claiming",
+   "post_time": "12:43 pm PST",
+   "distance_text": "6 Furlongs",
+   "surface": "Inner turf",
+   "tags": [
+    "Best Value"
+   ],
+   "likely_winner": false,
+   "best_value": true,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "1",
+     "name": "Tacticality",
+     "ml": "6-1",
+     "jockey": "J R Velazquez",
+     "trainer": "R R Rodriguez"
+    },
+    {
+     "role": "Place",
+     "pgm": "3",
+     "name": "Pineland",
+     "ml": "7-2",
+     "jockey": "F Prat",
+     "trainer": "R E Dutrow, Jr."
+    },
+    {
+     "role": "Show",
+     "pgm": "5",
+     "name": "Moment's Notice",
+     "ml": "8-1",
+     "jockey": "M Franco",
+     "trainer": "J Sharp"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "8",
+     "name": "Escapades",
+     "ml": "4-1",
+     "jockey": "K Carmouche",
+     "trainer": "L Rice"
+    }
+   ],
+   "order": [
+    "1",
+    "3",
+    "5",
+    "8"
+   ],
+   "wagers": {
+    "exacta": "1,3,5 BOX",
+    "trifecta": "1,3,5,8 BOX",
+    "multi_race": "1,3,5,8"
+   }
+  },
+  "8": {
+   "race_no": 8,
+   "class_text": "Maiden Claiming",
+   "post_time": "1:14 pm PST",
+   "distance_text": "5 1/2 Furlongs",
+   "surface": "All Weather Track",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "10",
+     "name": "Sassy Sats",
+     "ml": "7-2",
+     "jockey": "M Franco",
+     "trainer": "R Handal"
+    },
+    {
+     "role": "Place",
+     "pgm": "3",
+     "name": "Promise Me Amelody",
+     "ml": "3-1",
+     "jockey": "S Marin",
+     "trainer": "M Clement"
+    },
+    {
+     "role": "Show",
+     "pgm": "12",
+     "name": "Daylight Dreamer",
+     "ml": "8-1",
+     "jockey": "K Carmouche",
+     "trainer": "J C Englehart"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "11",
+     "name": "Dancing Miracle",
+     "ml": "8-1",
+     "jockey": "C Elliott",
+     "trainer": "F Abreu"
+    }
+   ],
+   "order": [
+    "10",
+    "3",
+    "12",
+    "11"
+   ],
+   "wagers": {
+    "exacta": "3,10,12 BOX",
+    "trifecta": "3,10,11,12 BOX",
+    "multi_race": "3,10,11,12"
+   }
+  }
+ }
+}

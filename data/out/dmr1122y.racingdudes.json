@@ -1,0 +1,520 @@
+{
+ "card": "dmr1122y",
+ "track": "Del Mar",
+ "track_code": "DMR",
+ "date": "2026-11-22",
+ "file": "Dashboard - Racing Dudes 112226.html",
+ "reader_version": "rd-1",
+ "saved_at_utc": "2026-11-23T03:12:39Z",
+ "note": "Racing Dudes' picks for this card from the newest page loaded for its date: a benchmark, read by no rule",
+ "races": {
+  "1": {
+   "race_no": 1,
+   "class_text": "Maiden Claiming",
+   "post_time": "12:30 pm PST",
+   "distance_text": "1 Mile",
+   "surface": "Turf",
+   "tags": [
+    "Likely Winner"
+   ],
+   "likely_winner": true,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "5",
+     "name": "Mighty Toro",
+     "ml": "7-5",
+     "jockey": "J Rosario",
+     "trainer": "J W Sadler"
+    },
+    {
+     "role": "Place",
+     "pgm": "4",
+     "name": "Fuzzy Stare",
+     "ml": "4-1",
+     "jockey": "K Frey",
+     "trainer": "I Tamayo"
+    },
+    {
+     "role": "Show",
+     "pgm": "3",
+     "name": "Shapoval",
+     "ml": "8-1",
+     "jockey": "J J Hernandez",
+     "trainer": "P Miller"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "8",
+     "name": "Charisma",
+     "ml": "10-1",
+     "jockey": "A Aguilar",
+     "trainer": "P S Capestro"
+    }
+   ],
+   "order": [
+    "5",
+    "4",
+    "3",
+    "8"
+   ],
+   "wagers": {
+    "exacta": "4,5/3,4,5",
+    "trifecta": "4,5/3,4,5,8/3,4,5,8",
+    "multi_race": "4,5"
+   }
+  },
+  "2": {
+   "race_no": 2,
+   "class_text": "Maiden Claiming",
+   "post_time": "1:02 pm PST",
+   "distance_text": "6 1/2 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "6",
+     "name": "Awsome Amy",
+     "ml": "3-1",
+     "jockey": "H I Berrios",
+     "trainer": "O J Jauregui"
+    },
+    {
+     "role": "Place",
+     "pgm": "1",
+     "name": "Another Warrior",
+     "ml": "7-5",
+     "jockey": "J Rosario",
+     "trainer": "P Miller"
+    },
+    {
+     "role": "Show",
+     "pgm": "3",
+     "name": "Olympian Thirst",
+     "ml": "8-1",
+     "jockey": "A Ayuso",
+     "trainer": "A Farias"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "2",
+     "name": "Lovely Maya",
+     "ml": "8-1",
+     "jockey": "K Frey",
+     "trainer": "D F O'Neill"
+    }
+   ],
+   "order": [
+    "6",
+    "1",
+    "3",
+    "2"
+   ],
+   "wagers": {
+    "exacta": "1,3,6 BOX",
+    "trifecta": "1,2,3,6 BOX",
+    "multi_race": "1,2,3,6"
+   }
+  },
+  "3": {
+   "race_no": 3,
+   "class_text": "Allowance Optional Claiming",
+   "post_time": "1:32 pm PST",
+   "distance_text": "5 Furlongs",
+   "surface": "Turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "9",
+     "name": "Double Jab",
+     "ml": "7-2",
+     "jockey": "A Ayuso",
+     "trainer": "A Mathis"
+    },
+    {
+     "role": "Place",
+     "pgm": "7",
+     "name": "Travelin' Show",
+     "ml": "6-1",
+     "jockey": "J J Hernandez",
+     "trainer": "C A Lewis"
+    },
+    {
+     "role": "Show",
+     "pgm": "2",
+     "name": "Grey's Boy",
+     "ml": "9-2",
+     "jockey": "J Rosario",
+     "trainer": "V Cerin"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "10",
+     "name": "Tygra",
+     "ml": "15-1",
+     "jockey": "M Americano",
+     "trainer": "F Rodriguez"
+    }
+   ],
+   "order": [
+    "9",
+    "7",
+    "2",
+    "10"
+   ],
+   "wagers": {
+    "exacta": "2,7,9 BOX",
+    "trifecta": "2,7,9,10 BOX",
+    "multi_race": "2,7,9,10"
+   }
+  },
+  "4": {
+   "race_no": 4,
+   "class_text": "Maiden Special Weight",
+   "post_time": "2:02 pm PST",
+   "distance_text": "6 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "1",
+     "name": "Bunners",
+     "ml": "5-2",
+     "jockey": "E Jaramillo",
+     "trainer": "B Baffert"
+    },
+    {
+     "role": "Place",
+     "pgm": "6",
+     "name": "Dear Diary",
+     "ml": "4-1",
+     "jockey": "M E Smith",
+     "trainer": "R E Mandella"
+    },
+    {
+     "role": "Show",
+     "pgm": "2",
+     "name": "Thirteen Kisses",
+     "ml": "8-1",
+     "jockey": "J J Hernandez",
+     "trainer": "M W McCarthy"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "7",
+     "name": "Sharon's Joy",
+     "ml": "5-1",
+     "jockey": "R Gonzalez",
+     "trainer": "P D'Amato"
+    }
+   ],
+   "order": [
+    "1",
+    "6",
+    "2",
+    "7"
+   ],
+   "wagers": {
+    "exacta": "1,2,6 BOX",
+    "trifecta": "1,2,6,7 BOX",
+    "multi_race": "1,2,6,7"
+   }
+  },
+  "5": {
+   "race_no": 5,
+   "class_text": "Maiden Special Weight",
+   "post_time": "2:32 pm PST",
+   "distance_text": "5 Furlongs",
+   "surface": "Turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "6",
+     "name": "Paddock Buzz",
+     "ml": "4-1",
+     "jockey": "H I Berrios",
+     "trainer": "D Blacker"
+    },
+    {
+     "role": "Place",
+     "pgm": "7",
+     "name": "Terry's Girl",
+     "ml": "5-1",
+     "jockey": "A L Bautista",
+     "trainer": "L Mendez"
+    },
+    {
+     "role": "Show",
+     "pgm": "2",
+     "name": "Baby Houseman",
+     "ml": "5-1",
+     "jockey": "E Jaramillo",
+     "trainer": "S R Knapp"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "4",
+     "name": "Negotiating Terms",
+     "ml": "12-1",
+     "jockey": "E A Maldonado",
+     "trainer": "E G Alvarez"
+    }
+   ],
+   "order": [
+    "6",
+    "7",
+    "2",
+    "4"
+   ],
+   "wagers": {
+    "exacta": "2,6,7 BOX",
+    "trifecta": "2,4,6,7 BOX",
+    "multi_race": "2,4,6,7"
+   }
+  },
+  "6": {
+   "race_no": 6,
+   "class_text": "Claiming",
+   "post_time": "3:03 pm PST",
+   "distance_text": "5 1/2 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "4",
+     "name": "Tapalo",
+     "ml": "7-2",
+     "jockey": "A Ayuso",
+     "trainer": "S R Knapp"
+    },
+    {
+     "role": "Place",
+     "pgm": "12",
+     "name": "Doo Wop Don",
+     "ml": "5-2",
+     "jockey": "J Rosario",
+     "trainer": "J Mullins"
+    },
+    {
+     "role": "Show",
+     "pgm": "10",
+     "name": "Midnite Musket",
+     "ml": "4-1",
+     "jockey": "E A Maldonado",
+     "trainer": "J Periban"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "8",
+     "name": "Zombo Bombo",
+     "ml": "5-1",
+     "jockey": "A Escobedo",
+     "trainer": "A M Aquino"
+    }
+   ],
+   "order": [
+    "4",
+    "12",
+    "10",
+    "8"
+   ],
+   "wagers": {
+    "exacta": "4,10,12 BOX",
+    "trifecta": "4,8,10,12 BOX",
+    "multi_race": "4,8,10,12"
+   }
+  },
+  "7": {
+   "race_no": 7,
+   "class_text": "Allowance Optional Claiming",
+   "post_time": "3:33 pm PST",
+   "distance_text": "5 Furlongs",
+   "surface": "Turf",
+   "tags": [
+    "Best Value"
+   ],
+   "likely_winner": false,
+   "best_value": true,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "5",
+     "name": "Matt At Five",
+     "ml": "5-1",
+     "jockey": "J J Hernandez",
+     "trainer": "P Miller"
+    },
+    {
+     "role": "Place",
+     "pgm": "1",
+     "name": "Virat",
+     "ml": "3-1",
+     "jockey": "H I Berrios",
+     "trainer": "D Blacker"
+    },
+    {
+     "role": "Show",
+     "pgm": "3",
+     "name": "Mescalero",
+     "ml": "10-1",
+     "jockey": "U Rispoli",
+     "trainer": "R E Mandella"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "2",
+     "name": "Regal Patriot",
+     "ml": "7-2",
+     "jockey": "E Jaramillo",
+     "trainer": "D F O'Neill"
+    }
+   ],
+   "order": [
+    "5",
+    "1",
+    "3",
+    "2"
+   ],
+   "wagers": {
+    "exacta": "1,3,5 BOX",
+    "trifecta": "1,2,3,5 BOX",
+    "multi_race": "1,2,3,5"
+   }
+  },
+  "8": {
+   "race_no": 8,
+   "class_text": "Maiden Claiming",
+   "post_time": "4:03 pm PST",
+   "distance_text": "6 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "4",
+     "name": "Imnotvanillasky",
+     "ml": "9-2",
+     "jockey": "A Lezcano",
+     "trainer": "M Glatt"
+    },
+    {
+     "role": "Place",
+     "pgm": "10",
+     "name": "Tropical Rain Day",
+     "ml": "5-1",
+     "jockey": "A Ayuso",
+     "trainer": "V L Garcia"
+    },
+    {
+     "role": "Show",
+     "pgm": "12",
+     "name": "Mustang Knicky",
+     "ml": "6-1",
+     "jockey": "T J Pereira",
+     "trainer": "S R Knapp"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "9",
+     "name": "Low La Bunny",
+     "ml": "4-1",
+     "jockey": "J Rosario",
+     "trainer": "J R Thomas"
+    }
+   ],
+   "order": [
+    "4",
+    "10",
+    "12",
+    "9"
+   ],
+   "wagers": {
+    "exacta": "4,10,12 BOX",
+    "trifecta": "4,9,10,12 BOX",
+    "multi_race": "4,9,10,12"
+   }
+  },
+  "9": {
+   "race_no": 9,
+   "class_text": "Claiming",
+   "post_time": "4:33 pm PST",
+   "distance_text": "1 1/16 Miles",
+   "surface": "Turf",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "4",
+     "name": "Zalamo",
+     "ml": "7-2",
+     "jockey": "T J Pereira",
+     "trainer": "D Pederson"
+    },
+    {
+     "role": "Place",
+     "pgm": "10",
+     "name": "Amplitude",
+     "ml": "9-2",
+     "jockey": "J Rosario",
+     "trainer": "J W Sadler"
+    },
+    {
+     "role": "Show",
+     "pgm": "1",
+     "name": "Calm Sea",
+     "ml": "5-1",
+     "jockey": "K Frey",
+     "trainer": "M Glatt"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "2",
+     "name": "Lahaina Flavor",
+     "ml": "5-1",
+     "jockey": "D Van Dyke",
+     "trainer": "P Gallagher"
+    }
+   ],
+   "order": [
+    "4",
+    "10",
+    "1",
+    "2"
+   ],
+   "wagers": {
+    "exacta": "1,4,10 BOX",
+    "trifecta": "1,2,4,10 BOX",
+    "multi_race": "1,2,4,10"
+   }
+  }
+ }
+}

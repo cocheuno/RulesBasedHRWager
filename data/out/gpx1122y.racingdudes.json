@@ -1,0 +1,576 @@
+{
+ "card": "gpx1122y",
+ "track": "Gulfstream Park",
+ "track_code": "GP",
+ "date": "2026-11-22",
+ "file": "Dashboard - Racing Dudes 112226.html",
+ "reader_version": "rd-1",
+ "saved_at_utc": "2026-11-23T03:12:37Z",
+ "note": "Racing Dudes' picks for this card from the newest page loaded for its date: a benchmark, read by no rule",
+ "races": {
+  "1": {
+   "race_no": 1,
+   "class_text": "Maiden Claiming",
+   "post_time": "9:20 am PST",
+   "distance_text": "5 1/2 Furlongs",
+   "surface": "All Weather Track",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "4",
+     "name": "Empress New Groove",
+     "ml": "8-5",
+     "jockey": "M J Husbands",
+     "trainer": "S A Joseph, Jr."
+    },
+    {
+     "role": "Place",
+     "pgm": "3",
+     "name": "Authentic Guitar",
+     "ml": "6-1",
+     "jockey": "J Santos",
+     "trainer": "D Zanelli"
+    },
+    {
+     "role": "Show",
+     "pgm": "6",
+     "name": "My Honey Mother",
+     "ml": "8-1",
+     "jockey": "P Lopez",
+     "trainer": "V Barboza, Jr."
+    },
+    {
+     "role": "Next Best",
+     "pgm": "9",
+     "name": "Noffies Late Nite",
+     "ml": "10-1",
+     "jockey": "E Perez",
+     "trainer": "F Russo"
+    }
+   ],
+   "order": [
+    "4",
+    "3",
+    "6",
+    "9"
+   ],
+   "wagers": {
+    "exacta": "3,4/3,4,6",
+    "trifecta": "3,4/3,4,6,9/3,4,6,9",
+    "multi_race": "3,4"
+   }
+  },
+  "2": {
+   "race_no": 2,
+   "class_text": "Claiming",
+   "post_time": "9:50 am PST",
+   "distance_text": "7 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "3",
+     "name": "Nice Try Riley",
+     "ml": "5-2",
+     "jockey": "S Camacho",
+     "trainer": "B J Chapman"
+    },
+    {
+     "role": "Place",
+     "pgm": "1",
+     "name": "Wearebackyoungman",
+     "ml": "15-1",
+     "jockey": "M Meneses",
+     "trainer": "J K Sweezey"
+    },
+    {
+     "role": "Show",
+     "pgm": "2",
+     "name": "Pardo",
+     "ml": "6-1",
+     "jockey": "L Reyes",
+     "trainer": "J F D'Angelo"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "4",
+     "name": "Ruleroftheuniverse",
+     "ml": "5-1",
+     "jockey": "M J Husbands",
+     "trainer": "S A Joseph, Jr."
+    }
+   ],
+   "order": [
+    "3",
+    "1",
+    "2",
+    "4"
+   ],
+   "wagers": {
+    "exacta": "1,2,3 BOX",
+    "trifecta": "1,2,3,4 BOX",
+    "multi_race": "1,2,3,4"
+   }
+  },
+  "3": {
+   "race_no": 3,
+   "class_text": "Maiden Special Weight",
+   "post_time": "10:22 am PST",
+   "distance_text": "1 Mile",
+   "surface": "Dirt",
+   "tags": [
+    "Likely Winner"
+   ],
+   "likely_winner": true,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "3",
+     "name": "Guns of Roses",
+     "ml": "8-5",
+     "jockey": "M J Husbands",
+     "trainer": "S A Joseph, Jr."
+    },
+    {
+     "role": "Place",
+     "pgm": "7",
+     "name": "Song of Sarah",
+     "ml": "5-2",
+     "jockey": "P Lopez",
+     "trainer": "D Gargan"
+    },
+    {
+     "role": "Show",
+     "pgm": "6",
+     "name": "Prime Time Lady",
+     "ml": "7-2",
+     "jockey": "S Camacho",
+     "trainer": "B A Lynch"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "4",
+     "name": "Treasured Times",
+     "ml": "4-1",
+     "jockey": "R Hughes",
+     "trainer": "S A Joseph, Jr."
+    }
+   ],
+   "order": [
+    "3",
+    "7",
+    "6",
+    "4"
+   ],
+   "wagers": {
+    "exacta": "3,7/3,6,7",
+    "trifecta": "3,7/3,4,6,7/3,4,6,7",
+    "multi_race": "3,7"
+   }
+  },
+  "4": {
+   "race_no": 4,
+   "class_text": "Starter Optional Claiming",
+   "post_time": "11:00 am PST",
+   "distance_text": "1 Mile",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "1",
+     "name": "Golden Valley",
+     "ml": "2-1",
+     "jockey": "S Camacho",
+     "trainer": "N J Tomlinson"
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "Sweet Agenda",
+     "ml": "5-2",
+     "jockey": "M J Husbands",
+     "trainer": "S A Joseph, Jr."
+    },
+    {
+     "role": "Show",
+     "pgm": "6",
+     "name": "Hidden Recipe",
+     "ml": "9-2",
+     "jockey": "D A Herrera",
+     "trainer": "N Ramsey"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "5",
+     "name": "Miss Silipo",
+     "ml": "10-1",
+     "jockey": "R Hughes",
+     "trainer": "S A Joseph, Jr."
+    }
+   ],
+   "order": [
+    "1",
+    "2",
+    "6",
+    "5"
+   ],
+   "wagers": {
+    "exacta": "1,2,6 BOX",
+    "trifecta": "1,2,5,6 BOX",
+    "multi_race": "1,2,5,6"
+   }
+  },
+  "5": {
+   "race_no": 5,
+   "class_text": "Maiden Optional Claiming",
+   "post_time": "11:32 am PST",
+   "distance_text": "6 Furlongs",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "1",
+     "name": "Fireballer",
+     "ml": "7-5",
+     "jockey": "M J Husbands",
+     "trainer": "S A Joseph, Jr."
+    },
+    {
+     "role": "Place",
+     "pgm": "5",
+     "name": "Colonel Russell",
+     "ml": "9-2",
+     "jockey": "P Lopez",
+     "trainer": "G G Jackson"
+    },
+    {
+     "role": "Show",
+     "pgm": "3",
+     "name": "Tokenize",
+     "ml": "6-1",
+     "jockey": "E Gonzalez",
+     "trainer": "S A Joseph, Jr."
+    },
+    {
+     "role": "Next Best",
+     "pgm": "7",
+     "name": "Honorable Seve",
+     "ml": "6-1",
+     "jockey": "H Figueroa",
+     "trainer": "H Smullen"
+    }
+   ],
+   "order": [
+    "1",
+    "5",
+    "3",
+    "7"
+   ],
+   "wagers": {
+    "exacta": "1,5/1,3,5",
+    "trifecta": "1,5/1,3,5/1,3,5,7",
+    "multi_race": "1,5"
+   }
+  },
+  "6": {
+   "race_no": 6,
+   "class_text": "Claiming",
+   "post_time": "12:04 pm PST",
+   "distance_text": "1 Mile",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "3",
+     "name": "Khopesh",
+     "ml": "5-2",
+     "jockey": "M Meneses",
+     "trainer": "N J Tomlinson"
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "Bala de Plata",
+     "ml": "3-1",
+     "jockey": "S Camacho",
+     "trainer": "S R Hernandez, Jr."
+    },
+    {
+     "role": "Show",
+     "pgm": "4",
+     "name": "Zozan",
+     "ml": "2-1",
+     "jockey": "E Gonzalez",
+     "trainer": "R Yanez"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "1",
+     "name": "Swashbuckle",
+     "ml": "7-2",
+     "jockey": "J Ocasio",
+     "trainer": "J Negrete"
+    }
+   ],
+   "order": [
+    "3",
+    "2",
+    "4",
+    "1"
+   ],
+   "wagers": {
+    "exacta": "2,3/2,3,4",
+    "trifecta": "2,3/1,2,3,4/1,2,3,4",
+    "multi_race": "2,3"
+   }
+  },
+  "7": {
+   "race_no": 7,
+   "class_text": "Handicap",
+   "post_time": "12:36 pm PST",
+   "distance_text": "1 Mile",
+   "surface": "Dirt",
+   "tags": [
+    "Best Value"
+   ],
+   "likely_winner": false,
+   "best_value": true,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "6",
+     "name": "Competitive Market",
+     "ml": "9-2",
+     "jockey": "M A Vasquez",
+     "trainer": "J F D'Angelo"
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "Social Fortress",
+     "ml": "2-1",
+     "jockey": "L Reyes",
+     "trainer": "J F D'Angelo"
+    },
+    {
+     "role": "Show",
+     "pgm": "7",
+     "name": "Charlie's Wish",
+     "ml": "6-1",
+     "jockey": "P Lopez",
+     "trainer": "D Fawkes"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "3",
+     "name": "Fede",
+     "ml": "7-2",
+     "jockey": "S Camacho",
+     "trainer": "A De La Cerda"
+    }
+   ],
+   "order": [
+    "6",
+    "2",
+    "7",
+    "3"
+   ],
+   "wagers": {
+    "exacta": "2,6/2,6,7",
+    "trifecta": "2,6/2,6,7/2,3,6,7",
+    "multi_race": "2,6,7"
+   }
+  },
+  "8": {
+   "race_no": 8,
+   "class_text": "Starter Optional Claiming",
+   "post_time": "1:06 pm PST",
+   "distance_text": "1 Mile 70 Yards",
+   "surface": "All Weather Track",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "6",
+     "name": "Slew Vinbiz",
+     "ml": "5-2",
+     "jockey": "L Reyes",
+     "trainer": "K O'Connell"
+    },
+    {
+     "role": "Place",
+     "pgm": "4",
+     "name": "Uriel's Decree",
+     "ml": "2-1",
+     "jockey": "C Gil",
+     "trainer": "D Fawkes"
+    },
+    {
+     "role": "Show",
+     "pgm": "3",
+     "name": "Mr. Hetty",
+     "ml": "6-1",
+     "jockey": "J Torrealba",
+     "trainer": "P L Biancone"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "7",
+     "name": "Ready to Rage",
+     "ml": "4-1",
+     "jockey": "M A Vasquez",
+     "trainer": "C A David"
+    }
+   ],
+   "order": [
+    "6",
+    "4",
+    "3",
+    "7"
+   ],
+   "wagers": {
+    "exacta": "3,4,6 BOX",
+    "trifecta": "4,6/3,4,6/3,4,6,7",
+    "multi_race": "3,4,6"
+   }
+  },
+  "9": {
+   "race_no": 9,
+   "class_text": "Handicap",
+   "post_time": "1:36 pm PST",
+   "distance_text": "1 1/16 Miles",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "5",
+     "name": "Bartholdy",
+     "ml": "2-1",
+     "jockey": "L Reyes",
+     "trainer": "J F D'Angelo"
+    },
+    {
+     "role": "Place",
+     "pgm": "3",
+     "name": "Indecisiveness",
+     "ml": "4-1",
+     "jockey": "R Hughes",
+     "trainer": "R Sierra"
+    },
+    {
+     "role": "Show",
+     "pgm": "2",
+     "name": "Lightning Tones",
+     "ml": "8-1",
+     "jockey": "M A Vasquez",
+     "trainer": "J M Castro"
+    },
+    {
+     "role": "Next Best",
+     "pgm": "9",
+     "name": "Digital Ops",
+     "ml": "5-1",
+     "jockey": "M J Husbands",
+     "trainer": "S A Joseph, Jr."
+    }
+   ],
+   "order": [
+    "5",
+    "3",
+    "2",
+    "9"
+   ],
+   "wagers": {
+    "exacta": "2,3,5 BOX",
+    "trifecta": "2,3,5,9 BOX",
+    "multi_race": "2,3,5,9"
+   }
+  },
+  "10": {
+   "race_no": 10,
+   "class_text": "Claiming",
+   "post_time": "2:08 pm PST",
+   "distance_text": "1 Mile",
+   "surface": "Dirt",
+   "tags": [],
+   "likely_winner": false,
+   "best_value": false,
+   "best_bet": false,
+   "picks": [
+    {
+     "role": "Win",
+     "pgm": "1",
+     "name": "Lou the Body",
+     "ml": "8-5",
+     "jockey": "D A Herrera",
+     "trainer": "V Barboza, Jr."
+    },
+    {
+     "role": "Place",
+     "pgm": "2",
+     "name": "O Captain",
+     "ml": "8-1",
+     "jockey": "S Leon",
+     "trainer": "C A David"
+    },
+    {
+     "role": "Show",
+     "pgm": "7",
+     "name": "The Best Distance",
+     "ml": "7-2",
+     "jockey": "L Reyes",
+     "trainer": "S R Hernandez, Jr."
+    },
+    {
+     "role": "Next Best",
+     "pgm": "4",
+     "name": "Blue Slide Park",
+     "ml": "10-1",
+     "jockey": "J Santos",
+     "trainer": "P R Garcia"
+    }
+   ],
+   "order": [
+    "1",
+    "2",
+    "7",
+    "4"
+   ],
+   "wagers": {
+    "exacta": "1,2/1,2,7",
+    "trifecta": "1,2/1,2,4,7/1,2,4,7",
+    "multi_race": "1,2"
+   }
+  }
+ }
+}
