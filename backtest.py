@@ -27,6 +27,8 @@ def main(argv: list[str]) -> int:
     reports, evals = [], []
     for p_path, r_path in zip(argv[:half], argv[half:]):
         picks = json.load(open(p_path, encoding="utf-8"))
+        from racing_dudes.reader import card_benchmark       # Racing Dudes: the newest page loaded for the date
+        picks = card_benchmark(os.path.dirname(os.path.abspath(p_path)), os.path.basename(p_path).split(".")[0], picks)
         res = load_results(r_path)
         bt = backtest(picks, res)
         ev = evaluate_card(picks, res, cfg["wagering"])

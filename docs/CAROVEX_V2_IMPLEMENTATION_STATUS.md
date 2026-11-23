@@ -294,3 +294,17 @@ settlement pays a ticket that covers any of them.  `CHART_READER_VERSION` is 202
 `python ocr_results.py --all` for every card) reads the charts again.  Doubles and Pick 3s on file were not
 affected; counted totals do not change.  The tracked Pick 4 record does: Racing Dudes' four hits and the engine's
 one had no payoff before.
+
+### Racing Dudes: the newest page for the date is the benchmark (2026-11-23)
+
+Racing Dudes revises its picks and adds its tickets after the morning scratches; the 11/22 page loaded in the
+morning had no tickets and different picks in 22 of 37 races.  No rule reads Racing Dudes, so a page loaded late -
+even after the races - cannot carry a result into the engine's picks.  Loading a page now writes
+`data/out/<card>.racingdudes.json` for every card of its dates (committed with the picks); the pre-race composite,
+the comparison by bet type, the back-test, the evaluation, the angles and the best-bets record read Racing Dudes from
+that file, falling back to the run's copy.  The engine's runs and snapshots keep the copy they were made with.  A
+card whose PPs are read after the page was loaded gets its file on its first run.
+
+A page holds every date it shows, and a dashboard can show tomorrow for a few tracks only.  A date's saved page
+(`data/pps/racingdudes_<date>.html`) is no longer replaced by a page that lacks one of its tracks; the upload says
+which date it kept and why.

@@ -131,10 +131,28 @@ def track_day(doc: dict, date: str | None, track_code: str | None = None, track_
     return None
 
 
+def _race_block(r: dict, horses: list[dict], race_no) -> tuple[dict, dict, list[str]]:
+    """One race's Racing Dudes block for a card's horses ({pgm, name}): the race block, each matched horse's role
+    and rank by program number, and notes.  Matching by program number, confirmed by the first word of the name."""
+    from handicapper.identity import norm_name
+    notes, order, roles, per = [], [], {}, {}
+    by_pgm = {str(h["pgm"]).upper(): h for h in horses}
+    for i, p in enumerate(r.get("picks") or [], 1):
+        h = by_pgm.get(p["pgm"])
+        if h is None or (p.get("name") and h.get("name") and norm_name(p["name"]).split()[:1] != norm_name(h["name"]).split()[:1]):
+            notes.append(f"R{race_no} #{p['pgm']}: Racing Dudes says {p.get('name')!r}, card says {(h or {}).get('name')!r}; not matched")
+            continue
+        per[h["pgm"]] = {"role": p["role"], "rank": i, "ml": p.get("ml"), "source": "racing_dudes"}
+        order.append(h["pgm"]); roles[h["pgm"]] = p["role"]
+    block = {"order": order, "roles": roles, "tags": r.get("tags") or [], "likely_winner": bool(r.get("likely_winner")),
+             "best_value": bool(r.get("best_value")), "best_bet": bool(r.get("best_bet")), "wagers": r.get("wagers") or {},
+             "reader_version": READER_VERSION}
+    return block, per, notes
+
+
 def merge_racing_dudes(card: dict, races: dict | None, source: str | None = None) -> list[str]:
     """Attach the picks to a parsed card: race["racing_dudes"] and, for their four horses, horse["racing_dudes"]
     with the role and rank.  Matching by race number then program number, confirmed by the first word of the name."""
-    from handicapper.identity import norm_name
     notes = []
     if not races:
         return ["no Racing Dudes picks for this track and date"]
@@ -144,19 +162,99 @@ def merge_racing_dudes(card: dict, races: dict | None, source: str | None = None
             race["racing_dudes"] = None
             notes.append(f"R{race['race_no']}: not in the Racing Dudes page")
             continue
-        by_pgm = {h["pgm"].upper(): h for h in race["horses"]}
-        order, roles = [], {}
-        for i, p in enumerate(r["picks"], 1):
-            h = by_pgm.get(p["pgm"])
-            if h is None or (p["name"] and h.get("name") and norm_name(p["name"]).split()[:1] != norm_name(h["name"]).split()[:1]):
-                notes.append(f"R{race['race_no']} #{p['pgm']}: Racing Dudes says {p['name']!r}, card says {(h or {}).get('name')!r}; not matched")
-                continue
-            h["racing_dudes"] = {"role": p["role"], "rank": i, "ml": p["ml"], "source": "racing_dudes"}
-            order.append(h["pgm"]); roles[h["pgm"]] = p["role"]
-        race["racing_dudes"] = {"order": order, "roles": roles, "tags": r["tags"], "likely_winner": r["likely_winner"],
-                                "best_value": r["best_value"], "best_bet": r["best_bet"], "wagers": r["wagers"],
-                                "reader_version": READER_VERSION, "file": source}
+        block, per, n = _race_block(r, race["horses"], race["race_no"])
+        notes += n
+        for h in race["horses"]:
+            if h["pgm"] in per:
+                h["racing_dudes"] = per[h["pgm"]]
+        race["racing_dudes"] = dict(block, file=source)
     return notes
+
+
+# ---------------------------------------------------------------------------
+# the card's benchmark file: Racing Dudes' newest picks for the card's date
+# ---------------------------------------------------------------------------
+# No rule reads Racing Dudes, so a page loaded late (even after the races) cannot carry a result into the engine's
+# picks: the benchmark is the newest page loaded for the date, whenever it was loaded.  The engine's own pre-race
+# runs keep the copy they were made with; every comparison reads this file first.
+BENCH_SUFFIX = ".racingdudes.json"
+
+
+def bench_path(out_dir: str, card: str) -> str:
+    return os.path.join(out_dir, f"{card}{BENCH_SUFFIX}")
+
+
+def save_card_benchmark(out_dir: str, card: str, races: dict | None, meta: dict, source: str | None = None) -> str | None:
+    """Write data/out/<card>.racingdudes.json from one track and date's races (track_day's result).  Unchanged
+    picks are not rewritten.  Returns the path, or None when the page has no races for the card."""
+    import json
+    from datetime import datetime, timezone
+    if not races:
+        return None
+    path = bench_path(out_dir, card)
+    body = {str(k): v for k, v in sorted(races.items(), key=lambda kv: int(kv[0]))}
+    old = load_card_benchmark(out_dir, card)
+    if old and old.get("races") == body:
+        return path
+    doc = {"card": card, "track": meta.get("track"), "track_code": meta.get("track_code"), "date": meta.get("date"),
+           "file": os.path.basename(source) if source else None, "reader_version": READER_VERSION,
+           "saved_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+           "note": "Racing Dudes' picks for this card from the newest page loaded for its date: a benchmark, read by no rule",
+           "races": body}
+    os.makedirs(out_dir, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(doc, fh, indent=1, ensure_ascii=False)
+    return path
+
+
+def load_card_benchmark(out_dir: str, card: str) -> dict | None:
+    import json
+    path = bench_path(out_dir, card)
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return None
+
+
+def apply_card_benchmark(picks: dict | None, bench: dict | None) -> dict | None:
+    """A copy of a picks dict (a run, a snapshot or the pre-race composite) whose Racing Dudes blocks - per race
+    and per horse - come from the card's benchmark file.  Races the file does not have keep the run's copy; the
+    engine's scores, ranks and wagers are untouched (no rule reads Racing Dudes)."""
+    import copy
+    if not picks or not bench or not bench.get("races"):
+        return picks
+    out = copy.deepcopy(picks)
+    used = 0
+    for race in out.get("races", []):
+        r = bench["races"].get(str(race["race_no"]))
+        if not r:
+            continue
+        sheets = race.get("sheets") or []
+        block, per, _ = _race_block(r, sheets, race["race_no"])
+        race["racing_dudes"] = dict(block, file=bench.get("file"), benchmark_file=True)
+        for s in sheets:
+            s["racing_dudes"] = per.get(s["pgm"])
+        used += 1
+    if used:
+        out["racing_dudes_benchmark"] = {"file": bench.get("file"), "saved_at_utc": bench.get("saved_at_utc"), "races": used}
+    return out
+
+
+def card_benchmark(out_dir: str, card: str, picks: dict | None) -> dict | None:
+    """apply_card_benchmark with the card's file, when there is one."""
+    return apply_card_benchmark(picks, load_card_benchmark(out_dir, card))
+
+
+def date_coverage(doc: dict) -> dict[str, set]:
+    """{date: {track name, ...}} on a page."""
+    cov: dict[str, set] = {}
+    for t in doc.get("tracks", []):
+        for d in t.get("days") or {}:
+            cov.setdefault(d, set()).add(t.get("name"))
+    return cov
 
 
 def benchmark(root: str, doc: dict, cfg: dict | None = None) -> dict:
