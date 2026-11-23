@@ -5,6 +5,7 @@ Read result charts (PDF) and payout-page screenshots (PNG) into a results file.
     python ocr_results.py data/results-png/dmr1106y results/dmr1106y.results.json --card data/out/dmr1106y.card.json
     python ocr_results.py data/results-png/dmr1106y/r3.png results/dmr1106y.results.json      # one race
     python ocr_results.py data/results-png/bel1106y/20261106BELUSA1.pdf results/bel1106y.results.json
+    python ocr_results.py --all       # every card: read again the charts an older chart reader read
 
 A chart PDF (Equibase/Brisnet, named r<N>.pdf or as downloaded, e.g. 20261106BELUSA1.pdf) is preferred over a
 screenshot of the same race: it is text, complete (every finisher, final odds, calls, condition, comments) and
@@ -22,7 +23,8 @@ import os
 import re
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, ROOT)
 
 from handicapper.ocr import read_screenshot   # noqa: E402
 from brisnet_pp.chart import CHART_READER_VERSION, chart_to_result, parse_chart   # noqa: E402
@@ -91,13 +93,37 @@ def ocr_folder(src: str, results_path: str, card_path: str | None = None, force:
     return {"path": results_path, "races": done}
 
 
+def reread_all(root: str) -> int:
+    """Process results for every card that has a results file and its charts on this computer."""
+    pngs, res_dir, out_dir = os.path.join(root, "data", "results-png"), os.path.join(root, "results"), os.path.join(root, "data", "out")
+    total = 0
+    for card in sorted(os.listdir(pngs)) if os.path.isdir(pngs) else []:
+        res = os.path.join(res_dir, f"{card}.results.json")
+        if not (os.path.isdir(os.path.join(pngs, card)) and os.path.exists(res)):
+            continue
+        cj = os.path.join(out_dir, f"{card}.card.json")
+        out = ocr_folder(os.path.join(pngs, card), res, cj if os.path.exists(cj) else None)
+        total += len(out["races"])
+        print(f"{card}: {len(out['races'])} races read again" if out["races"] else f"{card}: up to date")
+    print(f"{total} races read again; commit and push results/")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("src", help="folder of r<N>.png screenshots, or one png")
-    ap.add_argument("results", help="results/<card>.results.json to create or extend")
+    ap.add_argument("src", nargs="?", help="folder of r<N>.png screenshots, or one png")
+    ap.add_argument("results", nargs="?", help="results/<card>.results.json to create or extend")
     ap.add_argument("--card", help="data/out/<card>.card.json for the name cross-check")
     ap.add_argument("--force", action="store_true", help="re-read races already on file")
+    ap.add_argument("--all", action="store_true",
+                    help="every card with a results file and charts in data/results-png/<card>/: read again the races an older "
+                         "chart reader read (hand corrections are kept), as Process results does for one card")
+    ap.add_argument("--root", default=ROOT, help="project folder (default: this script's folder)")
     a = ap.parse_args()
+    if a.all:
+        return reread_all(a.root)
+    if not (a.src and a.results):
+        ap.error("give a source and a results file, or --all")
     out = ocr_folder(a.src, a.results, a.card, a.force)
     for r in out["races"]:
         w = r["ocr"]["warnings"]

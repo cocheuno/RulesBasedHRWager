@@ -283,3 +283,14 @@ Each race read from a chart carries the chart reader's version (`reader`, `CHART
 `brisnet_pp/chart.py`). **Process results** reads a chart again when the race on file came from an older reader or
 has no finishing order, so a fix to the reader (like the dead-heat fix) reaches races already on file. A race
 corrected by hand is kept; only **Re-read all results files** replaces it.
+
+### Several horses in one leg of a winning combination (2026-11-23)
+
+A chart prints a multi-race combination with '-' between legs and '/' between the horses that count in one leg (a
+dead heat, or tickets on a scratched horse moved to the favourite): Gulfstream 11/22 race 7 paid the Pick 4 on
+`6-7-6-1/3/4/5/8`.  The reader had turned every '-' into '/', so that Pick 4 read as eight legs and a hit could not
+be paid.  The results file now keeps legs apart with '/' and horses in a leg with ',' (`6/7/6/1,3,4,5,8`), and
+settlement pays a ticket that covers any of them.  `CHART_READER_VERSION` is 2026-11-23, so Process results (or
+`python ocr_results.py --all` for every card) reads the charts again.  Doubles and Pick 3s on file were not
+affected; counted totals do not change.  The tracked Pick 4 record does: Racing Dudes' four hits and the engine's
+one had no payoff before.

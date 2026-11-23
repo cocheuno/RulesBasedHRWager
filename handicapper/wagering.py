@@ -22,7 +22,6 @@ rollup(evaluations) -> by bet type, by track, by confidence, plus hit/miss count
 from __future__ import annotations
 
 import itertools
-import re
 from collections import defaultdict
 
 DEFAULT_UNITS = {"WIN": 2.0, "PLACE": 2.0, "SHOW": 2.0, "EXACTA": 1.0, "TRIFECTA": 0.5, "SUPERFECTA": 0.10,
@@ -106,8 +105,15 @@ def _per_dollar(e: dict) -> float | None:
 
 
 def _combo_list(s: str) -> list[list[str]]:
-    """'6,9,10/8/7/2' -> [['6','9','10'], ['8'], ['7'], ['2']] (alternates after scratches)."""
-    return [[p.strip() for p in part.split(",") if p.strip()] for part in s.split("/")]
+    """'6,9,10/8/7/2' -> [['6','9','10'], ['8'], ['7'], ['2']]: legs or positions joined by '/' (or '-'), several
+    horses that count in one leg by ',' (a dead heat, or tickets on a scratched horse moved to the favourite)."""
+    return [[p.strip() for p in part.split(",") if p.strip()] for part in s.replace("-", "/").split("/")]
+
+
+def _combo_set(s: str) -> set[tuple]:
+    """Every finishing combination a printed combo stands for: '3/5,6' -> {('3','5'), ('3','6')}."""
+    from itertools import product
+    return set(product(*_combo_list(s)))
 
 
 def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
@@ -189,7 +195,7 @@ def evaluate_wager(w: dict, by_no: dict, unit: float) -> dict:
         paid = [e for e in res.get("exotics", []) if _type_of(e) == wtype and e.get("combo") and _per_dollar(e) is not None]
         if paid:
             mine = set(combos(w["legs"], w["box"], False))
-            covered = [e for e in paid if tuple(p.strip() for p in re.split(r"[/-]", e["combo"])) in mine]
+            covered = [e for e in paid if _combo_set(e["combo"]) & mine]
             if covered:
                 row["hit"] = True
                 row["ret"] = round(sum(unit * _per_dollar(e) for e in covered), 2)
