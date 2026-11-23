@@ -16,6 +16,7 @@ data/*
 !data/out/
 data/out/*
 !data/out/*.picks.json
+!data/out/*.racingdudes.json
 !data/out/snapshots/
 !tests/fixtures/*.png
 

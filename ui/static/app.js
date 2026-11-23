@@ -361,7 +361,7 @@ async function upload(kind, files) {
   if (!card) return toast('Type a card code first (e.g. gpx1107y)');
   for (const file of files) {
     const fd = new FormData(); fd.append('card', card); fd.append('kind', kind); fd.append('file', file, file.name);
-    try { const r = await fetch('/api/upload', { method: 'POST', body: fd }); const j = await r.json(); if (j.error) throw new Error(j.error); toast('Saved ' + j.saved.join(', ') + (j.applied && j.applied.length ? (kind === 'racingdudes' ? ' · Racing Dudes picks for ' : ' · changes applied to ') + j.applied.map(a => a.card + (a.scratches ? ' (scratches ' + a.scratches + ')' : '') + (a.races ? ' (' + a.races + ' races)' : '')).join('; ') : (j.tracks && j.tracks.length ? ' · tracks in the file: ' + j.tracks.join(', ') + ' (no loaded card matches by date)' : '')), 9000); }
+    try { const r = await fetch('/api/upload', { method: 'POST', body: fd }); const j = await r.json(); if (j.error) throw new Error(j.error); toast((j.saved.length ? 'Saved ' + j.saved.join(', ') : 'Nothing replaced') + (j.kept && j.kept.length ? ' · kept the page already loaded for ' + j.kept.map(k => k.date + ' (this page lacks ' + k.missing.join(', ') + ')').join('; ') : '') + (j.applied && j.applied.length ? (kind === 'racingdudes' ? ' · Racing Dudes picks for ' : ' · changes applied to ') + j.applied.map(a => a.card + (a.scratches ? ' (scratches ' + a.scratches + ')' : '') + (a.races ? ' (' + a.races + ' races)' : '')).join('; ') : (j.tracks && j.tracks.length ? ' · tracks in the file: ' + j.tracks.join(', ') + ' (no loaded card matches by date)' : '')), 9000); }
     catch (e) { toast('Upload failed: ' + e.message, 7000); }
   }
   await loadCards(); await loadCard(card);

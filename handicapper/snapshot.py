@@ -134,7 +134,8 @@ def pre_race_by_race(out_dir: str, card: str, results: dict | None = None, tz: s
                       "per_race": per_race, "excluded": excluded, "margin_minutes": margin_minutes, "track_timezone": tz}
     comp["snapshot"] = {"kind": "composite", "at_utc": max(v["at_utc"] for v in per_race.values()),
                         "file": ", ".join(sorted({v["file"] for v in per_race.values()}))}
-    return comp
+    from racing_dudes.reader import card_benchmark     # Racing Dudes: the newest page for the date (a benchmark)
+    return card_benchmark(out_dir, card, comp)
 
 
 def latest_snapshot(out_dir: str, card: str, kind: str | None = "pre-race") -> dict | None:

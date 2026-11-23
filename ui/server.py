@@ -266,6 +266,14 @@ class Desk:
             out = run_card(cj, scratch=st.get("scratches") or None, sheet=f["sheet"], results=f["results"], config_path=self.config,
                            changes=changes, timeform=f["timeform"], weather=wx, boards=boards, racing_dudes=f["racing_dudes"])
             result = out["result"]
+            if f["racing_dudes"]:              # a card read after its date's page was loaded gets its benchmark file now
+                from racing_dudes.reader import load_card_benchmark, parse_page as parse_rd, save_card_benchmark, track_day
+                if not load_card_benchmark(self.out, card):
+                    meta = self.payload_meta(card)
+                    with open(f["racing_dudes"], "rb") as fh:
+                        doc = parse_rd(fh.read(), f["racing_dudes"])
+                    save_card_benchmark(self.out, card, track_day(doc, str(meta.get("date")), meta.get("track_code"), meta.get("track"),
+                                                                   load_config(self.config)), meta, f["racing_dudes"])
             kind = kind or ("post-results" if result["run"]["results_known"] else "pre-race")
             result["run"]["kind"] = kind
             with open(os.path.join(self.out, f"{card}.picks.json"), "w", encoding="utf-8") as fh:
@@ -307,6 +315,9 @@ class Desk:
                                            "run_style": h.get("run_style"), "speed_pts": h.get("speed_pts"), "entry_status": h.get("entry_status"),
                                            "jockey": h.get("jockey"), "trainer": h.get("trainer")} for h in r["horses"]]})
         picks = json.load(open(f["picks_json"], encoding="utf-8")) if f["picks_json"] else None
+        if picks:                         # Racing Dudes from the newest page loaded for the date (benchmark only)
+            from racing_dudes.reader import card_benchmark
+            picks = card_benchmark(self.out, card, picks)
         if picks and not picks.get("track_code") and meta.get("track_code"):
             picks["track_code"] = meta["track_code"]
         if picks:   # the latest run's inputs, surface switch and Timeform reading belong to the race, not the raw parse
@@ -499,13 +510,14 @@ class Desk:
         bench = {"races": 0, "engine_wins": 0, "brisnet_wins": 0, "brisnet_top3": 0, "best_bets": 0, "best_bet_wins": 0,
                  "rd_races": 0, "rd_wins": 0, "rd_top4": 0, "rd_engine_wins": 0, "rd_likely": 0, "rd_likely_wins": 0}
         refused = []
+        from racing_dudes.reader import card_benchmark
         for c in self.cards():
             f = self.files(c["card"])
             if not (f["picks_json"] and f["results"]):
                 continue
             res = load_results(f["results"])
             snap = self.clock_snapshot(c["card"], res)
-            picks = snap or json.load(open(f["picks_json"], encoding="utf-8"))
+            picks = snap or card_benchmark(self.out, c["card"], json.load(open(f["picks_json"], encoding="utf-8")))
             basis = ("pre-race (" + snap["timing"]["label"] + ")") if snap else "latest (retrospective)"
             try:
                 bt = backtest(picks, res)
@@ -837,12 +849,24 @@ class Desk:
             if not is_racing_dudes(data):
                 raise ValueError("refused: this is not a saved Racing Dudes picks page")
             doc = parse_rd(data, filename)
-            dates = sorted({d for t in doc["tracks"] for d in t["days"]})
+            from racing_dudes.reader import date_coverage, save_card_benchmark
+            cov = date_coverage(doc)
+            dates = sorted(cov)
             if not dates:
                 raise ValueError("no picks found in this page (save it as 'Webpage, HTML only' after the races are expanded)")
-            saved = []
-            for d in dates:                    # one copy per race date on the page: a later page for that date replaces it
-                p = os.path.join(self.pps, f"racingdudes_{d}.html")
+            saved, kept = [], []
+            for d in dates:                    # one copy per race date on the page: a later page for that date replaces it,
+                p = os.path.join(self.pps, f"racingdudes_{d}.html")      # unless it lacks a track the saved copy has
+                if os.path.exists(p):
+                    try:
+                        with open(p, "rb") as fh:
+                            have = date_coverage(parse_rd(fh.read(), p)).get(d, set())
+                    except Exception:          # an unreadable saved copy is replaced
+                        have = set()
+                    missing = sorted(t for t in have - cov[d] if t)
+                    if missing:
+                        kept.append({"date": d, "missing": missing})
+                        continue
                 with open(p, "wb") as fh:
                     fh.write(data)
                 saved.append(os.path.relpath(p, self.root))
@@ -853,10 +877,12 @@ class Desk:
                 if str(meta.get("date")) not in dates:
                     continue
                 races = track_day(doc, str(meta.get("date")), meta.get("track_code"), meta.get("track"), cfg)
-                if races:
+                if races:                      # the card's benchmark: this page is the newest loaded for its track and date
+                    save_card_benchmark(self.out, c["card"], races, meta, filename)
                     st = self.state(c["card"]); self.log(st, "Load Racing Dudes", f"{len(races)} races for {meta.get('track')} {meta.get('date')}"); self.save_state(st)
                     applied.append({"card": c["card"], "track": meta.get("track"), "races": len(races)})
-            return {"saved": saved[0], "files": saved, "race_dates": dates, "tracks": [t["name"] for t in doc["tracks"]], "applied": applied}
+            return {"saved": saved[0] if saved else None, "files": saved, "kept": kept, "race_dates": dates,
+                    "tracks": [t["name"] for t in doc["tracks"]], "applied": applied}
         elif kind == "timeform":
             path = os.path.join(self.pps, f"{card}.tfus.{'pdf' if data.startswith(b'%PDF') else 'txt'}")
             self.guard_timeform(card, data)  # same identity guard as the PP: another track's or day's file is refused
@@ -1002,7 +1028,7 @@ class Handler(SimpleHTTPRequestHandler):
                     out.append(self.desk.save_upload(fields.get("card", ""), fields.get("kind", ""), f["filename"], f["data"],
                                                      int(rn) if rn else None))
                 extra = [o for o in out if o.get("applied") is not None]
-                return self._json({"saved": [o["saved"] for o in out], "applied": [a for o in extra for a in o["applied"]], "tracks": [t for o in extra for t in o.get("tracks", [])],
+                return self._json({"saved": [o["saved"] for o in out if o.get("saved")], "kept": [k for o in out for k in o.get("kept") or []], "applied": [a for o in extra for a in o["applied"]], "tracks": [t for o in extra for t in o.get("tracks", [])],
                                    "kind": fields.get("kind")})
             body = self._body()
             payload = json.loads(body) if body else {}
