@@ -16,6 +16,9 @@
     "7"
    ],
    "win": 5.8,
+   "win_by": {
+    "6": 5.8
+   },
    "place": {
     "6": 4.2,
     "3": 13.8
@@ -481,6 +484,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Authentic Quality",
@@ -508,6 +514,9 @@
     "3"
    ],
    "win": 6.4,
+   "win_by": {
+    "4": 6.4
+   },
    "place": {
     "4": 3.4,
     "5": 2.6
@@ -877,6 +886,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "World Builder",
@@ -902,6 +914,9 @@
     "6"
    ],
    "win": 17.8,
+   "win_by": {
+    "3": 17.8
+   },
    "place": {
     "3": 6.4,
     "2": 3.2
@@ -1238,6 +1253,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Rotenberg",
@@ -1262,6 +1280,9 @@
     "1"
    ],
    "win": 3.0,
+   "win_by": {
+    "3": 3.0
+   },
    "place": {
     "3": 2.4,
     "2": 3.6
@@ -1516,6 +1537,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "High Ambition",
@@ -1544,6 +1568,9 @@
     "4"
    ],
    "win": 5.8,
+   "win_by": {
+    "8": 5.8
+   },
    "place": {
     "8": 3.6,
     "3": 5.8
@@ -1587,13 +1614,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "4/3/3/6/8",
+     "combo": "4/3/3,6/8",
      "payout": 286.65
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "6/4/3/3/6/8",
+     "combo": "6/4/3/3,6/8",
      "payout": 1045.2
     }
    ],
@@ -1999,6 +2026,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Assertiveness",
@@ -2028,6 +2058,9 @@
     "4"
    ],
    "win": 4.0,
+   "win_by": {
+    "2": 4.0
+   },
    "place": {
     "2": 2.4,
     "6": 4.2
@@ -2404,6 +2437,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Golden Decree",
@@ -2429,6 +2465,9 @@
     "5"
    ],
    "win": 6.0,
+   "win_by": {
+    "6": 6.0
+   },
    "place": {
     "6": 3.0,
     "4": 2.8
@@ -2804,6 +2843,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Melody Factor",
@@ -2829,6 +2871,9 @@
     "4"
    ],
    "win": 5.8,
+   "win_by": {
+    "1": 5.8
+   },
    "place": {
     "1": 4.4,
     "3": 3.6
@@ -3122,6 +3167,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "I'm Not Tell You",
@@ -3149,6 +3197,9 @@
     "3"
    ],
    "win": 5.8,
+   "win_by": {
+    "8": 5.8
+   },
    "place": {
     "8": 4.2,
     "6": 8.8
@@ -3180,13 +3231,13 @@
     {
      "type": "PICK6JACKPOT",
      "base": 0.2,
-     "combo": "3/6/8/2/6/1/6/8",
+     "combo": "3,6/8/2/6/1,6/8",
      "payout": 74.6
     },
     {
      "type": "PLACEPICK8",
      "base": 1.0,
-     "combo": "2/4/5/1/2/3/2/3/6/3/8/2/6/1/4/",
+     "combo": "2,4,5/1,2,3/2,3,6/3,8/2,6/1,4",
      "payout": 93.4
     },
     {
@@ -3204,13 +3255,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "2/6/1/6/8",
+     "combo": "2/6/1,6/8",
      "payout": 66.6
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "8/2/6/1/6/8",
+     "combo": "8/2/6/1,6/8",
      "payout": 268.55
     }
    ],
@@ -3542,6 +3593,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 20th, 2026",
+   "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Nasti Z",

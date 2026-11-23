@@ -15,6 +15,9 @@
     "8"
    ],
    "win": 8.26,
+   "win_by": {
+    "7": 8.26
+   },
    "place": {
     "7": 4.28,
     "6": 3.12
@@ -46,6 +49,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Maiden Claiming",
@@ -432,6 +436,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Determinedfinisher",
@@ -459,6 +466,9 @@
     "1"
    ],
    "win": 51.78,
+   "win_by": {
+    "6": 51.78
+   },
    "place": {
     "6": 21.98,
     "5": 4.88
@@ -502,6 +512,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Maiden Special Weight",
@@ -838,6 +849,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Kaz Toro",
@@ -866,6 +880,9 @@
     "8"
    ],
    "win": 3.4,
+   "win_by": {
+    "2": 3.4
+   },
    "place": {
     "2": 2.78,
     "4": 11.42
@@ -908,10 +925,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:31\u00a8) Starter Allowance",
+   "class_text": "Starter Allowance",
    "purse": 65000,
    "times": [
     26.12,
@@ -1344,6 +1362,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Salt Spartan",
@@ -1371,6 +1393,9 @@
     "7"
    ],
    "win": 11.92,
+   "win_by": {
+    "2": 11.92
+   },
    "place": {
     "2": 6.6,
     "9": 4.66
@@ -1419,10 +1444,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "6 Furlongs",
-   "class_text": "(1:16\u00ab) Maiden Special Weight",
+   "class_text": "Maiden Special Weight",
    "purse": 100000,
    "times": [
     23.23,
@@ -1713,6 +1739,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Saintly Villain",
@@ -1739,6 +1768,9 @@
     "8"
    ],
    "win": 6.36,
+   "win_by": {
+    "5": 6.36
+   },
    "place": {
     "5": 4.2,
     "1": 3.66
@@ -1782,18 +1814,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "6/2/2/2/5",
+     "combo": "6/2/2/2,5",
      "payout": 665.04
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "7/6/2/2/2/5",
+     "combo": "7/6/2/2/2,5",
      "payout": 2355.91
     }
    ],
    "track_condition": "SLOPPY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Claiming",
@@ -2130,6 +2163,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Unbroken Chain",
@@ -2157,6 +2193,9 @@
     "2"
    ],
    "win": 5.5,
+   "win_by": {
+    "4": 5.5
+   },
    "place": {
     "4": 4.0,
     "7": 8.46
@@ -2200,6 +2239,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.35,
@@ -2583,6 +2623,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Vicked",
@@ -2608,6 +2651,9 @@
     "7"
    ],
    "win": 4.56,
+   "win_by": {
+    "4": 4.56
+   },
    "place": {
     "4": 2.82,
     "5": 4.04
@@ -2651,12 +2697,13 @@
     {
      "type": "GRANDSLAM",
      "base": 1.0,
-     "combo": "1/2/9/1/2/3/5/4/5/6/7/3/4/6",
+     "combo": "1,2,9/1,2,3,5/4,5,6,7/3,4,6",
      "payout": 12.0
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.52,
@@ -2937,6 +2984,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Stand the Rain",
@@ -2964,6 +3014,9 @@
     "5"
    ],
    "win": 14.06,
+   "win_by": {
+    "2": 14.06
+   },
    "place": {
     "2": 4.72,
     "4": 4.5
@@ -3007,24 +3060,25 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "2/5/4/5/3/4/6/2",
+     "combo": "2,5/4,5/3,4,6/2",
      "payout": 122.82
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "2/2/5/4/5/3/4/6/2",
+     "combo": "2/2,5/4,5/3,4,6/2",
      "payout": 1410.71
     },
     {
      "type": "PICK6",
      "base": 1.0,
-     "combo": "2/2/2/5/4/5/3/4/6/2",
+     "combo": "2/2/2,5/4,5/3,4,6/2",
      "payout": 6009.33
     }
    ],
    "track_condition": "SLOPPY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -3512,6 +3566,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 12th, 2026",
+   "date": "2026-11-12",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Whitby",

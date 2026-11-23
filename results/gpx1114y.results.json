@@ -17,6 +17,9 @@
     "8"
    ],
    "win": 5.0,
+   "win_by": {
+    "7": 5.0
+   },
    "place": {
     "7": 3.4,
     "5": 3.0
@@ -48,6 +51,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.96,
@@ -533,6 +537,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Miss Silipo",
@@ -563,6 +570,9 @@
     "4"
    ],
    "win": 6.2,
+   "win_by": {
+    "7": 6.2
+   },
    "place": {
     "7": 3.2,
     "2": 3.2
@@ -600,6 +610,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.59,
@@ -1033,6 +1044,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Finest Gamble",
@@ -1061,6 +1075,9 @@
     "1"
    ],
    "win": 10.8,
+   "win_by": {
+    "4": 10.8
+   },
    "place": {
     "4": 3.4,
     "2": 2.4
@@ -1104,6 +1121,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "weather": "Clear 70",
    "times": [
@@ -1486,6 +1504,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Delightful Diva",
@@ -1512,6 +1533,9 @@
     "2"
    ],
    "win": 122.4,
+   "win_by": {
+    "1": 122.4
+   },
    "place": {
     "1": 32.2,
     "3": 3.8
@@ -1555,6 +1579,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -1890,6 +1915,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Fredericksburg",
@@ -1915,6 +1943,9 @@
     "1"
    ],
    "win": 7.0,
+   "win_by": {
+    "7": 7.0
+   },
    "place": {
     "7": 4.0,
     "8": 4.2
@@ -1958,18 +1989,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "7/4/1/4/5/7",
+     "combo": "7/4/1/4,5,7",
      "payout": 21968.7
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "7/7/4/1/4/5/7",
+     "combo": "7/7/4/1/4,5,7",
      "payout": 81666.75
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.4,
@@ -2302,6 +2334,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Shepping Naches",
@@ -2327,6 +2362,9 @@
     "5"
    ],
    "win": 6.8,
+   "win_by": {
+    "2": 6.8
+   },
    "place": {
     "2": 3.2,
     "3": 3.0
@@ -2370,6 +2408,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     25.18,
@@ -2701,6 +2740,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Alinao Forever",
@@ -2727,6 +2769,9 @@
     "7"
    ],
    "win": 23.6,
+   "win_by": {
+    "5": 23.6
+   },
    "place": {
     "5": 9.2,
     "1": 5.8
@@ -2770,12 +2815,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "1/4/5/7/2/5",
+     "combo": "1/4,5,7/2/5",
      "payout": 41766.4
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Maiden Special Weight",
@@ -3113,6 +3159,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Saytara",
@@ -3139,6 +3188,9 @@
     "4"
    ],
    "win": 3.8,
+   "win_by": {
+    "3": 3.8
+   },
    "place": {
     "3": 2.8,
     "2": 6.4
@@ -3181,10 +3233,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
-   "class_text": "(1:01\u00aa) Handicap",
+   "class_text": "Handicap",
    "purse": 60000,
    "times": [
     22.26,
@@ -3431,6 +3484,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Great Venezuela",
@@ -3458,6 +3514,9 @@
     "7"
    ],
    "win": 8.0,
+   "win_by": {
+    "5": 8.0
+   },
    "place": {
     "5": 4.2,
     "6": 3.6
@@ -3501,6 +3560,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Allowance Optional Claiming",
@@ -3881,6 +3941,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Jalapeno",
@@ -3909,6 +3972,9 @@
     "2"
    ],
    "win": 3.4,
+   "win_by": {
+    "5": 3.4
+   },
    "place": {
     "5": 2.6,
     "3": 9.0
@@ -3952,6 +4018,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Stakes",
@@ -4288,6 +4355,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Lady of City",
@@ -4319,6 +4389,9 @@
     "10"
    ],
    "win": 7.0,
+   "win_by": {
+    "4": 7.0
+   },
    "place": {
     "4": 4.0,
     "11": 3.0
@@ -4350,13 +4423,13 @@
     {
      "type": "PICK6JACKPOT",
      "base": 0.2,
-     "combo": "2/5/1/3/5/4/5/4",
+     "combo": "2/5/1,3/5/4,5/4",
      "payout": 592.42
     },
     {
      "type": "PLACEPICK8",
      "base": 1.0,
-     "combo": "1/3/4/5/7/8/2/3/1/5/1/2/3/5/6/",
+     "combo": "1,3/4,5,7,8/2,3/1,5/1,2,3/5,6/",
      "payout": 1225.7
     },
     {
@@ -4374,18 +4447,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "1/3/5/4/5/4",
+     "combo": "1,3/5/4,5/4",
      "payout": 30.0
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "5/1/3/5/4/5/4",
+     "combo": "5/1,3/5/4,5/4",
      "payout": 344.8
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.26,
@@ -4977,6 +5051,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Gulfstream Park",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Act a Fool",

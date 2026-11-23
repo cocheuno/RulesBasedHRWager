@@ -13,6 +13,9 @@
     "2"
    ],
    "win": 5.24,
+   "win_by": {
+    "5": 5.24
+   },
    "place": {
     "5": 2.58,
     "7": 2.26
@@ -44,6 +47,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Maiden Special Weight",
@@ -291,6 +295,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Okay Annie",
@@ -315,6 +322,9 @@
     "6"
    ],
    "win": 7.26,
+   "win_by": {
+    "2": 7.26
+   },
    "place": {
     "2": 4.04,
     "5": 9.34
@@ -358,6 +368,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Claiming",
@@ -649,6 +660,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Princip",
@@ -674,6 +688,9 @@
     "3"
    ],
    "win": 19.64,
+   "win_by": {
+    "5": 19.64
+   },
    "place": {
     "5": 7.14,
     "4": 3.0
@@ -729,6 +746,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Maiden Optional Claiming",
@@ -1063,6 +1081,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Papa Vegas",
@@ -1089,6 +1110,9 @@
     "7"
    ],
    "win": 13.2,
+   "win_by": {
+    "6": 13.2
+   },
    "place": {
     "6": 5.68,
     "3": 3.7
@@ -1143,10 +1167,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:31\u00a8) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 108000,
    "times": [
     25.02,
@@ -1527,6 +1552,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Grace and Grit",
@@ -1555,6 +1584,9 @@
     "5"
    ],
    "win": 18.12,
+   "win_by": {
+    "4": 18.12
+   },
    "place": {
     "4": 9.58,
     "8": 40.94
@@ -1610,6 +1642,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -2048,6 +2081,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Go Irish",
@@ -2075,6 +2111,9 @@
     "5"
    ],
    "win": 6.5,
+   "win_by": {
+    "2": 6.5
+   },
    "place": {
     "2": 3.48,
     "6": 4.62
@@ -2118,6 +2157,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Claiming",
@@ -2409,6 +2449,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Inexorable",
@@ -2436,6 +2479,9 @@
     "7"
    ],
    "win": 5.44,
+   "win_by": {
+    "2": 5.44
+   },
    "place": {
     "2": 3.1,
     "9": 3.84
@@ -2479,15 +2525,16 @@
     {
      "type": "GRANDSLAM",
      "base": 1.0,
-     "combo": "3/4/6/1/4/8/1/2/4/6/2/6",
+     "combo": "3,4,6/1,4,8/1,2,4,6/2,6",
      "payout": 24.15
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "6 Furlongs",
-   "class_text": "(1:06\u00aa) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 108000,
    "times": [
     23.4,
@@ -2866,6 +2913,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Fairy Godmother",
@@ -2895,6 +2945,9 @@
     "6"
    ],
    "win": 6.64,
+   "win_by": {
+    "3": 6.64
+   },
    "place": {
     "3": 3.72,
     "8": 6.36
@@ -2950,21 +3003,22 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "4/1/2/2/6/1/3/5",
+     "combo": "4/1,2/2,6/1,3,5",
      "payout": 266.49
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "6/4/1/2/2/6/1/3/5",
+     "combo": "6/4/1,2/2,6/1,3,5",
      "payout": 2351.78
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:31\u00a8) Maiden Claiming",
+   "class_text": "Maiden Claiming",
    "purse": 56000,
    "times": [
     24.61,
@@ -3401,6 +3455,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Italianne",

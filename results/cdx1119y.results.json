@@ -14,6 +14,9 @@
     "6"
    ],
    "win": 8.64,
+   "win_by": {
+    "2": 8.64
+   },
    "place": {
     "2": 6.12,
     "3": 7.56
@@ -380,6 +383,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Pied Piper",
@@ -407,6 +414,9 @@
     "6"
    ],
    "win": 5.06,
+   "win_by": {
+    "5": 5.06
+   },
    "place": {
     "5": 3.08,
     "1": 4.72
@@ -884,6 +894,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sock Monkey",
@@ -915,6 +928,9 @@
     "9"
    ],
    "win": 3.44,
+   "win_by": {
+    "2": 3.44
+   },
    "place": {
     "2": 2.64,
     "6": 3.82
@@ -1364,6 +1380,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Bush",
@@ -1395,6 +1414,9 @@
     "9"
    ],
    "win": 8.32,
+   "win_by": {
+    "8": 8.32
+   },
    "place": {
     "8": 6.06,
     "1": 13.72
@@ -1770,6 +1792,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "City of Rome",
@@ -1800,6 +1825,9 @@
     "8"
    ],
    "win": 18.62,
+   "win_by": {
+    "5": 18.62
+   },
    "place": {
     "5": 7.04,
     "1": 5.88
@@ -2289,6 +2317,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "One Cool Dude",
@@ -2318,7 +2349,11 @@
     "8",
     "6"
    ],
-   "win": 3.24,
+   "win": 32.18,
+   "win_by": {
+    "5": 32.18,
+    "4": 3.24
+   },
    "place": {
     "5": 9.46,
     "4": 2.4,
@@ -2802,6 +2837,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Creating Havoc",
@@ -2831,6 +2869,9 @@
     "1"
    ],
    "win": 3.36,
+   "win_by": {
+    "8": 3.36
+   },
    "place": {
     "8": 3.04,
     "3": 6.08
@@ -3324,6 +3365,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Bourbon Neat",
@@ -3355,6 +3399,9 @@
     "6"
    ],
    "win": 29.98,
+   "win_by": {
+    "10": 29.98
+   },
    "place": {
     "10": 12.72,
     "7": 8.66
@@ -3942,6 +3989,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Classic Glide",
@@ -3974,6 +4024,9 @@
     "1"
    ],
    "win": 11.22,
+   "win_by": {
+    "2": 11.22
+   },
    "place": {
     "2": 5.66,
     "4": 5.6
@@ -4405,6 +4458,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 19th, 2026",
+   "date": "2026-11-19",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Avalon Beach",

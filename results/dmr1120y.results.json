@@ -275,6 +275,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mixit",
@@ -670,6 +671,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Padel Addict (IRE)",
@@ -1189,6 +1191,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Wildfire Princess",
@@ -1597,6 +1600,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Blazing Grace",
@@ -1682,13 +1686,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "3/3/8/9/6",
+     "combo": "3/3/8,9/6",
      "payout": 254.7
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "3/4/6/3/3/8/9/6",
+     "combo": "3,4,6/3/3/8,9/6",
      "payout": 601.05
     }
    ],
@@ -2171,6 +2175,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Giant Kid",
@@ -2585,6 +2590,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Berkey",
@@ -3047,6 +3053,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Jasmina",
@@ -3130,13 +3137,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "6/6/6/8/11/12/13",
+     "combo": "6/6/6/8,11,12,13",
      "payout": 1161.9
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "8/9/6/6/6/8/11/12/13",
+     "combo": "8,9/6/6/6/8,11,12,13",
      "payout": 5190.9
     }
    ],
@@ -3688,6 +3695,7 @@
    "source": "chart",
    "date_text": "November 20th, 2026",
    "date": "2026-11-20",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Is That You Wing",

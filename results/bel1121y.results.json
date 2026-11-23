@@ -343,6 +343,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mia's Warrior",
@@ -748,6 +749,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Factory Setting",
@@ -1158,6 +1160,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Conniving",
@@ -1712,6 +1715,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Purple Potato",
@@ -1793,13 +1797,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "5/6/1/9/12",
+     "combo": "5,6/1/9/12",
      "payout": 2440.32
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "4/5/6/1/9/12",
+     "combo": "4/5,6/1/9/12",
      "payout": 14678.75
     }
    ],
@@ -2371,6 +2375,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Arinato",
@@ -3048,6 +3053,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sammy C Note",
@@ -3521,6 +3527,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Bow Draw",
@@ -4026,6 +4033,7 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Capturing",
@@ -4104,7 +4112,7 @@
     {
      "type": "GRANDSLAM",
      "base": 1.0,
-     "combo": "2/5/10/3/4/6/5/6/7/1",
+     "combo": "2,5,10/3,4,6/5,6,7/1",
      "payout": 30.41
     }
    ],
@@ -4653,6 +4661,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Ground Support",
@@ -5395,6 +5404,7 @@
    "track": "Belmont Park",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Light Cav",

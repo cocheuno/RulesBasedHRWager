@@ -382,6 +382,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Max Is Him",
@@ -732,6 +733,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Cavatelli",
@@ -1154,6 +1156,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Chiqueada",
@@ -1850,6 +1853,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Jaydeevee",
@@ -2286,6 +2290,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Kintrigue",
@@ -2695,6 +2700,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Vissino",
@@ -2774,13 +2780,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "12/4/6/1/5/6/10/12",
+     "combo": "12/4/6/1,5,6,10,12",
      "payout": 460.11
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "4/12/4/6/1/5/6/10/12",
+     "combo": "4/12/4/6/1,5,6,10,12",
      "payout": 2133.67
     }
    ],
@@ -3227,6 +3233,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Quick Pick",
@@ -3709,6 +3716,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Southern Road",
@@ -3795,7 +3803,7 @@
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "4/6/1/5/6/10/12/4/3",
+     "combo": "4/6/1,5,6,10,12/4/3",
      "payout": 650.35
     }
    ],
@@ -4185,6 +4193,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Paris Twilight",
@@ -4652,6 +4661,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Gramp's Legacy",
@@ -4714,7 +4724,7 @@
     {
      "type": "PICK6JACKPOT",
      "base": 0.2,
-     "combo": "6/1/5/6/10/12/4/3/2/4",
+     "combo": "6/1,5,6,10,12/4/3/2/4",
      "payout": 6784.96
     },
     {
@@ -4738,7 +4748,7 @@
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "1/5/6/10/12/4/3/2/4",
+     "combo": "1,5,6,10,12/4/3/2/4",
      "payout": 2916.04
     }
    ],
@@ -5131,6 +5141,7 @@
    "track": "Churchill Downs",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "C R Sultan",

@@ -12,6 +12,9 @@
     "3"
    ],
    "win": 7.48,
+   "win_by": {
+    "5": 7.48
+   },
    "place": {
     "5": 3.18,
     "4": 2.5
@@ -27,6 +30,7 @@
    ],
    "track_condition": "SLOPPY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Maiden Special Weight",
@@ -229,6 +233,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Very Clever",
@@ -252,6 +259,9 @@
     "4"
    ],
    "win": 3.12,
+   "win_by": {
+    "3": 3.12
+   },
    "place": {
     "3": 2.52,
     "7": 4.54
@@ -295,6 +305,7 @@
    ],
    "track_condition": "SLOPPY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -628,6 +639,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Royal Bobbie",
@@ -653,6 +668,9 @@
     "3"
    ],
    "win": 4.24,
+   "win_by": {
+    "1": 4.24
+   },
    "place": {
     "1": 2.36,
     "5": 2.6
@@ -695,10 +713,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:31\u00a8) Maiden Special Weight",
+   "class_text": "Maiden Special Weight",
    "purse": 100000,
    "weather": "Cloudy 40",
    "times": [
@@ -1031,6 +1050,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Belmont Street",
@@ -1057,6 +1079,9 @@
     "8"
    ],
    "win": 23.66,
+   "win_by": {
+    "7": 23.66
+   },
    "place": {
     "7": 9.68,
     "1": 5.66
@@ -1106,6 +1131,7 @@
    ],
    "track_condition": "SLOPPY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Claiming",
@@ -1442,6 +1468,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Admiral Sol",
@@ -1469,6 +1499,9 @@
     "4"
    ],
    "win": 11.96,
+   "win_by": {
+    "7": 11.96
+   },
    "place": {
     "7": 7.78,
     "6": 9.52
@@ -1512,18 +1545,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "1/3/1/6/7/7",
+     "combo": "1,3/1,6/7/7",
      "payout": 165.38
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "5/1/3/1/6/7/7",
+     "combo": "5/1,3/1,6/7/7",
      "payout": 848.92
     }
    ],
    "track_condition": "SLOPPY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Special Weight",
@@ -1860,6 +1894,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Centrado",
@@ -1888,6 +1925,9 @@
     "2"
    ],
    "win": 24.78,
+   "win_by": {
+    "1": 24.78
+   },
    "place": {
     "1": 9.82,
     "8": 5.36
@@ -1931,6 +1971,7 @@
    ],
    "track_condition": "SLOPPY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Starter Allowance",
@@ -2310,6 +2351,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "First Blessing",
@@ -2339,6 +2383,9 @@
     "4"
    ],
    "win": 5.42,
+   "win_by": {
+    "3": 5.42
+   },
    "place": {
     "3": 2.94,
     "6": 3.16
@@ -2382,12 +2429,13 @@
     {
      "type": "GRANDSLAM",
      "base": 1.0,
-     "combo": "1/5/7/6/7/8/1/5/8/3",
+     "combo": "1,5,7/6,7,8/1,5,8/3",
      "payout": 294.37
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.97,
@@ -2821,6 +2869,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "A Little At First",
@@ -2852,6 +2903,9 @@
     "4"
    ],
    "win": 5.96,
+   "win_by": {
+    "9": 5.96
+   },
    "place": {
     "9": 3.36,
     "1": 6.78
@@ -2907,21 +2961,22 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "7/1/3/5/9/12/13",
+     "combo": "7/1/3/5,9,12,13",
      "payout": 360.43
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "7/7/1/3/5/9/12/13",
+     "combo": "7/7/1/3/5,9,12,13",
      "payout": 4462.4
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "6 Furlongs",
-   "class_text": "(1:06\u00aa) Maiden Special Weight",
+   "class_text": "Maiden Special Weight",
    "purse": 100000,
    "times": [
     22.3,
@@ -3392,6 +3447,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Belmont Park",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Plum Island",

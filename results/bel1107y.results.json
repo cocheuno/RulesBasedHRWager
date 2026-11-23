@@ -15,6 +15,9 @@
     "3"
    ],
    "win": 16.68,
+   "win_by": {
+    "1": 16.68
+   },
    "place": {
     "1": 5.92,
     "2": 7.08
@@ -46,6 +49,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Claiming",
@@ -379,6 +383,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Into Inspiration",
@@ -406,6 +414,9 @@
     "1"
    ],
    "win": 7.3,
+   "win_by": {
+    "9": 7.3
+   },
    "place": {
     "9": 4.2,
     "4": 5.44
@@ -449,6 +460,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.24,
@@ -833,6 +845,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "All Show",
@@ -860,6 +876,9 @@
     "4"
    ],
    "win": 7.12,
+   "win_by": {
+    "3": 7.12
+   },
    "place": {
     "3": 4.1,
     "5": 7.0
@@ -903,6 +922,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -1286,6 +1306,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Dear Chairman",
@@ -1314,6 +1338,9 @@
     "8"
    ],
    "win": 33.62,
+   "win_by": {
+    "6": 33.62
+   },
    "place": {
     "6": 9.68,
     "2": 5.04
@@ -1362,10 +1389,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "6 Furlongs",
-   "class_text": "() Maiden Optional Claiming",
+   "class_text": "Maiden Optional Claiming",
    "purse": 80000,
    "times": [
     23.13,
@@ -1744,6 +1772,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Souper Lawrence",
@@ -1775,6 +1807,9 @@
     "1"
    ],
    "win": 13.06,
+   "win_by": {
+    "8": 13.06
+   },
    "place": {
     "8": 6.58,
     "5": 15.96
@@ -1830,6 +1865,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.54,
@@ -2366,6 +2402,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Outsource",
@@ -2393,6 +2433,9 @@
     "5"
    ],
    "win": 7.46,
+   "win_by": {
+    "3": 7.46
+   },
    "place": {
     "3": 6.8,
     "6": 11.72
@@ -2420,6 +2463,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Stakes",
@@ -2621,6 +2665,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Beauty Reigns",
@@ -2646,6 +2694,9 @@
     "5"
    ],
    "win": 18.5,
+   "win_by": {
+    "10": 18.5
+   },
    "place": {
     "10": 6.44,
     "4": 3.5
@@ -2700,10 +2751,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "6 Furlongs",
-   "class_text": "(1:06\u00aa) Stakes",
+   "class_text": "Stakes",
    "purse": 175000,
    "times": [
     23.35,
@@ -3082,6 +3134,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Blazing Tiger",
@@ -3111,6 +3167,9 @@
     "10"
    ],
    "win": 20.56,
+   "win_by": {
+    "3": 20.56
+   },
    "place": {
     "3": 5.26,
     "9": 3.22
@@ -3154,6 +3213,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Stakes",
@@ -3592,6 +3652,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Stimulate",
@@ -3621,6 +3685,9 @@
     "5"
    ],
    "win": 12.72,
+   "win_by": {
+    "3": 12.72
+   },
    "place": {
     "3": 5.52,
     "2": 6.6
@@ -3664,12 +3731,13 @@
     {
      "type": "GRANDSLAM",
      "base": 1.0,
-     "combo": "3/6/4/7/10/3/8/9/3",
+     "combo": "3,6/4,7,10/3,8,9/3",
      "payout": 50.25
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.19,
@@ -4106,6 +4174,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Tap to Open",
@@ -4136,6 +4208,9 @@
     "7"
    ],
    "win": 19.96,
+   "win_by": {
+    "3": 19.96
+   },
    "place": {
     "3": 7.96,
     "6": 5.24
@@ -4196,10 +4271,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "6 Furlongs",
-   "class_text": "(1:06\u00aa) Maiden Claiming",
+   "class_text": "Maiden Claiming",
    "purse": 56000,
    "times": [
     23.18,
@@ -4669,6 +4745,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Belmont Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Major Bourbon",

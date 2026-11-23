@@ -15,6 +15,9 @@
     "1"
    ],
    "win": 7.08,
+   "win_by": {
+    "5": 7.08
+   },
    "place": {
     "5": 3.7,
     "7": 3.92
@@ -52,6 +55,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Maiden Claiming",
@@ -435,6 +439,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Prairie Princess",
@@ -460,6 +468,9 @@
     "1"
    ],
    "win": 9.58,
+   "win_by": {
+    "5": 9.58
+   },
    "place": {
     "5": 4.78,
     "3": 5.16
@@ -491,6 +502,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Claiming",
@@ -736,6 +748,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Perpetua",
@@ -766,6 +782,9 @@
     "15"
    ],
    "win": 24.32,
+   "win_by": {
+    "11": 24.32
+   },
    "place": {
     "11": 10.88,
     "1": 35.62
@@ -814,10 +833,11 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32\u00ab) Maiden Special Weight",
+   "class_text": "Maiden Special Weight",
    "purse": 120000,
    "times": [
     23.31,
@@ -1463,6 +1483,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Fifth Peg",
@@ -1494,6 +1518,9 @@
     "1"
    ],
    "win": 23.58,
+   "win_by": {
+    "5": 23.58
+   },
    "place": {
     "5": 8.3,
     "2": 4.08
@@ -1543,6 +1570,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Allowance Optional Claiming",
@@ -1831,6 +1859,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Just Deeds",
@@ -1862,6 +1894,9 @@
     "11"
    ],
    "win": 8.18,
+   "win_by": {
+    "7": 8.18
+   },
    "place": {
     "7": 3.98,
     "2": 3.52
@@ -1923,6 +1958,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Claiming",
@@ -2486,6 +2522,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Prank At Dawn",
@@ -2519,6 +2559,9 @@
     "3"
    ],
    "win": 5.36,
+   "win_by": {
+    "7": 5.36
+   },
    "place": {
     "7": 3.12,
     "6": 4.18
@@ -2568,6 +2611,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Maiden Claiming",
@@ -2947,6 +2991,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mizzou",
@@ -2979,6 +3027,9 @@
     "4"
    ],
    "win": 18.84,
+   "win_by": {
+    "6": 18.84
+   },
    "place": {
     "6": 7.58,
     "2": 3.92
@@ -3039,7 +3090,8 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.11,
@@ -3632,6 +3684,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Arrival Time",
@@ -3662,6 +3718,9 @@
     "12"
    ],
    "win": 10.0,
+   "win_by": {
+    "8": 10.0
+   },
    "place": {
     "8": 4.14,
     "7": 2.54
@@ -3717,6 +3776,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -4055,6 +4115,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Copp",
@@ -4081,6 +4145,9 @@
     "2"
    ],
    "win": 4.2,
+   "win_by": {
+    "1": 4.2
+   },
    "place": {
     "1": 3.06,
     "7": 6.52
@@ -4136,6 +4203,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Allowance Optional Claiming",
@@ -4469,6 +4537,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sneaky Good",
@@ -4501,6 +4573,9 @@
     "9"
    ],
    "win": 10.5,
+   "win_by": {
+    "5": 10.5
+   },
    "place": {
     "5": 4.98,
     "4": 3.38
@@ -4573,10 +4648,11 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32\u00ab) Maiden Special Weight",
+   "class_text": "Maiden Special Weight",
    "purse": 120000,
    "times": [
     23.58,
@@ -5222,6 +5298,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Shelley B",

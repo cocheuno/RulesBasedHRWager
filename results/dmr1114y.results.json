@@ -16,6 +16,9 @@
     "7"
    ],
    "win": 5.0,
+   "win_by": {
+    "2": 5.0
+   },
    "place": {
     "2": 2.8,
     "4": 4.2
@@ -53,6 +56,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Special Weight",
@@ -431,6 +435,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Eurydice",
@@ -459,6 +466,9 @@
     "1"
    ],
    "win": 9.6,
+   "win_by": {
+    "6": 9.6
+   },
    "place": {
     "6": 4.6,
     "4": 9.6
@@ -502,6 +512,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "5 Furlongs",
    "class_text": "Claiming",
@@ -785,6 +796,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Harcyn",
@@ -810,6 +824,9 @@
     "2"
    ],
    "win": 2.6,
+   "win_by": {
+    "1": 2.6
+   },
    "place": {
     "1": 2.1,
     "3": 2.8
@@ -853,6 +870,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Stakes",
@@ -1096,6 +1114,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Holmby",
@@ -1123,6 +1144,9 @@
     "7"
    ],
    "win": 6.8,
+   "win_by": {
+    "3": 6.8
+   },
    "place": {
     "3": 3.6,
     "6": 4.0
@@ -1172,6 +1196,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
    "class_text": "Claiming",
@@ -1532,6 +1557,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Battle School",
@@ -1562,6 +1590,9 @@
     "5"
    ],
    "win": 7.0,
+   "win_by": {
+    "2": 7.0
+   },
    "place": {
     "2": 4.4,
     "1": 9.8
@@ -1635,6 +1666,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Maiden Special Weight",
@@ -2072,6 +2104,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Dream Seeker",
@@ -2104,6 +2139,9 @@
     "8"
    ],
    "win": 14.4,
+   "win_by": {
+    "9": 14.4
+   },
    "place": {
     "9": 7.4,
     "12": 5.0
@@ -2159,6 +2197,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
    "class_text": "Maiden Claiming",
@@ -2598,6 +2637,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Dont Short Ur Self",
@@ -2628,6 +2670,9 @@
     "2"
    ],
    "win": 11.0,
+   "win_by": {
+    "5": 11.0
+   },
    "place": {
     "5": 4.8,
     "1": 3.2
@@ -2683,6 +2728,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.33,
@@ -3063,6 +3109,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Flamboyant",
@@ -3091,6 +3140,9 @@
     "6"
    ],
    "win": 8.8,
+   "win_by": {
+    "8": 8.8
+   },
    "place": {
     "8": 4.2,
     "7": 4.4
@@ -3140,6 +3192,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Allowance Optional Claiming",
@@ -3520,6 +3573,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Stagger Lee",
@@ -3548,6 +3604,9 @@
     "10"
    ],
    "win": 12.8,
+   "win_by": {
+    "2": 12.8
+   },
    "place": {
     "2": 6.0,
     "5": 4.0
@@ -3615,6 +3674,7 @@
    ],
    "track_condition": "GOOD",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Maiden Special Weight",
@@ -4002,6 +4062,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Soul Force",

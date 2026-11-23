@@ -16,6 +16,9 @@
     "6"
    ],
    "win": 7.4,
+   "win_by": {
+    "2": 7.4
+   },
    "place": {
     "2": 4.2,
     "4": 14.4
@@ -47,6 +50,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.48,
@@ -481,6 +485,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Looks to Kill",
@@ -509,6 +517,9 @@
     "2"
    ],
    "win": 3.2,
+   "win_by": {
+    "3": 3.2
+   },
    "place": {
     "3": 2.4,
     "5": 3.8
@@ -545,10 +556,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
-   "class_text": "(1:01\u00aa) Maiden Claiming",
+   "class_text": "Maiden Claiming",
    "purse": 25000,
    "times": [
     22.36,
@@ -830,6 +842,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Stem Cell",
@@ -856,6 +872,9 @@
     "4"
    ],
    "win": 4.8,
+   "win_by": {
+    "2": 4.8
+   },
    "place": {
     "2": 2.8,
     "5": 2.8
@@ -899,6 +918,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.85,
@@ -1227,6 +1247,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sky Masterson",
@@ -1253,6 +1277,9 @@
     "7"
    ],
    "win": 11.2,
+   "win_by": {
+    "6": 11.2
+   },
    "place": {
     "6": 7.0,
     "2": 6.6
@@ -1295,10 +1322,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5 Furlongs",
-   "class_text": "(:54\u00ab) Maiden Claiming",
+   "class_text": "Maiden Claiming",
    "purse": 27000,
    "times": [
     21.91,
@@ -1581,6 +1609,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Play It Forward",
@@ -1609,6 +1641,9 @@
     "2"
    ],
    "win": 8.4,
+   "win_by": {
+    "1": 8.4
+   },
    "place": {
     "1": 4.2,
     "6": 8.0
@@ -1664,6 +1699,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Claiming",
@@ -2043,6 +2079,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Authentic Wave",
@@ -2071,6 +2111,9 @@
     "8"
    ],
    "win": 11.8,
+   "win_by": {
+    "7": 11.8
+   },
    "place": {
     "7": 4.2,
     "1": 3.2
@@ -2114,6 +2157,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.54,
@@ -2497,6 +2541,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Peacethrustrength",
@@ -2522,6 +2570,9 @@
     "7"
    ],
    "win": 8.6,
+   "win_by": {
+    "4": 8.6
+   },
    "place": {
     "4": 4.2,
     "2": 3.2
@@ -2571,6 +2622,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Maiden Claiming",
@@ -2817,6 +2869,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Queen of Rock",
@@ -2846,6 +2902,9 @@
     "3"
    ],
    "win": 15.0,
+   "win_by": {
+    "8": 15.0
+   },
    "place": {
     "8": 7.4,
     "5": 6.8
@@ -2889,6 +2948,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.18,
@@ -3477,6 +3537,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Junction Road",
@@ -3506,6 +3570,9 @@
     "7"
    ],
    "win": 4.6,
+   "win_by": {
+    "1": 4.6
+   },
    "place": {
     "1": 2.4,
     "3": 3.2
@@ -3549,6 +3616,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Claiming",
@@ -3797,6 +3865,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Swaggish",
@@ -3824,6 +3896,9 @@
     "6"
    ],
    "win": 4.8,
+   "win_by": {
+    "8": 4.8
+   },
    "place": {
     "8": 2.8,
     "3": 3.4
@@ -3855,13 +3930,13 @@
     {
      "type": "PICK6JACKPOT",
      "base": 0.2,
-     "combo": "1/7/4/8/1/2/4/6/9/8",
+     "combo": "1/7/4/8/1,2,4,6,9/8",
      "payout": 1022.34
     },
     {
      "type": "PLACEPICK8",
      "base": 1.0,
-     "combo": "2/5/2/6/1/6/1/6/7/9/2/4/5/8/1/",
+     "combo": "2,5/2,6/1,6/1,6,7,9/2,4/5,8/1",
      "payout": 2107.6
     },
     {
@@ -3879,18 +3954,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "4/8/1/2/4/6/9/8",
+     "combo": "4/8/1,2,4,6,9/8",
      "payout": 84.2
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "7/4/8/1/2/4/6/9/8",
+     "combo": "7/4/8/1,2,4,6,9/8",
      "payout": 682.5
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.86,
@@ -4375,6 +4451,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sovereign Gold",

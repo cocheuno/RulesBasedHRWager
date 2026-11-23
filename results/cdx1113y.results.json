@@ -14,6 +14,9 @@
     "5"
    ],
    "win": 27.5,
+   "win_by": {
+    "2": 27.5
+   },
    "place": {
     "2": 7.08,
     "3": 3.84
@@ -45,6 +48,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Claiming",
@@ -336,6 +340,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Issachar",
@@ -362,6 +369,9 @@
     "7"
    ],
    "win": 6.14,
+   "win_by": {
+    "3": 6.14
+   },
    "place": {
     "3": 3.16,
     "4": 3.12
@@ -405,6 +415,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7\u00bd Furlongs",
    "class_text": "Maiden Claiming",
@@ -743,6 +754,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Apexion",
@@ -771,6 +785,9 @@
     "1"
    ],
    "win": 30.9,
+   "win_by": {
+    "3": 30.9
+   },
    "place": {
     "3": 10.56,
     "8": 4.34
@@ -820,6 +837,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -1255,6 +1273,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Landing Craft",
@@ -1284,6 +1306,9 @@
     "9"
    ],
    "win": 4.04,
+   "win_by": {
+    "11": 4.04
+   },
    "place": {
     "11": 3.46,
     "3": 5.34
@@ -1333,6 +1358,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Allowance",
@@ -1772,6 +1798,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Defiant Lass",
@@ -1805,6 +1835,9 @@
     "3"
    ],
    "win": 6.1,
+   "win_by": {
+    "5": 6.1
+   },
    "place": {
     "5": 3.68,
     "11": 5.54
@@ -1854,18 +1887,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "3/3/1/4/8/11/5/6/14/15/16",
+     "combo": "3/3/1,4,8,11/5,6,14,15,16",
      "payout": 280.42
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "2/3/3/1/4/8/11/5/6/14/15/16",
+     "combo": "2/3/3/1,4,8,11/5,6,14,15,16",
      "payout": 3450.06
     }
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Maiden Claiming",
@@ -2430,6 +2464,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Queens Ambition",
@@ -2462,6 +2499,9 @@
     "8"
    ],
    "win": 22.9,
+   "win_by": {
+    "1": 22.9
+   },
    "place": {
     "1": 7.82,
     "9": 2.84
@@ -2511,6 +2551,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Claiming",
@@ -2847,6 +2888,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Dr Fenn",
@@ -2876,6 +2921,9 @@
     "7"
    ],
    "win": 15.74,
+   "win_by": {
+    "5": 15.74
+   },
    "place": {
     "5": 8.56,
     "4": 17.44
@@ -2925,18 +2973,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "1/4/8/11/5/6/14/15/16/1/5",
+     "combo": "1,4,8,11/5,6,14,15,16/1/5",
      "payout": 845.56
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "3/1/4/8/11/5/6/14/15/16/1/5",
+     "combo": "3/1,4,8,11/5,6,14,15,16/1/5",
      "payout": 11877.89
     }
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
    "class_text": "Allowance",
@@ -3299,6 +3348,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Strate Cash",
@@ -3328,6 +3381,9 @@
     "3"
    ],
    "win": 14.76,
+   "win_by": {
+    "2": 14.76
+   },
    "place": {
     "2": 6.2,
     "4": 3.66
@@ -3389,6 +3445,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Special Weight",
@@ -3727,6 +3784,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "It's the Law",
@@ -3754,6 +3814,9 @@
     "7"
    ],
    "win": 4.44,
+   "win_by": {
+    "4": 4.44
+   },
    "place": {
     "4": 2.88,
     "2": 4.04
@@ -3809,12 +3872,13 @@
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "5/6/14/15/16/1/5/2/4/5/9/10/11",
+     "combo": "5,6,14,15,16/1/5/2/4,5,9,10,11",
      "payout": 6512.19
     }
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Claiming",
@@ -4153,6 +4217,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Camp Hale",
@@ -4180,6 +4248,9 @@
     "7"
    ],
    "win": 7.86,
+   "win_by": {
+    "13": 7.86
+   },
    "place": {
     "13": 4.26,
     "9": 6.0
@@ -4223,6 +4294,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Allowance Optional Claiming",
@@ -4617,6 +4689,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Kalahari Dreams",
@@ -4646,6 +4721,9 @@
     "5"
    ],
    "win": 6.22,
+   "win_by": {
+    "2": 6.22
+   },
    "place": {
     "2": 3.94,
     "3": 4.06
@@ -4719,6 +4797,7 @@
    ],
    "track_condition": "MUDDY (sealed)",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Claiming",
@@ -5145,6 +5224,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 13th, 2026",
+   "date": "2026-11-13",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Hoops Rivalry",

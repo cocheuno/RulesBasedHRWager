@@ -16,6 +16,9 @@
     "4"
    ],
    "win": 11.8,
+   "win_by": {
+    "7": 11.8
+   },
    "place": {
     "7": 5.0,
     "1": 4.4
@@ -52,7 +55,8 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     22.9,
@@ -485,6 +489,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Muscled",
@@ -513,6 +520,9 @@
     "1"
    ],
    "win": 26.8,
+   "win_by": {
+    "4": 26.8
+   },
    "place": {
     "4": 9.0,
     "7": 8.0
@@ -556,6 +566,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
    "class_text": "Waiver Claiming",
@@ -840,6 +851,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Babe Ruthless",
@@ -869,6 +883,9 @@
     "8"
    ],
    "win": 25.2,
+   "win_by": {
+    "3": 25.2
+   },
    "place": {
     "3": 10.4,
     "7": 2.8
@@ -917,10 +934,11 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Claiming",
+   "class_text": "Claiming",
    "purse": 35000,
    "times": [
     23.27,
@@ -1405,6 +1423,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sareeha (IRE)",
@@ -1434,6 +1455,9 @@
     "1"
    ],
    "win": 3.8,
+   "win_by": {
+    "5": 3.8
+   },
    "place": {
     "5": 2.8,
     "2": 3.2
@@ -1483,6 +1507,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Maiden Special Weight",
@@ -1816,6 +1841,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Duntov",
@@ -1846,6 +1874,9 @@
     "1"
    ],
    "win": 10.0,
+   "win_by": {
+    "10": 10.0
+   },
    "place": {
     "10": 4.6,
     "2": 3.8
@@ -1906,10 +1937,11 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5 Furlongs",
-   "class_text": "(:54\u00aa) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 67000,
    "times": [
     22.58,
@@ -2304,6 +2336,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Blame Ashley",
@@ -2337,6 +2372,9 @@
     "2"
    ],
    "win": 13.6,
+   "win_by": {
+    "5": 13.6
+   },
    "place": {
     "5": 5.6,
     "3": 4.8
@@ -2386,6 +2424,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Waiver Claiming",
@@ -2929,6 +2968,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sterling Sea",
@@ -2962,6 +3004,9 @@
     "6"
    ],
    "win": 6.4,
+   "win_by": {
+    "3": 6.4
+   },
    "place": {
     "3": 3.2,
     "2": 3.8
@@ -3011,15 +3056,16 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "5/10/5/3/12/13/14",
+     "combo": "5/10/5/3,12,13,14",
      "payout": 250.45
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5 Furlongs",
-   "class_text": "(:54\u00aa) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 67000,
    "times": [
     22.65,
@@ -3419,6 +3465,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Billie Holiday",
@@ -3449,6 +3498,9 @@
     "6"
    ],
    "win": 74.6,
+   "win_by": {
+    "8": 74.6
+   },
    "place": {
     "8": 22.6,
     "9": 5.2
@@ -3498,6 +3550,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Stakes",
@@ -3834,6 +3887,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mr. Disrespectful",
@@ -3865,6 +3921,9 @@
     "8"
    ],
    "win": 12.0,
+   "win_by": {
+    "5": 12.0
+   },
    "place": {
     "5": 5.6,
     "6": 6.4
@@ -3914,21 +3973,22 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "5/3/12/13/14/8/5",
+     "combo": "5/3,12,13,14/8/5",
      "payout": 4629.35
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "10/5/3/12/13/14/8/5",
+     "combo": "10/5/3,12,13,14/8/5",
      "payout": 49793.35
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 67000,
    "times": [
     23.44,
@@ -4517,6 +4577,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Peppermint Dash",

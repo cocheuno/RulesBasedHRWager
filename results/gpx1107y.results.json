@@ -18,6 +18,9 @@
     "1"
    ],
    "win": 39.6,
+   "win_by": {
+    "7": 39.6
+   },
    "place": {
     "7": 17.0,
     "8": 4.0
@@ -48,10 +51,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
-   "class_text": "(1:01\u00aa) Maiden Special Weight",
+   "class_text": "Maiden Special Weight",
    "purse": 50000,
    "times": [
     22.34,
@@ -447,6 +451,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Turca",
@@ -477,6 +485,9 @@
     "7"
    ],
    "win": 12.8,
+   "win_by": {
+    "3": 12.8
+   },
    "place": {
     "3": 6.8,
     "1": 14.6
@@ -514,6 +525,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Claiming",
@@ -847,6 +859,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "My Mom Forever",
@@ -871,6 +887,9 @@
     "7"
    ],
    "win": 3.6,
+   "win_by": {
+    "2": 3.6
+   },
    "place": {
     "2": 2.2,
     "4": 3.4
@@ -897,10 +916,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5 Furlongs",
-   "class_text": "(:54\u00ab) Claiming",
+   "class_text": "Claiming",
    "purse": 23000,
    "times": [
     21.85,
@@ -1071,6 +1091,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Breezey Z",
@@ -1098,6 +1122,9 @@
     "3"
    ],
    "win": 12.0,
+   "win_by": {
+    "7": 12.0
+   },
    "place": {
     "7": 4.2,
     "11": 3.0
@@ -1140,10 +1167,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5 Furlongs",
-   "class_text": "(:54\u00ab) Maiden Claiming",
+   "class_text": "Maiden Claiming",
    "purse": 27000,
    "times": [
     21.71,
@@ -1541,6 +1569,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Baby Princess",
@@ -1570,6 +1602,9 @@
     "4"
    ],
    "win": 4.6,
+   "win_by": {
+    "2": 4.6
+   },
    "place": {
     "2": 3.0,
     "6": 3.4
@@ -1613,18 +1648,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "3/1/2/3/5/7/2/7",
+     "combo": "3/1,2,3,5/7/2,7",
      "payout": 183.6
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "7/3/1/2/3/5/7/2/7",
+     "combo": "7/3/1,2,3,5/7/2,7",
      "payout": 3410.65
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Maiden Claiming",
@@ -1958,6 +1994,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mosai",
@@ -1984,6 +2024,9 @@
     "2"
    ],
    "win": 10.2,
+   "win_by": {
+    "6": 10.2
+   },
    "place": {
     "6": 4.6,
     "4": 3.2
@@ -2026,10 +2069,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5 Furlongs",
-   "class_text": "(:54\u00ab) Claiming",
+   "class_text": "Claiming",
    "purse": 28000,
    "times": [
     21.68,
@@ -2310,6 +2354,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Here Comes Leo",
@@ -2338,6 +2386,9 @@
     "6"
    ],
    "win": 9.6,
+   "win_by": {
+    "2": 9.6
+   },
    "place": {
     "2": 4.8,
     "4": 2.6
@@ -2381,18 +2432,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "7/2/7/6/2",
+     "combo": "7/2,7/6/2",
      "payout": 505.7
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "1/2/3/5/7/2/7/6/2",
+     "combo": "1,2,3,5/7/2,7/6/2",
      "payout": 730.75
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Maiden Optional Claiming",
@@ -2773,6 +2825,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "King Manolete",
@@ -2802,6 +2858,9 @@
     "1"
    ],
    "win": 6.4,
+   "win_by": {
+    "8": 6.4
+   },
    "place": {
     "8": 3.8,
     "4": 6.0
@@ -2845,6 +2904,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     23.29,
@@ -3277,6 +3337,10 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Miss Mary Nell",
@@ -3303,6 +3367,9 @@
     "7"
    ],
    "win": 10.4,
+   "win_by": {
+    "6": 10.4
+   },
    "place": {
     "6": 4.2,
     "3": 3.6
@@ -3346,6 +3413,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Claiming",
@@ -3592,6 +3660,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Zealot",
@@ -3618,6 +3690,9 @@
     "3"
    ],
    "win": 6.0,
+   "win_by": {
+    "6": 6.0
+   },
    "place": {
     "6": 3.2,
     "5": 3.6
@@ -3660,10 +3735,11 @@
     }
    ],
    "track_condition": "FAST",
-   "surface": "DIRT",
+   "surface": "SYNTHETIC",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
-   "class_text": "(1:01\u00aa) Handicap",
+   "class_text": "Handicap",
    "purse": 60000,
    "weather": "Clear 86",
    "times": [
@@ -3986,6 +4062,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mattingly",
@@ -4013,6 +4093,9 @@
     "8"
    ],
    "win": 20.0,
+   "win_by": {
+    "7": 20.0
+   },
    "place": {
     "7": 7.8,
     "4": 4.2
@@ -4044,13 +4127,13 @@
     {
      "type": "PICK6JACKPOT",
      "base": 0.2,
-     "combo": "6/2/8/6/6/7/7",
+     "combo": "6/2/8/6/6,7/7",
      "payout": 10270.1
     },
     {
      "type": "PLACEPICK8",
      "base": 1.0,
-     "combo": "1/2/7/11/2/6/7/4/6/2/4/5/4/8/3",
+     "combo": "1,2,7,11/2,6,7/4,6/2,4,5/4,8/3",
      "payout": 102.6
     },
     {
@@ -4068,18 +4151,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "8/6/6/7/7",
+     "combo": "8/6/6,7/7",
      "payout": 853.0
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "2/8/6/6/7/7",
+     "combo": "2/8/6/6,7/7",
      "payout": 3289.05
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     25.19,
@@ -4411,6 +4495,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Gulfstream Park",
+   "date_text": "November 7th, 2026",
+   "date": "2026-11-07",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Distinct",

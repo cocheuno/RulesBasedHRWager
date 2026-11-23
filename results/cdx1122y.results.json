@@ -346,7 +346,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Nickyb",
@@ -757,7 +757,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Wild Acclaim",
@@ -1119,7 +1119,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Heart Headed",
@@ -1676,7 +1676,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Jasmine Absolute",
@@ -1760,13 +1760,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "7/6/2/5/7",
+     "combo": "7/6/2,5/7",
      "payout": 31.65
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "4/7/6/2/5/7",
+     "combo": "4/7/6/2,5/7",
      "payout": 99.41
     }
    ],
@@ -2211,7 +2211,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Dosc",
@@ -2579,7 +2579,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mandy's Man Can",
@@ -2661,13 +2661,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "2/5/7/4/1",
+     "combo": "2,5/7/4/1",
      "payout": 132.64
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "6/2/5/7/4/1",
+     "combo": "6/2,5/7/4/1",
      "payout": 655.7
     }
    ],
@@ -3215,7 +3215,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Pierre",
@@ -3825,7 +3825,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Unionista",
@@ -4347,7 +4347,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Spur of the Moment",
@@ -4427,7 +4427,7 @@
     {
      "type": "PICK6JACKPOT",
      "base": 0.2,
-     "combo": "7/4/1/1/11/12/13/14/15/3/4/5/5",
+     "combo": "7/4/1/1,11,12,13,14,15/3,4,5/5",
      "payout": 6313.89
     },
     {
@@ -4445,13 +4445,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "1/1/11/12/13/14/15/3/4/5/5",
+     "combo": "1/1,11,12,13,14,15/3,4,5/5",
      "payout": 1018.35
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "4/1/1/11/12/13/14/15/3/4/5/5",
+     "combo": "4/1/1,11,12,13,14,15/3,4,5/5",
      "payout": 4443.47
     }
    ],
@@ -5105,7 +5105,7 @@
    "track": "Churchill Downs",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Sunshine Daydream",

@@ -15,6 +15,9 @@
     "8"
    ],
    "win": 5.2,
+   "win_by": {
+    "3": 5.2
+   },
    "place": {
     "3": 3.08,
     "9": 4.8
@@ -52,6 +55,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -439,6 +443,10 @@
    ],
    "claimed": [],
    "source": "chart",
+   "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Spirit of a Walkon",
@@ -466,6 +474,9 @@
     "8"
    ],
    "win": 5.18,
+   "win_by": {
+    "4": 5.18
+   },
    "place": {
     "4": 2.94,
     "7": 5.18
@@ -509,6 +520,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Special Weight",
@@ -846,6 +858,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Fletch's Rockette",
@@ -871,6 +886,9 @@
     "1"
    ],
    "win": 4.2,
+   "win_by": {
+    "4": 4.2
+   },
    "place": {
     "4": 2.9,
     "6": 3.1
@@ -908,6 +926,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Stakes",
@@ -1154,6 +1173,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Echo Sound",
@@ -1181,6 +1203,9 @@
     "10"
    ],
    "win": 4.78,
+   "win_by": {
+    "4": 4.78
+   },
    "place": {
     "4": 3.98,
     "7": 11.68
@@ -1230,6 +1255,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Starter Allowance",
@@ -1699,6 +1725,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Kerness K",
@@ -1730,6 +1759,9 @@
     "7"
    ],
    "win": 9.66,
+   "win_by": {
+    "8": 9.66
+   },
    "place": {
     "8": 4.34,
     "3": 7.44
@@ -1779,18 +1811,19 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "4/5/6/2/4/4/8",
+     "combo": "4,5,6/2,4/4/8",
      "payout": 77.04
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "3/6/7/4/5/6/2/4/4/8",
+     "combo": "3,6,7/4,5,6/2,4/4/8",
      "payout": 280.27
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.33,
@@ -2226,6 +2259,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Goats On a Tree",
@@ -2257,7 +2293,11 @@
     "3",
     "7"
    ],
-   "win": 3.2,
+   "win": 34.18,
+   "win_by": {
+    "4": 34.18,
+    "5": 3.2
+   },
    "place": {
     "4": 11.88,
     "5": 2.64,
@@ -2304,6 +2344,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Starter Allowance",
@@ -2896,6 +2937,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Stay Beautiful",
@@ -2930,6 +2974,9 @@
     "7"
    ],
    "win": 14.6,
+   "win_by": {
+    "4": 14.6
+   },
    "place": {
     "4": 6.44,
     "3": 4.1
@@ -2997,12 +3044,13 @@
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "2/4/4/8/4/4",
+     "combo": "2,4/4/8/4/4",
      "payout": 36878.32
     }
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.53,
@@ -3547,6 +3595,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Metatron's Muse",
@@ -3580,6 +3631,9 @@
     "12"
    ],
    "win": 8.12,
+   "win_by": {
+    "5": 8.12
+   },
    "place": {
     "5": 3.98,
     "3": 3.28
@@ -3635,6 +3689,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Starter Allowance",
@@ -4107,6 +4162,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Miracle Ball",
@@ -4142,6 +4200,9 @@
     "11"
    ],
    "win": 5.98,
+   "win_by": {
+    "2": 5.98
+   },
    "place": {
     "2": 3.68,
     "7": 7.08
@@ -4190,10 +4251,11 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
-   "class_text": "(1:00\u00ab) Starter Allowance",
+   "class_text": "Starter Allowance",
    "purse": 150000,
    "times": [
     22.26,
@@ -4671,6 +4733,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Shape Note",
@@ -4709,6 +4774,9 @@
     "5"
    ],
    "win": 11.9,
+   "win_by": {
+    "8": 11.9
+   },
    "place": {
     "8": 6.54,
     "9": 21.78
@@ -4758,6 +4826,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Starter Allowance",
@@ -5364,6 +5433,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Air of Defiance",
@@ -5399,6 +5471,9 @@
     "2"
    ],
    "win": 17.18,
+   "win_by": {
+    "6": 17.18
+   },
    "place": {
     "6": 6.72,
     "1": 3.48
@@ -5448,6 +5523,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.03,
@@ -5933,6 +6009,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Groveland",
@@ -5967,6 +6046,9 @@
     "10"
    ],
    "win": 71.54,
+   "win_by": {
+    "6": 71.54
+   },
    "place": {
     "6": 31.4,
     "1": 13.24
@@ -6021,7 +6103,8 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.32,
@@ -6668,6 +6751,9 @@
    "claimed": [],
    "source": "chart",
    "track": "Churchill Downs",
+   "date_text": "November 14th, 2026",
+   "date": "2026-11-14",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Magical Ways",

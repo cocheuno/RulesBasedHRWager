@@ -564,6 +564,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Cyclone Claire",
@@ -912,6 +913,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Tee N Off",
@@ -1200,6 +1202,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Yours Sincerely (IRE)",
@@ -1613,6 +1616,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Battle Belle",
@@ -2112,6 +2116,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Little King",
@@ -2529,6 +2534,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Midnight Mammoth",
@@ -2609,7 +2615,7 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "6/12/4/6/8",
+     "combo": "6/12/4/6,8",
      "payout": 368.75
     }
    ],
@@ -2979,6 +2985,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Miss Kitty Boom",
@@ -3496,6 +3503,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Midway Lane",
@@ -3579,13 +3587,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "4/6/8/2/3",
+     "combo": "4/6,8/2/3",
      "payout": 2182.15
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "12/4/6/8/2/3",
+     "combo": "12/4/6,8/2/3",
      "payout": 8498.8
     }
    ],
@@ -4135,6 +4143,7 @@
    "source": "chart",
    "date_text": "November 21st, 2026",
    "date": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Ronilla",

@@ -13,6 +13,9 @@
     "4"
    ],
    "win": 6.4,
+   "win_by": {
+    "3": 6.4
+   },
    "place": {
     "3": 3.2,
     "6": 2.6
@@ -44,6 +47,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Maiden Optional Claiming",
@@ -289,6 +293,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Boss Man Bolt",
@@ -313,6 +320,9 @@
     "2"
    ],
    "win": 18.4,
+   "win_by": {
+    "4": 18.4
+   },
    "place": {
     "4": 7.0,
     "5": 2.6
@@ -355,10 +365,11 @@
     }
    ],
    "track_condition": "GOOD",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 67000,
    "times": [
     23.23,
@@ -687,6 +698,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Ms Grainger Danger",
@@ -712,6 +726,9 @@
     "6"
    ],
    "win": 6.4,
+   "win_by": {
+    "7": 6.4
+   },
    "place": {
     "7": 3.8,
     "1": 5.4
@@ -761,6 +778,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Claiming",
@@ -1051,6 +1069,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Godbless Her",
@@ -1077,6 +1098,9 @@
     "1"
    ],
    "win": 23.6,
+   "win_by": {
+    "2": 23.6
+   },
    "place": {
     "2": 7.4,
     "6": 3.6
@@ -1126,6 +1150,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Allowance Optional Claiming",
@@ -1509,6 +1534,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Medjugorje",
@@ -1536,6 +1564,9 @@
     "7"
    ],
    "win": 12.4,
+   "win_by": {
+    "3": 12.4
+   },
    "place": {
     "3": 4.4,
     "5": 3.0
@@ -1596,10 +1627,11 @@
     }
    ],
    "track_condition": "GOOD",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Maiden Special Weight",
+   "class_text": "Maiden Special Weight",
    "purse": 65000,
    "times": [
     23.27,
@@ -1980,6 +2012,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Forewarn",
@@ -2008,6 +2043,9 @@
     "1"
    ],
    "win": 9.0,
+   "win_by": {
+    "2": 9.0
+   },
    "place": {
     "2": 4.4,
     "8": 4.4
@@ -2057,6 +2095,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6\u00bd Furlongs",
    "class_text": "Allowance Optional Claiming",
@@ -2437,6 +2476,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Danzingwith Maxine",
@@ -2455,13 +2497,35 @@
   },
   {
    "race_no": 7,
-   "finish": [],
+   "finish": [
+    "7",
+    "5",
+    "6",
+    "1",
+    "8",
+    "3",
+    "4",
+    "2"
+   ],
    "win": 7.0,
+   "win_by": {
+    "7": 7.0
+   },
+   "dead_heats": {
+    "2": [
+     "5",
+     "6"
+    ]
+   },
    "place": {
-    "7": 3.2
+    "7": 3.2,
+    "5": 3.0,
+    "6": 3.2
    },
    "show": {
-    "7": 2.6
+    "7": 2.6,
+    "5": 3.4,
+    "6": 3.6
    },
    "exotics": [
     {
@@ -2532,10 +2596,11 @@
     }
    ],
    "track_condition": "GOOD",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 68000,
    "times": [
     24.06,
@@ -2545,13 +2610,443 @@
     96.92
    ],
    "off_at": "3:34",
-   "final_odds": {},
-   "runners": [],
+   "final_odds": {
+    "7": 2.5,
+    "5": 6.9,
+    "6": 3.9,
+    "1": 4.3,
+    "8": 3.8,
+    "3": 23.8,
+    "4": 11.8,
+    "2": 15.8
+   },
+   "runners": [
+    {
+     "pgm": "7",
+     "name": "Known Idea",
+     "last_raced": "18Oct26\u00acSA\u00a8",
+     "equipment": "L b",
+     "age_sex": "5G",
+     "weight": 123,
+     "post": 7,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 1,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "1\u00a9"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 1,
+       "lengths": 3.0,
+       "margin": null,
+       "raw": "1\u00aa"
+      },
+      {
+       "call": "\u00be",
+       "pos": 1,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "1\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 1,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "1\u00a8"
+      }
+     ],
+     "comment": "KNOWN IDEA grabbed the lead and crossed over, set all the pace to the stretch, dug in under right handed urging in the final furlong and held gamely.",
+     "start": {
+      "pos": 4,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "4"
+     },
+     "finish": 1,
+     "margin": 0.25,
+     "jockey": "Hernandez J J",
+     "odds": 2.5,
+     "beaten": 0.0
+    },
+    {
+     "pgm": "5",
+     "name": "Twirling Point",
+     "last_raced": "17Oct26\u00aaSA\u00aa",
+     "equipment": "L b",
+     "age_sex": "5G",
+     "weight": 121,
+     "post": 5,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 7,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "7\u00a8\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 7,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "7\u00a9"
+      },
+      {
+       "call": "\u00be",
+       "pos": 6,
+       "lengths": 1.25,
+       "margin": null,
+       "raw": "6\u00a8\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 6,
+       "lengths": 2.25,
+       "margin": null,
+       "raw": "6\u00a9\u0081"
+      }
+     ],
+     "comment": "TWIRLING POINT bumped inner rival leaving the gate, traveled outside a rival towards the rear, picked up stride while angling four wide around the far turn, rallied widest in the lane, reeled in the leader late but ran out of ground while bumping with inner rival at the wire.",
+     "start": {
+      "pos": 3,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "3"
+     },
+     "finish": 2,
+     "margin": 0.2,
+     "jockey": "Gonzalez R 100000",
+     "odds": 6.9,
+     "beaten": 0.25
+    },
+    {
+     "pgm": "6",
+     "name": "Charlie's to Blame",
+     "last_raced": "11Oct26\u00a8\u00a7SA\u00ab",
+     "equipment": "L",
+     "age_sex": "4C",
+     "weight": 121,
+     "post": 6,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 2,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "2\u0081"
+      },
+      {
+       "call": "\u00be",
+       "pos": 4,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "4\u00a8"
+      },
+      {
+       "call": "Str",
+       "pos": 3,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "3\u00b2"
+      }
+     ],
+     "comment": "CHARLIE'S TO BLAME stalked inside the pace from inside, roused leaving the far turn, rallied up the fence, drew alongside the leader but was too late.",
+     "start": {
+      "pos": 2,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "2"
+     },
+     "finish": 2,
+     "margin": 0.2,
+     "jockey": "Rispoli U",
+     "odds": 3.9,
+     "beaten": 0.45
+    },
+    {
+     "pgm": "1",
+     "name": "First Peace",
+     "last_raced": "26Sep26\u00acSA\u00ad",
+     "equipment": "L",
+     "age_sex": "6H",
+     "weight": 121,
+     "post": 1,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 4,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "4\u00a8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 4,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "4\u00a8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 5,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "5\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 5,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "5\u00a8"
+      }
+     ],
+     "comment": "FIRST PEACE reserved along the rail, drew closer leaving the backstretch, eased off the fence around the far turn, chased three wide into the stretch, tipped out, put in a late run between rivals and got bumped on both sides at the wire.",
+     "start": {
+      "pos": 1,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "1"
+     },
+     "finish": 4,
+     "margin": 0.2,
+     "jockey": "Smith M E 100000",
+     "odds": 4.3,
+     "beaten": 0.65
+    },
+    {
+     "pgm": "8",
+     "name": "Packs a Wahlop",
+     "last_raced": "11Oct26\u00a8\u00a7SA\u00a9",
+     "equipment": "L b",
+     "age_sex": "6G",
+     "weight": 121,
+     "post": 8,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 3,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "3\u00a8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 2,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "2\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 2,
+       "lengths": 1.0,
+       "margin": null,
+       "raw": "2\u00a8"
+      }
+     ],
+     "comment": "PACKS A WAHLOP tracked in the two path, closed in on the backstretch, bid two wide around the far turn, fought outside the winner through the lane but could not find the needed late kick.",
+     "start": {
+      "pos": 5,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "5"
+     },
+     "finish": 5,
+     "margin": 1.5,
+     "jockey": "Rosario J 100000",
+     "odds": 3.8,
+     "beaten": 0.85
+    },
+    {
+     "pgm": "3",
+     "name": "Scipio",
+     "last_raced": "11Oct26\u00a8\u00a7SA\u00ac",
+     "equipment": "L b",
+     "age_sex": "4G",
+     "weight": 121,
+     "post": 3,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 5,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "5\u00a9"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 5,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "5\u00a9"
+      },
+      {
+       "call": "\u00be",
+       "pos": 3,
+       "lengths": 0.25,
+       "margin": null,
+       "raw": "3\u0081"
+      },
+      {
+       "call": "Str",
+       "pos": 4,
+       "lengths": 2.0,
+       "margin": null,
+       "raw": "4\u00a9"
+      }
+     ],
+     "comment": "SCIPIO settled in the two path early on, started to move leaving the backstretch, bid three deep on the far turn, chased into the final furlong and finished evenly late.",
+     "start": {
+      "pos": 7,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "7"
+     },
+     "finish": 6,
+     "margin": 3.5,
+     "jockey": "Van Dyke D",
+     "odds": 23.8,
+     "beaten": 2.35
+    },
+    {
+     "pgm": "4",
+     "name": "Horco Molle (CHI)",
+     "last_raced": "12Oct26\u00b0SA\u00ab",
+     "equipment": "L f",
+     "age_sex": "5G",
+     "weight": 121,
+     "post": 4,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "\u00be",
+       "pos": 7,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "7\u00b2"
+      },
+      {
+       "call": "Str",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      }
+     ],
+     "comment": "HORCO MOLLE (CHI) got bumped and crowded between rivals leaving the gate, tucked inside at the back, went two wide into the far turn, eased out around the bend, spun four wide into the drive and was never a factor.",
+     "start": {
+      "pos": 8,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "8"
+     },
+     "finish": 7,
+     "margin": 0.25,
+     "jockey": "Ayuso A",
+     "odds": 11.8,
+     "beaten": 5.85
+    },
+    {
+     "pgm": "2",
+     "name": "Napa Valley (ARG)",
+     "last_raced": "14Dec24\u00a8\u00a7SI\u00ab",
+     "equipment": "L",
+     "age_sex": "6G",
+     "weight": 121,
+     "post": 2,
+     "calls": [
+      {
+       "call": "\u00bc",
+       "pos": 6,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "6\u00b2"
+      },
+      {
+       "call": "\u00bd",
+       "pos": 6,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "6\u00b2"
+      },
+      {
+       "call": "\u00be",
+       "pos": 8,
+       "lengths": 0.0,
+       "margin": null,
+       "raw": "8"
+      },
+      {
+       "call": "Str",
+       "pos": 7,
+       "lengths": 0.2,
+       "margin": "hd",
+       "raw": "7\u00b2"
+      }
+     ],
+     "comment": "NAPA VALLEY (ARG) unhurried in the early going, saved ground along the rail, lost the crop at the three-sixteenths pole and never made an impact.",
+     "start": {
+      "pos": 6,
+      "lengths": 0.0,
+      "margin": null,
+      "raw": "6"
+     },
+     "finish": 8,
+     "margin": 0.0,
+     "jockey": "Jaramillo E",
+     "odds": 15.8,
+     "beaten": 6.1
+    }
+   ],
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
-    "names": [],
+    "names": [
+     "Known Idea",
+     "Twirling Point",
+     "Charlie's to Blame",
+     "First Peace",
+     "Packs a Wahlop",
+     "Scipio",
+     "Horco Molle (CHI)",
+     "Napa Valley (ARG)"
+    ],
     "confidence": 1.0,
     "warnings": [],
     "source": "chart"
@@ -2569,6 +3064,9 @@
     "5"
    ],
    "win": 5.6,
+   "win_by": {
+    "7": 5.6
+   },
    "place": {
     "7": 3.4,
     "6": 17.2
@@ -2618,6 +3116,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Stakes",
@@ -2951,6 +3450,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Kivo",
@@ -2980,6 +3482,9 @@
     "7"
    ],
    "win": 4.4,
+   "win_by": {
+    "1": 4.4
+   },
    "place": {
     "1": 3.2,
     "5": 5.6
@@ -3046,10 +3551,11 @@
     }
    ],
    "track_condition": "GOOD",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Waiver Claiming",
+   "class_text": "Waiver Claiming",
    "purse": 27000,
    "times": [
     23.1,
@@ -3534,6 +4040,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 15th, 2026",
+   "date": "2026-11-15",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Let Seamus Go",

@@ -296,7 +296,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Turn N Burn",
@@ -493,7 +493,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Wynstock",
@@ -1109,7 +1109,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Don't Blame Tate",
@@ -1624,7 +1624,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Hedge Book",
@@ -1701,13 +1701,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "4/6/8/6/7",
+     "combo": "4/6/8/6,7",
      "payout": 268.14
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "1/4/4/6/8/6/7",
+     "combo": "1,4/4/6/8/6,7",
      "payout": 636.27
     }
    ],
@@ -2097,7 +2097,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Braverthanubelieve",
@@ -2506,7 +2506,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "McCready",
@@ -2584,7 +2584,7 @@
     {
      "type": "GRANDSLAM",
      "base": 1.0,
-     "combo": "5/8/10/2/7/8/1/3/4/3",
+     "combo": "5,8,10/2,7,8/1,3,4/3",
      "payout": 21.92
     }
    ],
@@ -3157,7 +3157,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Pineland",
@@ -3742,7 +3742,7 @@
    "track": "Belmont Park",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Raised",

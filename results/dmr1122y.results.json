@@ -547,7 +547,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Mighty Toro",
@@ -959,7 +959,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Another Warrior",
@@ -1485,7 +1485,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Travelin' Show",
@@ -1951,7 +1951,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Tiz Lady Luck",
@@ -2037,13 +2037,13 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "1/7/8/6/11/13",
+     "combo": "1/7/8/6,11,13",
      "payout": 286.05
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "5/1/7/8/6/11/13",
+     "combo": "5/1/7/8/6,11,13",
      "payout": 760.7
     }
    ],
@@ -2528,7 +2528,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Paddock Buzz",
@@ -3098,7 +3098,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Midnite Musket",
@@ -3184,7 +3184,7 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "8/6/11/13/10/1",
+     "combo": "8/6,11,13/10/1",
      "payout": 633.8
     }
    ],
@@ -3514,7 +3514,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Virat",
@@ -4160,7 +4160,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Queen of Bantry",
@@ -4254,13 +4254,13 @@
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "6/11/13/10/1/7/5",
+     "combo": "6,11,13/10/1/7/5",
      "payout": 789.6
     },
     {
      "type": "PICK6",
      "base": 2.0,
-     "combo": "8/6/11/13/10/1/7/5",
+     "combo": "8/6,11,13/10/1/7/5",
      "payout": 138276.2
     }
    ],
@@ -4808,7 +4808,7 @@
    "source": "chart",
    "date_text": "November 22nd, 2026",
    "date": "2026-11-22",
-   "reader": "2026-11-21",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Dairago (FR)",

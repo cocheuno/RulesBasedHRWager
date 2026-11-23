@@ -14,6 +14,9 @@
     "5"
    ],
    "win": 6.2,
+   "win_by": {
+    "2": 6.2
+   },
    "place": {
     "2": 3.4,
     "1": 4.8
@@ -51,6 +54,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "1 Mile",
    "class_text": "Claiming",
@@ -382,6 +386,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Good Golly Dolly",
@@ -408,6 +415,9 @@
     "5"
    ],
    "win": 6.0,
+   "win_by": {
+    "6": 6.0
+   },
    "place": {
     "6": 3.0,
     "4": 3.0
@@ -451,6 +461,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Maiden Claiming",
@@ -784,6 +795,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Big If",
@@ -810,6 +824,9 @@
     "6"
    ],
    "win": 9.8,
+   "win_by": {
+    "1": 9.8
+   },
    "place": {
     "1": 5.6,
     "4": 10.4
@@ -858,10 +875,11 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Allowance Optional Claiming",
+   "class_text": "Allowance Optional Claiming",
    "purse": 67000,
    "times": [
     23.69,
@@ -1190,6 +1208,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Ellen Jorth",
@@ -1217,6 +1238,9 @@
     "2"
    ],
    "win": 6.0,
+   "win_by": {
+    "8": 6.0
+   },
    "place": {
     "8": 4.0,
     "1": 6.8
@@ -1266,6 +1290,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "5\u00bd Furlongs",
    "class_text": "Maiden Claiming",
@@ -1588,6 +1613,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Penny the Jet",
@@ -1617,6 +1645,9 @@
     "5"
    ],
    "win": 11.6,
+   "win_by": {
+    "4": 11.6
+   },
    "place": {
     "4": 4.4,
     "6": 3.8
@@ -1677,10 +1708,11 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "header",
    "official": true,
    "distance_text": "1 Mile",
-   "class_text": "(1:32) Claiming",
+   "class_text": "Claiming",
    "purse": 27000,
    "times": [
     23.66,
@@ -2113,6 +2145,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Shining River (GB)",
@@ -2140,6 +2175,9 @@
     "2"
    ],
    "win": 3.6,
+   "win_by": {
+    "5": 3.6
+   },
    "place": {
     "5": 3.4,
     "6": 7.0
@@ -2189,6 +2227,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "6 Furlongs",
    "class_text": "Allowance Optional Claiming",
@@ -2477,6 +2516,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Himari",
@@ -2504,6 +2546,9 @@
     "3"
    ],
    "win": 11.0,
+   "win_by": {
+    "6": 11.0
+   },
    "place": {
     "6": 4.6,
     "1": 2.8
@@ -2558,7 +2603,8 @@
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.69,
@@ -2991,6 +3037,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Hazaka (FR)",
@@ -3018,6 +3067,9 @@
     "3"
    ],
    "win": 4.2,
+   "win_by": {
+    "1": 4.2
+   },
    "place": {
     "1": 2.8,
     "6": 4.8
@@ -3067,6 +3119,7 @@
    ],
    "track_condition": "FAST",
    "surface": "DIRT",
+   "surface_source": "off-line",
    "official": true,
    "distance_text": "7 Furlongs",
    "class_text": "Stakes",
@@ -3359,6 +3412,9 @@
    ],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Grand Slam Smile",
@@ -3387,6 +3443,9 @@
     "4"
    ],
    "win": 10.4,
+   "win_by": {
+    "7": 10.4
+   },
    "place": {
     "7": 5.0,
     "3": 5.6
@@ -3436,24 +3495,25 @@
     {
      "type": "PICK4",
      "base": 0.5,
-     "combo": "5/6/1/2/5/9/7",
+     "combo": "5/6/1,2,5,9/7",
      "payout": 63.85
     },
     {
      "type": "PICK5",
      "base": 0.5,
-     "combo": "4/5/6/1/2/5/9/7",
+     "combo": "4/5/6/1,2,5,9/7",
      "payout": 384.25
     },
     {
      "type": "PICK6",
      "base": 2.0,
-     "combo": "8/4/5/6/1/2/5/9/7",
+     "combo": "8/4/5/6/1,2,5,9/7",
      "payout": 3421.6
     }
    ],
    "track_condition": "FIRM",
-   "surface": "DIRT",
+   "surface": "TURF",
+   "surface_source": "off-line",
    "official": true,
    "times": [
     24.3,
@@ -3938,6 +3998,9 @@
    "scratched": [],
    "claimed": [],
    "source": "chart",
+   "date_text": "November 8th, 2026",
+   "date": "2026-11-08",
+   "reader": "2026-11-23",
    "ocr": {
     "names": [
      "Channel Place",
